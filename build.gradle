@@ -14,7 +14,13 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = mod_version
+// Jar 版本号追加当前 commit 短 hash，便于追溯每次构建（非 git 环境回退为纯版本号）
+def gitHash = providers.exec {
+    commandLine 'git', 'rev-parse', '--short', 'HEAD'
+    workingDir = rootDir
+    ignoreExitValue = true
+}.standardOutput.asText.get().trim()
+version = gitHash ? "${mod_version}+${gitHash}" : "${mod_version}"
 group = mod_group_id
 
 sourceSets.main.resources {
