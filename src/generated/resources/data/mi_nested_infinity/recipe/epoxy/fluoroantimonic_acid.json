@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 64,
+  "duration": 100,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:hydrofluoric_acid",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:antimony_pentafluoride",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:fluoroantimonic_acid",
+      "amount": 1000
+    }
+  ]
+}

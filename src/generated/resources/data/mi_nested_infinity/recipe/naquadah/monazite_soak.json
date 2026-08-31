@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 256000,
+  "duration": 600,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/monazite",
+      "amount": 4
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:nitric_acid",
+      "amount": 2000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:monazite_residue",
+      "amount": 2
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:monazite_heavy_residue_solution",
+      "amount": 2000
+    }
+  ]
+}

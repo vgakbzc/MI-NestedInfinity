@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 1000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/platinum",
+      "amount": 3
+    },
+    {
+      "tag": "c:dusts/uranium",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:uranium_triplatinum_dust",
+      "amount": 4
+    }
+  ]
+}

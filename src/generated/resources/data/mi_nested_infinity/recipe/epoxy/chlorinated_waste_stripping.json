@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:distillery",
+  "eu": 8,
+  "duration": 160,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:chlorinated_waste",
+      "amount": 150
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:allyl_chloride",
+      "amount": 30
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 120
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:assembler",
+  "duration": 200,
+  "eu": 8,
+  "fluid_inputs": [
+    {
+      "amount": 12,
+      "fluid": "modern_industrialization:styrene_butadiene_rubber"
+    },
+    {
+      "amount": 72,
+      "fluid": "mi_nested_infinity:liquid_glass"
+    }
+  ],
+  "item_inputs": [
+    {
+      "amount": 1,
+      "item": "modern_industrialization:nichrome_wire"
+    },
+    {
+      "amount": 1,
+      "item": "mi_nested_infinity:mica_insulator_sheet"
+    }
+  ],
+  "item_outputs": [
+    {
+      "amount": 1,
+      "item": "modern_industrialization:nichrome_cable"
+    }
+  ]
+}

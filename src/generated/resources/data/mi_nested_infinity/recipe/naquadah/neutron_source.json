@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 512000,
+  "duration": 1200,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:he_mox_fuel_rod_quad",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:cooling_cell",
+      "amount": 8
+    },
+    {
+      "tag": "c:plates/iridium",
+      "amount": 32
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:neutron_source",
+      "amount": 32
+    }
+  ]
+}

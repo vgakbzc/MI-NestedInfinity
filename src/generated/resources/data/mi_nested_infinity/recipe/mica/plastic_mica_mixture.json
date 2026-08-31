@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 8,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:mica_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:polyvinyl_chloride",
+      "amount": 144
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:plastic_mica_mixture",
+      "amount": 1
+    }
+  ]
+}

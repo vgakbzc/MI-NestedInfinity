@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 240,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:styrene_butadiene_rubber",
+      "amount": 500
+    },
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:ion_exchange_resin",
+      "amount": 4
+    }
+  ]
+}

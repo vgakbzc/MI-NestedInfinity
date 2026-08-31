@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "modern_industrialization:naquadah_block",
+    "modern_industrialization:uranium_triplatinum_block",
+    "mi_nested_infinity:nichrome_coil",
+    "mi_nested_infinity:tpv_coil",
+    "mi_nested_infinity:trinium_dinaquadide_coil",
+    "mi_nested_infinity:neutronium_coil",
+    "mi_nested_infinity:infinitium_coil",
+    "mi_nested_infinity:hypogen_coil",
+    "mi_nested_infinity:stellarium_coil",
+    "mi_nested_infinity:draconicic_prismarinium_diaquamide_coil",
+    "mi_nested_infinity:eternium_coil",
+    "mi_nested_infinity:terminium_coil",
+    "mi_nested_infinity:plastic_mica_block",
+    "modern_industrialization:nichrome_block"
+  ]
+}

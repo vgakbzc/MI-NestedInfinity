@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 64,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/antimony",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:fluorine",
+      "amount": 5000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:antimony_pentafluoride",
+      "amount": 1000
+    }
+  ]
+}

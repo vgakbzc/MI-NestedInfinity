@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 128000,
+  "duration": 400,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:xenon",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:fluorine",
+      "amount": 3000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:xenon_hexafluoride",
+      "amount": 1000
+    }
+  ]
+}

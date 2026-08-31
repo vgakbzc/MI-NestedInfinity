@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 128000,
+  "duration": 400,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:monazite_heavy_residue_solution",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:sodium_hydroxide",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:heavy_element_residue_oxide",
+      "amount": 1
+    }
+  ]
+}

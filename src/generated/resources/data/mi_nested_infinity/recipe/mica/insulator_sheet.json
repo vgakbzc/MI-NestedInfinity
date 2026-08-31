@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:cutting_machine",
+  "eu": 2,
+  "duration": 400,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:plastic_mica_block",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:lubricant",
+      "amount": 144
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:mica_insulator_sheet",
+      "amount": 9
+    }
+  ]
+}

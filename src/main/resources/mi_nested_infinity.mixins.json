@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.nestedinfinity.mod.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "UpgradeComponentMixin", "ElectricBlastFurnaceMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

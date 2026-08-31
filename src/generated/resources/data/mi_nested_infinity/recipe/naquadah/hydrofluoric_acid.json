@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 128000,
+  "duration": 400,
+  "item_inputs": [
+    {
+      "item": "minecraft:glowstone_dust",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 2000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:hydrofluoric_acid",
+      "amount": 2000
+    }
+  ]
+}

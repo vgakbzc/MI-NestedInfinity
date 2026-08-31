@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 1000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:quantum_circuit",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:naquadah_computing_unit",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:cooling_cell",
+      "amount": 8
+    },
+    {
+      "item": "mi_nested_infinity:crystal_circuit_board",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:crystal_circuit",
+      "amount": 1
+    }
+  ]
+}

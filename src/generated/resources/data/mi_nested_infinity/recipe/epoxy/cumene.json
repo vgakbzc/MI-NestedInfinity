@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 240,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:benzene",
+      "amount": 600
+    },
+    {
+      "fluid": "modern_industrialization:propene",
+      "amount": 400
+    },
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 25
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:cumene",
+      "amount": 950
+    },
+    {
+      "fluid": "modern_industrialization:benzene",
+      "amount": 100
+    }
+  ]
+}

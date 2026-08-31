@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 128000,
+  "duration": 400,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:nitrogen",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 2500
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:nitric_acid",
+      "amount": 2000
+    }
+  ]
+}

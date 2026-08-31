@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:electrolyzer",
+  "eu": 128000,
+  "duration": 400,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:hydrofluoric_acid",
+      "amount": 2000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:fluorine",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 1000
+    }
+  ]
+}

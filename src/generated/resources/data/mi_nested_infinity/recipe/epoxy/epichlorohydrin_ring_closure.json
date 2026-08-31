@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 160,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:dichlorohydrin",
+      "amount": 850
+    },
+    {
+      "fluid": "modern_industrialization:sodium_hydroxide",
+      "amount": 900
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:crude_epichlorohydrin",
+      "amount": 1000
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 400
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:salt_dust",
+      "amount": 3
+    }
+  ]
+}

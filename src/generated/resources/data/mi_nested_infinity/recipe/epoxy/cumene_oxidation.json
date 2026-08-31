@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 300,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:cumene",
+      "amount": 950
+    },
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 950
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:cumene_hydroperoxide",
+      "amount": 950
+    }
+  ]
+}

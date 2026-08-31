@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:ion_exchange",
+  "eu": 32,
+  "duration": 240,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:ion_exchange_catalyst",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:crude_epoxy_resin",
+      "amount": 1250
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:epoxy_resin",
+      "amount": 1200
+    },
+    {
+      "fluid": "mi_nested_infinity:epichlorohydrin",
+      "amount": 250
+    }
+  ]
+}

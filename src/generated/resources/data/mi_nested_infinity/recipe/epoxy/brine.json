@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 8,
+  "duration": 120,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/salt",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:brine",
+      "amount": 1000
+    }
+  ]
+}

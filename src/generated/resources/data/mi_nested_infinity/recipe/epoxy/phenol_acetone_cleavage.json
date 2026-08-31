@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 240,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:cumene_hydroperoxide",
+      "amount": 950
+    },
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 50
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:phenol",
+      "amount": 1150
+    },
+    {
+      "fluid": "mi_nested_infinity:acetone",
+      "amount": 550
+    },
+    {
+      "fluid": "mi_nested_infinity:phenol_tar",
+      "amount": 90
+    }
+  ]
+}

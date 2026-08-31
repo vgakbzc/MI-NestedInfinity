@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:fusion_reactor",
+  "eu": 16000,
+  "duration": 1200,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:ultraheavy_element_mixture",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:chlorine",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:inert_naquadah_solution",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:argon",
+      "amount": 250
+    }
+  ]
+}

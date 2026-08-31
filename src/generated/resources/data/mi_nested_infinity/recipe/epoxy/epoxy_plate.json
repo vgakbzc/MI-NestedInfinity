@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:cutting_machine",
+  "eu": 16,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:cured_epoxy_resin_block",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:lubricant",
+      "amount": 233
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:epoxy_plate",
+      "amount": 16
+    }
+  ]
+}

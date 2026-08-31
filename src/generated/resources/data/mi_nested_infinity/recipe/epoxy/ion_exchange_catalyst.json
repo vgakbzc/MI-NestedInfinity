@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 16,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:ion_exchange_resin",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:platinum_wire_mesh",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:ion_exchange_catalyst",
+      "amount": 32
+    }
+  ]
+}

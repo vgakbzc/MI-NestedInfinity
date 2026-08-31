@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 8,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/silicon",
+      "amount": 4
+    },
+    {
+      "tag": "c:dusts/aluminum",
+      "amount": 1
+    },
+    {
+      "tag": "c:dusts/salt",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 2000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:mica_dust",
+      "amount": 10
+    }
+  ]
+}

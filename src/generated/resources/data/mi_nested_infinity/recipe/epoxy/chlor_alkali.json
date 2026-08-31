@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:electrolyzer",
+  "eu": 16,
+  "duration": 300,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:brine",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "modern_industrialization:sodium_hydroxide",
+      "amount": 900
+    },
+    {
+      "fluid": "modern_industrialization:chlorine",
+      "amount": 600
+    },
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 300
+    }
+  ]
+}

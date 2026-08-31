@@ -1,0 +1,39 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 1000000,
+  "duration": 12000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:random_access_memory",
+      "amount": 8
+    },
+    {
+      "item": "modern_industrialization:arithmetic_logic_unit",
+      "amount": 4
+    },
+    {
+      "item": "modern_industrialization:memory_management_unit",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:high_purity_monocrystalline_naquadah",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:processing_unit",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:acrylic_glue",
+      "amount": 37
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:naquadah_computing_unit",
+      "amount": 1
+    }
+  ]
+}

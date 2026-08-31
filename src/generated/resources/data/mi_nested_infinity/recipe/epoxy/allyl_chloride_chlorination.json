@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 200,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:propene",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:chlorine",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:crude_allyl_chloride",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 850
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 256000,
+  "duration": 800,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:platinized_ultraheavy_residue_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:uu_matter",
+      "amount": 200
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:platinum_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:ultraheavy_element_mixture",
+      "amount": 1000
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 128000,
+  "duration": 5340,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/nickel",
+      "amount": 4
+    },
+    {
+      "tag": "c:dusts/chromium",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:nichrome_dust",
+      "amount": 5
+    }
+  ]
+}

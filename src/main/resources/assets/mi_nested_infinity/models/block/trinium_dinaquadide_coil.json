@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "mi_nested_infinity:block/trinium_dinaquadide_coil_top",
+    "side": "mi_nested_infinity:block/trinium_dinaquadide_coil_side"
+  }
+}

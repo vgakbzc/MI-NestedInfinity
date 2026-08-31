@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "eu": 512,
+  "duration": 4000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:naquadah_ingot",
+      "amount": 32
+    },
+    {
+      "item": "modern_industrialization:uranium_triplatinum_ingot",
+      "amount": 3
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:cryofluid",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:high_purity_monocrystalline_naquadah",
+      "amount": 21
+    }
+  ]
+}

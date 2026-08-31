@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 160,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:allyl_chloride",
+      "amount": 850
+    },
+    {
+      "fluid": "mi_nested_infinity:hypochlorous_acid",
+      "amount": 850
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:dichlorohydrin",
+      "amount": 850
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:ion_exchange",
+  "eu": 8,
+  "duration": 120,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:ion_exchange_catalyst",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:phenol_tar",
+      "amount": 90
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:phenol",
+      "amount": 50
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 256000,
+  "duration": 600,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:neutron_source",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:inert_naquadah_solution",
+      "amount": 8000
+    },
+    {
+      "fluid": "mi_nested_infinity:xenon_hexafluoride",
+      "amount": 8000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:neutron_activated_naquadah_solution",
+      "amount": 8000
+    }
+  ]
+}

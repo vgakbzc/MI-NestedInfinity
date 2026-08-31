@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:centrifuge",
+  "eu": 512000,
+  "duration": 1000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:neutron_activated_naquadah_solution",
+      "amount": 125
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:naquadah_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:xenon",
+      "amount": 20
+    }
+  ]
+}

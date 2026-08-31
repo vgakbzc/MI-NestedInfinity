@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 64,
+  "duration": 300,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:phenol",
+      "amount": 2000
+    },
+    {
+      "fluid": "mi_nested_infinity:acetone",
+      "amount": 1000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:ion_exchange_resin",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:crude_bisphenol_a",
+      "amount": 1300
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 650
+    }
+  ]
+}

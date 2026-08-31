@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 64,
+  "duration": 300,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:bisphenol_a",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:epichlorohydrin",
+      "amount": 2000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:chlorohydrin_ether",
+      "amount": 1100
+    }
+  ]
+}

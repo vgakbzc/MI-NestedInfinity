@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "mi_nested_infinity:item/high_purity_monocrystalline_naquadah"
+  }
+}
+

@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:nichrome_cable",
+      "amount": 16
+    },
+    {
+      "item": "mi_nested_infinity:mica_insulator_sheet",
+      "amount": 3
+    },
+    {
+      "item": "modern_industrialization:diode",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:nichrome_coil",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "mi_nested_infinity:item/24d_non_euclidean_space_time_folding_upgrade"
+  }
+}

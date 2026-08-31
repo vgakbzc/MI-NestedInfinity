@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "eu": 512,
+  "duration": 2000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:heavy_element_residue_oxide",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:heavy_element_residue_dust",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:ion_exchange",
+  "eu": 16,
+  "duration": 240,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:ion_exchange_catalyst",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:crude_bisphenol_a",
+      "amount": 1300
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:bisphenol_a",
+      "amount": 1200
+    }
+  ]
+}
