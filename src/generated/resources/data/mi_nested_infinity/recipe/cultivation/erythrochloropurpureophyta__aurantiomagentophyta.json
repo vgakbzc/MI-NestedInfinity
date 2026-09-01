@@ -20,7 +20,7 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_aurantiochloromagentophyta",
+      "item": "mi_nested_infinity:petri_erythrochloropurpureophyta",
       "amount": 1,
       "probability": 0.25
     },
@@ -30,7 +30,7 @@
       "probability": 0.25
     },
     {
-      "item": "mi_nested_infinity:petri_erythrochloropurpureophyta",
+      "item": "mi_nested_infinity:petri_aurantiochloromagentophyta",
       "amount": 1,
       "probability": 0.25
     },

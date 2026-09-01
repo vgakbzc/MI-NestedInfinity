@@ -1043,17 +1043,18 @@
   "item.mi_nested_infinity.crystal_diode": "Crystal Diode",
   "item.mi_nested_infinity.graphene_electrode": "Graphene Electrode",
   "item.mi_nested_infinity.optical_qubit_component": "Optical Qubit Component",
-  "block.mi_nested_infinity.super_assembler": "Super Assembler",
   "fluid.mi_nested_infinity.neon": "Neon",
   "item.mi_nested_infinity.neon_bucket": "Neon Bucket",
   "fluid.mi_nested_infinity.argon": "Argon",
   "item.mi_nested_infinity.argon_bucket": "Argon Bucket",
   "fluid.mi_nested_infinity.krypton": "Krypton",
   "item.mi_nested_infinity.krypton_bucket": "Krypton Bucket",
-  "emi.category.mi_nested_infinity.super_assembler": "Super Assembler",
   "item.mi_nested_infinity.graphene_oxide": "Graphene Oxide",
   "item.mi_nested_infinity.graphene": "Graphene",
   "item.mi_nested_infinity.graphene_rod": "Graphene Rod",
   "fluid.mi_nested_infinity.liquid_xenon": "Liquid Xenon",
-  "item.mi_nested_infinity.liquid_xenon_bucket": "Liquid Xenon Bucket"
+  "item.mi_nested_infinity.liquid_xenon_bucket": "Liquid Xenon Bucket",
+  "block.modern_industrialization.super_assembler": "Super Assembler",
+  "item.modern_industrialization.super_assembler": "Super Assembler",
+  "rei_categories.modern_industrialization.super_assembler": "Super Assembler"
 }

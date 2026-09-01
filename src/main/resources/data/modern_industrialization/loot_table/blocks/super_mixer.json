@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "mi_nested_infinity:super_assembler"
+          "name": "modern_industrialization:super_mixer"
         }
       ],
       "conditions": [

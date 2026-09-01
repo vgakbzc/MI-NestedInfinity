@@ -295,114 +295,41 @@ def make_battery_texture(dst):
     write_png(dst, 16, 16, px)
 
 
-def make_machine_textures(dst_dir):
-    """Super assembler faces: steel casing with amber conduits feeding a
-    10x10 socket grid on the top."""
+def make_super_assembler_overlays(dst_dir):
+    """Front overlay of the MI-registered machine: a dark instrument window
+    with an amber tube-grid gauge (lit up in the _active variant)."""
     os.makedirs(dst_dir, exist_ok=True)
 
-    def base(px):
-        import random
-        rng = random.Random(0x50A)
-        for y in range(16):
-            for x in range(16):
+    def window(active):
+        px = bytearray(16 * 16 * 4)
+        amber = (255, 198, 92) if active else (176, 124, 46)
+        amber_dark = (120, 80, 26)
+        for y in range(4, 12):
+            for x in range(3, 13):
                 o = (y * 16 + x) * 4
-                frame = x == 0 or y == 0 or x == 15 or y == 15
-                v = rng.random()
+                frame = x in (3, 12) or y in (4, 11)
+                grid = x in (6, 9) or y in (7, 8)
                 if frame:
-                    c = (52, 48, 44)
-                elif v < 0.10:
-                    c = (106, 100, 92)
+                    px[o:o + 4] = bytes((56, 58, 66, 255))
+                elif grid:
+                    px[o:o + 4] = bytes(amber_dark + (255,))
                 else:
-                    c = (88, 82, 74)
-                px[o], px[o+1], px[o+2], px[o+3] = c[0], c[1], c[2], 255
+                    px[o:o + 4] = bytes(amber + (255,))
+        # corner rivets on the window frame
+        for x, y in [(3, 4), (12, 4), (3, 11), (12, 11)]:
+            o = (y * 16 + x) * 4
+            px[o:o + 4] = bytes((120, 124, 134, 255))
+        if active:
+            for x, y in [(5, 6), (8, 9), (10, 5)]:
+                o = (y * 16 + x) * 4
+                px[o:o + 4] = bytes((255, 236, 170, 255))
+        return px
 
-    def put(px, x, y, c):
-        o = (y * 16 + x) * 4
-        px[o], px[o+1], px[o+2] = c
-
-    amber, amber_dark, amber_light = (240, 170, 60), (156, 104, 30), (255, 220, 140)
-    # side: three amber energy conduits with junction dots
-    side = bytearray(16 * 16 * 4)
-    base(side)
-    for cx in (4, 8, 12):
-        for y in range(2, 15):
-            put(side, cx, y, amber if (y // 2) % 2 == 0 else amber_dark)
-        put(side, cx, 2, amber_light)
-    write_png(os.path.join(dst_dir, "super_assembler_side.png"), 16, 16, side)
-    # top: a miniature 3x3-preview of the tube grid, amber framed
-    top = bytearray(16 * 16 * 4)
-    base(top)
-    for y in range(3, 13):
-        for x in range(3, 13):
-            edge = x in (3, 12) or y in (3, 12) or x in (7, 8) or y in (7, 8)
-            put(top, x, y, amber if edge else (34, 32, 30))
-    for x, y in [(1, 1), (14, 1), (1, 14), (14, 14)]:
-        put(top, x, y, amber_light)
-    write_png(os.path.join(dst_dir, "super_assembler_top.png"), 16, 16, top)
-    # bottom: vents
-    bottom = bytearray(16 * 16 * 4)
-    base(bottom)
-    for x in range(3, 13):
-        for y in (5, 8, 11):
-            put(bottom, x, y, (40, 38, 34))
-    write_png(os.path.join(dst_dir, "super_assembler_bottom.png"), 16, 16, bottom)
+    write_png(os.path.join(dst_dir, "overlay_front.png"), 16, 16, window(False))
+    write_png(os.path.join(dst_dir, "overlay_front_active.png"), 16, 16, window(True))
 
 
-def make_super_assembler_gui(dst):
-    """256x320 sheet holding a 244x302 panel: title row, the 10x10 tube grid,
-    an arrow into the output slot, and the player inventory. Coordinates mirror
-    SuperAssemblerMenu."""
-    SHEET_W, SHEET_H = 256, 320
-    W, H = 244, 302
-    px = bytearray(SHEET_W * SHEET_H * 4)
 
-    def put(x, y, rgb):
-        if 0 <= x < W and 0 <= y < H:
-            i = (y * SHEET_W + x) * 4
-            px[i], px[i+1], px[i+2], px[i+3] = rgb[0], rgb[1], rgb[2], 255
-
-    for y in range(H):
-        for x in range(W):
-            put(x, y, (198, 198, 198))
-    for i in range(W):
-        put(i, 0, (85, 85, 85))
-        put(i, H - 1, (85, 85, 85))
-    for j in range(H):
-        put(0, j, (85, 85, 85))
-        put(W - 1, j, (85, 85, 85))
-
-    def slot_inset(x, y, w=18, h=18):
-        for yy in range(y, y + h):
-            for xx in range(x, x + w):
-                put(xx, yy, (139, 139, 139))
-        for k in range(w):
-            put(x + k, y, (55, 55, 55))
-            put(x + k, y + h - 1, (255, 255, 255))
-        for k in range(h):
-            put(x, y + k, (55, 55, 55))
-            put(x + w - 1, y + k, (255, 255, 255))
-
-    # the 10x10 glow-tube grid
-    for row in range(10):
-        for col in range(10):
-            slot_inset(8 + col * 18, 18 + row * 18)
-    # amber arrow into the output slot
-    for dx in range(16):
-        half = max(0, 6 - dx // 2)
-        for dy in range(-half, half + 1):
-            put(194 + dx, 107 + dy, (196, 132, 40))
-    slot_inset(214, 99)
-    # player inventory, centered under the grid
-    for row in range(3):
-        for col in range(9):
-            slot_inset(41 + col * 18, 216 + row * 18)
-    for col in range(9):
-        slot_inset(41 + col * 18, 278)
-    os.makedirs(os.path.dirname(dst), exist_ok=True)
-    write_png(dst, SHEET_W, SHEET_H, px)
-
-
-# ---------------------------------------------------------------- main
 
 
 def main():
@@ -456,22 +383,38 @@ def main():
         write_json(os.path.join(A, f"models/item/{item}.json"),
                    {"parent": "minecraft:item/generated",
                     "textures": {"layer0": f"{MODID}:item/{item}"}})
-    make_machine_textures(os.path.join(DST, 'block'))
-    write_json(os.path.join(A, 'blockstates/super_assembler.json'),
-               {"variants": {"": {"model": f"{MODID}:block/super_assembler"}}})
-    write_json(os.path.join(A, 'models/block/super_assembler.json'),
-               {"parent": "minecraft:block/cube_bottom_top",
-                "textures": {"top": f"{MODID}:block/super_assembler_top",
-                             "bottom": f"{MODID}:block/super_assembler_bottom",
-                             "side": f"{MODID}:block/super_assembler_side"}})
-    write_json(os.path.join(A, 'models/item/super_assembler.json'),
-               {"parent": f"{MODID}:block/super_assembler"})
-    write_json(os.path.join(loot_dir, 'super_assembler.json'),
-               {"type": "minecraft:block",
-                "pools": [{"rolls": 1,
-                           "entries": [{"type": "minecraft:item", "name": f"{MODID}:super_assembler"}],
-                           "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
-    make_super_assembler_gui(os.path.join(A, 'textures/gui/super_assembler.png'))
+    # the super assembler: a real MI machine (modern_industrialization ns),
+    # so its assets are overlays on the lv casing + machine-model jsons
+    make_super_assembler_overlays(os.path.join(ROOT,
+        'src/main/resources/assets/modern_industrialization/textures/block/machines/super_assembler'))
+    AMI = os.path.join(ROOT, 'src/main/resources/assets/modern_industrialization')
+    write_json(os.path.join(AMI, 'blockstates/super_assembler.json'),
+               {"variants": {"": {"model": "modern_industrialization:block/super_assembler"}}})
+    write_json(os.path.join(AMI, 'models/block/super_assembler.json'),
+               {"loader": "modern_industrialization:machine",
+                "casing": "lv",
+                "default_overlays": {
+                    "fluid_auto": "modern_industrialization:block/overlays/fluid_auto",
+                    "front": "modern_industrialization:block/machines/super_assembler/overlay_front",
+                    "front_active": "modern_industrialization:block/machines/super_assembler/overlay_front_active",
+                    "item_auto": "modern_industrialization:block/overlays/item_auto",
+                    "output": "modern_industrialization:block/overlays/output"}})
+    write_json(os.path.join(AMI, 'models/item/super_assembler.json'),
+               {"parent": "modern_industrialization:block/super_assembler"})
+
+    # loot tables: the super assembler plus our other four MI-registered
+    # machines, which were missing theirs (they dropped nothing when broken)
+    DAMI = os.path.join(ROOT, 'src/main/resources/data/modern_industrialization/loot_table/blocks')
+    for machine in ("super_assembler", "algae_cultivator", "ion_exchange", "magma_crucible", "super_mixer"):
+        write_json(os.path.join(DAMI, f"{machine}.json"),
+                   {"type": "minecraft:block",
+                    "pools": [{"rolls": 1,
+                               "entries": [{"type": "minecraft:item",
+                                            "name": f"modern_industrialization:{machine}"}],
+                               "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
+
+    # the five spectral assemblies were folded back into the single 10x10
+    # recipe; nothing extra to emit here
 
     # 3. noble gases + condensed xenon: the fluid four-piece
     gases = [("neon", "Neon", "氖", 0xFFFF5F42),
@@ -513,18 +456,24 @@ def main():
     for item_id, item_en, item_zh in parts:
         en[f"item.{MODID}.{item_id}"] = item_en
         zh[f"item.{MODID}.{item_id}"] = item_zh
-    en[f"block.{MODID}.super_assembler"] = "Super Assembler"
-    zh[f"block.{MODID}.super_assembler"] = "超级组装机"
+    # the machine is MI-registered, so its keys live in MI's namespace
+    for key in (f"block.modern_industrialization.super_assembler",
+                f"item.modern_industrialization.super_assembler",
+                f"rei_categories.modern_industrialization.super_assembler"):
+        en[key] = "Super Assembler"
+        zh[key] = "超级组装机"
+    en.pop(f"block.{MODID}.super_assembler", None)
+    zh.pop(f"block.{MODID}.super_assembler", None)
+    en.pop(f"emi.category.{MODID}.super_assembler", None)
+    zh.pop(f"emi.category.{MODID}.super_assembler", None)
     for fluid_id, fluid_en, fluid_zh, _tint in gases:
         en[f"fluid.{MODID}.{fluid_id}"] = fluid_en
         en[f"item.{MODID}.{fluid_id}_bucket"] = f"{fluid_en} Bucket"
         zh[f"fluid.{MODID}.{fluid_id}"] = fluid_zh
         zh[f"item.{MODID}.{fluid_id}_bucket"] = f"{fluid_zh}桶"
-    en[f"emi.category.{MODID}.super_assembler"] = "Super Assembler"
-    zh[f"emi.category.{MODID}.super_assembler"] = "超级组装机"
     write_json(en_path, en)
     write_json(zh_path, zh)
-    print('optical assets done: 100 gems, 4 fluids, graphene route, super assembler')
+    print('optical assets done: 100 gems, 4 fluids, graphene route, MI super assembler')
 
 
 if __name__ == '__main__':

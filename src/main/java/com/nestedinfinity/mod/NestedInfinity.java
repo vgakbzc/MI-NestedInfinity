@@ -111,7 +111,6 @@ public class NestedInfinity {
                 output.accept(NIItems.GRAPHENE.get());
                 output.accept(NIItems.GRAPHENE_ROD.get());
                 output.accept(NIItems.OPTICAL_QUBIT_COMPONENT.get());
-                output.accept(NIBlocks.SUPER_ASSEMBLER_ITEM.get());
                 output.accept(NIFluids.NEON.bucket.get());
                 output.accept(NIFluids.ARGON.bucket.get());
                 output.accept(NIFluids.KRYPTON.bucket.get());

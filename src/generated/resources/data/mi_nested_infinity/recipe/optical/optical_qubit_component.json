@@ -1,0 +1,413 @@
+{
+  "type": "modern_industrialization:super_assembler",
+  "eu": 2000000000,
+  "duration": 160000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:ruby_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:garnet_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:spinel_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:carnelian_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:bloodstone_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:cuprite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:crocoite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:eudialyte_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:rhodochrosite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:morganite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:kunzite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:rose_quartz_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:rhodonite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:thulite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:poudretteite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:sunstone_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:amber_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:fire_opal_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:hessonite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:vanadinite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:sphalerite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:imperial_topaz_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:citrine_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:topaz_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:heliodor_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:sulfur_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:sphene_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:zircon_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:scapolite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:tiger_eye_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:cassiterite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:emerald_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:peridot_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:jade_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:malachite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:chrysoprase_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:aventurine_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:diopside_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:serpentine_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:prasiolite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:prehnite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:variscite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:brazilianite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:epidote_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:demantoid_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:aquamarine_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:turquoise_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:chrysocolla_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:larimar_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:apatite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:fluorite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:amazonite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:hemimorphite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:alexandrite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:sapphire_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:azurite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:lapis_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:benitoite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:kyanite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:iolite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:sodalite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:tanzanite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:lazulite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:celestine_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:grandidierite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:jeremejevite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:amethyst_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:charoite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:sugilite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:taaffeite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:lepidolite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:purpurite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:axinite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:afghanite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:stichtite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:rubellite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:cobaltoan_calcite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:pezzottaite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:bixbite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:jasper_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:unakite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:smoky_quartz_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:sinhalite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:aragonite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:dolomite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:staurolite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:chromite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:painite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:onyx_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:hematite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:magnetite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:galena_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:pyrite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:marcasite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:moonstone_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:opal_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:pearl_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:labradorite_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:rutile_glow_tube",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:molybdenite_glow_tube",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:optical_qubit_component",
+      "amount": 1
+    }
+  ]
+}

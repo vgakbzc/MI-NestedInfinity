@@ -1043,17 +1043,18 @@
   "item.mi_nested_infinity.crystal_diode": "晶体二极管",
   "item.mi_nested_infinity.graphene_electrode": "石墨烯电极",
   "item.mi_nested_infinity.optical_qubit_component": "光学量子比特组件",
-  "block.mi_nested_infinity.super_assembler": "超级组装机",
   "fluid.mi_nested_infinity.neon": "氖",
   "item.mi_nested_infinity.neon_bucket": "氖桶",
   "fluid.mi_nested_infinity.argon": "氩",
   "item.mi_nested_infinity.argon_bucket": "氩桶",
   "fluid.mi_nested_infinity.krypton": "氪",
   "item.mi_nested_infinity.krypton_bucket": "氪桶",
-  "emi.category.mi_nested_infinity.super_assembler": "超级组装机",
   "item.mi_nested_infinity.graphene_oxide": "氧化石墨烯",
   "item.mi_nested_infinity.graphene": "石墨烯",
   "item.mi_nested_infinity.graphene_rod": "石墨烯杆",
   "fluid.mi_nested_infinity.liquid_xenon": "液态氙",
-  "item.mi_nested_infinity.liquid_xenon_bucket": "液态氙桶"
+  "item.mi_nested_infinity.liquid_xenon_bucket": "液态氙桶",
+  "block.modern_industrialization.super_assembler": "超级组装机",
+  "item.modern_industrialization.super_assembler": "超级组装机",
+  "rei_categories.modern_industrialization.super_assembler": "超级组装机"
 }

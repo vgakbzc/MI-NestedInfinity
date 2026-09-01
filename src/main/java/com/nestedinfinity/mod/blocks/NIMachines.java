@@ -27,6 +27,9 @@ public final class NIMachines {
     public static final String SUPER_MIXER_PATH = "super_mixer";
     public static final MachineRecipeType SUPER_MIXER = createSuperMixerType();
 
+    public static final String SUPER_ASSEMBLER_PATH = "super_assembler";
+    public static final MachineRecipeType SUPER_ASSEMBLER = createSuperAssemblerType();
+
     /**
      * MIMachineRecipeTypes.create(String) builds a type that rejects every ingredient kind;
      * the two-arg overload that configures capabilities is private, so we construct the
@@ -74,6 +77,16 @@ public final class NIMachines {
                 .withFluidOutputs();
         MIRegistries.RECIPE_SERIALIZERS.register(SUPER_MIXER_PATH, () -> type);
         MIRegistries.RECIPE_TYPES.register(SUPER_MIXER_PATH, () -> type);
+        return type;
+    }
+
+    private static MachineRecipeType createSuperAssemblerType() {
+        MachineRecipeType type = new MachineRecipeType(
+                ResourceLocation.fromNamespaceAndPath("modern_industrialization", SUPER_ASSEMBLER_PATH))
+                .withItemInputs()
+                .withItemOutputs();
+        MIRegistries.RECIPE_SERIALIZERS.register(SUPER_ASSEMBLER_PATH, () -> type);
+        MIRegistries.RECIPE_TYPES.register(SUPER_ASSEMBLER_PATH, () -> type);
         return type;
     }
 
@@ -155,6 +168,37 @@ public final class NIMachines {
                 fluidTanks -> fluidTanks.addSlot(128, 71),
                 true, false, false,
                 4, 16);
+
+        // Super assembler: the optical finale — all hundred glow tubes in ONE
+        // 10x10 grid recipe crafting the optical qubit component. MI's machine
+        // background sheet hard-caps the panel at 176x260, so the grid uses a
+        // 15px slot pitch instead of the standard 18px (a 1px sprite overlap
+        // between neighbours), the progress arrow and output slot live in the
+        // otherwise empty title strip, and the result fits without any slot
+        // falling off the panel.
+        SingleBlockCraftingMachines.registerMachineTiers(
+                "Super Assembler",
+                SUPER_ASSEMBLER_PATH,
+                SUPER_ASSEMBLER,
+                100, 1, 0, 0,
+                builder -> {
+                    builder.backgroundHeight(260);
+                    builder.playerInventoryY = 182;
+                },
+                new ProgressBar.Params(100, 0, "arrow"),
+                new RecipeEfficiencyBar.Params(44, 171),
+                new EnergyBar.Params(4, 30),
+                itemSlots -> {
+                    for (int row = 0; row < 10; row++) {
+                        for (int col = 0; col < 10; col++) {
+                            itemSlots.addSlot(22 + col * 15, 18 + row * 15);
+                        }
+                    }
+                    itemSlots.addSlot(132, 0);
+                },
+                fluidTanks -> {},
+                true, false, false,
+                4, 16);
     }
 
     public static void clientInit() {
@@ -162,6 +206,7 @@ public final class NIMachines {
         MachineRegistrationHelper.addMachineModel(ION_EXCHANGE_PATH, ION_EXCHANGE_PATH, MachineCasings.get("lv"), true, false, false);
         MachineRegistrationHelper.addMachineModel(ALGAE_CULTIVATOR_PATH, ALGAE_CULTIVATOR_PATH, MachineCasings.get("lv"), true, false, false);
         MachineRegistrationHelper.addMachineModel(SUPER_MIXER_PATH, SUPER_MIXER_PATH, MachineCasings.get("lv"), true, false, false);
+        MachineRegistrationHelper.addMachineModel(SUPER_ASSEMBLER_PATH, SUPER_ASSEMBLER_PATH, MachineCasings.get("lv"), true, false, false);
     }
 
     private NIMachines() {}

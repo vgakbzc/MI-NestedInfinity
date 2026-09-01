@@ -24,10 +24,6 @@ public class NIEmiPlugin implements EmiPlugin {
             ResourceLocation.fromNamespaceAndPath(NestedInfinity.MODID, "resonance_attuner"),
             EmiStack.of(NIBlocks.RESONANCE_ATTUNER.get()));
 
-    public static final EmiRecipeCategory SUPER_ASSEMBLING = new EmiRecipeCategory(
-            ResourceLocation.fromNamespaceAndPath(NestedInfinity.MODID, "super_assembler"),
-            EmiStack.of(NIBlocks.SUPER_ASSEMBLER.get()));
-
     @Override
     public void register(EmiRegistry registry) {
         registry.addCategory(ATTUNING);
@@ -35,9 +31,7 @@ public class NIEmiPlugin implements EmiPlugin {
         for (NINotes note : NINotes.ALL) {
             registry.addRecipe(new NIAttuningRecipe(note));
         }
-        // the super assembler's hundred-tube finale (see NIOpticalQubitRecipe)
-        registry.addCategory(SUPER_ASSEMBLING);
-        registry.addWorkstation(SUPER_ASSEMBLING, EmiStack.of(NIBlocks.SUPER_ASSEMBLER.get()));
-        registry.addRecipe(new NIOpticalQubitRecipe());
+        // the super assembler needs no hand-written page: since it became a
+        // real MI machine, MI's own viewer integration shows its recipes
     }
 }

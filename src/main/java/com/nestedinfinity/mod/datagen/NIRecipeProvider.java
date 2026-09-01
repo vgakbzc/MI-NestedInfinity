@@ -2627,6 +2627,15 @@ public final class NIRecipeProvider implements DataProvider {
                     .itemOut(NIGems.tubeId(gem), 1)
                     .save("optical/tube_" + gem.name());
         }
+
+        // the super assembler finale: all hundred glow tubes in the 10x10
+        // grid craft the optical qubit component (2G EU/t, 8000s)
+        NIRecipes.MachineBuilder builder = r.machine("super_assembler", EU, T * 2);
+        for (NIGems.Gem gem : NIGems.ALL) {
+            builder.itemIn(NIGems.tubeId(gem), 1);
+        }
+        builder.itemOut(ni + "optical_qubit_component", 1)
+                .save("optical/optical_qubit_component");
     }
 
     /** Discharge colors of the six noble gases (helium peach, neon red-orange,
