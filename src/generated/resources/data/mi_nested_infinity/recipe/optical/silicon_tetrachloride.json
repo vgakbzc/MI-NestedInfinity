@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:quartz_dust",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:carbon_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:chlorine",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:silicon_tetrachloride",
+      "amount": 2000
+    }
+  ]
+}

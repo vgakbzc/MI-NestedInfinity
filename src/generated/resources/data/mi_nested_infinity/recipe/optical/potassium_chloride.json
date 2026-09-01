@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:centrifuge",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:brine",
+      "amount": 8000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:salt_dust",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:potassium_chloride",
+      "amount": 2
+    }
+  ]
+}

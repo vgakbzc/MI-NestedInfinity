@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:duv_stepper",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:etched_substrate",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:copper_plate",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:metallized_wafer",
+      "amount": 1
+    }
+  ]
+}

@@ -48,10 +48,6 @@
     {
       "fluid": "modern_industrialization:helium_3",
       "amount": 500
-    },
-    {
-      "fluid": "mi_nested_infinity:mutagen",
-      "amount": 100
     }
   ],
   "item_outputs": [

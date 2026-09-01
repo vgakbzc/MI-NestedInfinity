@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:hniw_powder",
+      "amount": 6
+    },
+    {
+      "item": "mi_nested_infinity:ffkm_sheet",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:lead_azide_detonator",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:cyanoacrylate_glue",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:hniw_implosion_lens",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:gst_target",
+      "amount": 1,
+      "probability": 0.75
+    },
+    {
+      "item": "mi_nested_infinity:litho_substrate",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:argon",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:gst_memory_cell",
+      "amount": 2
+    }
+  ]
+}

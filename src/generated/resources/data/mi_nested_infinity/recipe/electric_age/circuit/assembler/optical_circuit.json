@@ -1,0 +1,41 @@
+{
+  "type": "modern_industrialization:super_mixer",
+  "eu": 2000000000,
+  "duration": 640000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:resonant_circuit",
+      "amount": 8
+    },
+    {
+      "item": "mi_nested_infinity:optical_qubit_component",
+      "amount": 16
+    },
+    {
+      "item": "mi_nested_infinity:optical_random_access_memory",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:optical_memory_management_unit",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:optical_arithmetic_logic_unit",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:optical_circuit_board",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:optical_superconductor_cable",
+      "amount": 4
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:optical_circuit",
+      "amount": 1
+    }
+  ]
+}

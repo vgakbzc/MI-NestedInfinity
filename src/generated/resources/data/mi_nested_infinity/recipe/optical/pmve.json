@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:hexafluoropropylene_oxide",
+      "amount": 3000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:perfluoromethyl_vinyl_ether",
+      "amount": 2000
+    },
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 500
+    }
+  ]
+}

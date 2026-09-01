@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:lead_dust",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:sodium_azide",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:copper_plate",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:lead_azide_detonator",
+      "amount": 2
+    }
+  ]
+}

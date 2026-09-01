@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:centrifuge",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:gem_cassiterite",
+      "amount": 4
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:tin_dust",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:coltan_concentrate",
+      "amount": 1
+    }
+  ]
+}

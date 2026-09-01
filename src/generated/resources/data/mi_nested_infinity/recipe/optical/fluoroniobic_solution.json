@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:coltan_concentrate",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:hydrofluoric_acid",
+      "amount": 2000
+    },
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 500
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:fluoroniobic_solution",
+      "amount": 2000
+    }
+  ]
+}

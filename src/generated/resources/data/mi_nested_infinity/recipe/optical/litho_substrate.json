@@ -1,0 +1,22 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:fused_silica_plate",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:cerium_oxide",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:litho_substrate",
+      "amount": 1
+    }
+  ]
+}

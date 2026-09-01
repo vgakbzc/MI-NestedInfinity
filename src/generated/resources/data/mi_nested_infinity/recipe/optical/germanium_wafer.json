@@ -1,0 +1,22 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:germanium_ingot",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:quartz_dust",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:germanium_wafer",
+      "amount": 8
+    }
+  ]
+}

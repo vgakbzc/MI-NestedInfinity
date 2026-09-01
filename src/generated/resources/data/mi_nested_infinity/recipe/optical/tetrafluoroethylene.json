@@ -1,0 +1,32 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:refrigerant_22",
+      "amount": 6000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:r22_pyrolysis_catalyst",
+      "amount": 1,
+      "probability": 0.15
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:tetrafluoroethylene",
+      "amount": 4000
+    },
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 2000
+    },
+    {
+      "fluid": "mi_nested_infinity:refrigerant_22",
+      "amount": 1000
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:excimer_laser",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:caf2_lens_array",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:optical_bench",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:ffkm_sheet",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:peek_plate",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:large_elite_pump",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:large_elite_motor",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:resonant_superconductor_cable",
+      "amount": 4
+    },
+    {
+      "item": "modern_industrialization:solid_titanium_machine_casing",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:duv_stepper",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:gem_emerald",
+      "amount": 3
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:sodium_hydroxide",
+      "amount": 1500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:beryllium_dust",
+      "amount": 2
+    }
+  ]
+}

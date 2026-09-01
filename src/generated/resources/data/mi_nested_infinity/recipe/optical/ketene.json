@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:acetic_acid",
+      "amount": 2000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:ketene",
+      "amount": 1500
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 500
+    }
+  ]
+}

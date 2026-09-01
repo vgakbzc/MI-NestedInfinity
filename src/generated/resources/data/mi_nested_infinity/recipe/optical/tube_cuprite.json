@@ -22,6 +22,10 @@
     {
       "item": "mi_nested_infinity:graphene_rod",
       "amount": 4
+    },
+    {
+      "item": "modern_industrialization:trinium_dust",
+      "amount": 1
     }
   ],
   "fluid_inputs": [
@@ -32,10 +36,6 @@
     {
       "fluid": "mi_nested_infinity:liquid_xenon",
       "amount": 16000
-    },
-    {
-      "fluid": "mi_nested_infinity:molten_trinium",
-      "amount": 50
     }
   ],
   "item_outputs": [

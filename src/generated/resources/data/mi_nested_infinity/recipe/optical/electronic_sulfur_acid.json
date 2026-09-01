@@ -1,0 +1,24 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 3000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:urea",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:electronic_grade_sulfuric_acid",
+      "amount": 2400
+    }
+  ]
+}

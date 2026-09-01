@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:wiremill",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:optical_superconductor_ingot",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:optical_superconductor_wire",
+      "amount": 4
+    }
+  ]
+}

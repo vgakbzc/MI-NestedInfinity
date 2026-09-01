@@ -13,6 +13,7 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import com.nestedinfinity.mod.blocks.NIBlocks;
 import com.nestedinfinity.mod.items.NIItems;
+import com.nestedinfinity.mod.items.NIOpticalItems;
 import com.nestedinfinity.mod.items.algae.NIAlgae;
 import com.nestedinfinity.mod.items.algae.NIPetriDishes;
 import com.nestedinfinity.mod.items.gems.NIGems;
@@ -68,6 +69,12 @@ public final class NIRecipeProvider implements DataProvider {
         cultivationRecipes(r);
         wildIsolation(r);
         opticalGemChain(r);
+        opticalMaterialChain(r);
+        opticalElementChain(r);
+        opticalPhotonicChain(r);
+        opticalHniwChain(r);
+        opticalNeutroniumChain(r);
+        opticalFinaleChain(r);
     }
 
     /**
@@ -696,7 +703,9 @@ public final class NIRecipeProvider implements DataProvider {
                 .fluidOut(mi + "hydrochloric_acid", 850)
                 .save("epoxy/allyl_chloride_chlorination");
         // 4. Allyl chloride purification
-        r.machine("distillery", 16, 200)
+        // crude cut split in the reactor (the distillery has a single fluid
+        // outlet, so the heavy chlorinated bottoms co-discharge here)
+        r.machine("chemical_reactor", 16, 200)
                 .fluidIn(ni + "crude_allyl_chloride", 1000)
                 .fluidOut(ni + "allyl_chloride", 850)
                 .fluidOut(ni + "chlorinated_waste", 150)
@@ -730,7 +739,7 @@ public final class NIRecipeProvider implements DataProvider {
                 .fluidOut("minecraft:water", 150)
                 .save("epoxy/epichlorohydrin_purification");
         // 20. Waste stripping recovery (allyl chloride from chlorinated waste)
-        r.machine("distillery", 8, 160)
+        r.machine("chemical_reactor", 8, 160)
                 .fluidIn(ni + "chlorinated_waste", 150)
                 .fluidOut(ni + "allyl_chloride", 30)
                 .fluidOut("minecraft:water", 120)
@@ -1526,7 +1535,6 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemIn(NIItems.P_TOLUENESULFONIC_ACID.getId().toString(), 2)
                 .itemIn(NIItems.ELITE_PUMP.getId().toString(), 1, 0.10)
                 .fluidIn(ni + "mutagen", 400)
-                .fluidIn(mi + "helium_3", 100)
                 .fluidIn(ni + "fluoroantimonic_acid", 10)
                 .itemOut(ni + "wetware_circuit_board", 1)
                 .save("electric_age/circuit/assembler/wetware_circuit_board");
@@ -2498,7 +2506,6 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemIn(NIItems.ELITE_PUMP.getId().toString(), 2)
                 .fluidIn(ni + "resonant_mother_liquor", 100)
                 .fluidIn(mi + "helium_3", 500)
-                .fluidIn(ni + "mutagen", 100)
                 .itemOut(ni + "resonant_circuit_board", 1)
                 .save("electric_age/circuit/assembler/resonant_circuit_board");
 
@@ -2623,7 +2630,7 @@ public final class NIRecipeProvider implements DataProvider {
                     .itemIn(ni + "graphene_rod", 4)
                     .fluidIn(gasFor(gem.rgb()), 100)
                     .fluidIn(ni + "liquid_xenon", 16_000)
-                    .fluidIn(ni + "molten_trinium", 50)
+                    .itemIn("modern_industrialization:trinium_dust", 1)
                     .itemOut(NIGems.tubeId(gem), 1)
                     .save("optical/tube_" + gem.name());
         }
@@ -2636,6 +2643,950 @@ public final class NIRecipeProvider implements DataProvider {
         }
         builder.itemOut(ni + "optical_qubit_component", 1)
                 .save("optical/optical_qubit_component");
+    }
+
+    // -- optical program: the photonic tier ------------------------------------
+
+    /**
+     * Optical program, part 1: the four material families one tier stronger
+     * than the resonant program's (FFKM perfluoroelastomer over FKM, PEEK over
+     * polyimide, semiconductor-grade chemicals over bulk acids, DUV
+     * photoresist and UV optical adhesive over cyanoacrylate). Every step is
+     * a real industrial route with its named catalyst; catalysts are consumed
+     * with a small probability and yields may be probabilistic.
+     *
+     * <p>Timing: key steps 2G EU/t for 16000 s (320,000 ticks — four times the
+     * resonant tier), reagent syntheses 4000 s.
+     */
+    private void opticalMaterialChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int T = 320_000;  // 16000 s key steps
+        int RT = 80_000;  // 4000 s reagent steps
+
+        // -- FFKM (Kalrez-class perfluoroelastomer): TFE + PMVE + cure site --
+        // pyrolysis catalyst: fluorite IS the CaF2 of the real AlF3/CaF2 system
+        r.machine("mixer", EU, RT)
+                .tagIn("c:dusts/aluminum", 2)
+                .itemIn(ni + "gem_fluorite", 3)
+                .fluidIn(ni + "fluorine", 500)
+                .itemOut(ni + "r22_pyrolysis_catalyst", 4)
+                .save("optical/r22_pyrolysis_catalyst");
+        // TFE: R-22 steam pyrolysis at 550-750C; unreacted R-22 recycled, HCl co-product
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "refrigerant_22", 6000)
+                .itemIn(ni + "r22_pyrolysis_catalyst", 1, 0.15)
+                .fluidOut(ni + "tetrafluoroethylene", 4000)
+                .fluidOut(mi + "hydrochloric_acid", 2000)
+                .fluidOut(ni + "refrigerant_22", 1000)
+                .save("optical/tetrafluoroethylene");
+        // HFPO: epoxidation of the HFP byproduct stream
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "hexafluoropropylene", 2000)
+                .fluidIn(mi + "oxygen", 1000)
+                .itemIn(ni + "r22_pyrolysis_catalyst", 1, 0.10)
+                .fluidOut(ni + "hexafluoropropylene_oxide", 2000)
+                .save("optical/hfpo");
+        // PMVE: HFPO pyrolysis to the perfluoro vinyl ether comonomer
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "hexafluoropropylene_oxide", 3000)
+                .fluidOut(ni + "perfluoromethyl_vinyl_ether", 2000)
+                .fluidOut(mi + "oxygen", 500)
+                .save("optical/pmve");
+        // cure-site monomer: the perfluorinated pendant that lets peroxide sulfur vulcanize
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "perfluoromethyl_vinyl_ether", 1500)
+                .fluidIn(ni + "fluorine", 1000)
+                .itemOut(ni + "perfluoro_cure_site_monomer", 2)
+                .save("optical/cure_site_monomer");
+        // DCP: cumene hydroperoxide + alpha-methylstyrene (the real dicumyl route)
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "cumene_hydroperoxide", 1000)
+                .fluidIn(mi + "styrene", 500)
+                .itemOut(ni + "dcp_peroxide", 4)
+                .save("optical/dcp_peroxide");
+        // TAIC: the triallyl triazine co-curing agent from allyl chloride + cyanamide
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "allyl_chloride", 1500)
+                .itemIn(ni + "cyanamide", 2)
+                .itemOut(ni + "taic_coagent", 3)
+                .save("optical/taic_coagent");
+        // the terpolymer gum: peroxide-initiated TFE/PMVE/CSM solution polymerization
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "tetrafluoroethylene", 3000)
+                .fluidIn(ni + "perfluoromethyl_vinyl_ether", 1500)
+                .itemIn(ni + "perfluoro_cure_site_monomer", 1)
+                .itemIn(ni + "dcp_peroxide", 1, 0.20)
+                .itemOut(ni + "ffkm_gum", 4)
+                .save("optical/ffkm_gum");
+        // press-cure the gum into sealing sheet (peroxide + TAIC, both partly consumed)
+        r.machine("assembler", EU, RT)
+                .itemIn(ni + "ffkm_gum", 2)
+                .itemIn(ni + "taic_coagent", 1, 0.25)
+                .itemIn(ni + "dcp_peroxide", 1, 0.25)
+                .itemOut(ni + "ffkm_sheet", 2)
+                .save("optical/ffkm_sheet");
+
+        // -- PEEK: DFBP + hydroquinone, K2CO3 phenoxide, diphenyl sulfone solvent --
+        // potash: fractional crystallization of the brine cut (KCl/salt split),
+        // then caustic carbonation to the carbonate
+        r.machine("centrifuge", EU, RT)
+                .fluidIn(ni + "brine", 8000)
+                .itemOut(mi + "salt_dust", 4)
+                .itemOut(ni + "potassium_chloride", 2)
+                .save("optical/potassium_chloride");
+        r.machine("chemical_reactor", EU, RT)
+                .itemIn(ni + "potassium_chloride", 3)
+                .itemIn(mi + "carbon_dust", 1)
+                .fluidIn(mi + "sodium_hydroxide", 1000)
+                .itemOut(ni + "potassium_carbonate", 2)
+                .fluidOut(mi + "chlorine", 500)
+                .save("optical/potassium_carbonate");
+        // fluorobenzene feed
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(mi + "benzene", 1000)
+                .fluidIn(ni + "fluorine", 500)
+                .fluidOut(ni + "fluorobenzene", 1000)
+                .save("optical/fluorobenzene");
+        // p-fluorobenzoyl chloride: carbonylative chlorination, para-selective
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "fluorobenzene", 1000)
+                .fluidIn(mi + "chlorine", 1000)
+                .fluidIn(ni + "carbon_monoxide", 500)
+                .itemOut(ni + "p_fluorobenzoyl_chloride", 2)
+                .save("optical/p_fluorobenzoyl_chloride");
+        // DFBP: Friedel-Crafts acylation (aluminum turns over as in-situ AlCl3),
+        // 70% yield and the excess fluorobenzene distills back out
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "fluorobenzene", 2000)
+                .itemIn(ni + "p_fluorobenzoyl_chloride", 1)
+                .tagIn("c:dusts/aluminum", 1, 0.25)
+                .itemOut(ni + "difluorobenzophenone", 1, 0.7)
+                .fluidOut(ni + "fluorobenzene", 500)
+                .save("optical/difluorobenzophenone");
+        // hydroquinone: phenol oxidation with (electronic-grade) peroxide
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "phenol", 1000)
+                .fluidIn(ni + "electronic_grade_hydrogen_peroxide", 250)
+                .itemOut(ni + "hydroquinone", 4)
+                .save("optical/hydroquinone");
+        // diphenyl sulfone: the 320-340C polymerization solvent
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(mi + "benzene", 2000)
+                .fluidIn(ni + "sulfur_dioxide", 500)
+                .fluidIn(mi + "oxygen", 500)
+                .itemOut(ni + "diphenyl_sulfone", 2)
+                .save("optical/diphenyl_sulfone");
+        // the nucleophilic polycondensation: strict 1:1 DFBP:HQ in the diphenyl
+        // sulfone melt, K2CO3 makes the phenoxide (solvent loss folded into the
+        // sheet-pressing step below)
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "difluorobenzophenone", 1)
+                .itemIn(ni + "hydroquinone", 1)
+                .itemIn(ni + "potassium_carbonate", 1, 0.25)
+                .itemOut(ni + "peek_powder", 2)
+                .itemOut(ni + "potassium_carbonate", 1, 0.5)
+                .save("optical/peek_powder");
+        r.machine("compressor", EU, RT)
+                .itemIn(ni + "peek_powder", 4)
+                .itemOut(ni + "peek_plate", 1)
+                .save("optical/peek_plate");
+        r.machine("assembler", EU, RT)
+                .itemIn(ni + "peek_plate", 1)
+                .itemIn(ni + "diphenyl_sulfone", 1, 0.25)
+                .itemOut(ni + "peek_insulator_sheet", 4)
+                .save("optical/peek_insulator_sheet");
+
+        // -- semiconductor-grade chemicals: the AO peroxide loop ---------------
+        // EAQ carrier: phthalic-anhydride (o-xylene cut) + ethylbenzene condensation
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(mi + "ethylbenzene", 1000)
+                .fluidIn(ni + "m_xylene", 500)
+                .fluidIn(mi + "oxygen", 1000)
+                .itemOut(ni + "ethylanthraquinone", 2)
+                .save("optical/ethylanthraquinone");
+        // working solution: EAQ dissolved in the aromatic cut + TBP extraction
+        // phase (the PUREX-tier extractant, as in real AO plants)
+        r.machine("mixer", EU, RT)
+                .itemIn(ni + "ethylanthraquinone", 2)
+                .itemIn(ni + "tributyl_phosphate", 1, 0.10)
+                .fluidIn(mi + "toluene", 1000)
+                .fluidOut(ni + "anthraquinone_working_solution", 2000)
+                .save("optical/working_solution");
+        // hydrogenation: Pd-side reduction to the hydroquinone form
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "anthraquinone_working_solution", 2000)
+                .fluidIn(mi + "hydrogen", 2000)
+                .itemIn(mi + "platinum_dust", 1, 0.10)
+                .fluidOut(ni + "hydrogenated_working_solution", 2000)
+                .save("optical/working_solution_hydrogenation");
+        // air oxidation + extraction: the loop closes back, crude peroxide drops out
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "hydrogenated_working_solution", 2000)
+                .fluidIn(mi + "oxygen", 1500)
+                .fluidOut(ni + "anthraquinone_working_solution", 1800)
+                .fluidOut(ni + "crude_hydrogen_peroxide", 1000)
+                .save("optical/peroxide_oxidation");
+        // polish to semiconductor grade in the ion exchanger (resin consumed slowly)
+        r.machine("ion_exchange", EU, T)
+                .fluidIn(ni + "crude_hydrogen_peroxide", 2000)
+                .itemIn(ni + "ion_exchange_resin", 1, 0.25)
+                .fluidOut(ni + "electronic_grade_hydrogen_peroxide", 1800)
+                .save("optical/electronic_hydrogen_peroxide");
+        // urea: the Bosch-Meiser synthesis, folded over the water-gas shift
+        // (2 NH3 + CO -> NH2CONH2 + H2O)
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "ammonia", 2000)
+                .fluidIn(ni + "carbon_monoxide", 1000)
+                .itemOut(ni + "urea", 2)
+                .fluidOut("minecraft:water", 1000)
+                .save("optical/urea");
+        // electronic-grade nitric / sulfuric: urea scavenges the nitrous acid,
+        // then re-digestion in the reactor (the distillery has no item port)
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "nitric_acid", 3000)
+                .itemIn(ni + "urea", 1, 0.25)
+                .fluidOut(ni + "electronic_grade_nitric_acid", 2400)
+                .fluidOut(ni + "nitric_acid", 300)
+                .save("optical/electronic_nitric_acid");
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(mi + "sulfuric_acid", 3000)
+                .itemIn(ni + "urea", 1, 0.25)
+                .fluidOut(ni + "electronic_grade_sulfuric_acid", 2400)
+                .save("optical/electronic_sulfur_acid");
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "methanol", 2000)
+                .fluidIn(ni + "ammonia", 1000)
+                .fluidOut(ni + "tmah_developer", 1500)
+                .save("optical/tmah_developer");
+        // PGMEA: the photoresist thinner
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(mi + "propene", 1000)
+                .fluidIn(ni + "methanol", 500)
+                .fluidIn(mi + "oxygen", 500)
+                .fluidOut(ni + "pgmea_solvent", 2000)
+                .save("optical/pgmea_solvent");
+
+        // -- DUV photoresist + UV optical adhesive -------------------------------
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(mi + "benzene", 1000)
+                .fluidIn(ni + "phenol", 1000)
+                .fluidIn(mi + "oxygen", 500)
+                .itemOut(ni + "polyhydroxystyrene_resin", 2)
+                .save("optical/phs_resin");
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(mi + "ethylene", 2000)
+                .fluidIn(mi + "propene", 1000)
+                .fluidIn(mi + "methane", 500)
+                .itemOut(ni + "alicyclic_acrylate_resin", 2)
+                .save("optical/alicyclic_resin");
+        // the photoacid generator: diphenyl sulfide chemistry, folded to one step
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(mi + "benzene", 2000)
+                .fluidIn(ni + "sulfur_dioxide", 250)
+                .fluidIn(mi + "chlorine", 250)
+                .itemOut(ni + "triphenylsulfonium_pag", 2)
+                .save("optical/pag");
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(mi + "benzene", 1000)
+                .fluidIn(ni + "formaldehyde", 500)
+                .fluidIn(mi + "oxygen", 250)
+                .itemOut(ni + "uv_photoinitiator", 2)
+                .save("optical/uv_photoinitiator");
+        r.machine("mixer", EU, T)
+                .itemIn(ni + "polyhydroxystyrene_resin", 2)
+                .itemIn(ni + "triphenylsulfonium_pag", 1)
+                .fluidIn(ni + "pgmea_solvent", 1000)
+                .fluidOut(ni + "krf_photoresist", 2000)
+                .save("optical/krf_photoresist");
+        r.machine("mixer", EU, T)
+                .itemIn(ni + "alicyclic_acrylate_resin", 2)
+                .itemIn(ni + "triphenylsulfonium_pag", 1)
+                .fluidIn(ni + "pgmea_solvent", 1000)
+                .fluidOut(ni + "arf_photoresist", 2000)
+                .save("optical/arf_photoresist");
+        r.machine("mixer", EU, T)
+                .fluidIn(mi + "acrylic_glue", 500)
+                .itemIn(ni + "uv_photoinitiator", 1, 0.10)
+                .fluidIn(ni + "pgmea_solvent", 500)
+                .fluidOut(ni + "uv_optical_adhesive", 1500)
+                .save("optical/uv_optical_adhesive");
+    }
+
+    /**
+     * Optical program, part 2: the new element chains — germanium from zinc
+     * smelter flue dust, niobium from coltan via HF digestion and MIBK
+     * extraction, lithium carbonate from brine, the lanthanide separations
+     * (Er/Ce by alpha-HIBA elution, Eu by electrolytic reduction — the real
+     * Eu3+/Eu2+ trick), ruthenium from the PGM residue by RuO4 volatile
+     * distillation, beryllium from beryl (emerald), the GST phase-change
+     * alloy, and fused silica / doped optical fiber.
+     */
+    private void opticalElementChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int T = 320_000;
+        int RT = 80_000;
+
+        // -- germanium: sphalerite -> flue dust -> GeCl4 -> GeO2 -> ingot -> wafer
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "gem_sphalerite", 2)
+                .fluidIn(mi + "oxygen", 1000)
+                .itemOut(ni + "zinc_flue_dust", 2)
+                .fluidOut(ni + "sulfur_dioxide", 500)
+                .save("optical/zinc_flue_dust");
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "zinc_flue_dust", 2)
+                .fluidIn(mi + "hydrochloric_acid", 1500)
+                .fluidOut(ni + "germanium_tetrachloride", 600)
+                .fluidOut(ni + "chlorinated_waste", 500)
+                .save("optical/germanium_tetrachloride");
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "germanium_tetrachloride", 500)
+                .fluidIn("minecraft:water", 1000)
+                .itemOut(ni + "germanium_dioxide", 2)
+                .fluidOut(mi + "hydrochloric_acid", 250)
+                .save("optical/germanium_dioxide");
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "germanium_dioxide", 1)
+                .fluidIn(mi + "hydrogen", 1000)
+                .itemOut(ni + "germanium_ingot", 1)
+                .save("optical/germanium_ingot");
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "germanium_ingot", 1)
+                .itemIn(mi + "quartz_dust", 1, 0.25)
+                .itemOut(ni + "germanium_wafer", 8)
+                .save("optical/germanium_wafer");
+
+        // -- niobium: coltan (with the cassiterite it is mined with) -> H2NbF7 ->
+        //    MIBK extraction -> Nb2O5 -> aluminothermic ingot
+        r.machine("centrifuge", EU, RT)
+                .itemIn(ni + "gem_cassiterite", 4)
+                .itemOut(mi + "tin_dust", 2)
+                .itemOut(ni + "coltan_concentrate", 1)
+                .save("optical/coltan_concentrate");
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "coltan_concentrate", 2)
+                .fluidIn(ni + "hydrofluoric_acid", 2000)
+                .fluidIn(mi + "sulfuric_acid", 500)
+                .fluidOut(ni + "fluoroniobic_solution", 2000)
+                .save("optical/fluoroniobic_solution");
+        // MIBK from acetone hydrogenation (Ni-side)
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "acetone", 2000)
+                .fluidIn(mi + "hydrogen", 1000)
+                .tagIn("c:dusts/nickel", 1, 0.10)
+                .fluidOut(ni + "mibk_solvent", 2000)
+                .save("optical/mibk_solvent");
+        // solvent extraction: MIBK pulls the H2NbF7 out of the digestion acid
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "fluoroniobic_solution", 2000)
+                .fluidIn(ni + "mibk_solvent", 1000)
+                .itemOut(ni + "niobium_pentoxide", 2)
+                .save("optical/niobium_pentoxide");
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "niobium_pentoxide", 1)
+                .tagIn("c:dusts/aluminum", 4)
+                .itemOut(ni + "niobium_ingot", 2)
+                .save("optical/niobium_ingot");
+
+        // -- lithium carbonate from brine (soda-ash precipitation) --
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "brine", 8000)
+                .itemIn(mi + "carbon_dust", 1)
+                .fluidIn(mi + "sodium_hydroxide", 500)
+                .itemOut(ni + "lithium_carbonate", 1)
+                .fluidOut(mi + "chlorine", 250)
+                .save("optical/lithium_carbonate");
+
+        // -- lanthanide separations off the monazite residue solution --
+        // Er/Ce: alpha-HIBA elution (ion-exchange machines have no solid
+        // discharge, so the elution column runs in the reactor)
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "monazite_heavy_residue_solution", 3000)
+                .itemIn(ni + "alpha_hiba_eluant", 2, 0.25)
+                .itemOut(ni + "erbium_oxide", 2)
+                .fluidOut(ni + "monazite_heavy_residue_solution", 2000)
+                .save("optical/erbium_oxide");
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "monazite_heavy_residue_solution", 3000)
+                .itemIn(ni + "alpha_hiba_eluant", 2, 0.25)
+                .itemOut(ni + "cerium_oxide", 3)
+                .fluidOut(ni + "monazite_heavy_residue_solution", 2000)
+                .save("optical/cerium_oxide");
+        // europium: the Eu3+ -> Eu2+ electrolytic reduction, then precipitation
+        r.machine("electrolyzer", EU, T)
+                .fluidIn(ni + "monazite_heavy_residue_solution", 4000)
+                .itemIn(ni + "alpha_hiba_eluant", 2, 0.25)
+                .itemOut(ni + "europium_dust", 2)
+                .fluidOut(ni + "monazite_heavy_residue_solution", 2000)
+                .save("optical/europium_dust");
+
+        // -- ruthenium: PGM residue -> RuO4 volatile distillation -> RuO2 -> Ru --
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "pgm_residue", 2)
+                .fluidIn(ni + "aqua_regia", 2000)
+                .itemIn(ni + "sodium_chlorate", 2, 0.15)
+                .itemOut(ni + "ruthenium_dioxide", 3)
+                .save("optical/ruthenium_dioxide");
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "ruthenium_dioxide", 1)
+                .fluidIn(mi + "hydrogen", 1000)
+                .itemOut(ni + "ruthenium_dust", 1)
+                .save("optical/ruthenium_dust");
+
+        // -- beryllium: emerald (beryl) alkali fusion to MI's beryllium dust ---
+        r.machine("chemical_reactor", EU, RT)
+                .itemIn(ni + "gem_emerald", 3)
+                .fluidIn(mi + "sodium_hydroxide", 1500)
+                .itemOut(mi + "beryllium_dust", 2)
+                .save("optical/beryllium_dust");
+        // the neutron tamper: hot-pressed beryllium reflector shells
+        r.machine("compressor", EU, RT)
+                .tagIn("c:dusts/beryllium", 4)
+                .itemOut(ni + "beryllium_reflector", 1)
+                .save("optical/beryllium_reflector");
+
+        // -- GST (Ge2Sb2Te5) phase-change alloy --
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "germanium_ingot", 2)
+                .itemIn(mi + "antimony_dust", 2)
+                .itemIn(ni + "tellurium_dust", 2)
+                .itemOut(ni + "gst_target", 2)
+                .save("optical/gst_target");
+
+        // -- fused silica and doped fiber --
+        // electric fusion of quartz on the trinium-dinaquide coil tier (32768 EU gate)
+        r.machine("blast_furnace", 32768, T)
+                .itemIn(mi + "quartz_dust", 4)
+                .fluidIn(mi + "oxygen", 250)
+                .itemOut(ni + "fused_silica_ingot", 1)
+                .save("optical/fused_silica_ingot");
+        r.machine("cutting_machine", EU, RT)
+                .itemIn(ni + "fused_silica_ingot", 1)
+                .fluidIn(mi + "lubricant", 10)
+                .itemOut(ni + "fused_silica_plate", 4)
+                .save("optical/fused_silica_plate");
+        // SiCl4 for the OVD preform deposition
+        r.machine("chemical_reactor", EU, RT)
+                .itemIn(mi + "quartz_dust", 2)
+                .itemIn(mi + "carbon_dust", 1)
+                .fluidIn(mi + "chlorine", 1000)
+                .fluidOut(ni + "silicon_tetrachloride", 2000)
+                .save("optical/silicon_tetrachloride");
+        // OVD: SiCl4 + GeCl4 + ErF3 soot deposition, sintered to the preform
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "silicon_tetrachloride", 4000)
+                .fluidIn(ni + "germanium_tetrachloride", 400)
+                .itemIn(ni + "erbium_oxide", 1)
+                .fluidIn(mi + "oxygen", 2000)
+                .itemOut(ni + "fiber_preform", 1)
+                .save("optical/fiber_preform");
+        // the draw tower: one preform pulls into kilometers of fiber
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "fiber_preform", 1)
+                .itemIn(ni + "fused_silica_plate", 1, 0.25)
+                .itemOut(ni + "erbium_doped_fiber", 32)
+                .save("optical/erbium_doped_fiber");
+    }
+
+    /**
+     * Optical program, part 3: the photonic parts (lasers, lenses, modulators,
+     * single-photon detectors, waveguides, transceivers, photomasks), the DUV
+     * stepper machine itself, its lithography process stream and the optical
+     * processing-unit trio.
+     */
+    private void opticalPhotonicChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int T = 320_000;
+        int RT = 80_000;
+
+        // -- light sources --
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "germanium_wafer", 1)
+                .itemIn(ni + "crystal_diode", 1)
+                .itemIn(ni + "ruby_plate", 1)
+                .itemOut(ni + "laser_diode", 2)
+                .save("optical/laser_diode");
+        // ruby rod pumped by diodes, alexandrite for tunability (real laser crystals)
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "ruby_plate", 2)
+                .itemIn(ni + "alexandrite_plate", 2)
+                .itemIn(ni + "laser_diode", 4)
+                .itemOut(ni + "solid_state_laser", 1)
+                .save("optical/solid_state_laser");
+        // the 193nm ArF excimer laser: argon + fluorine discharge in the CaF2 cavity
+        r.machine("assembler", EU, T)
+                .fluidIn(mi + "argon", 1000)
+                .fluidIn(ni + "fluorine", 1000)
+                .itemIn(ni + "caf2_lens_array", 1)
+                .itemIn(ni + "optical_bench", 1)
+                .itemIn(ni + "laser_diode", 2)
+                .itemOut(ni + "excimer_laser", 1)
+                .save("optical/excimer_laser");
+
+        // -- optics --
+        // fluorite lenses, ground and cerium-polished (CMP slurry slowly consumed)
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "gem_fluorite", 2)
+                .itemIn(ni + "cerium_oxide", 1, 0.25)
+                .itemOut(ni + "caf2_lens_array", 2)
+                .save("optical/caf2_lens_array");
+        // the vibration-isolated bench: fused silica on resonite damping mounts
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "fused_silica_plate", 2)
+                .itemIn("modern_industrialization:resonite_plate", 2)
+                .itemIn(ni + "peek_insulator_sheet", 2)
+                .itemOut(ni + "optical_bench", 1)
+                .save("optical/optical_bench");
+
+        // -- lithium niobate modulators --
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "lithium_carbonate", 1)
+                .itemIn(ni + "niobium_pentoxide", 1)
+                .itemIn(mi + "quartz_dust", 1, 0.10)
+                .itemOut(ni + "lithium_niobate_wafer", 2)
+                .save("optical/lithium_niobate_wafer");
+        // Mach-Zehnder: LiNbO3 + waveguide + gold electrodes
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "lithium_niobate_wafer", 2)
+                .itemIn(ni + "optical_waveguide", 1)
+                .itemIn(mi + "gold_dust", 2)
+                .itemIn(ni + "resonant_circuit", 1)
+                .itemOut(ni + "electrooptic_modulator", 1)
+                .save("optical/electrooptic_modulator");
+
+        // -- SNSPD: NbN meander on the sapphire substrate (real single-photon kit) --
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "niobium_ingot", 1)
+                .itemIn(NIItems.SAPPHIRE_SUBSTRATE.getId().toString(), 1)
+                .fluidIn(mi + "nitrogen", 1000)
+                .itemOut(ni + "single_photon_detector", 2)
+                .save("optical/single_photon_detector");
+
+        // -- waveguides (SOI) and the transceiver --
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(mi + "silicon_wafer", 1)
+                .itemIn(ni + "fused_silica_plate", 1)
+                .itemOut(ni + "optical_waveguide", 4)
+                .save("optical/optical_waveguide");
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "laser_diode", 2)
+                .itemIn(ni + "electrooptic_modulator", 1)
+                .itemIn(ni + "single_photon_detector", 1)
+                .itemIn(ni + "erbium_doped_fiber", 4)
+                .itemIn("modern_industrialization:resonant_superconductor_cable", 2)
+                .itemOut(ni + "optical_transceiver", 1)
+                .save("optical/optical_transceiver");
+
+        // -- photomasks: chromium (from chromite) on quartz, KrF-written --
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "fused_silica_plate", 1)
+                .itemIn(ni + "gem_chromite", 2)
+                .itemOut(ni + "photomask_blank", 2)
+                .save("optical/photomask_blank");
+        // mask writing: the frequency-converted solid-state laser writes the
+        // reticle (real mask writers are Nd:YAG-derived), resist slowly consumed
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "photomask_blank", 1)
+                .itemIn(ni + "solid_state_laser", 1, 0.10)
+                .fluidIn(ni + "krf_photoresist", 250)
+                .itemOut(ni + "photomask", 1)
+                .save("optical/photomask");
+
+        // -- GST phase-change cells: magnetron sputtering in argon --
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "gst_target", 1, 0.75)
+                .itemIn(ni + "litho_substrate", 2)
+                .fluidIn(mi + "argon", 500)
+                .itemOut(ni + "gst_memory_cell", 2)
+                .save("optical/gst_memory_cell");
+
+        // -- the DUV stepper machine (the tier's new machine) --
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "excimer_laser", 1)
+                .itemIn(ni + "caf2_lens_array", 2)
+                .itemIn(ni + "optical_bench", 1)
+                .itemIn(ni + "ffkm_sheet", 4)
+                .itemIn(ni + "peek_plate", 2)
+                .itemIn(ni + "large_elite_pump", 2)
+                .itemIn(ni + "large_elite_motor", 2)
+                .itemIn("modern_industrialization:resonant_superconductor_cable", 4)
+                .itemIn(mi + "solid_titanium_machine_casing", 2)
+                .itemOut(mi + "duv_stepper", 1)
+                .save("optical/duv_stepper");
+
+        // -- the lithography process stream (inside the stepper) --
+        // CMP: ceria polish of the silica plate to sub-nanometer flatness
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "fused_silica_plate", 1)
+                .itemIn(ni + "cerium_oxide", 1, 0.25)
+                .itemOut(ni + "litho_substrate", 1)
+                .save("optical/litho_substrate");
+        r.machine("duv_stepper", EU, T)
+                .itemIn(ni + "litho_substrate", 1)
+                .fluidIn(ni + "arf_photoresist", 250)
+                .itemOut(ni + "coated_substrate", 1)
+                .save("optical/coat");
+        // exposure through the reticle (real reticles slowly wear out)
+        r.machine("duv_stepper", EU, T)
+                .itemIn(ni + "coated_substrate", 1)
+                .itemIn(ni + "photomask", 1, 0.05)
+                .itemOut(ni + "exposed_substrate", 1)
+                .save("optical/expose");
+        // 0.26N TMAH development, stripped resist leaves the tar heel
+        r.machine("duv_stepper", EU, T)
+                .itemIn(ni + "exposed_substrate", 1)
+                .fluidIn(ni + "tmah_developer", 250)
+                .itemOut(ni + "developed_substrate", 1)
+                .fluidOut(ni + "phenol_tar", 100)
+                .save("optical/develop");
+        // piranha etch with the electronic-grade acids
+        r.machine("duv_stepper", EU, T)
+                .itemIn(ni + "developed_substrate", 1)
+                .fluidIn(ni + "electronic_grade_sulfuric_acid", 250)
+                .fluidIn(ni + "electronic_grade_hydrogen_peroxide", 100)
+                .itemOut(ni + "etched_substrate", 1)
+                .save("optical/etch");
+        // copper damascene metallization
+        r.machine("duv_stepper", EU, T)
+                .itemIn(ni + "etched_substrate", 1)
+                .itemIn(mi + "copper_plate", 2)
+                .itemOut(ni + "metallized_wafer", 1)
+                .save("optical/metallize");
+        // diamond saw dicing of the finished wafer (physical step, fast)
+        r.machine("cutting_machine", EU, RT)
+                .itemIn(ni + "metallized_wafer", 1)
+                .fluidIn(mi + "lubricant", 10)
+                .itemOut(ni + "photonic_chip", 8)
+                .save("optical/dice");
+
+        // -- optical processing units (mirror of the bio/resonant trios) --
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "gst_memory_cell", 2)
+                .itemIn(NIItems.RESONANT_RANDOM_ACCESS_MEMORY.getId().toString(), 1)
+                .itemIn(ni + "optical_waveguide", 2)
+                .itemIn(ni + "peek_insulator_sheet", 4)
+                .fluidIn(ni + "electronic_grade_hydrogen_peroxide", 250)
+                .itemOut(ni + "optical_random_access_memory", 1)
+                .save("optical/optical_ram");
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "optical_transceiver", 1)
+                .itemIn(NIItems.RESONANT_MEMORY_MANAGEMENT_UNIT.getId().toString(), 1)
+                .itemIn(ni + "optical_waveguide", 2)
+                .itemIn(ni + "peek_insulator_sheet", 4)
+                .fluidIn(ni + "electronic_grade_nitric_acid", 250)
+                .itemOut(ni + "optical_memory_management_unit", 1)
+                .save("optical/optical_mmu");
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "electrooptic_modulator", 1)
+                .itemIn(ni + "photonic_chip", 2)
+                .itemIn(NIItems.RESONANT_ARITHMETIC_LOGIC_UNIT.getId().toString(), 1)
+                .itemIn(ni + "optical_waveguide", 2)
+                .itemIn(ni + "peek_insulator_sheet", 4)
+                .fluidIn(ni + "tmah_developer", 250)
+                .itemOut(ni + "optical_arithmetic_logic_unit", 1)
+                .save("optical/optical_alu");
+    }
+
+    /**
+     * Optical program, part 4: the HNIW (CL-20) explosive chain — toluene
+     * photochlorination to benzyl chloride, ammonolysis to benzylamine,
+     * glyoxal condensation to HBIW, recrystallization, the REAL two-stage
+     * palladium hydrogenolysis to TADBIW then TAIW, N2O5-assisted nitration
+     * with electronic-grade nitric acid, and the epsilon-polymorph
+     * recrystallization (the only crystal form worth pressing). The chain
+     * ends in the PBX implosion lens with the cyanoacrylate binder, plus the
+     * acetic-anhydride and azide-detonator side chains.
+     */
+    private void opticalHniwChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int T = 320_000;
+        int RT = 80_000;
+
+        // benzyl chloride: radical photochlorination (the diode is the UV lamp)
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(mi + "toluene", 1000)
+                .fluidIn(mi + "chlorine", 1100)
+                .itemIn(ni + "laser_diode", 1, 0.05)
+                .fluidOut(ni + "benzyl_chloride", 1000)
+                .fluidOut(mi + "hydrochloric_acid", 100)
+                .save("optical/benzyl_chloride");
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "benzyl_chloride", 1000)
+                .fluidIn(ni + "ammonia", 2000)
+                .fluidOut(ni + "benzylamine", 800)
+                .itemOut(mi + "salt_dust", 1)
+                .save("optical/benzylamine");
+        // glyoxal: silver-gauze oxidation of glycolaldehyde
+        r.machine("chemical_reactor", EU, RT)
+                .itemIn(ni + "glycolaldehyde", 4)
+                .itemIn(NIItems.SILVER_GAUZE_CATALYST.getId().toString(), 1, 0.10)
+                .fluidIn(mi + "oxygen", 1000)
+                .fluidOut(ni + "glyoxal", 1000)
+                .save("optical/glyoxal");
+        // HBIW: the acid-catalyzed glyoxal/benzylamine cage condensation
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "glyoxal", 500)
+                .fluidIn(ni + "benzylamine", 2000)
+                .itemIn(NIItems.P_TOLUENESULFONIC_ACID.getId().toString(), 1, 0.20)
+                .itemOut(ni + "hbiw_crude", 2)
+                .save("optical/hbiw_crude");
+        r.machine("chemical_reactor", EU, RT)
+                .itemIn(ni + "hbiw_crude", 2)
+                .fluidIn(ni + "pgmea_solvent", 500)
+                .fluidOut(ni + "pgmea_solvent", 450)
+                .itemOut(ni + "hbiw_crystal", 2)
+                .save("optical/hbiw_crystal");
+        // stage-1 hydrogenolysis: two benzyls off, acetic anhydride caps the freed N-H
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "hbiw_crystal", 1)
+                .fluidIn(mi + "hydrogen", 2000)
+                .fluidIn(ni + "acetic_anhydride", 1000)
+                .itemIn(mi + "platinum_dust", 1, 0.10)
+                .itemOut(ni + "tadbiw", 1)
+                .save("optical/tadbiw");
+        // stage-2 hydrogenolysis: the last two benzyls (Pt-side, faster catalyst)
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "tadbiw", 1)
+                .fluidIn(mi + "hydrogen", 2000)
+                .itemIn(mi + "platinum_dust", 1, 0.10)
+                .itemOut(ni + "taiw", 1)
+                .save("optical/taiw");
+        // N2O5: oxidative dehydration of the electronic-grade acid
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "electronic_grade_nitric_acid", 1500)
+                .fluidIn(mi + "oxygen", 1500)
+                .itemOut(ni + "dinitrogen_pentoxide", 2)
+                .save("optical/dinitrogen_pentoxide");
+        // nitration: NO2+ in the N2O5/HNO3 system, ~90% yield
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "taiw", 1)
+                .fluidIn(ni + "electronic_grade_nitric_acid", 2000)
+                .itemIn(ni + "dinitrogen_pentoxide", 2)
+                .itemOut(ni + "hniw_crude", 1, 0.9)
+                .save("optical/hniw_crude");
+        // epsilon-polymorph crystallization: alpha/beta/gamma go back into the pot
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "hniw_crude", 2)
+                .fluidIn(ni + "pgmea_solvent", 250)
+                .itemOut(ni + "hniw_powder", 2)
+                .fluidOut(ni + "pgmea_solvent", 200)
+                .save("optical/hniw_powder");
+        // sodium azide: sodium amide + N2O (folded to ammonia + nitrogen)
+        r.machine("chemical_reactor", EU, RT)
+                .itemIn(mi + "sodium_dust", 2)
+                .fluidIn(ni + "ammonia", 1000)
+                .fluidIn(mi + "nitrogen", 1500)
+                .itemOut(ni + "sodium_azide", 3)
+                .save("optical/sodium_azide");
+        // lead azide detonator in a copper cup
+        r.machine("assembler", EU, RT)
+                .itemIn(mi + "lead_dust", 2)
+                .itemIn(ni + "sodium_azide", 2)
+                .itemIn(mi + "copper_plate", 1)
+                .itemOut(ni + "lead_azide_detonator", 2)
+                .save("optical/lead_azide_detonator");
+        // PBX: HNIW crystals bonded in the cyanoacrylate matrix, FFKM liner
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "hniw_powder", 6)
+                .fluidIn(ni + "cyanoacrylate_glue", 500)
+                .itemIn(ni + "ffkm_sheet", 1)
+                .itemIn(ni + "lead_azide_detonator", 1)
+                .itemOut(ni + "hniw_implosion_lens", 1)
+                .save("optical/hniw_implosion_lens");
+
+        // -- acetic anhydride side chain (the real ketene process) --
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "acetic_acid", 2000)
+                .fluidOut(ni + "ketene", 1500)
+                .fluidOut("minecraft:water", 500)
+                .save("optical/ketene");
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "ketene", 1500)
+                .fluidIn(ni + "acetic_acid", 1000)
+                .fluidOut(ni + "acetic_anhydride", 2000)
+                .save("optical/acetic_anhydride");
+    }
+
+    /**
+     * Optical program, part 5: the neutronium program — Cf-252 decay neutrons
+     * (the real spontaneous-fission neutron source), the 6400-ball giant
+     * matter ball assembled in the super assembler, the implosion shot in
+     * MI's own implosion compressor, melt-casting in the magma crucible with
+     * the elite cryo loop, the neutronium wire mirroring the previous tier's
+     * coil recipe, the 32-wire coil, and the Ru/Am/Nt/Naquadah/Eu/graphene
+     * superconducting alloy at 2^39 EU/t.
+     */
+    private void opticalNeutroniumChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int T = 320_000;
+        int RT = 80_000;
+
+        // the decay cell: Cf-252 spontaneous fission in a graphite-moderated,
+        // helium-cooled bed; fragments drop out probabilistically
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "californium_dust", 1)
+                .itemIn(mi + "carbon_dust", 4, 0.25)
+                .fluidIn(mi + "helium", 4000)
+                .fluidOut(ni + "neutron_fluid", 2000)
+                .itemOut(ni + "fission_fragments", 1, 0.5)
+                .save("optical/neutron_fluid");
+        // the Cf-252 startup source: encapsulated in stainless with a Be boost,
+        // neutron-soaked before it ships (the real initiator architecture)
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "californium_dust", 4)
+                .tagIn("c:dusts/beryllium", 2)
+                .tagIn("c:plates/stainless_steel", 2)
+                .fluidIn(ni + "neutron_fluid", 4000)
+                .itemOut(ni + "californium_initiator", 1)
+                .save("optical/californium_initiator");
+
+        // the giant matter ball: one hundred full stacks of MI's ultradense
+        // metal balls pressed into a single sphere (360000 s — the tier's grind)
+        NIRecipes.MachineBuilder ball = r.machine("super_assembler", EU, 7_200_000);
+        for (int i = 0; i < 100; i++) {
+            ball.itemIn(mi + "ultradense_metal_ball", 64);
+        }
+        ball.itemOut(ni + "giant_matter_ball", 1)
+                .save("optical/giant_matter_ball");
+
+        // the implosion shot: six explosive lenses around the ball, the Cf
+        // initiator at the center, beryllium tamper shells reflecting neutrons
+        // back in — 95% of shots yield degenerate matter (MI's implosion compressor)
+        r.machine("implosion_compressor", EU, T)
+                .itemIn(ni + "giant_matter_ball", 1)
+                .itemIn(ni + "hniw_implosion_lens", 6)
+                .itemIn(ni + "californium_initiator", 4)
+                .itemIn(ni + "beryllium_reflector", 2)
+                .itemOut(mi + "neutronium_dust", 4, 0.95)
+                .save("optical/neutronium_implosion");
+
+        // melt: the crucible runs at 2G (single item port — no room for the
+        // pump here); the elite cryo loop rides on the freeze-cast instead
+        r.machine("magma_crucible", EU, T)
+                .itemIn(mi + "neutronium_dust", 1)
+                .fluidOut(ni + "molten_neutronium", 144)
+                .save("optical/molten_neutronium");
+        // freeze-cast: the large elite pump runs the cryo loop, 5% wear per shot
+        r.machine("vacuum_freezer", EU, T)
+                .fluidIn(ni + "molten_neutronium", 144)
+                .itemIn(ni + "large_elite_pump", 1, 0.05)
+                .itemOut(mi + "neutronium_ingot", 1)
+                .save("optical/neutronium_ingot");
+
+        // the neutronium wire mirrors the trinium-dinaquide COIL recipe one
+        // tier down: alloy plates + insulator sheets + the previous circuit
+        r.machine("assembler", EU, T)
+                .itemIn(mi + "neutronium_plate", 2)
+                .itemIn(ni + "peek_insulator_sheet", 6)
+                .itemIn(ni + "resonant_circuit", 2)
+                .itemOut(mi + "neutronium_wire", 1)
+                .save("optical/neutronium_wire");
+        // the coil: thirty-two wires (32 ingots' worth of neutronium per coil)
+        r.machine("assembler", EU, T)
+                .itemIn(mi + "neutronium_wire", 32)
+                .itemOut(ni + "neutronium_coil", 1)
+                .save("optical/neutronium_coil");
+
+        // the optical superconducting alloy: 1 Ru + 2 Am + 3 Nt + 6 supercharged
+        // naquadah + 31 Eu + 12 graphene (55 parts), EBF-melted on the neutronium
+        // coil tier (recipe eu 262144 — lower coils are locked out)
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "ruthenium_dust", 1)
+                .itemIn(ni + "americium_dust", 2)
+                .itemIn(mi + "neutronium_dust", 3)
+                .itemIn(ni + "supercharged_naquadah", 6)
+                .itemIn(ni + "europium_dust", 31)
+                .itemIn(ni + "graphene", 12)
+                .itemOut(ni + "optical_alloy_mixture", 3)
+                .save("optical/optical_alloy_mixture");
+        r.machine("blast_furnace", 262144, 40_000)
+                .itemIn(ni + "optical_alloy_mixture", 1)
+                .itemOut(ni + "optical_superconductor_ingot", 1)
+                .save("optical/optical_superconductor_ingot");
+        r.machine("wiremill", EU, T)
+                .itemIn(ni + "optical_superconductor_ingot", 1)
+                .itemOut(ni + "optical_superconductor_wire", 4)
+                .save("optical/optical_superconductor_wire");
+        // the 2^39 EU/t cable, sealed like the resonant one
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "optical_superconductor_wire", 2)
+                .itemIn(ni + "ffkm_sheet", 2)
+                .itemIn(ni + "peek_insulator_sheet", 2)
+                .fluidIn(ni + "liquid_glass", 144)
+                .itemOut(mi + "optical_superconductor_cable", 1)
+                .save("optical/optical_superconductor_cable");
+    }
+
+    /**
+     * Optical program, part 6: the large elite pump and motor (time x4 and
+     * materials x2 of the elite pair) and the two finals — the optical board
+     * and the optical circuit itself (resonant circuits x8, qubits x16,
+     * everything else x2), both at 32000 s.
+     */
+    private void opticalFinaleChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int FT = 640_000; // 32000 s finals
+        int T = 320_000;
+
+        // large elite motor: nine elites on a naquadah shaft (4x the elite's time)
+        r.machine("assembler", EU, T)
+                .itemIn(NIItems.ELITE_MOTOR.getId().toString(), 9)
+                .itemIn(mi + "naquadah_rod", 8)
+                .itemIn(mi + "quantum_circuit", 4)
+                .itemIn(ni + "resonant_circuit", 2)
+                .fluidIn(mi + "lubricant", 2000)
+                .itemOut(ni + "large_elite_motor", 1)
+                .save("optical/large_elite_motor");
+        // large elite pump: three elites around a large elite motor
+        r.machine("assembler", EU, T)
+                .itemIn(NIItems.ELITE_PUMP.getId().toString(), 3)
+                .itemIn(ni + "large_elite_motor", 1)
+                .itemIn(mi + "naquadah_rotor", 12)
+                .itemIn(mi + "quantum_circuit", 8)
+                .itemIn(ni + "ffkm_sheet", 4)
+                .itemOut(ni + "large_elite_pump", 1)
+                .save("optical/large_elite_pump");
+
+        // the optical board: the resonant board re-laminated in PEEK/FFKM around
+        // the fiber plant, modulators, transceivers and SNSPDs (nine item inputs)
+        r.machine("assembler", EU, FT)
+                .itemIn(ni + "resonant_circuit_board", 1)
+                .itemIn(ni + "etched_substrate", 2)
+                .itemIn(ni + "fused_silica_plate", 4)
+                .itemIn(ni + "erbium_doped_fiber", 8)
+                .itemIn(ni + "electrooptic_modulator", 2)
+                .itemIn(ni + "optical_transceiver", 4)
+                .itemIn(ni + "single_photon_detector", 2)
+                .itemIn(ni + "peek_plate", 4)
+                .itemIn(ni + "ffkm_sheet", 4)
+                .fluidIn(ni + "uv_optical_adhesive", 500)
+                .itemOut(ni + "optical_circuit_board", 1)
+                .save("electric_age/circuit/assembler/optical_circuit_board");
+
+        // THE optical circuit: eight resonant circuits and sixteen optical
+        // qubit components over the doubled processing units, in the super mixer
+        r.machine("super_mixer", EU, FT)
+                .itemIn(ni + "resonant_circuit", 8)
+                .itemIn(ni + "optical_qubit_component", 16)
+                .itemIn(ni + "optical_random_access_memory", 2)
+                .itemIn(ni + "optical_memory_management_unit", 2)
+                .itemIn(ni + "optical_arithmetic_logic_unit", 2)
+                .itemIn(ni + "optical_circuit_board", 1)
+                .itemIn(mi + "optical_superconductor_cable", 4)
+                .itemOut(ni + "optical_circuit", 1)
+                .save("electric_age/circuit/assembler/optical_circuit");
     }
 
     /** Discharge colors of the six noble gases (helium peach, neon red-orange,

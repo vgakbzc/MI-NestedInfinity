@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:silicon_tetrachloride",
+      "amount": 4000
+    },
+    {
+      "fluid": "mi_nested_infinity:germanium_tetrachloride",
+      "amount": 400
+    },
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 2000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:erbium_oxide",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:fiber_preform",
+      "amount": 1
+    }
+  ]
+}

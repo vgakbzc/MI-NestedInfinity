@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:electronic_grade_nitric_acid",
+      "amount": 1500
+    },
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 1500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:dinitrogen_pentoxide",
+      "amount": 2
+    }
+  ]
+}

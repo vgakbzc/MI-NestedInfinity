@@ -1,0 +1,35 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:fluorobenzene",
+      "amount": 2000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:p_fluorobenzoyl_chloride",
+      "amount": 1
+    },
+    {
+      "tag": "c:dusts/aluminum",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:difluorobenzophenone",
+      "amount": 1,
+      "probability": 0.7
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:fluorobenzene",
+      "amount": 500
+    }
+  ]
+}

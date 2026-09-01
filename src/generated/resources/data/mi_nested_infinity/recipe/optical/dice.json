@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:cutting_machine",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:metallized_wafer",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:lubricant",
+      "amount": 10
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:photonic_chip",
+      "amount": 8
+    }
+  ]
+}

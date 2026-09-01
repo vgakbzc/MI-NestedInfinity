@@ -20,12 +20,12 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_erythroglaucophyta",
+      "item": "mi_nested_infinity:petri_erythroprasinocyanophyta",
       "amount": 1,
       "probability": 0.5
     },
     {
-      "item": "mi_nested_infinity:petri_erythroprasinocyanophyta",
+      "item": "mi_nested_infinity:petri_erythroglaucophyta",
       "amount": 1,
       "probability": 0.5
     }

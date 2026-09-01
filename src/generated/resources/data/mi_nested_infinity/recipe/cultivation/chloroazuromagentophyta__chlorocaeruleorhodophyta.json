@@ -20,12 +20,7 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_azuromagentophyta",
-      "amount": 1,
-      "probability": 0.25
-    },
-    {
-      "item": "mi_nested_infinity:petri_azurorhodophyta",
+      "item": "mi_nested_infinity:petri_purpureophyta",
       "amount": 1,
       "probability": 0.25
     },
@@ -35,7 +30,12 @@
       "probability": 0.25
     },
     {
-      "item": "mi_nested_infinity:petri_purpureophyta",
+      "item": "mi_nested_infinity:petri_azurorhodophyta",
+      "amount": 1,
+      "probability": 0.25
+    },
+    {
+      "item": "mi_nested_infinity:petri_azuromagentophyta",
       "amount": 1,
       "probability": 0.25
     }

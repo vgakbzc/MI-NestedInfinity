@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:benzene",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:fluorine",
+      "amount": 500
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:fluorobenzene",
+      "amount": 1000
+    }
+  ]
+}

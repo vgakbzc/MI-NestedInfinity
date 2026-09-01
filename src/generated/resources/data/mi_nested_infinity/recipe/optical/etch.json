@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:duv_stepper",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:developed_substrate",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:electronic_grade_sulfuric_acid",
+      "amount": 250
+    },
+    {
+      "fluid": "mi_nested_infinity:electronic_grade_hydrogen_peroxide",
+      "amount": 100
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:etched_substrate",
+      "amount": 1
+    }
+  ]
+}

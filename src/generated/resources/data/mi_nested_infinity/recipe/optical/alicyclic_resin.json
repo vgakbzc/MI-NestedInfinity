@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:ethylene",
+      "amount": 2000
+    },
+    {
+      "fluid": "modern_industrialization:propene",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:methane",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:alicyclic_acrylate_resin",
+      "amount": 2
+    }
+  ]
+}

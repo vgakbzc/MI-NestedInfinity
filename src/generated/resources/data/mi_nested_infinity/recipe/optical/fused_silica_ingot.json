@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "eu": 32768,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:quartz_dust",
+      "amount": 4
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:fused_silica_ingot",
+      "amount": 1
+    }
+  ]
+}

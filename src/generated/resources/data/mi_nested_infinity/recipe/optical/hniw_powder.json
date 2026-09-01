@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:hniw_crude",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:pgmea_solvent",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:hniw_powder",
+      "amount": 2
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:pgmea_solvent",
+      "amount": 200
+    }
+  ]
+}

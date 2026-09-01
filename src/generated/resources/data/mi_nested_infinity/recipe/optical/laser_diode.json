@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:germanium_wafer",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:crystal_diode",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:ruby_plate",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:laser_diode",
+      "amount": 2
+    }
+  ]
+}

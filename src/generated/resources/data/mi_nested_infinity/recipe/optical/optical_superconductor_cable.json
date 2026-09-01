@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:optical_superconductor_wire",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:ffkm_sheet",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:peek_insulator_sheet",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:liquid_glass",
+      "amount": 144
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:optical_superconductor_cable",
+      "amount": 1
+    }
+  ]
+}

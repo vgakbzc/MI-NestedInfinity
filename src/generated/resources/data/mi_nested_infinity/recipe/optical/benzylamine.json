@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:benzyl_chloride",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:ammonia",
+      "amount": 2000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:benzylamine",
+      "amount": 800
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:salt_dust",
+      "amount": 1
+    }
+  ]
+}

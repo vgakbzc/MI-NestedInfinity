@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:niobium_pentoxide",
+      "amount": 1
+    },
+    {
+      "tag": "c:dusts/aluminum",
+      "amount": 4
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:niobium_ingot",
+      "amount": 2
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:hbiw_crystal",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:platinum_dust",
+      "amount": 1,
+      "probability": 0.1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 2000
+    },
+    {
+      "fluid": "mi_nested_infinity:acetic_anhydride",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:tadbiw",
+      "amount": 1
+    }
+  ]
+}

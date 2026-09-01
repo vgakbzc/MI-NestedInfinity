@@ -1,0 +1,413 @@
+{
+  "type": "modern_industrialization:super_assembler",
+  "eu": 2000000000,
+  "duration": 7200000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    },
+    {
+      "item": "modern_industrialization:ultradense_metal_ball",
+      "amount": 64
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:giant_matter_ball",
+      "amount": 1
+    }
+  ]
+}
