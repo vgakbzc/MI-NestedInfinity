@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/acetic_acid"
+    }
+  }
+}

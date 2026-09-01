@@ -1,0 +1,32 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:cyanoacetic_acid",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:p_toluenesulfonic_acid",
+      "amount": 1,
+      "probability": 0.1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:methanol",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:methyl_cyanoacetate",
+      "amount": 1000
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    }
+  ]
+}

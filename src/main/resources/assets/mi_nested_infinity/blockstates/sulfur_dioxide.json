@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/sulfur_dioxide"
+    }
+  }
+}

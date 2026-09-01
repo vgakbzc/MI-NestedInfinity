@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 64,
+  "duration": 400,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:toluene",
+      "amount": 2000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "modern_industrialization:benzene",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:m_xylene",
+      "amount": 1000
+    }
+  ]
+}

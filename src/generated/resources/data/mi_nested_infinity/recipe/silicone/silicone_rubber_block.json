@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 128000,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/sulfur",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:liquid_silicone_rubber",
+      "amount": 1296
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:silicone_rubber_block",
+      "amount": 1
+    }
+  ]
+}

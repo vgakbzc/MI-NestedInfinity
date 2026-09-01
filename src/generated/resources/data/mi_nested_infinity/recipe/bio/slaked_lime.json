@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 8,
+  "duration": 100,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:quicklime",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 125
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:slaked_lime",
+      "amount": 2
+    }
+  ]
+}

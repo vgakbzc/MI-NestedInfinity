@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 16,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:washed_rhodophyta",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:hypochlorous_acid",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:bleached_rhodophyta",
+      "amount": 2
+    }
+  ]
+}

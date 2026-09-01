@@ -1,0 +1,24 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 16,
+  "duration": 200,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:formaldehyde",
+      "amount": 2000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:slaked_lime",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:glycolaldehyde",
+      "amount": 1
+    }
+  ]
+}

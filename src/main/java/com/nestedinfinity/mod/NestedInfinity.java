@@ -26,6 +26,14 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import com.nestedinfinity.mod.blocks.NIBlocks;
+import com.nestedinfinity.mod.blocks.NICoils;
+import com.nestedinfinity.mod.blocks.NIMachines;
+import com.nestedinfinity.mod.fluids.NIFluids;
+import com.nestedinfinity.mod.items.NICircuits;
+import com.nestedinfinity.mod.items.NIItems;
+import com.nestedinfinity.mod.items.algae.NIPetriDishes;
+import com.nestedinfinity.mod.material.NIMaterials;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(NestedInfinity.MODID)
@@ -62,6 +70,11 @@ public class NestedInfinity {
                 output.accept(NIItems.PLASTIC_MICA_MIXTURE.get());
                 output.accept(NIBlocks.PLASTIC_MICA_BLOCK_ITEM.get());
                 NICoils.ALL.forEach(coil -> output.accept(coil.get()));
+                NIFluids.ALGAE.forEach(algae -> output.accept(algae.bucket.get()));
+                NIPetriDishes.ALL.forEach(dish -> output.accept(dish.item().get()));
+                output.accept(NIItems.PROTEIN.get());
+                output.accept(NIItems.AGAR.get());
+                output.accept(NIFluids.NUTRIENT_AGAR.bucket.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -73,6 +86,7 @@ public class NestedInfinity {
         NIItems.init();
         NIBlocks.init();
         NIFluids.init();
+        NIPetriDishes.init();
         NICoils.init();
         NIMachines.init();
 

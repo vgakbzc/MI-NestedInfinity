@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:vacuum_freezer",
+  "eu": 32,
+  "duration": 400,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:polybenzimidazole",
+      "amount": 1296
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:solid_titanium_machine_casing",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:polybenzimidazole_block",
+      "amount": 1
+    }
+  ]
+}

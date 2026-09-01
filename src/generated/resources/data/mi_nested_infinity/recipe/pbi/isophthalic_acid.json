@@ -1,0 +1,34 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 64,
+  "duration": 400,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:m_xylene",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 3000
+    }
+  ],
+  "item_inputs": [
+    {
+      "tag": "c:dusts/manganese",
+      "amount": 1,
+      "probability": 0.15
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:isophthalic_acid",
+      "amount": 2
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    }
+  ]
+}

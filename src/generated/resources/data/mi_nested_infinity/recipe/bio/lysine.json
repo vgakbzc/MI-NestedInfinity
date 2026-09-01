@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 64,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:epsilon_aminocaproic_acid",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:ammonia",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:lysine",
+      "amount": 1
+    }
+  ]
+}

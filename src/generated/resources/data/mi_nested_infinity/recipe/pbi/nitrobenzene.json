@@ -1,0 +1,33 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 200,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:benzene",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:nitric_acid",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:nitrobenzene",
+      "amount": 1000
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 1000
+    }
+  ]
+}

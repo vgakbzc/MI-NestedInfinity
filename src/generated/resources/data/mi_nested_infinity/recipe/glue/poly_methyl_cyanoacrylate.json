@@ -1,0 +1,34 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 300,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:methyl_cyanoacetate",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:formaldehyde",
+      "amount": 1000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:slaked_lime",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:poly_methyl_cyanoacrylate",
+      "amount": 2
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    }
+  ]
+}

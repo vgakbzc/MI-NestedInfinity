@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 240,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:phenylalanine_aminonitrile",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 2000
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 2000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:phenylalanine",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:ammonium_chloride",
+      "amount": 2
+    }
+  ]
+}

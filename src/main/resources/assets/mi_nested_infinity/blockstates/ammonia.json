@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/ammonia"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/ammonia"
+    }
+  }
+}

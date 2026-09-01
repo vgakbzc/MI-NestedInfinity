@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 128000,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:cinnabar_dust",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 1500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:mercury_oxide_dust",
+      "amount": 2
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:sulfur_dioxide",
+      "amount": 1000
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 16,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/iron",
+      "amount": 3
+    },
+    {
+      "tag": "c:dusts/aluminum",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:slaked_lime",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:haber_iron_catalyst",
+      "amount": 5
+    }
+  ]
+}

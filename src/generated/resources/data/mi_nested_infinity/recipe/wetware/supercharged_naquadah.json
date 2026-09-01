@@ -1,0 +1,24 @@
+{
+  "type": "modern_industrialization:algae_cultivator",
+  "eu": 8,
+  "duration": 1000,
+  "item_inputs": [
+    {
+      "tag": "mi_nested_infinity:cold_petri_dishes",
+      "amount": 1,
+      "probability": 0.5
+    },
+    {
+      "item": "modern_industrialization:naquadah_ingot",
+      "amount": 1,
+      "probability": 0.5
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:supercharged_naquadah",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ]
+}

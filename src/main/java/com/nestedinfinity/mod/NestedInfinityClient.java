@@ -4,8 +4,12 @@ import aztech.modern_industrialization.client.pipes.MIPipesClient;
 import aztech.modern_industrialization.client.pipes.api.PipeRenderer;
 import aztech.modern_industrialization.pipes.api.PipeNetworkType;
 import java.lang.reflect.Field;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -16,6 +20,11 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import com.nestedinfinity.mod.blocks.NIMachines;
+import com.nestedinfinity.mod.fluids.NIFluids;
+import com.nestedinfinity.mod.material.NIMaterial;
+import com.nestedinfinity.mod.material.NIMaterials;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = NestedInfinity.MODID, dist = Dist.CLIENT)
@@ -82,4 +91,19 @@ public class NestedInfinityClient {
         NestedInfinity.LOGGER.info("HELLO FROM CLIENT SETUP");
         NestedInfinity.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
     }
+
+    /** The algae cultivator explains its dish-repeat time penalty on its item tooltip. */
+    @SubscribeEvent
+    static void onItemTooltip(ItemTooltipEvent event) {
+        if (!event.getItemStack().is(algaeCultivatorItem)) {
+            return;
+        }
+        event.getToolTip().add(Component.translatable("tooltip.mi_nested_infinity.algae_cultivator.repeat.1")
+                .withStyle(ChatFormatting.GRAY));
+        event.getToolTip().add(Component.translatable("tooltip.mi_nested_infinity.algae_cultivator.repeat.2")
+                .withStyle(ChatFormatting.GRAY));
+    }
+
+    private static final Item algaeCultivatorItem = BuiltInRegistries.ITEM.get(
+            ResourceLocation.fromNamespaceAndPath("modern_industrialization", "algae_cultivator"));
 }

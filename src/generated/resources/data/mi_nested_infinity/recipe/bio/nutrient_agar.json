@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 16,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:protein",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:agar",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:slaked_lime",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 750
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:nutrient_agar",
+      "amount": 1000
+    }
+  ]
+}

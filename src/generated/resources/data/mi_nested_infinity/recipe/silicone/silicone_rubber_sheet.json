@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:cutting_machine",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:silicone_rubber_block",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:lubricant",
+      "amount": 114
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:silicone_rubber_sheet",
+      "amount": 4
+    }
+  ]
+}

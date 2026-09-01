@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32000,
+  "duration": 200,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:methanol",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:chloromethane",
+      "amount": 1000
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    }
+  ]
+}

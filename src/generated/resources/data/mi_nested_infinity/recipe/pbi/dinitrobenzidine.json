@@ -1,0 +1,37 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:benzidine",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:nitric_acid",
+      "amount": 2000
+    },
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 2000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:dinitrobenzidine",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 2000
+    },
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 2000
+    }
+  ]
+}

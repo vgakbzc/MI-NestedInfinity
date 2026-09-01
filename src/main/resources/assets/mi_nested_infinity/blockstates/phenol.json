@@ -1,6 +1,51 @@
 {
   "variants": {
-    "": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/phenol"
+    },
+    "level=15": {
       "model": "mi_nested_infinity:block/phenol"
     }
   }

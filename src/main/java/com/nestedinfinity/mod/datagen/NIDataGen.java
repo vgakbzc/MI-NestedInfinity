@@ -1,12 +1,12 @@
 package com.nestedinfinity.mod.datagen;
 
-import com.nestedinfinity.mod.NIMaterials;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import com.nestedinfinity.mod.material.NIMaterials;
 
 /**
  * Datagen entry point: triggered by {@code gradlew runData}, output goes to src/generated/resources.

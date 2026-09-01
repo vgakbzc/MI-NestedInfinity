@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 64,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:dinitrobenzidine",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 6000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:diaminobenzidine",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 4000
+    }
+  ]
+}

@@ -5,7 +5,8 @@
   "item_inputs": [
     {
       "item": "mi_nested_infinity:ion_exchange_catalyst",
-      "amount": 1
+      "amount": 1,
+      "probability": 0.1
     }
   ],
   "fluid_inputs": [

@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 16,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:ion_exchange_resin",
+      "amount": 1
+    },
+    {
+      "item": "minecraft:sugar",
+      "amount": 4
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:immobilized_enzyme",
+      "amount": 4
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 1000000,
+  "duration": 4000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:large_advanced_pump",
+      "amount": 3
+    },
+    {
+      "item": "mi_nested_infinity:elite_motor",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:naquadah_rotor",
+      "amount": 6
+    },
+    {
+      "item": "modern_industrialization:quantum_circuit",
+      "amount": 4
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:elite_pump",
+      "amount": 1
+    }
+  ]
+}

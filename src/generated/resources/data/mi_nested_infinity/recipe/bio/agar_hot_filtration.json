@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:centrifuge",
+  "eu": 16,
+  "duration": 200,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:crude_agar_solution",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:clarified_agar_solution",
+      "amount": 900
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:rhodophyta_residue",
+      "amount": 1
+    }
+  ]
+}

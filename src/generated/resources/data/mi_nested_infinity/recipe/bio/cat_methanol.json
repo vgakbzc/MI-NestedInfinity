@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 16,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/copper",
+      "amount": 4
+    },
+    {
+      "tag": "c:dusts/aluminum",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:methanol_synthesis_catalyst",
+      "amount": 4
+    }
+  ]
+}

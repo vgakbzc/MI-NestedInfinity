@@ -1,6 +1,51 @@
 {
   "variants": {
-    "": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/acetone"
+    },
+    "level=15": {
       "model": "mi_nested_infinity:block/acetone"
     }
   }

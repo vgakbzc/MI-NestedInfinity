@@ -1,0 +1,33 @@
+{
+  "type": "modern_industrialization:algae_cultivator",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:petri_xanthocaeruleophyta",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:petri_erythrocyanopurpureophyta",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:nutrient_agar",
+      "amount": 50
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:petri_aurantioazurophyta",
+      "amount": 1,
+      "probability": 0.5
+    },
+    {
+      "item": "mi_nested_infinity:petri_aurantiocyanopurpureophyta",
+      "amount": 1,
+      "probability": 0.5
+    }
+  ]
+}

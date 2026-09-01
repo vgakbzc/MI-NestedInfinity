@@ -1,6 +1,51 @@
 {
   "variants": {
-    "": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/xenon_hexafluoride"
+    },
+    "level=15": {
       "model": "mi_nested_infinity:block/xenon_hexafluoride"
     }
   }

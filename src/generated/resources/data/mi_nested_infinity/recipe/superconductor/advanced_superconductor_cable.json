@@ -1,0 +1,44 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 1000000,
+  "duration": 6000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:superconductor_substrate_wire",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:mica_insulator_sheet",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:large_advanced_pump",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:large_pump",
+      "amount": 1,
+      "probability": 0.25
+    },
+    {
+      "item": "modern_industrialization:superconductor_ingot",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:helium",
+      "amount": 100
+    },
+    {
+      "fluid": "mi_nested_infinity:advanced_rubber",
+      "amount": 72
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:advanced_superconductor_cable",
+      "amount": 1
+    }
+  ]
+}

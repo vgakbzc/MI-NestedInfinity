@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 200,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:methyl_butanal",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:ammonia",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:hydrogen_cyanide",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:isoleucine_aminonitrile",
+      "amount": 2
+    }
+  ]
+}

@@ -74,6 +74,15 @@ public final class NIRecipes {
 
     /** Emits a c:/minecraft: item tag JSON, e.g. tag("c:dusts/naquadah", "..."). */
     public void tag(String tagId, String... values) {
+        emitTag("item", tagId, values);
+    }
+
+    /** Emits a fluid tag JSON under data/&lt;ns&gt;/tags/fluid/, e.g. fluidTag("mi_nested_infinity:algae_cultures", ...). */
+    public void fluidTag(String tagId, String... values) {
+        emitTag("fluid", tagId, values);
+    }
+
+    private void emitTag(String kind, String tagId, String... values) {
         JsonObject json = new JsonObject();
         json.addProperty("replace", false);
         JsonArray array = new JsonArray();
@@ -83,7 +92,7 @@ public final class NIRecipes {
         json.add("values", array);
         String namespace = tagId.substring(0, tagId.indexOf(':'));
         String tagPath = tagId.substring(tagId.indexOf(':') + 1);
-        emit(namespace + "/tags/item/" + tagPath, json);
+        emit(namespace + "/tags/" + kind + "/" + tagPath, json);
     }
 
     public final class MachineBuilder {
@@ -97,33 +106,55 @@ public final class NIRecipes {
         }
 
         public MachineBuilder itemIn(String itemId, int amount) {
-            return ingredient("item_inputs", "item", itemId, amount);
+            return ingredient("item_inputs", "item", itemId, amount, 1.0);
+        }
+
+        /** Input consumed only with the given independent probability per craft (MI: chance of consumption). */
+        public MachineBuilder itemIn(String itemId, int amount, double probability) {
+            return ingredient("item_inputs", "item", itemId, amount, probability);
         }
 
         public MachineBuilder tagIn(String tagId, int amount) {
-            return ingredient("item_inputs", "tag", tagId, amount);
+            return ingredient("item_inputs", "tag", tagId, amount, 1.0);
+        }
+
+        /** Tag input consumed only with the given independent probability per craft (MI: chance of consumption). */
+        public MachineBuilder tagIn(String tagId, int amount, double probability) {
+            return ingredient("item_inputs", "tag", tagId, amount, probability);
         }
 
         public MachineBuilder fluidIn(String fluidId, int amount) {
-            return ingredient("fluid_inputs", "fluid", fluidId, amount);
+            return ingredient("fluid_inputs", "fluid", fluidId, amount, 1.0);
+        }
+
+        public MachineBuilder fluidTagIn(String tagId, int amount) {
+            return ingredient("fluid_inputs", "tag", tagId, amount, 1.0);
         }
 
         public MachineBuilder itemOut(String itemId, int amount) {
-            return ingredient("item_outputs", "item", itemId, amount);
+            return ingredient("item_outputs", "item", itemId, amount, 1.0);
+        }
+
+        /** Output produced with the given independent roll probability (MI machine recipe format). */
+        public MachineBuilder itemOut(String itemId, int amount, double probability) {
+            return ingredient("item_outputs", "item", itemId, amount, probability);
         }
 
         public MachineBuilder fluidOut(String fluidId, int amount) {
-            return ingredient("fluid_outputs", "fluid", fluidId, amount);
+            return ingredient("fluid_outputs", "fluid", fluidId, amount, 1.0);
         }
 
         public void save(String path) {
             emit(NestedInfinity.MODID + "/recipe/" + path, json);
         }
 
-        private MachineBuilder ingredient(String section, String kind, String id, int amount) {
+        private MachineBuilder ingredient(String section, String kind, String id, int amount, double probability) {
             JsonObject entry = new JsonObject();
             entry.addProperty(kind, id);
             entry.addProperty("amount", amount);
+            if (probability < 1.0) {
+                entry.addProperty("probability", probability);
+            }
             array(section).add(entry);
             return this;
         }

@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:vacuum_freezer",
+  "eu": 32,
+  "duration": 400,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:clarified_agar_solution",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:frozen_agar_gel",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 512000,
+  "duration": 2000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:petri_aurantiochloroazuromagentophyta",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:memory_management_unit",
+      "amount": 4
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:mutagen",
+      "amount": 200
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:bio_memory_management_unit",
+      "amount": 1
+    }
+  ]
+}

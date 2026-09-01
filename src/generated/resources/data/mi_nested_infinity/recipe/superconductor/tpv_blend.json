@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 512000,
+  "duration": 8000,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/titanium",
+      "amount": 2
+    },
+    {
+      "tag": "c:dusts/platinum",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:vanadium_dust",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:tpv_dust",
+      "amount": 4
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 8,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:agar_gel",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:agar",
+      "amount": 1
+    }
+  ]
+}

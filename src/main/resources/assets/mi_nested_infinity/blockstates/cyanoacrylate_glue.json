@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/cyanoacrylate_glue"
+    }
+  }
+}

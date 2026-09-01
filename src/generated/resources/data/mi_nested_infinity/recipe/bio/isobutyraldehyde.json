@@ -1,0 +1,32 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 200,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:propene",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:carbon_monoxide",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 1000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:hydroformylation_catalyst",
+      "amount": 1,
+      "probability": 0.08
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:isobutyraldehyde",
+      "amount": 1000
+    }
+  ]
+}

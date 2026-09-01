@@ -1,6 +1,51 @@
 {
   "variants": {
-    "": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/cumene_hydroperoxide"
+    },
+    "level=15": {
       "model": "mi_nested_infinity:block/cumene_hydroperoxide"
     }
   }

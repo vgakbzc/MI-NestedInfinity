@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/cyanophyta"
+    }
+  }
+}

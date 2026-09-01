@@ -1,0 +1,36 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 250,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:isobutyraldehyde",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:formaldehyde",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 1000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:slaked_lime",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:isovaleraldehyde",
+      "amount": 1000
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 500
+    }
+  ]
+}

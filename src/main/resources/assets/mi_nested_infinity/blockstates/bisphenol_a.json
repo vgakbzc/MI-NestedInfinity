@@ -1,6 +1,51 @@
 {
   "variants": {
-    "": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/bisphenol_a"
+    },
+    "level=15": {
       "model": "mi_nested_infinity:block/bisphenol_a"
     }
   }

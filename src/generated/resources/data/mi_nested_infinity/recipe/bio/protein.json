@@ -1,0 +1,83 @@
+{
+  "type": "modern_industrialization:super_mixer",
+  "eu": 1000000000,
+  "duration": 6500,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:glycine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:alanine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:valine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:leucine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:isoleucine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:serine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:threonine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:aspartic_acid",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:glutamic_acid",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:lysine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:arginine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:proline",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:phenylalanine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:tyrosine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:asparagine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:glutamine",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:protein",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 500
+    }
+  ]
+}

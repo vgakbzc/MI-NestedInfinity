@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "mi_nested_infinity:item/clarified_agar_solution_bucket"
+  }
+}

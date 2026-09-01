@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/ultraheavy_element_mixture"
+    }
+  }
+}

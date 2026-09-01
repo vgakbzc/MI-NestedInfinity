@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 250,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:caprolactam",
+      "amount": 1000
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:epsilon_aminocaproic_acid",
+      "amount": 2
+    }
+  ]
+}

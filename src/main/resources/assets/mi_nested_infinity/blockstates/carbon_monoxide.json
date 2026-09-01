@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/carbon_monoxide"
+    }
+  }
+}

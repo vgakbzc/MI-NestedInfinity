@@ -3,8 +3,6 @@ package com.nestedinfinity.mod.mixin;
 
 import aztech.modern_industrialization.MI;
 import aztech.modern_industrialization.machines.blockentities.multiblocks.ElectricBlastFurnaceBlockEntity;
-import com.nestedinfinity.mod.NICoils;
-import com.nestedinfinity.mod.NIMachines;
 import com.nestedinfinity.mod.NestedInfinity;
 import net.minecraft.resources.ResourceLocation;
 import org.jline.utils.Log;
@@ -18,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.io.Console;
 import java.util.List;
+import com.nestedinfinity.mod.blocks.NICoils;
+import com.nestedinfinity.mod.blocks.NIMachines;
 
 @Mixin(ElectricBlastFurnaceBlockEntity.class)
 public class ElectricBlastFurnaceMixin {

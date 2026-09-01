@@ -1,6 +1,51 @@
 {
   "variants": {
-    "": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/fluorine"
+    },
+    "level=15": {
       "model": "mi_nested_infinity:block/fluorine"
     }
   }

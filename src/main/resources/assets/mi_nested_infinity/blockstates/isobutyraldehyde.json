@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/isobutyraldehyde"
+    }
+  }
+}

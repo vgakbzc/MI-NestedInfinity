@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/methanol"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/methanol"
+    }
+  }
+}

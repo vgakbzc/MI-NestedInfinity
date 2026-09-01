@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "eu": 4096,
+  "duration": 600,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:mercury_barium_titanium_copper_oxide",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:superconductor_substrate",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/platinum",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:carbon_monoxide",
+      "amount": 1500
+    },
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:hydroformylation_catalyst",
+      "amount": 2
+    }
+  ]
+}

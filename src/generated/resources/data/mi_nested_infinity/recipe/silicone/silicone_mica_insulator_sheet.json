@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:mica_insulator_sheet",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:silicone_rubber_sheet",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:silicone_mica_insulator_sheet",
+      "amount": 1
+    }
+  ]
+}

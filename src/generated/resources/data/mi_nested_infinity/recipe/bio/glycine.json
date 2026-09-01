@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 16,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:chloroacetic_acid",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:ammonia",
+      "amount": 2000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:glycine",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:ammonium_chloride",
+      "amount": 1
+    }
+  ]
+}

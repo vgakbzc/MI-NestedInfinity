@@ -1,0 +1,36 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:tpv_wire",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:mica_insulator_sheet",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:large_pump",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:styrene_butadiene_rubber",
+      "amount": 12
+    },
+    {
+      "fluid": "mi_nested_infinity:liquid_glass",
+      "amount": 72
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:tpv_cable",
+      "amount": 1
+    }
+  ]
+}

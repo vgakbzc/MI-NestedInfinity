@@ -1,0 +1,35 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 512000,
+  "duration": 400,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:mercury_oxide_dust",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:barium_oxide_dust",
+      "amount": 1
+    },
+    {
+      "tag": "c:dusts/titanium",
+      "amount": 1
+    },
+    {
+      "tag": "c:dusts/copper",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:mercury_barium_titanium_copper_oxide",
+      "amount": 4
+    }
+  ]
+}

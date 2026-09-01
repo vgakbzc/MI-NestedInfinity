@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:wiremill",
+  "eu": 128000,
+  "duration": 300,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:superconductor_substrate",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:superconductor_substrate_wire",
+      "amount": 2
+    }
+  ]
+}

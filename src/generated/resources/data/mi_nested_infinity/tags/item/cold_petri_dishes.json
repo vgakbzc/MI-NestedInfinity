@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "mi_nested_infinity:petri_glaucophyta",
+    "mi_nested_infinity:petri_xanthoglaucophyta",
+    "mi_nested_infinity:petri_cyanophyta",
+    "mi_nested_infinity:petri_xanthocyanophyta",
+    "mi_nested_infinity:petri_prasinocyanophyta",
+    "mi_nested_infinity:petri_caeruleophyta",
+    "mi_nested_infinity:petri_xanthocaeruleophyta",
+    "mi_nested_infinity:petri_prasinocaeruleophyta",
+    "mi_nested_infinity:petri_chlorocaeruleophyta",
+    "mi_nested_infinity:petri_glaucocaeruleophyta",
+    "mi_nested_infinity:petri_xanthoglaucocaeruleophyta",
+    "mi_nested_infinity:petri_glaucopurpureophyta",
+    "mi_nested_infinity:petri_xanthoglaucopurpureophyta",
+    "mi_nested_infinity:petri_cyanopurpureophyta",
+    "mi_nested_infinity:petri_xanthocyanopurpureophyta",
+    "mi_nested_infinity:petri_prasinocyanopurpureophyta",
+    "mi_nested_infinity:petri_glaucomagentophyta",
+    "mi_nested_infinity:petri_xanthoglaucomagentophyta",
+    "mi_nested_infinity:petri_cyanomagentophyta",
+    "mi_nested_infinity:petri_xanthocyanomagentophyta",
+    "mi_nested_infinity:petri_prasinocyanomagentophyta"
+  ]
+}

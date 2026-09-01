@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 64,
+  "duration": 400,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:poly_methyl_cyanoacrylate",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:sulfur_dioxide",
+      "amount": 100
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:cyanoacrylate_glue",
+      "amount": 1000
+    }
+  ]
+}

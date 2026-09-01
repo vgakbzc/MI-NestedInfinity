@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 8,
+  "duration": 160,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:low_purity_algae",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:wet_rhodophyta",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:salt_dust",
+      "amount": 1
+    }
+  ]
+}

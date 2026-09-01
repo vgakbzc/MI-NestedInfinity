@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32000,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:supercharged_naquadah",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:supercharged_naquadah_solution",
+      "amount": 1000
+    }
+  ]
+}

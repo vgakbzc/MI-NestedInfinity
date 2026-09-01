@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:centrifuge",
+  "eu": 512000,
+  "duration": 600,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:ultraheavy_element_mixture",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:cinnabar_dust",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:barite_dust",
+      "amount": 1
+    }
+  ]
+}

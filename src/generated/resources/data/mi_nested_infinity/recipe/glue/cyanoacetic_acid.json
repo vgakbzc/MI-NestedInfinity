@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 240,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:chloroacetic_acid",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:sodium_cyanide",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:cyanoacetic_acid",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:salt_dust",
+      "amount": 1
+    }
+  ]
+}

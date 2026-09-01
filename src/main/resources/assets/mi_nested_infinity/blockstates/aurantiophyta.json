@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/aurantiophyta"
+    }
+  }
+}

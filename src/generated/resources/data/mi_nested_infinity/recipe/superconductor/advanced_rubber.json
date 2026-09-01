@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 128000,
+  "duration": 300,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:styrene_butadiene_rubber",
+      "amount": 1000
+    }
+  ],
+  "item_inputs": [
+    {
+      "tag": "c:dusts/sulfur",
+      "amount": 1
+    },
+    {
+      "tag": "c:dusts/coal",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:advanced_rubber",
+      "amount": 1000
+    }
+  ]
+}

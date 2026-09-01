@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 64000,
+  "duration": 400,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:agar",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:supercharged_naquadah_solution",
+      "amount": 500
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:mutagen",
+      "amount": 500
+    }
+  ]
+}

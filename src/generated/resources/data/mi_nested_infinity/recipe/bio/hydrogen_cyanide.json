@@ -1,0 +1,36 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 200,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:methane",
+      "amount": 250
+    },
+    {
+      "fluid": "mi_nested_infinity:ammonia",
+      "amount": 250
+    },
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 375
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:platinum_gauze_catalyst",
+      "amount": 1,
+      "probability": 0.05
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:hydrogen_cyanide",
+      "amount": 250
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 750
+    }
+  ]
+}

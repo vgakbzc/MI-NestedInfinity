@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/dimethyldichlorosilane"
+    }
+  }
+}

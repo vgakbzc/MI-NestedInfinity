@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/prasinophyta"
+    }
+  }
+}

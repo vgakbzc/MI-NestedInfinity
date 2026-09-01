@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:platinum_wire",
+      "amount": 4
+    },
+    {
+      "item": "modern_industrialization:platinum_plate",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:platinum_gauze_catalyst",
+      "amount": 2
+    }
+  ]
+}

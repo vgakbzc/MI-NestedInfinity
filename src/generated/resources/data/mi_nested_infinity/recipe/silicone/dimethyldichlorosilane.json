@@ -1,0 +1,28 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 128000,
+  "duration": 400,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/silicon",
+      "amount": 1
+    },
+    {
+      "tag": "c:dusts/copper",
+      "amount": 1,
+      "probability": 0.2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:chloromethane",
+      "amount": 2000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:dimethyldichlorosilane",
+      "amount": 1000
+    }
+  ]
+}

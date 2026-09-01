@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 16,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/nickel",
+      "amount": 3
+    },
+    {
+      "tag": "c:dusts/aluminum",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:reforming_nickel_catalyst",
+      "amount": 4
+    }
+  ]
+}

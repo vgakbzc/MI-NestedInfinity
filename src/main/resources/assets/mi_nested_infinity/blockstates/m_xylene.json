@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/m_xylene"
+    }
+  }
+}

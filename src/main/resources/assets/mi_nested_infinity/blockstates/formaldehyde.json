@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/formaldehyde"
+    }
+  }
+}

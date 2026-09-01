@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 128000,
+  "duration": 400,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/titanium",
+      "amount": 3
+    },
+    {
+      "tag": "c:dusts/salt",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 3000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:sodium_vanadate",
+      "amount": 2
+    }
+  ]
+}

@@ -1,6 +1,51 @@
 {
   "variants": {
-    "": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/epichlorohydrin"
+    },
+    "level=15": {
       "model": "mi_nested_infinity:block/epichlorohydrin"
     }
   }

@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "mi_nested_infinity:glycine",
+    "mi_nested_infinity:alanine",
+    "mi_nested_infinity:valine",
+    "mi_nested_infinity:leucine",
+    "mi_nested_infinity:isoleucine",
+    "mi_nested_infinity:serine",
+    "mi_nested_infinity:threonine",
+    "mi_nested_infinity:aspartic_acid",
+    "mi_nested_infinity:glutamic_acid",
+    "mi_nested_infinity:lysine",
+    "mi_nested_infinity:arginine",
+    "mi_nested_infinity:proline",
+    "mi_nested_infinity:phenylalanine",
+    "mi_nested_infinity:tyrosine",
+    "mi_nested_infinity:asparagine",
+    "mi_nested_infinity:glutamine"
+  ]
+}

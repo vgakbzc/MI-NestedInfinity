@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 16,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:silver_wire",
+      "amount": 4
+    },
+    {
+      "item": "modern_industrialization:silver_plate",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:silver_gauze_catalyst",
+      "amount": 2
+    }
+  ]
+}
