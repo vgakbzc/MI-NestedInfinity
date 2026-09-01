@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/neon"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/neon"
+    }
+  }
+}
