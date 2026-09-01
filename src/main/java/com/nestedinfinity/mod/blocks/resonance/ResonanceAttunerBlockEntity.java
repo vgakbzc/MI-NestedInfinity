@@ -185,8 +185,13 @@ public class ResonanceAttunerBlockEntity extends BlockEntity implements WorldlyC
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put("input", input.save(registries));
-        tag.put("output", output.save(registries));
+        // ItemStack.save throws on empty stacks, so only persist filled slots
+        if (!input.isEmpty()) {
+            tag.put("input", input.save(registries));
+        }
+        if (!output.isEmpty()) {
+            tag.put("output", output.save(registries));
+        }
     }
 
     @Override
