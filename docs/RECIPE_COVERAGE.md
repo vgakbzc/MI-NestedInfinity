@@ -44,8 +44,8 @@
 
 | 类别 | 物品 | 说明 |
 |---|---|---|
-| 未来电路层级 ×8 | resonant / optical / electromagnetic_interference / awakened_draconic / paracausal / multiverse_parallel_computational / 24d_non_euclidean_space_time_folding / ama（各含 circuit + circuit_board，共 16 个） | `NICircuits.ALL_TIERS` 已注册，配方待后续版本按层级补齐 |
-| 未来线圈 ×8 | trinium_dinaquadide / neutronium / infinitium / hypogen / stellarium / draconicic_prismarinium_diaquamide / eternium / terminium（各 `_coil`） | `NICoils` 的 EBF 线圈扩展已注册并挂入电爆炉 mixin，仅 nichrome_coil、tpv_coil 两级有配方，其余 8 级待补 |
+| 未来电路层级 ×7 | optical / electromagnetic_interference / awakened_draconic / paracausal / multiverse_parallel_computational / 24d_non_euclidean_space_time_folding / ama（各含 circuit + circuit_board，共 14 个） | `NICircuits.ALL_TIERS` 已注册；**resonant 层级已于 feat/resonant 补齐**（见第 8 节），其余待后续版本按层级补齐 |
+| 未来线圈 ×7 | neutronium / infinitium / hypogen / stellarium / draconicic_prismarinium_diaquamide / eternium / terminium（各 `_coil`） | `NICoils` 的 EBF 线圈扩展已注册并挂入电爆炉 mixin；nichrome_coil、tpv_coil 与 **trinium_dinaquadide_coil（feat/resonant）** 三级已有配方，其余 7 级待补 |
 
 ### 3.2 有意取消 / 已知待补
 
@@ -86,3 +86,41 @@
 6. **湿件电路板重排**：硅岩框架+3 PBI 板+12 高级超导线缆+16 钚电池+1 晶体电路板+4 硅岩板+2 对甲苯磺酸+1 精英泵 + 变异剂 400 mB / He-3 100 mB / 氟锑酸 10 mB（8 物品+3 流体，物品数不超 MI 上限）；湿件电路的超导线缆换为高级超导线缆体系。
 7. **naquadah 转子**：`NIMaterial.generateRotor()` — 注册 rotor 部件、取消 MI 自动转子配方（blade/ring/bolt 级联）、提供 装配机 1 板+1 杆→1 转子 简化配方（`materials/naquadah/assembler/rotor_simple`）。
 8. **贴图统一**：板件全部改用 MI 原版 plate 模板重着色（环氧板/PBI 板，对比度加强保证 3D 感）；精英马达/泵复用 MI 马达/泵模板；超能硅岩/硅岩框架/变异剂桶等同步重绘。
+
+## 8. 2026-09-01 谐振电路程序（feat/resonant，103 个新配方）
+
+> 全部位于 `resonant/`（101 个）+ `electric_age/circuit/assembler/resonant_{circuit,circuit_board}`（2 个终局）。
+> 能耗规则：分离/合成关键步骤 **2G EU/t、4000 s**；试剂合成 2G EU/t、1000 s；终局板与电路 2G EU/t、**8000 s**；
+> 聚变沿 MI 16k EU/t 先例（EBF 系配方豁免能耗规则）。
+
+### 8.1 六条链
+
+| 链 | 配方数 | 覆盖内容 |
+|---|---|---|
+| 全元素分离级联 `resonantSeparationChain` | 46 | 进料 3（氙+氧聚变→氡；氡裂解超能硅岩溶液→超重裂化液；重元素残渣+氡+硝酸备用固料入口）；Cycle A PUREX ×8（亚硝酸钠调价 25% 概耗→TBP 萃取 10% 概耗+氙/碲副产→肼反萃→硝酸 U/Np 分离→煅烧氢还原 U/Pu/Np→Th 酸洗）；Cycle B TRUEX+TALSPEAK ×12（CMPO 5% 概耗→硝酸反萃 TBP 回收→DTPA 10% 概耗分组→Bk 氯酸钠氧化 10% 概耗+碲 15% 副产→α-HIBA 淋洗阶梯 100/200/300/400 mB 水：Am/Cm/Cf/Es 各 80%、Fm/Md/No/Lr 各 70%）；Cycle C 轻锕系 ×2（Ac 独居石镧载体 50% 概耗 75%、Pa 二氧化锰吸附+HF 淋洗 75%）；Cycle D 超锕系单原子化学 ×11（Rf/Db 氟络阴离子交换 60%；Sg 氧氯化挥发（碲代硒）+冷凝 50%；Bh 氧氯化盐酸裂解 50%；Hs 碲酸氧化挥发 55%；Cn 金箔捕集（5% 概耗）+热脱附 65%；Mt/Ds 王水分级浸出 55%；Rg 硫醚络合 60%）；试剂 10（TBP（异丁醛+独居石磷源）/CMPO/DTPA/α-HIBA/肼/亚硝酸钠/氯酸钠/碲酸/王水/金箔），PGM 残渣王水浸出返回超重蒸气 |
+| 聚变三重链+轻硅岩 `resonantFusionChain` | 12 | 惰性硅岩液离心→粗轻硅岩粉 75%→氢还原 90%；金/银/𬬭/鎶坩埚熔融 4；聚变 3（金+𬬭→精金、银+鎶→秘银、精金+秘银→翠尼特）；He-3 急冷铸锭 3（翠尼特锭唯一来源——EBF 路线已 `skipEbfRecipes` 抑制，真空冷冻热锭死配方已 `cancelRecipes("vacuum_freezer/hot_ingot")` 取消） |
+| 聚酰亚胺+导电银胶 `resonantPolyimideChain` | 10 | 真实 Kapton 化学：间二甲苯+氯甲烷→杜烯→钒催化硝酸氧化（10% 概耗）90%→均苯四甲酸→脱水 PMDA；硝基苯→对硝基氯苯 80%→铜催化 Ullmann 醚化（15% 概耗）→二硝基二苯醚→加氢→ODA；PMDA+ODA→聚酰胺酸→亚胺化→PI 粉→PI 板；银粉+环氧树脂+ODA 固化剂（25% 概耗）→导电银胶 |
+| 氟橡胶+谐振超导 `resonantFluoroChain` | 12 | FKM：氯甲烷→氯仿→R-22→VDF 热解、丙烯+氟→HFP、过硫酸盐（硫酸钠 10% 概耗）共聚→FKM 板；YBCO：独居石重稀土残液+离子交换树脂（50% 概耗）→氧化钇 90%+PGM 残渣 50%、铜氧化、Y2O3+2BaO+3CuO 混料、蓝宝石基板（EBF 翠尼特线圈 32768）、RF 溅射（靶材 75% 概耗+氩）→谐振超导带、8 带+谐振合金线+银胶→**2^36 EU/t 谐振超导线缆** |
+| resonite+压电+调律 `resonantTuningChain` | 14 | 末影之眼×4+硅岩粉×2+PI 粉→resonite 粉（EBF 翠尼特线圈自动配方 32768）；resonite 线缆（PI+FKM+银胶，自动配方已取消）；石英→压电晶圆；铅+钛+氧→钛酸铅（MI 无锆，真实 PbTiO₃）→陶瓷板；石英振荡器；SAW 谐振器；变异剂+末影之眼→谐振母液；白音符（晶体电路+高纯单晶硅岩+振荡器+母液 100 mB）；红/黄/蓝音符（振荡器+钛酸铅板+resonite 板+母液 100/200/300 mB 阶梯）；调律方块（晶体电路+单晶硅岩×2+钛酸铅板×2+resonite 板+白音符）；谐振调律机（钛酸铅板+resonite 板+谐振超导线缆×4+湿件电路+银胶） |
+| 处理单元+单体+终局 `resonantCircuitChain` | 9 | 谐振 RAM（**绿**×2+bio RAM）/MMU（**青**×1）/ALU（**紫**×1）+钛酸铅板+resonite 板+母液 100/200/300 mB；声子激光器（SAW×2+**黑**×1+精英泵）；共振腔（钛酸铅×6+resonite×6+黑×2+超导线缆×8+FKM×2）；锁相环（振荡器×2+resonite 线×8+FKM）；**翠尼特二硅岩化物线圈**（翠尼特锭×1+轻硅岩×2+硅橡胶云母片×6+湿件电路×2）；谐振电路板（湿件板+PI 板×4+超导线缆×12+saser+共振腔+锁相环+resonite 板×6+钚电池×16 恰 8 物品+母液/He-3/变异剂，8000 s）；谐振电路（湿件×4+RAM×2+MMU+ALU+板，8000 s） |
+
+### 8.2 Q₈ 调律系统（全新机制，非配方）
+
+- **谐振调律机**（单方块机器，`blocks/resonance/`）正上方放置**调律方块**（8 态 `color` 属性，放置初始白）；
+- 放入音符 n（寄存器态 b）→ 输出音符 = **b×n**（Q₈ 四元数群乘法），方块色 ← n；白音符 = 读出+复位；
+- 颜色映射：白=1、黑=−1、红=i、青=−i、黄=j、紫=−j、蓝=k、绿=−k；互补色恰为逆元；红×黄=蓝而黄×红=绿（非交换）；
+- 交互：手持音符右键（产物直接进背包）或漏斗自动化（`WorldlyContainer`：上/侧面进音符、底面出产物，服务器 tick 处理输入槽）；
+- 音符经济闭环：白/红/黄/蓝可直接合成；绿/青/紫/黑**仅**调律机可产（如 蓝=红×黄、绿=黄×红、黑=红×红、青=黑×红）；`NINotes.init()` 启动时对乘法表做 Q₈ 一致性自检。
+
+### 8.3 催化剂概率消耗与概率产出一览
+
+催化剂（`itemIn` 第 3 参 = 每次合成独立消耗概率）：亚硝酸钠 25%、TBP 10%、肼 10%、CMPO 5%、DTPA 10%、α-HIBA 10%、氯酸钠 10%、独居石（Ac 载体）50%、金箔 5%、钒 10%、铜 15%、硫酸钠（引发剂）10%、离子交换树脂 50%、ODA（固化剂）25%、溅射靶材 75%、碲（Sg 挥发载体）25%。
+产率（`itemOut` 第 3 参 = 产出概率，即化学产率叙事）：U 90%、Pu/Np 85%、Th 90%、Ac/Pa 75%、Bk 80%、Am/Cm/Cf/Es 80%、Fm/Md/No/Lr 70%、Rf/Db 60%、Sg/Bh 50%、Hs 55%、Mt/Ds 55%、Rg 60%、Cn 65%、粗轻硅岩粉 75%、轻硅岩 90%、均苯四甲酸 90%、对硝基氯苯 80%、氧化钇 90%、PGM 残渣 50%、氙/碲裂变副产 10%/15%（碲回供碲酸与 Sg 载体，闭环）。
+
+### 8.4 新注册内容
+
+材料 3：trinium（全部件，EBF+真空冷冻热锭路线取消，聚变锭唯一源）、resonite（全部件+线+线缆 2^25，`setTier(4)`=翠尼特线圈 32768）、resonant_superconductor（仅线缆 2^36）；流体 32（氡/裂化液/PUREX 与 TRUEX 各相/锕系组液/超重蒸气/鎶冷凝液/𬬭配位液/碲酸/王水/6 种熔融金属/母液/聚酰胺酸/银胶/VDF/HFP/氯仿/R-22/铀镎混合料液）；物品 ~70（22 种元素粉、9 种分离试剂、轻硅岩+粗粉、精金/秘银锭、钛酸铅粉/板、压电晶圆、振荡器、SAW、PI 中间体×6+粉/板、FKM 板、氧化钇/氧化铜/靶材/蓝宝石/超导带、谐振 RAM/MMU/ALU、saser/共振腔/锁相环、金箔、PGM 残渣）；方块 2（8 态调律方块、调律机+BE）+ 8 音符物品。
+
+### 8.5 战略储备（有意不消费）
+
+除 Rg/Cn（聚变）、U/Pu（MI 生态）、Th/Te/Na 等试剂自用外，Ac/Am/Bk/Cf/Cm/Es/Fm/Lr/Md/No/Pa/Np 及 Rf/Db/Sg/Bh/Hs/Mt/Ds 共 19 种元素粉当前无下游——为后续电路层级（optical/EMI/…）预留的战略储备（用户明示豁免）。精金/秘银锭为聚变固态副产（熔体才是正途消耗）。
