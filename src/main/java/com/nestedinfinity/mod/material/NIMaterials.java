@@ -63,6 +63,18 @@ public final class NIMaterials {
                         "assembler/cable"));
         Materials.put("resonant_superconductor", new NIMaterial("resonant_superconductor")
                 .generateCableOnly(68_719_476_736L));
+        // Optical-circuit tier materials. Neutronium (degenerate matter) is born
+        // in the implosion compressor, melt-cast in the magma crucible — so the
+        // auto EBF smelt and the hot-ingot cooldown are both canceled (no hot
+        // ingot source; MI 2.5.6 runs that cooldown in the heat exchanger). Its
+        // wire part carries the hand-written recipe mirroring the
+        // trinium_dinaquadide coil (see NIRecipeProvider), so the auto wiremill
+        // recipe is canceled too. The optical superconductor is a cable-only
+        // material at 2^39 EU/t, one tier of eight above resonant.
+        Materials.put("neutronium", new NIMaterial("neutronium").skipEbfRecipes().generateWireOnly()
+                .cancelRecipes("heat_exchanger/hot_ingot", "wiremill/wire"));
+        Materials.put("optical_superconductor", new NIMaterial("optical_superconductor")
+                .generateCableOnly(549_755_813_888L));
     }
 
     public static final NIMaterial NAQUADAH = Materials.get("naquadah");

@@ -38,6 +38,8 @@ public final class NIMaterial {
     /** Coil tier required to smelt the hot ingot: 0=cupronickel, 1=kanthal, 2=nichrome, then in NICoils order. */
     private int blastFurnaceTier = 1;
     private boolean wire;
+    /** Wire part registered without the energy cable (hand-written recipe, feeds a coil). */
+    private boolean wireOnly;
     /** Adds the rotor part with a simplified plate+rod recipe (MI's own rotor needs blade/ring/bolt parts). */
     private boolean rotor;
     /** Cable-only material: registers just {@code <name>_cable} (e.g. the advanced superconductor cable). */
@@ -79,6 +81,18 @@ public final class NIMaterial {
     public NIMaterial generateWire(long maxTransfer) {
         this.wire = true;
         this.cableTransfer = maxTransfer;
+        return this;
+    }
+
+    /**
+     * Adds the wire part without an energy cable, for materials whose wire has
+     * a hand-written recipe (neutronium's mirrors the previous coil tier) and
+     * feeds a coil instead of a cable. The auto wiremill recipe is canceled so
+     * the hand-written one is the only route.
+     */
+    public NIMaterial generateWireOnly() {
+        this.wire = true;
+        this.wireOnly = true;
         return this;
     }
 
@@ -130,7 +144,9 @@ public final class NIMaterial {
             }
             if (wire) {
                 builder.addParts(MIParts.WIRE);
-                builder.addParts(MIParts.CABLE.of(cableTier()));
+                if (!wireOnly) {
+                    builder.addParts(MIParts.CABLE.of(cableTier()));
+                }
             }
         }
         builder.addRecipes(StandardRecipes::apply);
@@ -154,7 +170,7 @@ public final class NIMaterial {
 
     /** Whether this material has an energy cable (via {@link #generateWire} or {@link #generateCableOnly}). */
     public boolean hasCable() {
-        return wire || cableOnly;
+        return (wire && !wireOnly) || cableOnly;
     }
 
     /** Full item id of a part, e.g. naquadah + "dust" -> modern_industrialization:naquadah_dust */
@@ -224,7 +240,7 @@ public final class NIMaterial {
                     .addPartInput(MIParts.DUST, 1)
                     .addPartOutput(MIParts.HOT_INGOT, 1);
         }
-        if (wire && !cableOnly) {
+        if (wire && !cableOnly && !wireOnly) {
             // Cable: wire + mica insulator sheet + styrene rubber + liquid glass
             new MIRecipeBuilder(ctx, MIMachineRecipeTypes.ASSEMBLER, "cable", 8, 200)
                     .addPartInput(MIParts.WIRE, 1)
@@ -265,6 +281,8 @@ public final class NIMaterial {
             case "trinium_dinaquadide" -> 0x8A3FB8; // purple, aligned with the dinaquide coil
             case "resonite" -> 0x8CE8C0; // ender-teal, the ender-eye alloy
             case "resonant_superconductor" -> 0x50C8E8; // bright cyan YBCO luster
+            case "neutronium" -> 0xD8D8F8; // degenerate-matter pale lavender glow
+            case "optical_superconductor" -> 0xB070F0; // violet, the photonic tier
             default -> 0x9E9E9E;
         };
     }

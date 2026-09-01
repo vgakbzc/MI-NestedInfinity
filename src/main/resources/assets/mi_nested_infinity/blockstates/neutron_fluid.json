@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/neutron_fluid"
+    }
+  }
+}

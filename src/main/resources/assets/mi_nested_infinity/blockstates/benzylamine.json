@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/benzylamine"
+    }
+  }
+}

@@ -157,6 +157,46 @@ public final class NIFluids {
 
     public static final List<Entry> NOBLE = List.of(NEON, ARGON, KRYPTON, LIQUID_XENON);
 
+    // Optical-circuit program: perfluoroelastomer monomers, the AO peroxide
+    // loop, semiconductor-grade acids and photoresists, the HNIW reagent
+    // stream, the fiber precursor chlorides and the neutronium melts.
+    // Mirror of tools/gen_photonic_assets.py (OPTICAL_FLUIDS).
+    public static final Entry TETRAFLUOROETHYLENE = register("tetrafluoroethylene", 0xFFE8E8E0); // R-22 pyrolysis
+    public static final Entry HEXAFLUOROPROPYLENE_OXIDE = register("hexafluoropropylene_oxide", 0xFFD8E8E0); // HFPO
+    public static final Entry PERFLUOROMETHYL_VINYL_ETHER = register("perfluoromethyl_vinyl_ether", 0xFFC0E0DC); // PMVE
+    public static final Entry ANTHRAQUINONE_WORKING_SOLUTION = register("anthraquinone_working_solution", 0xFFD8B850);
+    public static final Entry HYDROGENATED_WORKING_SOLUTION = register("hydrogenated_working_solution", 0xFFB89838);
+    public static final Entry CRUDE_HYDROGEN_PEROXIDE = register("crude_hydrogen_peroxide", 0xFFE0E8E4);
+    public static final Entry ELECTRONIC_HYDROGEN_PEROXIDE = register("electronic_grade_hydrogen_peroxide", 0xFFF0F8F8);
+    public static final Entry ELECTRONIC_NITRIC_ACID = register("electronic_grade_nitric_acid", 0xFFF0E8C8);
+    public static final Entry ELECTRONIC_SULFURIC_ACID = register("electronic_grade_sulfuric_acid", 0xFFF0E8D0);
+    public static final Entry TMAH_DEVELOPER = register("tmah_developer", 0xFFE8E8D8); // 0.26N developer
+    public static final Entry PGMEA_SOLVENT = register("pgmea_solvent", 0xFFF0E8D8); // resist thinner
+    public static final Entry KRF_PHOTORESIST = register("krf_photoresist", 0xFFD8A860);
+    public static final Entry ARF_PHOTORESIST = register("arf_photoresist", 0xFFC898B8);
+    public static final Entry UV_OPTICAL_ADHESIVE = register("uv_optical_adhesive", 0xFFE8D8E8);
+    public static final Entry BENZYL_CHLORIDE = register("benzyl_chloride", 0xFFE8E8C8);
+    public static final Entry FLUOROBENZENE = register("fluorobenzene", 0xFFE0F0E8);
+    public static final Entry BENZYLAMINE = register("benzylamine", 0xFFE8E0B8);
+    public static final Entry GLYOXAL = register("glyoxal", 0xFFF0E8C8);
+    public static final Entry KETENE = register("ketene", 0xFFE0E0E0);
+    public static final Entry ACETIC_ANHYDRIDE = register("acetic_anhydride", 0xFFE8E8D0);
+    public static final Entry MIBK_SOLVENT = register("mibk_solvent", 0xFFE8E0D0); // niobium extractant
+    public static final Entry SILICON_TETRACHLORIDE = register("silicon_tetrachloride", 0xFFD8E0E8);
+    public static final Entry GERMANIUM_TETRACHLORIDE = register("germanium_tetrachloride", 0xFFE0E8D0);
+    public static final Entry FLUORONIOBIC_SOLUTION = register("fluoroniobic_solution", 0xFFD8E0D8); // H2NbF7
+    public static final Entry NEUTRON_FLUID = register("neutron_fluid", 0xFFB8D8F0); // Cf-252 decay flux
+    public static final Entry MOLTEN_NEUTRONIUM = register("molten_neutronium", 0xFFD8D8F8);
+
+    public static final List<Entry> OPTICAL = List.of(TETRAFLUOROETHYLENE, HEXAFLUOROPROPYLENE_OXIDE,
+            PERFLUOROMETHYL_VINYL_ETHER, ANTHRAQUINONE_WORKING_SOLUTION, HYDROGENATED_WORKING_SOLUTION,
+            CRUDE_HYDROGEN_PEROXIDE, ELECTRONIC_HYDROGEN_PEROXIDE, ELECTRONIC_NITRIC_ACID, ELECTRONIC_SULFURIC_ACID,
+            TMAH_DEVELOPER, PGMEA_SOLVENT, KRF_PHOTORESIST, ARF_PHOTORESIST, UV_OPTICAL_ADHESIVE, BENZYL_CHLORIDE,
+            BENZYLAMINE, GLYOXAL, KETENE, ACETIC_ANHYDRIDE, MIBK_SOLVENT, SILICON_TETRACHLORIDE,
+            GERMANIUM_TETRACHLORIDE, FLUORONIOBIC_SOLUTION, NEUTRON_FLUID, MOLTEN_NEUTRONIUM,
+            FLUOROBENZENE);
+
+
     public static final List<Entry> ALGAE = List.of(ERYTHROPHYTA, AURANTIOPHYTA, XANTHOPHYTA, PRASINOPHYTA,
             CHLOROPHYTA, GLAUCOPHYTA, CYANOPHYTA, AZUREOPHYTA, CAERULEOPHYTA, PURPUREOPHYTA, MAGENTOPHYTA, RHODOPHYTA);
 
@@ -181,7 +221,7 @@ public final class NIFluids {
             CRUDE_EPICHLOROHYDRIN, EPICHLOROHYDRIN, CRUDE_BISPHENOL_A, BISPHENOL_A, CHLOROHYDRIN_ETHER,
             CRUDE_EPOXY_RESIN, EPOXY_RESIN, ANTIMONY_PENTAFLUORIDE, FLUOROANTIMONIC_ACID).stream(),
             Stream.concat(NOBLE.stream(), Stream.concat(ALGAE.stream(),
-            Stream.concat(BIO.stream(), RESONANT.stream())))).toList();
+            Stream.concat(BIO.stream(), Stream.concat(RESONANT.stream(), OPTICAL.stream()))))).toList();
 
     private static Entry register(String name, int tint) {
         return new Entry(name, tint);

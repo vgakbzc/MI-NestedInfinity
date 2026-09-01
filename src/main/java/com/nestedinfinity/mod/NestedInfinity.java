@@ -32,6 +32,7 @@ import com.nestedinfinity.mod.blocks.NIMachines;
 import com.nestedinfinity.mod.fluids.NIFluids;
 import com.nestedinfinity.mod.items.NICircuits;
 import com.nestedinfinity.mod.items.NIItems;
+import com.nestedinfinity.mod.items.NIOpticalItems;
 import com.nestedinfinity.mod.items.algae.NIPetriDishes;
 import com.nestedinfinity.mod.items.gems.NIGems;
 import com.nestedinfinity.mod.items.resonance.NINotes;
@@ -115,6 +116,10 @@ public class NestedInfinity {
                 output.accept(NIFluids.ARGON.bucket.get());
                 output.accept(NIFluids.KRYPTON.bucket.get());
                 output.accept(NIFluids.LIQUID_XENON.bucket.get());
+                // photonic tier: FFKM/PEEK/electronic chemicals, the element
+                // chains, optics, the HNIW and neutronium programs, the parts
+                NIOpticalItems.ALL.forEach(item -> output.accept(item.get()));
+                NIFluids.OPTICAL.forEach(fluid -> output.accept(fluid.bucket.get()));
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -124,6 +129,7 @@ public class NestedInfinity {
         NIUpgrades.init();
         NIMaterials.init();
         NIItems.init();
+        NIOpticalItems.init();
         NIBlocks.init();
         NIFluids.init();
         NIPetriDishes.init();

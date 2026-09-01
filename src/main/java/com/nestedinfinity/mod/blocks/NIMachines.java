@@ -30,6 +30,9 @@ public final class NIMachines {
     public static final String SUPER_ASSEMBLER_PATH = "super_assembler";
     public static final MachineRecipeType SUPER_ASSEMBLER = createSuperAssemblerType();
 
+    public static final String DUV_STEPPER_PATH = "duv_stepper";
+    public static final MachineRecipeType DUV_STEPPER = createDuvStepperType();
+
     /**
      * MIMachineRecipeTypes.create(String) builds a type that rejects every ingredient kind;
      * the two-arg overload that configures capabilities is private, so we construct the
@@ -87,6 +90,18 @@ public final class NIMachines {
                 .withItemOutputs();
         MIRegistries.RECIPE_SERIALIZERS.register(SUPER_ASSEMBLER_PATH, () -> type);
         MIRegistries.RECIPE_TYPES.register(SUPER_ASSEMBLER_PATH, () -> type);
+        return type;
+    }
+
+    private static MachineRecipeType createDuvStepperType() {
+        MachineRecipeType type = new MachineRecipeType(
+                ResourceLocation.fromNamespaceAndPath("modern_industrialization", DUV_STEPPER_PATH))
+                .withItemInputs()
+                .withItemOutputs()
+                .withFluidInputs()
+                .withFluidOutputs();
+        MIRegistries.RECIPE_SERIALIZERS.register(DUV_STEPPER_PATH, () -> type);
+        MIRegistries.RECIPE_TYPES.register(DUV_STEPPER_PATH, () -> type);
         return type;
     }
 
@@ -190,17 +205,40 @@ public final class NIMachines {
                     builder.playerInventoryY = 182;
                 },
                 new ProgressBar.Params(100, 0, "arrow"),
-                new RecipeEfficiencyBar.Params(2, 176),
-                new EnergyBar.Params(160, 48),
+                new RecipeEfficiencyBar.Params(44, 171),
+                new EnergyBar.Params(4, 30),
                 itemSlots -> {
                     for (int row = 0; row < 10; row++) {
                         for (int col = 0; col < 10; col++) {
-                            itemSlots.addSlot(1 + col * 15, 18 + row * 15);
+                            itemSlots.addSlot(22 + col * 15, 18 + row * 15);
                         }
                     }
-                    itemSlots.addSlot(158, 26);
+                    itemSlots.addSlot(132, 0);
                 },
                 fluidTanks -> {},
+                true, false, false,
+                4, 16);
+
+        // DUV stepper: the deep-UV lithography scanner of the optical program.
+        // Three item inputs on the left (wafer, mask, carrier), two fluid tanks
+        // below them (photoresist + developer/etchant), the exposed wafer out
+        // on the right with the waste tank. Slot consumers take items then
+        // fluids, inputs before outputs in each. The lock button at (152,4)
+        // and the title strip are kept clear by the column layout.
+        SingleBlockCraftingMachines.registerMachineTiers(
+                "DUV Stepper",
+                DUV_STEPPER_PATH,
+                DUV_STEPPER,
+                3, 1, 2, 1,
+                builder -> {
+                    builder.backgroundHeight(184);
+                    builder.playerInventoryY = 102;
+                },
+                new ProgressBar.Params(92, 44, "arrow"),
+                new RecipeEfficiencyBar.Params(30, 95),
+                new EnergyBar.Params(12, 30),
+                itemSlots -> itemSlots.addSlots(30, 17, 1, 3).addSlot(128, 44),
+                fluidTanks -> fluidTanks.addSlot(30, 75).addSlot(54, 75).addSlot(128, 75),
                 true, false, false,
                 4, 16);
     }

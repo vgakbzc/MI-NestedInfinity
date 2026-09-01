@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/molten_neutronium"
+    }
+  }
+}
