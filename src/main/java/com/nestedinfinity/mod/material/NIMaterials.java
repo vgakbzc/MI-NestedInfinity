@@ -49,6 +49,10 @@ public final class NIMaterials {
                 // hot ingots have no source (fusion casts ingots directly), so the
                 // auto vacuum-freezer hot ingot -> ingot recipe would be dead
                 .cancelRecipes("vacuum_freezer/hot_ingot"));
+        // Trinium dinaquide: the coil alloy proper. Smelted on the TPV coil tier
+        // (setTier 3) — gating it on its own coil would be circular — then the
+        // plates are assembled into the trinium_dinaquadide_coil.
+        Materials.put("trinium_dinaquadide", new NIMaterial("trinium_dinaquadide").setTier(3));
         Materials.put("resonite", new NIMaterial("resonite").setTier(4).generateWire(33_554_432L)
                 .cancelRecipes(
                         "packer/block", "packer/cable", "packer/dust", "packer/ingot",

@@ -4,11 +4,7 @@
   "duration": 80000,
   "item_inputs": [
     {
-      "item": "modern_industrialization:trinium_ingot",
-      "amount": 1
-    },
-    {
-      "item": "mi_nested_infinity:naquide",
+      "item": "modern_industrialization:trinium_dinaquadide_plate",
       "amount": 2
     },
     {

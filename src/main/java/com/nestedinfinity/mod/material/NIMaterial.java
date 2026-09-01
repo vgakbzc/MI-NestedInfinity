@@ -262,6 +262,7 @@ public final class NIMaterial {
             case "tpv" -> 0x5AC26C; // aligned with the green tpv coil texture
             case "advanced_superconductor" -> 0x3A4E8C;
             case "trinium" -> 0x9BC8D8; // pale steel-blue, aligned with the trinium coil
+            case "trinium_dinaquadide" -> 0x8A3FB8; // purple, aligned with the dinaquide coil
             case "resonite" -> 0x8CE8C0; // ender-teal, the ender-eye alloy
             case "resonant_superconductor" -> 0x50C8E8; // bright cyan YBCO luster
             default -> 0x9E9E9E;

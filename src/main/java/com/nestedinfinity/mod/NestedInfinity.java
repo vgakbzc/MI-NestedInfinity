@@ -83,6 +83,8 @@ public class NestedInfinity {
                 output.accept(NIItems.NAQUIDE.get());
                 output.accept(NIItems.ADAMANTIUM_INGOT.get());
                 output.accept(NIItems.MITHRIL_INGOT.get());
+                output.accept(NIItems.ADAMANTIUM_PLATE.get());
+                output.accept(NIItems.MITHRIL_PLATE.get());
                 output.accept(NIItems.TELLURIUM_DUST.get());
                 output.accept(NIItems.PGM_RESIDUE.get());
                 output.accept(NIItems.QUARTZ_OSCILLATOR.get());
@@ -127,6 +129,8 @@ public class NestedInfinity {
         BLOCKS.register(modEventBus);
         // Block entity types (resonance attuner)
         NIBlocks.BLOCK_ENTITY_TYPES.register(modEventBus);
+        // Menus (resonance attuner GUI)
+        NIBlocks.MENUS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered

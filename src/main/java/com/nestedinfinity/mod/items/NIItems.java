@@ -189,6 +189,9 @@ public final class NIItems {
     public static final DeferredItem<Item> NAQUIDE = register("naquide");
     public static final DeferredItem<Item> ADAMANTIUM_INGOT = register("adamantium_ingot");
     public static final DeferredItem<Item> MITHRIL_INGOT = register("mithril_ingot");
+    // Plates of the fusion-born alloys, laminated into the resonant circuit
+    public static final DeferredItem<Item> ADAMANTIUM_PLATE = register("adamantium_plate");
+    public static final DeferredItem<Item> MITHRIL_PLATE = register("mithril_plate");
 
     // Piezoelectric quartz side (real PbTiO3 ceramics; MI has no zirconium)
     public static final DeferredItem<Item> LEAD_TITANATE_DUST = register("lead_titanate_dust");

@@ -20,12 +20,12 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_erythrophyta",
+      "item": "mi_nested_infinity:petri_aurantiophyta",
       "amount": 1,
       "probability": 0.5
     },
     {
-      "item": "mi_nested_infinity:petri_aurantiophyta",
+      "item": "mi_nested_infinity:petri_erythrophyta",
       "amount": 1,
       "probability": 0.5
     }

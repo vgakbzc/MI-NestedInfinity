@@ -22,6 +22,14 @@
     {
       "item": "mi_nested_infinity:resonant_circuit_board",
       "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:adamantium_plate",
+      "amount": 8
+    },
+    {
+      "item": "mi_nested_infinity:mithril_plate",
+      "amount": 8
     }
   ],
   "item_outputs": [
