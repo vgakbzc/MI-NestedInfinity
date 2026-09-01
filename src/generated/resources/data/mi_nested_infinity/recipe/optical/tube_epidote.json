@@ -1,0 +1,39 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:epidote_plate",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:transuranic_battery",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:crystal_diode",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:graphene_electrode",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:xenon",
+      "amount": 100
+    },
+    {
+      "fluid": "mi_nested_infinity:molten_trinium",
+      "amount": 50
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:epidote_glow_tube",
+      "amount": 1
+    }
+  ]
+}

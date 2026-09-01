@@ -13,6 +13,7 @@ import com.nestedinfinity.mod.blocks.NIBlocks;
 import com.nestedinfinity.mod.items.NIItems;
 import com.nestedinfinity.mod.items.algae.NIAlgae;
 import com.nestedinfinity.mod.items.algae.NIPetriDishes;
+import com.nestedinfinity.mod.items.gems.NIGems;
 import com.nestedinfinity.mod.material.NIMaterial;
 import com.nestedinfinity.mod.material.NIMaterials;
 
@@ -64,6 +65,7 @@ public final class NIRecipeProvider implements DataProvider {
         bioChain(r);
         cultivationRecipes(r);
         wildIsolation(r);
+        opticalGemChain(r);
     }
 
     /**
@@ -2510,5 +2512,163 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemIn(NIItems.MITHRIL_PLATE.getId().toString(), 8)
                 .itemOut(ni + "resonant_circuit", 1)
                 .save("electric_age/circuit/assembler/resonant_circuit");
+    }
+
+    // -- optical program: the hundred-gem collection ---------------------------
+
+    /**
+     * The optical program: a hundred real gemstones, each grown in the algae
+     * cultivator from glass, the petri dish of the gem's hue and the noble gas
+     * of its glow color (probabilistic output, like a chemical yield). Nine
+     * gems compress into a storage block, the cutting machine slices that
+     * block into nine plates, and each plate becomes one glow tube in the
+     * assembler (transuranic RTG battery, crystal diode, two graphene
+     * electrodes, its noble gas, molten trinium). The hundred distinct tubes
+     * finally merge in the super assembler's 10x10 grid into the optical
+     * qubit component - that last craft lives in
+     * {@code SuperAssemblerBlockEntity}, beyond the JSON recipe system.
+     */
+    private void opticalGemChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        int EU = 2_000_000_000;
+        int T = 80_000;
+
+        // the transuranic RTG battery: three so-far-unused heavy elements in a
+        // naquadah casing (Am/Cm are real radioisotope-battery fuels, Np-237
+        // breeds battery-grade Pu-238)
+        r.machine("assembler", EU, T)
+                .itemIn("modern_industrialization:naquadah_plate", 2)
+                .itemIn(ni + "americium_dust", 1)
+                .itemIn(ni + "curium_dust", 1)
+                .itemIn(ni + "neptunium_dust", 1)
+                .itemOut(ni + "transuranic_battery", 1)
+                .save("optical/transuranic_battery");
+        // crystal diode and graphene electrodes, the tube's active parts
+        r.machine("assembler", EU, T)
+                .itemIn("modern_industrialization:silicon_wafer", 2)
+                .itemIn("modern_industrialization:copper_plate", 1)
+                .itemOut(ni + "crystal_diode", 1)
+                .save("optical/crystal_diode");
+        r.machine("assembler", EU, T)
+                .itemIn("modern_industrialization:carbon_dust", 4)
+                .itemIn("modern_industrialization:copper_plate", 1)
+                .itemOut(ni + "graphene_electrode", 2)
+                .save("optical/graphene_electrode");
+
+        String[] dishIds = new String[NIAlgae.WHEEL_SIZE];
+        for (NIGems.Gem gem : NIGems.ALL) {
+            int slot = algaSlotFor(gem.rgb());
+            if (dishIds[slot] == null) {
+                dishIds[slot] = dishForSlot(slot);
+            }
+            String dish = dishIds[slot];
+            String gas = gasFor(gem.rgb());
+            r.machine("algae_cultivator", 8, 200)
+                    .itemIn("minecraft:glass", 1)
+                    .itemIn(dish, 1)
+                    .fluidIn(gas, 50)
+                    .itemOut(NIGems.gemId(gem), 1, 0.5)
+                    .save("optical/gem_" + gem.name());
+            r.machine("compressor", 2, 200)
+                    .itemIn(NIGems.gemId(gem), 9)
+                    .itemOut(NIGems.blockId(gem), 1)
+                    .save("optical/block_" + gem.name());
+            r.machine("cutting_machine", 2, 200)
+                    .itemIn(NIGems.blockId(gem), 1)
+                    .fluidIn("modern_industrialization:lubricant", 1)
+                    .itemOut(NIGems.plateId(gem), 9)
+                    .save("optical/plate_" + gem.name());
+            r.machine("assembler", EU, T)
+                    .itemIn(NIGems.plateId(gem), 1)
+                    .itemIn(ni + "transuranic_battery", 1)
+                    .itemIn(ni + "crystal_diode", 1)
+                    .itemIn(ni + "graphene_electrode", 2)
+                    .fluidIn(gas, 100)
+                    .fluidIn(ni + "molten_trinium", 50)
+                    .itemOut(NIGems.tubeId(gem), 1)
+                    .save("optical/tube_" + gem.name());
+        }
+    }
+
+    /** Discharge colors of the six noble gases (helium peach, neon red-orange,
+     * argon lavender, krypton ice-blue, xenon and radon per their fluids). */
+    private static final int[][] NOBLE_GLOWS = {
+            {255, 200, 130}, {255, 95, 66}, {170, 140, 255}, {150, 200, 255}, {127, 184, 196}, {200, 184, 232},
+    };
+    private static final String[] NOBLE_FLUIDS = {
+            "modern_industrialization:helium",
+            "mi_nested_infinity:neon",
+            "mi_nested_infinity:argon",
+            "mi_nested_infinity:krypton",
+            "mi_nested_infinity:xenon",
+            "mi_nested_infinity:radon",
+    };
+    /** Canonical colors of the twelve algae-wheel slots (ordinal order). */
+    private static final int[][] WHEEL_COLORS = {
+            {220, 45, 55}, {240, 140, 45}, {240, 220, 80}, {160, 215, 80}, {60, 200, 110}, {75, 200, 165},
+            {80, 215, 215}, {95, 165, 230}, {55, 95, 210}, {145, 95, 200}, {200, 65, 170}, {240, 145, 175},
+    };
+
+    /** The noble gas whose discharge color lies nearest the given rgb. */
+    private static String gasFor(int rgb) {
+        return NOBLE_FLUIDS[nearest(rgb, NOBLE_GLOWS)];
+    }
+
+    /**
+     * The algae-wheel slot for a gem color: hue mapped onto the twelve wheel
+     * positions, with near-achromatic colors (grays, whites, blacks, metallic
+     * sheens) falling back to nearest canonical wheel color by distance.
+     */
+    private static int algaSlotFor(int rgb) {
+        int red = (rgb >> 16) & 0xFF;
+        int green = (rgb >> 8) & 0xFF;
+        int blue = rgb & 0xFF;
+        int max = Math.max(red, Math.max(green, blue));
+        int min = Math.min(red, Math.min(green, blue));
+        if (max == 0 || (max - min) / (float) max < 0.18f) {
+            return nearest(rgb, WHEEL_COLORS);
+        }
+        float hue;
+        if (max == red) {
+            hue = 60f * (green - blue) / (float) (max - min);
+        } else if (max == green) {
+            hue = 60f * ((blue - red) / (float) (max - min) + 2);
+        } else {
+            hue = 60f * ((red - green) / (float) (max - min) + 4);
+        }
+        if (hue < 0) {
+            hue += 360;
+        }
+        return Math.round(hue / 30f) % NIAlgae.WHEEL_SIZE;
+    }
+
+    private static int nearest(int rgb, int[][] palette) {
+        int red = (rgb >> 16) & 0xFF;
+        int green = (rgb >> 8) & 0xFF;
+        int blue = rgb & 0xFF;
+        int best = 0;
+        long bestDistance = Long.MAX_VALUE;
+        for (int i = 0; i < palette.length; i++) {
+            long dr = red - palette[i][0];
+            long dg = green - palette[i][1];
+            long db = blue - palette[i][2];
+            long distance = dr * dr + dg * dg + db * db;
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                best = i;
+            }
+        }
+        return best;
+    }
+
+    /** The single-strain petri dish item id of an algae-wheel slot. */
+    private static String dishForSlot(int slot) {
+        NIAlgae alga = NIAlgae.values()[slot];
+        for (NIPetriDishes.PetriDish dish : NIPetriDishes.ALL) {
+            if (dish.algae().size() == 1 && dish.algae().get(0) == alga) {
+                return dish.item().getId().toString();
+            }
+        }
+        throw new IllegalStateException("No single-strain dish for " + alga);
     }
 }

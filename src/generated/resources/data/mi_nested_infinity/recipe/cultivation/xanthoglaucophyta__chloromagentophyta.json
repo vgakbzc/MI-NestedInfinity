@@ -20,12 +20,12 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_prasinomagentophyta",
+      "item": "mi_nested_infinity:petri_xanthoglaucomagentophyta",
       "amount": 1,
       "probability": 0.5
     },
     {
-      "item": "mi_nested_infinity:petri_xanthoglaucomagentophyta",
+      "item": "mi_nested_infinity:petri_prasinomagentophyta",
       "amount": 1,
       "probability": 0.5
     }

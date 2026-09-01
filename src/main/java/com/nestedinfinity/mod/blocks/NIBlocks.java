@@ -4,6 +4,9 @@ import com.nestedinfinity.mod.blocks.resonance.ResonanceAttunerBlock;
 import com.nestedinfinity.mod.blocks.resonance.ResonanceAttunerBlockEntity;
 import com.nestedinfinity.mod.blocks.resonance.ResonanceAttunerMenu;
 import com.nestedinfinity.mod.blocks.resonance.TuningBlock;
+import com.nestedinfinity.mod.blocks.superassembler.SuperAssemblerBlock;
+import com.nestedinfinity.mod.blocks.superassembler.SuperAssemblerBlockEntity;
+import com.nestedinfinity.mod.blocks.superassembler.SuperAssemblerMenu;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
@@ -70,6 +73,19 @@ public final class NIBlocks {
 
     public static final DeferredHolder<MenuType<?>, MenuType<ResonanceAttunerMenu>> RESONANCE_ATTUNER_MENU =
             MENUS.register("resonance_attuner", () -> IMenuTypeExtension.create(ResonanceAttunerMenu::new));
+
+    // Optical program finale (see blocks/superassembler): the 10x10 grid
+    // machine that fuses the hundred glow tubes into the optical qubit.
+    public static final DeferredBlock<SuperAssemblerBlock> SUPER_ASSEMBLER = NestedInfinity.BLOCKS.register("super_assembler",
+            () -> new SuperAssemblerBlock(BlockBehaviour.Properties.of().strength(6.0F, 8.0F)));
+    public static final DeferredItem<BlockItem> SUPER_ASSEMBLER_ITEM = NestedInfinity.ITEMS.registerSimpleBlockItem("super_assembler", SUPER_ASSEMBLER);
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SuperAssemblerBlockEntity>> SUPER_ASSEMBLER_TYPE =
+            BLOCK_ENTITY_TYPES.register("super_assembler",
+                    () -> BlockEntityType.Builder.of(SuperAssemblerBlockEntity::new, SUPER_ASSEMBLER.get()).build(null));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<SuperAssemblerMenu>> SUPER_ASSEMBLER_MENU =
+            MENUS.register("super_assembler", () -> IMenuTypeExtension.create(SuperAssemblerMenu::new));
 
     public static void init() {}
 

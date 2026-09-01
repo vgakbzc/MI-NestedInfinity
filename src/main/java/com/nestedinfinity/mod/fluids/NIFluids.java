@@ -144,6 +144,14 @@ public final class NIFluids {
     public static final Entry CHLOROFORM = register("chloroform", 0xFFD8E8E8); // methane chlorination
     public static final Entry REFRIGERANT_22 = register("refrigerant_22", 0xFFC8E8E8); // CHClF2, VF2 precursor
 
+    // Remaining noble gases of the glow-tube program (helium is MI's own
+    // modern_industrialization:helium). Each gem's tube is filled with the gas
+    // whose discharge color lies nearest the gem's color: neon red-orange,
+    // argon lavender, krypton ice-blue (xenon and radon already registered).
+    public static final Entry NEON = register("neon", 0xFFFF5F42);
+    public static final Entry ARGON = register("argon", 0xFFAA8CFF);
+    public static final Entry KRYPTON = register("krypton", 0xFF96C8FF);
+
     public static final List<Entry> ALGAE = List.of(ERYTHROPHYTA, AURANTIOPHYTA, XANTHOPHYTA, PRASINOPHYTA,
             CHLOROPHYTA, GLAUCOPHYTA, CYANOPHYTA, AZUREOPHYTA, CAERULEOPHYTA, PURPUREOPHYTA, MAGENTOPHYTA, RHODOPHYTA);
 

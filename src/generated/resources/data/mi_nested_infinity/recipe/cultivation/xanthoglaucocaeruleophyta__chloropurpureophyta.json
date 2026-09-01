@@ -25,7 +25,7 @@
       "probability": 0.25
     },
     {
-      "item": "mi_nested_infinity:petri_prasinocaeruleophyta",
+      "item": "mi_nested_infinity:petri_xanthoglaucocaeruleophyta",
       "amount": 1,
       "probability": 0.25
     },
@@ -35,7 +35,7 @@
       "probability": 0.25
     },
     {
-      "item": "mi_nested_infinity:petri_xanthoglaucocaeruleophyta",
+      "item": "mi_nested_infinity:petri_prasinocaeruleophyta",
       "amount": 1,
       "probability": 0.25
     }

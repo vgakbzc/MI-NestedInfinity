@@ -193,6 +193,14 @@ public final class NIItems {
     public static final DeferredItem<Item> ADAMANTIUM_PLATE = register("adamantium_plate");
     public static final DeferredItem<Item> MITHRIL_PLATE = register("mithril_plate");
 
+    // Optical program (see NIGems and the super assembler): the glow-tube
+    // parts and the finale. The battery is an RTG-style cell of three
+    // so-far-unused transuranics (Np/Am/Cm) in a naquadah casing.
+    public static final DeferredItem<Item> TRANSURANIC_BATTERY = register("transuranic_battery");
+    public static final DeferredItem<Item> CRYSTAL_DIODE = register("crystal_diode");
+    public static final DeferredItem<Item> GRAPHENE_ELECTRODE = register("graphene_electrode");
+    public static final DeferredItem<Item> OPTICAL_QUBIT_COMPONENT = register("optical_qubit_component");
+
     // Piezoelectric quartz side (real PbTiO3 ceramics; MI has no zirconium)
     public static final DeferredItem<Item> LEAD_TITANATE_DUST = register("lead_titanate_dust");
     public static final DeferredItem<Item> LEAD_TITANATE_PLATE = register("lead_titanate_plate");

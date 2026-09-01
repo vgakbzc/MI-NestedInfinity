@@ -25,6 +25,7 @@ import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import com.nestedinfinity.mod.blocks.NIBlocks;
 import com.nestedinfinity.mod.blocks.NIMachines;
 import com.nestedinfinity.mod.blocks.resonance.ResonanceAttunerScreen;
+import com.nestedinfinity.mod.blocks.superassembler.SuperAssemblerScreen;
 import com.nestedinfinity.mod.fluids.NIFluids;
 import com.nestedinfinity.mod.material.NIMaterial;
 import com.nestedinfinity.mod.material.NIMaterials;
@@ -91,6 +92,7 @@ public class NestedInfinityClient {
     @SubscribeEvent
     static void registerMenuScreens(RegisterMenuScreensEvent event) {
         event.register(NIBlocks.RESONANCE_ATTUNER_MENU.get(), ResonanceAttunerScreen::new);
+        event.register(NIBlocks.SUPER_ASSEMBLER_MENU.get(), SuperAssemblerScreen::new);
     }
 
     @SubscribeEvent

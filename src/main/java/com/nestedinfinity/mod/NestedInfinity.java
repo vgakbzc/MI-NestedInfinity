@@ -33,6 +33,7 @@ import com.nestedinfinity.mod.fluids.NIFluids;
 import com.nestedinfinity.mod.items.NICircuits;
 import com.nestedinfinity.mod.items.NIItems;
 import com.nestedinfinity.mod.items.algae.NIPetriDishes;
+import com.nestedinfinity.mod.items.gems.NIGems;
 import com.nestedinfinity.mod.items.resonance.NINotes;
 import com.nestedinfinity.mod.material.NIMaterials;
 
@@ -99,6 +100,18 @@ public class NestedInfinity {
                 output.accept(NIItems.RESONANCE_CHAMBER.get());
                 output.accept(NIItems.PHASE_LOCKED_LOOP.get());
                 output.accept(NIFluids.RESONANT_MOTHER_LIQUOR.bucket.get());
+                // optical program: the hundred-gem collection, its glow tubes,
+                // the tube parts and the finale
+                NIGems.ALL.forEach(gem -> output.accept(gem.gem().get()));
+                NIGems.ALL.forEach(gem -> output.accept(gem.tube().get()));
+                output.accept(NIItems.TRANSURANIC_BATTERY.get());
+                output.accept(NIItems.CRYSTAL_DIODE.get());
+                output.accept(NIItems.GRAPHENE_ELECTRODE.get());
+                output.accept(NIItems.OPTICAL_QUBIT_COMPONENT.get());
+                output.accept(NIBlocks.SUPER_ASSEMBLER_ITEM.get());
+                output.accept(NIFluids.NEON.bucket.get());
+                output.accept(NIFluids.ARGON.bucket.get());
+                output.accept(NIFluids.KRYPTON.bucket.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -112,6 +125,7 @@ public class NestedInfinity {
         NIFluids.init();
         NIPetriDishes.init();
         NINotes.init();
+        NIGems.init();
         NICoils.init();
         NIMachines.init();
 
