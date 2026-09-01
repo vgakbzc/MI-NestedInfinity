@@ -1,12 +1,19 @@
 package com.nestedinfinity.mod.blocks;
 import com.nestedinfinity.mod.NestedInfinity;
+import com.nestedinfinity.mod.blocks.resonance.ResonanceAttunerBlock;
+import com.nestedinfinity.mod.blocks.resonance.ResonanceAttunerBlockEntity;
+import com.nestedinfinity.mod.blocks.resonance.TuningBlock;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * Standalone blocks that do not belong to a material group.
@@ -36,6 +43,24 @@ public final class NIBlocks {
     public static final DeferredBlock<Block> POLYBENZIMIDAZOLE_BLOCK = NestedInfinity.BLOCKS.register("polybenzimidazole_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5.0F, 6.0F)));
     public static final DeferredItem<BlockItem> POLYBENZIMIDAZOLE_BLOCK_ITEM = NestedInfinity.ITEMS.registerSimpleBlockItem("polybenzimidazole_block", POLYBENZIMIDAZOLE_BLOCK);
+
+    // Resonance program (see blocks/resonance): the attuner machine and the
+    // eight-state tuning register placed directly above it. Same no-mineable-tag
+    // handling as the bulk solids.
+    public static final DeferredBlock<TuningBlock> TUNING_BLOCK = NestedInfinity.BLOCKS.register("tuning_block",
+            () -> new TuningBlock(BlockBehaviour.Properties.of().strength(5.0F, 6.0F)));
+    public static final DeferredItem<BlockItem> TUNING_BLOCK_ITEM = NestedInfinity.ITEMS.registerSimpleBlockItem("tuning_block", TUNING_BLOCK);
+
+    public static final DeferredBlock<ResonanceAttunerBlock> RESONANCE_ATTUNER = NestedInfinity.BLOCKS.register("resonance_attuner",
+            () -> new ResonanceAttunerBlock(BlockBehaviour.Properties.of().strength(6.0F, 8.0F)));
+    public static final DeferredItem<BlockItem> RESONANCE_ATTUNER_ITEM = NestedInfinity.ITEMS.registerSimpleBlockItem("resonance_attuner", RESONANCE_ATTUNER);
+
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, NestedInfinity.MODID);
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ResonanceAttunerBlockEntity>> RESONANCE_ATTUNER_TYPE =
+            BLOCK_ENTITY_TYPES.register("resonance_attuner",
+                    () -> BlockEntityType.Builder.of(ResonanceAttunerBlockEntity::new, RESONANCE_ATTUNER.get()).build(null));
 
     public static void init() {}
 

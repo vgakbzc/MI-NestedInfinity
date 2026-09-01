@@ -42,6 +42,8 @@ public final class NIMaterial {
     private boolean rotor;
     /** Cable-only material: registers just {@code <name>_cable} (e.g. the advanced superconductor cable). */
     private boolean cableOnly;
+    /** Suppresses the custom tier-gated dust -> hot ingot EBF recipe (fusion-born materials). */
+    private boolean skipEbf;
     private long cableTransfer = DEFAULT_CABLE_TRANSFER;
     private Material material;
     /** Auto-generated material recipe ids to suppress, e.g. "packer/block" (applied after StandardRecipes). */
@@ -99,6 +101,16 @@ public final class NIMaterial {
     public NIMaterial generateRotor() {
         this.rotor = true;
         return cancelRecipes("assembler/rotor", "craft/rotor");
+    }
+
+    /**
+     * Suppresses the auto-generated tier-gated dust -&gt; hot ingot EBF recipe,
+     * for materials whose ingots come from somewhere else entirely (trinium is
+     * born in the fusion reactor, so an EBF route would bypass the cascade).
+     */
+    public NIMaterial skipEbfRecipes() {
+        this.skipEbf = true;
+        return this;
     }
 
     /** Registers through MI's material API. Called once from {@link NIMaterials#init()}, after all options. */
@@ -207,7 +219,7 @@ public final class NIMaterial {
     /** Recipes MI's StandardRecipes does not cover. */
     private void customRecipes(MaterialBuilder.RecipeContext ctx) {
         // Tier-gated EBF smelting: dust -> hot ingot
-        if (!cableOnly) {
+        if (!cableOnly && !skipEbf) {
             new MIRecipeBuilder(ctx, MIMachineRecipeTypes.BLAST_FURNACE, "dust_to_hot_ingot", tierEu(blastFurnaceTier), 400)
                     .addPartInput(MIParts.DUST, 1)
                     .addPartOutput(MIParts.HOT_INGOT, 1);
@@ -249,6 +261,9 @@ public final class NIMaterial {
             case "nichrome" -> 0xA8B0B8;
             case "tpv" -> 0x5AC26C; // aligned with the green tpv coil texture
             case "advanced_superconductor" -> 0x3A4E8C;
+            case "trinium" -> 0x9BC8D8; // pale steel-blue, aligned with the trinium coil
+            case "resonite" -> 0x8CE8C0; // ender-teal, the ender-eye alloy
+            case "resonant_superconductor" -> 0x50C8E8; // bright cyan YBCO luster
             default -> 0x9E9E9E;
         };
     }

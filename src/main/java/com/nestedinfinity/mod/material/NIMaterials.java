@@ -39,6 +39,26 @@ public final class NIMaterials {
         // Recipe is hand-written in NIRecipeProvider.superconductorChain.
         Materials.put("advanced_superconductor", new NIMaterial("advanced_superconductor")
                 .generateCableOnly(8_589_934_592L));
+        // Resonant-circuit materials. Trinium: smelted by FUSION (adamantium +
+        // mithril), so the auto dust->hot ingot EBF recipe is canceled. Resonite:
+        // the ender-eye alloy of the resonant program, smelted on the trinium
+        // coil (setTier 4 = NICoils tier index 2, 32768 heat), 2^25 EU/t cable
+        // (cable recipe hand-written with PI/FKM). The resonant superconductor:
+        // cable-only at 2^36 EU/t, one tier of eight above the advanced one.
+        Materials.put("trinium", new NIMaterial("trinium").skipEbfRecipes()
+                // hot ingots have no source (fusion casts ingots directly), so the
+                // auto vacuum-freezer hot ingot -> ingot recipe would be dead
+                .cancelRecipes("vacuum_freezer/hot_ingot"));
+        Materials.put("resonite", new NIMaterial("resonite").setTier(4).generateWire(33_554_432L)
+                .cancelRecipes(
+                        "packer/block", "packer/cable", "packer/dust", "packer/ingot",
+                        "craft/block_from_ingot", "craft/cable", "craft/dust_from_tiny_dust",
+                        "craft/ingot_from_block", "craft/ingot_from_nugget", "craft/nugget_from_ingot",
+                        "craft/tiny_dust_from_dust",
+                        "assembler/cable_styrene_rubber", "assembler/cable_synthetic_rubber",
+                        "assembler/cable"));
+        Materials.put("resonant_superconductor", new NIMaterial("resonant_superconductor")
+                .generateCableOnly(68_719_476_736L));
     }
 
     public static final NIMaterial NAQUADAH = Materials.get("naquadah");

@@ -33,6 +33,7 @@ import com.nestedinfinity.mod.fluids.NIFluids;
 import com.nestedinfinity.mod.items.NICircuits;
 import com.nestedinfinity.mod.items.NIItems;
 import com.nestedinfinity.mod.items.algae.NIPetriDishes;
+import com.nestedinfinity.mod.items.resonance.NINotes;
 import com.nestedinfinity.mod.material.NIMaterials;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -75,6 +76,27 @@ public class NestedInfinity {
                 output.accept(NIItems.PROTEIN.get());
                 output.accept(NIItems.AGAR.get());
                 output.accept(NIFluids.NUTRIENT_AGAR.bucket.get());
+                // resonant program: Q8 notes, separation cascade and circuit parts
+                NINotes.ALL.forEach(note -> output.accept(note.item.get()));
+                output.accept(NIBlocks.TUNING_BLOCK_ITEM.get());
+                output.accept(NIBlocks.RESONANCE_ATTUNER_ITEM.get());
+                output.accept(NIItems.NAQUIDE.get());
+                output.accept(NIItems.ADAMANTIUM_INGOT.get());
+                output.accept(NIItems.MITHRIL_INGOT.get());
+                output.accept(NIItems.TELLURIUM_DUST.get());
+                output.accept(NIItems.PGM_RESIDUE.get());
+                output.accept(NIItems.QUARTZ_OSCILLATOR.get());
+                output.accept(NIItems.SAW_RESONATOR.get());
+                output.accept(NIItems.POLYIMIDE_PLATE.get());
+                output.accept(NIItems.FLUOROELASTOMER_SHEET.get());
+                output.accept(NIItems.RESONANT_SUPERCONDUCTOR_TAPE.get());
+                output.accept(NIItems.RESONANT_RANDOM_ACCESS_MEMORY.get());
+                output.accept(NIItems.RESONANT_MEMORY_MANAGEMENT_UNIT.get());
+                output.accept(NIItems.RESONANT_ARITHMETIC_LOGIC_UNIT.get());
+                output.accept(NIItems.SASER.get());
+                output.accept(NIItems.RESONANCE_CHAMBER.get());
+                output.accept(NIItems.PHASE_LOCKED_LOOP.get());
+                output.accept(NIFluids.RESONANT_MOTHER_LIQUOR.bucket.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -87,6 +109,7 @@ public class NestedInfinity {
         NIBlocks.init();
         NIFluids.init();
         NIPetriDishes.init();
+        NINotes.init();
         NICoils.init();
         NIMachines.init();
 
@@ -102,6 +125,8 @@ public class NestedInfinity {
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
+        // Block entity types (resonance attuner)
+        NIBlocks.BLOCK_ENTITY_TYPES.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered

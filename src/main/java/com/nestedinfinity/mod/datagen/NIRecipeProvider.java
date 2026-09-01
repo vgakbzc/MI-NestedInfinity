@@ -55,6 +55,12 @@ public final class NIRecipeProvider implements DataProvider {
         bioCircuitChain(r);
         epoxyChain(r);
         circuitChain(r);
+        resonantSeparationChain(r);
+        resonantFusionChain(r);
+        resonantPolyimideChain(r);
+        resonantFluoroChain(r);
+        resonantTuningChain(r);
+        resonantCircuitChain(r);
         bioChain(r);
         cultivationRecipes(r);
         wildIsolation(r);
@@ -1541,5 +1547,932 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemIn("mi_nested_infinity:crystal_circuit_board", 1)
                 .itemOut("mi_nested_infinity:crystal_circuit", 1)
                 .save("electric_age/circuit/assembler/crystal_circuit");
+    }
+
+    /**
+     * Resonant circuit program, part 1: the all-element multi-cycle separation
+     * cascade. Radon (fusion of xenon and oxygen) cracks supercharged naquadah
+     * into a superheavy fission solution, and four real radiochemistry cycles
+     * carve the periodic table's entire last row out of it — PUREX
+     * (U/Pu/Np/Th), TRUEX + TALSPEAK (Am..Lr with alpha-HIBA elution ladders),
+     * light-actinide carrier chemistry (Ac/La coprecipitation, Pa manganese
+     * adsorption), and transactinide single-atom chemistry (Rf..Cn: fluoride
+     * anion exchange, oxychloride volatility, gold-foil trapping).
+     *
+     * Every catalyst is consumed with a small independent probability; product
+     * probabilities are the chemical yields. Separation steps run at the 2G
+     * EU/t / 4000 s gate, reagent syntheses at 2G EU/t / 1000 s, and the two
+     * fusion feeds at MI's 16k EU/t fusion precedent.
+     */
+    private void resonantSeparationChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000; // the 2G EU/t gate of the resonant program
+        int T = 80_000;         // 4000 s per separation step
+        int RT = 20_000;        // 1000 s for reagent syntheses
+
+        // -- feeds ------------------------------------------------------------------
+
+        // Radon: fusion of xenon with an oxygen jacket (real Rn sits below Xe;
+        // unreacted oxygen recycles out of the torch).
+        r.machine("fusion_reactor", 16_000, 2_400)
+                .fluidIn(ni + "xenon", 1000)
+                .fluidIn(mi + "oxygen", 3000)
+                .fluidOut(ni + "radon", 200)
+                .fluidOut(mi + "oxygen", 1000)
+                .save("resonant/radon_fusion");
+
+        // Superheavy cracking: radon irradiation cracks supercharged naquadah
+        // solution into the fission solution everything below feeds on.
+        r.machine("fusion_reactor", 16_000, 2_400)
+                .fluidIn(ni + "supercharged_naquadah_solution", 1000)
+                .fluidIn(ni + "radon", 100)
+                .fluidOut(ni + "superheavy_fission_solution", 1000)
+                .fluidOut(ni + "inert_naquadah_solution", 800)
+                .save("resonant/superheavy_cracking");
+
+        // Backup solid feed: the naquadah line's heavy element residue digested
+        // with radon-spiked nitric acid (for when monazite is the bottleneck).
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(NIItems.HEAVY_ELEMENT_RESIDUE_DUST.getId().toString(), 4)
+                .fluidIn(ni + "radon", 100)
+                .fluidIn(ni + "nitric_acid", 1000)
+                .fluidOut(ni + "superheavy_fission_solution", 1000)
+                .save("resonant/residue_dissolution");
+
+        // -- Cycle A: PUREX (U / Pu / Np / Th) ---------------------------------------
+
+        // A1. Valence adjustment to Pu(IV)/Np(VI) nitrate with catalytic nitrite.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_fission_solution", 1000)
+                .itemIn(NIItems.SODIUM_NITRITE.getId().toString(), 1, 0.25)
+                .fluidOut(ni + "valence_adjusted_feed", 1000)
+                .save("resonant/purex_valence_adjustment");
+
+        // A2. TBP extraction: U/Pu/Np load into the organic phase; everything
+        // else stays in the high-level raffinate (Cycle B/C feed). Noble fission
+        // gas and a tellurium fraction ride along as byproducts.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "valence_adjusted_feed", 1000)
+                .itemIn(NIItems.TRIBUTYL_PHOSPHATE.getId().toString(), 1, 0.10)
+                .fluidOut(ni + "tbp_organic_phase", 900)
+                .fluidOut(ni + "hlr_raffinate", 1000)
+                .fluidOut(ni + "xenon", 20)
+                .itemOut(NIItems.TELLURIUM_DUST.getId().toString(), 1, 0.10)
+                .save("resonant/purex_tbp_extraction");
+
+        // A3. Hydrazine strip: Pu(III) drops out of the organic phase while
+        // U/Np co-strip into one liquor.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "tbp_organic_phase", 1000)
+                .itemIn(NIItems.HYDRAZINE.getId().toString(), 1, 0.10)
+                .fluidOut(ni + "plutonium_liquor", 400)
+                .fluidOut(ni + "uranium_neptunium_liquor", 600)
+                .save("resonant/purex_hydrazine_strip");
+
+        // A4. Nitric acid valence split of the U/Np liquor.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "uranium_neptunium_liquor", 1000)
+                .fluidIn(ni + "nitric_acid", 1000)
+                .fluidOut(ni + "uranium_liquor", 850)
+                .fluidOut(ni + "neptunium_liquor", 150)
+                .fluidOut("minecraft:water", 1000)
+                .save("resonant/purex_un_split");
+
+        // A5-A7. Denitration + hydrogen reduction to the metals.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "uranium_liquor", 1000)
+                .fluidIn(mi + "hydrogen", 2000)
+                .itemOut(mi + "le_uranium_dust", 1, 0.90)
+                .fluidOut("minecraft:water", 2000)
+                .save("resonant/purex_uranium_reduction");
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "plutonium_liquor", 1000)
+                .fluidIn(mi + "hydrogen", 2000)
+                .itemOut(mi + "plutonium_dust", 1, 0.85)
+                .fluidOut("minecraft:water", 2000)
+                .save("resonant/purex_plutonium_reduction");
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "neptunium_liquor", 1000)
+                .fluidIn(mi + "hydrogen", 2000)
+                .itemOut(NIItems.NEPTUNIUM_DUST.getId().toString(), 1, 0.85)
+                .fluidOut("minecraft:water", 2000)
+                .save("resonant/purex_neptunium_reduction");
+
+        // A8. Thorough scrub of the co-extracted thorium from the organic phase.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "tbp_organic_phase", 500)
+                .fluidIn(ni + "nitric_acid", 500)
+                .itemOut(NIItems.THORIUM_DUST.getId().toString(), 1, 0.90)
+                .fluidOut("minecraft:water", 1000)
+                .save("resonant/purex_thorium_scrub");
+
+        // -- Cycle B: TRUEX + TALSPEAK (Am..Lr) --------------------------------------
+
+        // B1. CMPO co-extraction of the minor actinides; the lanthanide aqueous
+        // phase loops back into the monazite heavy-residue stream.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "hlr_raffinate", 1000)
+                .itemIn(NIItems.CMPO_EXTRACTANT.getId().toString(), 1, 0.05)
+                .fluidOut(ni + "truex_organic", 800)
+                .fluidOut(ni + "monazite_heavy_residue_solution", 200)
+                .save("resonant/truex_cmpo_extraction");
+
+        // B2. Nitric acid strip of the loaded TRUEX phase (TBP solvent recycle).
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "truex_organic", 1000)
+                .fluidIn(ni + "nitric_acid", 1000)
+                .fluidOut(ni + "minor_actinide_liquor", 900)
+                .fluidOut(ni + "tbp_organic_phase", 100)
+                .save("resonant/truex_nitric_strip");
+
+        // B3. TALSPEAK split: DTPA in a lactic buffer separates the early
+        // (Am/Cm/Bk/Cf/Es) from the late (Fm/Md/No/Lr) actinide groups.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "minor_actinide_liquor", 1000)
+                .itemIn(NIItems.DTPA_COMPLEXANT.getId().toString(), 1, 0.10)
+                .fluidIn("minecraft:water", 1000)
+                .fluidOut(ni + "early_actinide_group", 600)
+                .fluidOut(ni + "late_actinide_group", 400)
+                .save("resonant/talspeak_group_split");
+
+        // B4. Bk(IV) chlorate oxidation precipitates berkelium out of the early
+        // group (the real Bk/Cf separation); a tellurium fraction comes along.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "early_actinide_group", 1000)
+                .itemIn(NIItems.SODIUM_CHLORATE.getId().toString(), 1, 0.10)
+                .itemOut(NIItems.BERKELIUM_DUST.getId().toString(), 1, 0.80)
+                .itemOut(NIItems.TELLURIUM_DUST.getId().toString(), 1, 0.15)
+                .fluidOut(ni + "early_actinide_group", 700)
+                .save("resonant/berkelium_oxidation");
+
+        // B5. Cation-exchange alpha-HIBA elution ladder over the early group:
+        // the elution volume picks the element (Am elutes first, Es last).
+        String[] early = {"americium", "curium", "californium", "einsteinium"};
+        for (int i = 0; i < early.length; i++) {
+            r.machine("chemical_reactor", EU, T)
+                    .fluidIn(ni + "early_actinide_group", 1000)
+                    .itemIn(NIItems.ALPHA_HIBA_ELUANT.getId().toString(), 1, 0.10)
+                    .fluidIn("minecraft:water", 100 * (i + 1))
+                    .itemOut(itemId(early[i] + "_dust"), 1, 0.80)
+                    .fluidOut(ni + "early_actinide_group", 800)
+                    .save("resonant/elution_early_" + early[i]);
+        }
+
+        // B6. Same ladder over the late group (Fm first ... Lr last; No comes
+        // off two columns early because it reduces to +2 - real nobelium).
+        String[] late = {"fermium", "mendelevium", "nobelium", "lawrencium"};
+        for (int i = 0; i < late.length; i++) {
+            r.machine("chemical_reactor", EU, T)
+                    .fluidIn(ni + "late_actinide_group", 1000)
+                    .itemIn(NIItems.ALPHA_HIBA_ELUANT.getId().toString(), 1, 0.10)
+                    .fluidIn("minecraft:water", 100 * (i + 1))
+                    .itemOut(itemId(late[i] + "_dust"), 1, 0.70)
+                    .fluidOut(ni + "late_actinide_group", 800)
+                    .save("resonant/elution_late_" + late[i]);
+        }
+
+        // -- Cycle C: light actinides (Ac / Pa) --------------------------------------
+
+        // C1. Actinium rides a lanthanum (monazite) carrier into the carbonate
+        // precipitate - the real 225Ac carrier process.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "hlr_raffinate", 1000)
+                .tagIn("c:dusts/monazite", 2, 0.50)
+                .fluidIn(mi + "sodium_hydroxide", 500)
+                .itemOut(NIItems.ACTINIUM_DUST.getId().toString(), 1, 0.75)
+                .fluidOut(ni + "monazite_heavy_residue_solution", 800)
+                .save("resonant/actinium_carrier");
+
+        // C2. Protactinium adsorbs on manganese dioxide, eluted with HF.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_fission_solution", 1000)
+                .tagIn("c:dusts/manganese", 1)
+                .fluidIn(ni + "hydrofluoric_acid", 200)
+                .itemOut(NIItems.PROTACTINIUM_DUST.getId().toString(), 1, 0.75)
+                .fluidOut(ni + "inert_naquadah_solution", 900)
+                .save("resonant/protactinium_adsorption");
+
+        // -- Cycle D: transactinide single-atom chemistry (Rf..Cn) ------------------
+
+        // D1. Fluoride anion-exchange: Rf and Db come off at different HF strengths.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_fission_solution", 1000)
+                .fluidIn(ni + "hydrofluoric_acid", 100)
+                .itemOut(NIItems.RUTHERFORDIUM_DUST.getId().toString(), 1, 0.60)
+                .fluidOut(ni + "superheavy_fission_solution", 900)
+                .save("resonant/rutherfordium_fluoride");
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_fission_solution", 1000)
+                .fluidIn(ni + "hydrofluoric_acid", 200)
+                .itemOut(NIItems.DUBNIUM_DUST.getId().toString(), 1, 0.60)
+                .fluidOut(ni + "superheavy_fission_solution", 900)
+                .save("resonant/dubnium_fluoride");
+
+        // D2. Sg forms a volatile oxychloride (SgO2Cl2, the SeO2 congener route
+        // with tellurium standing in for selenium) and distills into the trap.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_fission_solution", 1000)
+                .fluidIn(mi + "chlorine", 1000)
+                .itemIn(NIItems.TELLURIUM_DUST.getId().toString(), 1, 0.25)
+                .fluidOut(ni + "superheavy_vapor", 300)
+                .fluidOut(ni + "inert_naquadah_solution", 700)
+                .save("resonant/seaborgium_volatilization");
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_vapor", 400)
+                .itemOut(NIItems.SEABORGIUM_DUST.getId().toString(), 1, 0.50)
+                .fluidOut(mi + "chlorine", 300)
+                .save("resonant/seaborgium_condensation");
+
+        // D3. Bh oxychloride (BhO3Cl) fraction of the vapor, cracked with HCl.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_vapor", 300)
+                .fluidIn(mi + "hydrochloric_acid", 200)
+                .itemOut(NIItems.BOHRIUM_DUST.getId().toString(), 1, 0.50)
+                .fluidOut(mi + "chlorine", 100)
+                .save("resonant/bohrium_oxychloride");
+
+        // D4. Hs forms a volatile oxide (HsO4; the telluric-acid congener route).
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_vapor", 300)
+                .fluidIn(ni + "telluric_acid", 200)
+                .itemOut(NIItems.HASSIUM_DUST.getId().toString(), 1, 0.55)
+                .fluidOut(mi + "oxygen", 200)
+                .save("resonant/hassium_oxide");
+
+        // D5. Cn condenses onto a gold-foil surface trap (the real experiment
+        // design); gentle heating desorbs the metal.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_vapor", 300)
+                .itemIn(NIItems.GOLD_FOIL.getId().toString(), 1, 0.05)
+                .fluidIn(mi + "helium_3", 100)
+                .fluidOut(ni + "cn_condensate", 100)
+                .fluidOut(ni + "superheavy_vapor", 100)
+                .save("resonant/copernicium_gold_trap");
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "cn_condensate", 100)
+                .itemOut(NIItems.COPERNICIUM_DUST.getId().toString(), 1, 0.65)
+                .save("resonant/copernicium_desorption");
+
+        // D6. Mt / Ds yield to stepped aqua-regia leaching of the vapor.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_vapor", 300)
+                .fluidIn(ni + "aqua_regia", 100)
+                .itemOut(NIItems.MEITNERIUM_DUST.getId().toString(), 1, 0.55)
+                .fluidOut(mi + "chlorine", 100)
+                .save("resonant/meitnerium_leach");
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_vapor", 300)
+                .fluidIn(ni + "aqua_regia", 200)
+                .itemOut(NIItems.DARMSTADTIUM_DUST.getId().toString(), 1, 0.55)
+                .fluidOut(mi + "chlorine", 100)
+                .save("resonant/darmstadtium_leach");
+
+        // D7. Rg (gold's congener) complexes with thioethers and reduces clean.
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "superheavy_vapor", 300)
+                .fluidIn(ni + "sulfur_dioxide", 200)
+                .fluidIn(mi + "hydrogen", 200)
+                .itemOut(NIItems.ROENTGENIUM_DUST.getId().toString(), 1, 0.60)
+                .fluidOut("minecraft:water", 200)
+                .save("resonant/roentgenium_thioether");
+
+        // -- reagents -----------------------------------------------------------------
+
+        // TBP: hydrodeoxygenated isobutyraldehyde butyl chains esterified onto
+        // a monazite (phosphate mineral) backbone; the residue solution loops
+        // back into the monazite heavy-residue stream.
+        r.machine("chemical_reactor", EU, RT)
+                .tagIn("c:dusts/monazite", 1)
+                .fluidIn(ni + "isobutyraldehyde", 1500)
+                .fluidIn(mi + "chlorine", 1000)
+                .fluidIn(mi + "hydrogen", 6000)
+                .itemOut(NIItems.TRIBUTYL_PHOSPHATE.getId().toString(), 4)
+                .fluidOut(ni + "monazite_heavy_residue_solution", 500)
+                .fluidOut("minecraft:water", 3000)
+                .save("resonant/reagent_tbp");
+
+        // CMPO: a TBP phenyl-carbamoyl extension (the TRUEX molecule).
+        r.machine("chemical_reactor", EU, RT)
+                .itemIn(NIItems.TRIBUTYL_PHOSPHATE.getId().toString(), 1)
+                .fluidIn(ni + "phenol", 200)
+                .fluidIn(ni + "ammonia", 500)
+                .fluidIn(mi + "chlorine", 500)
+                .itemOut(NIItems.CMPO_EXTRACTANT.getId().toString(), 2)
+                .fluidOut("minecraft:water", 500)
+                .save("resonant/reagent_cmpo");
+
+        // DTPA: cyanamide homologation in hydrochloric ammonia.
+        r.machine("chemical_reactor", EU, RT)
+                .itemIn(NIItems.CYANAMIDE.getId().toString(), 2)
+                .fluidIn(ni + "ammonia", 1000)
+                .fluidIn(mi + "hydrochloric_acid", 500)
+                .itemOut(NIItems.DTPA_COMPLEXANT.getId().toString(), 2)
+                .fluidOut("minecraft:water", 1000)
+                .save("resonant/reagent_dtpa");
+
+        // alpha-HIBA: alpha-hydroxyisobutyric acid from isobutyraldehyde.
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "isobutyraldehyde", 500)
+                .fluidIn(mi + "hydrochloric_acid", 200)
+                .fluidIn(mi + "oxygen", 500)
+                .itemOut(NIItems.ALPHA_HIBA_ELUANT.getId().toString(), 2)
+                .fluidOut("minecraft:water", 300)
+                .save("resonant/reagent_alpha_hiba");
+
+        // Hydrazine: Raschig-style chloramine ammonia route.
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "ammonia", 2000)
+                .fluidIn(mi + "chlorine", 1000)
+                .itemOut(NIItems.HYDRAZINE.getId().toString(), 2)
+                .itemOut(NIItems.AMMONIUM_CHLORIDE.getId().toString(), 2)
+                .fluidOut("minecraft:water", 500)
+                .save("resonant/reagent_hydrazine");
+
+        // Sodium nitrite / chlorate from caustic soda (fluid form in MI).
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(mi + "sodium_hydroxide", 1000)
+                .fluidIn(ni + "nitric_acid", 500)
+                .itemOut(NIItems.SODIUM_NITRITE.getId().toString(), 3)
+                .fluidOut("minecraft:water", 1000)
+                .save("resonant/reagent_sodium_nitrite");
+        r.machine("electrolyzer", EU, RT)
+                .fluidIn("minecraft:water", 1000)
+                .fluidIn(mi + "chlorine", 1000)
+                .fluidIn(mi + "sodium_hydroxide", 1000)
+                .itemOut(NIItems.SODIUM_CHLORATE.getId().toString(), 3)
+                .fluidOut(mi + "hydrogen", 500)
+                .save("resonant/reagent_sodium_chlorate");
+
+        // Telluric acid: the Te(VI) oxidizer for the Hs route.
+        r.machine("chemical_reactor", EU, RT)
+                .itemIn(NIItems.TELLURIUM_DUST.getId().toString(), 1)
+                .fluidIn(ni + "nitric_acid", 1000)
+                .fluidIn(mi + "oxygen", 1000)
+                .fluidOut(ni + "telluric_acid", 500)
+                .fluidOut("minecraft:water", 500)
+                .save("resonant/reagent_telluric_acid");
+
+        // Aqua regia: one part nitric to three parts hydrochloric.
+        r.machine("mixer", EU, RT)
+                .fluidIn(ni + "nitric_acid", 250)
+                .fluidIn(mi + "hydrochloric_acid", 750)
+                .fluidOut(ni + "aqua_regia", 1000)
+                .save("resonant/reagent_aqua_regia");
+
+        // Gold foil: beaten from ingots for the copernicium surface trap.
+        r.machine("compressor", EU, RT)
+                .tagIn("c:ingots/gold", 1)
+                .itemOut(NIItems.GOLD_FOIL.getId().toString(), 4)
+                .save("resonant/reagent_gold_foil");
+    }
+
+    /** mi_nested_infinity item id shorthand for the elution ladders. */
+    private static String itemId(String name) {
+        return "mi_nested_infinity:" + name;
+    }
+
+    /**
+     * Resonant circuit program, part 2: naquide (轻硅岩) derivation and the
+     * fusion trinity. Gold/silver and the single-atom transactinides Rg/Cn
+     * melt in the crucible, fuse into adamantium (Au+Rg) and mithril (Ag+Cn),
+     * re-fuse into trinium, and a helium-3 quench casts the ingots. Trinium
+     * has no EBF route on purpose (skipEbfRecipes): fusion is the only way in.
+     */
+    private void resonantFusionChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int T = 80_000;
+
+        // -- naquide: the light fraction spun out of inert naquadah solution,
+        //    reduced with hydrogen to the crystal (coil dielectric feed) --
+        r.machine("centrifuge", EU, T)
+                .fluidIn(ni + "inert_naquadah_solution", 1000)
+                .itemOut(NIItems.CRUDE_NAQUIDE_POWDER.getId().toString(), 1, 0.75)
+                .fluidOut("minecraft:water", 900)
+                .save("resonant/naquide_centrifuge");
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(NIItems.CRUDE_NAQUIDE_POWDER.getId().toString(), 2)
+                .fluidIn(mi + "hydrogen", 1000)
+                .itemOut(NIItems.NAQUIDE.getId().toString(), 1, 0.90)
+                .fluidOut("minecraft:water", 500)
+                .save("resonant/naquide_reduction");
+
+        // -- crucible melts: the fusion torch only drinks liquids --
+        r.machine("magma_crucible", EU, T)
+                .itemIn(mi + "gold_dust", 1)
+                .fluidOut(ni + "molten_gold", 1000)
+                .save("resonant/melt_gold");
+        r.machine("magma_crucible", EU, T)
+                .itemIn(mi + "silver_dust", 1)
+                .fluidOut(ni + "molten_silver", 1000)
+                .save("resonant/melt_silver");
+        r.machine("magma_crucible", EU, T)
+                .itemIn(NIItems.ROENTGENIUM_DUST.getId().toString(), 1)
+                .fluidOut(ni + "molten_roentgenium", 1000)
+                .save("resonant/melt_roentgenium");
+        r.machine("magma_crucible", EU, T)
+                .itemIn(NIItems.COPERNICIUM_DUST.getId().toString(), 1)
+                .fluidOut(ni + "molten_copernicium", 1000)
+                .save("resonant/melt_copernicium");
+
+        // -- the fusion trinity (16k EU/t per MI's fusion precedent) --
+        // adamantium = gold + roentgenium (Rg is gold's own congener)
+        r.machine("fusion_reactor", 16_000, 2_400)
+                .fluidIn(ni + "molten_gold", 900)
+                .fluidIn(ni + "molten_roentgenium", 100)
+                .fluidOut(ni + "molten_adamantium", 1000)
+                .save("resonant/fusion_adamantium");
+        // mithril = silver + copernicium (Cn, the mercury-like volatile)
+        r.machine("fusion_reactor", 16_000, 2_400)
+                .fluidIn(ni + "molten_silver", 900)
+                .fluidIn(ni + "molten_copernicium", 100)
+                .fluidOut(ni + "molten_mithril", 1000)
+                .save("resonant/fusion_mithril");
+        // trinium = the two alloys re-fused
+        r.machine("fusion_reactor", 16_000, 2_400)
+                .fluidIn(ni + "molten_adamantium", 500)
+                .fluidIn(ni + "molten_mithril", 500)
+                .fluidOut(ni + "molten_trinium", 1000)
+                .save("resonant/fusion_trinium");
+
+        // -- helium-3 quenches cast the fusion-born ingots --
+        r.machine("vacuum_freezer", EU, T)
+                .fluidIn(ni + "molten_adamantium", 1000)
+                .fluidIn(mi + "helium_3", 200)
+                .itemOut(NIItems.ADAMANTIUM_INGOT.getId().toString(), 1)
+                .save("resonant/quench_adamantium");
+        r.machine("vacuum_freezer", EU, T)
+                .fluidIn(ni + "molten_mithril", 1000)
+                .fluidIn(mi + "helium_3", 200)
+                .itemOut(NIItems.MITHRIL_INGOT.getId().toString(), 1)
+                .save("resonant/quench_mithril");
+        r.machine("vacuum_freezer", EU, T)
+                .fluidIn(ni + "molten_trinium", 1000)
+                .fluidIn(mi + "helium_3", 200)
+                .itemOut("modern_industrialization:trinium_ingot", 1)
+                .save("resonant/quench_trinium");
+    }
+
+    /**
+     * Resonant circuit program, part 3: the polyimide program (real Kapton
+     * chemistry) and the conductive silver epoxy. Durene -> nitric oxidation
+     * (vanadium catalyst) -> pyromellitic acid -> PMDA; nitrobenzene ->
+     * p-nitrochlorobenzene -> dinitrodiphenyl ether -> ODA; PMDA + ODA ->
+     * polyamic acid -> imidization -> PI. The silver epoxy cures with an
+     * aromatic diamine hardener (the ODA monomer doubles as the curer).
+     */
+    private void resonantPolyimideChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int T = 80_000;
+        int RT = 20_000;
+
+        // durene: chloromethane methylation of m-xylene (Friedel-Crafts)
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "m_xylene", 500)
+                .fluidIn(ni + "chloromethane", 500)
+                .itemOut(NIItems.DURENE.getId().toString(), 1)
+                .fluidOut(mi + "hydrochloric_acid", 500)
+                .save("resonant/pi_durene");
+
+        // pyromellitic acid: full-side-chain nitric oxidation on vanadium
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(NIItems.DURENE.getId().toString(), 1)
+                .fluidIn(ni + "nitric_acid", 2000)
+                .tagIn("c:dusts/vanadium", 1, 0.10)
+                .itemOut(NIItems.PYROMELLITIC_ACID.getId().toString(), 1, 0.90)
+                .fluidOut("minecraft:water", 1500)
+                .fluidOut(mi + "nitrogen", 500)
+                .save("resonant/pi_pyromellitic_acid");
+
+        // PMDA: dehydration of the tetracid to the dianhydride
+        r.machine("chemical_reactor", EU, RT)
+                .itemIn(NIItems.PYROMELLITIC_ACID.getId().toString(), 2)
+                .itemOut(NIItems.PYROMELLITIC_DIANHYDRIDE.getId().toString(), 1)
+                .fluidOut("minecraft:water", 500)
+                .save("resonant/pi_pmda");
+
+        // p-nitrochlorobenzene: para chlorination of nitrobenzene
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "nitrobenzene", 500)
+                .fluidIn(mi + "chlorine", 500)
+                .itemOut(NIItems.P_NITROCHLOROBENZENE.getId().toString(), 1, 0.80)
+                .fluidOut(mi + "hydrochloric_acid", 500)
+                .save("resonant/pi_p_nitrochlorobenzene");
+
+        // dinitrodiphenyl ether: Ullmann etherification on copper
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(NIItems.P_NITROCHLOROBENZENE.getId().toString(), 2)
+                .fluidIn(mi + "oxygen", 500)
+                .tagIn("c:dusts/copper", 1, 0.15)
+                .itemOut(NIItems.DINITRODIPHENYL_ETHER.getId().toString(), 1)
+                .fluidOut(mi + "chlorine", 500)
+                .save("resonant/pi_dinitrodiphenyl_ether");
+
+        // ODA: hydrogenation of the dinitro ether to the diamine
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(NIItems.DINITRODIPHENYL_ETHER.getId().toString(), 1)
+                .fluidIn(mi + "hydrogen", 4000)
+                .itemOut(NIItems.DIAMINODIPHENYL_ETHER.getId().toString(), 1)
+                .fluidOut("minecraft:water", 3000)
+                .save("resonant/pi_oda");
+
+        // polyamic acid: PMDA + ODA polycondensation in the reactor
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(NIItems.PYROMELLITIC_DIANHYDRIDE.getId().toString(), 1)
+                .itemIn(NIItems.DIAMINODIPHENYL_ETHER.getId().toString(), 1)
+                .fluidOut(ni + "polyamic_acid", 1000)
+                .save("resonant/pi_polyamic_acid");
+
+        // imidization: cyclize the prepolymer, water boils off
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "polyamic_acid", 1000)
+                .itemOut(NIItems.POLYIMIDE_DUST.getId().toString(), 1)
+                .fluidOut("minecraft:water", 500)
+                .save("resonant/pi_imidization");
+
+        // the amber plate
+        r.machine("compressor", EU, RT)
+                .itemIn(NIItems.POLYIMIDE_DUST.getId().toString(), 4)
+                .itemOut(NIItems.POLYIMIDE_PLATE.getId().toString(), 1)
+                .save("resonant/pi_plate");
+
+        // conductive silver epoxy: silver flakes in epoxy resin, cured by the
+        // aromatic diamine (ODA hardener, consumed as a catalyst)
+        r.machine("chemical_reactor", EU, RT)
+                .tagIn("c:dusts/silver", 2)
+                .fluidIn(ni + "epoxy_resin", 500)
+                .itemIn(NIItems.DIAMINODIPHENYL_ETHER.getId().toString(), 1, 0.25)
+                .fluidOut(ni + "conductive_epoxy", 500)
+                .save("resonant/conductive_epoxy");
+    }
+
+    /**
+     * Resonant circuit program, part 4: the fluoroelastomer (FKM) gasket
+     * stock and the resonant YBCO superconductor tape / 2^36 EU/t cable.
+     * FKM: chloromethane -> chloroform -> R-22 -> vinylylidene fluoride,
+     * propene -> hexafluoropropylene, persulfate-initiated copolymerization.
+     * YBCO: the monazite heavy-residue stream yields yttrium (with a PGM
+     * residue byproduct that feeds back into the aqua-regia transactinide
+     * leach), oxide charge mixing, sapphire substrates grown on the trinium
+     * coil, and RF sputtering onto the tape.
+     */
+    private void resonantFluoroChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int T = 80_000;
+        int RT = 20_000;
+
+        // -- FKM (vinylidene fluoride / hexafluoropropylene copolymer) --------
+
+        // chloroform: exhaustive chlorination of chloromethane
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "chloromethane", 500)
+                .fluidIn(mi + "chlorine", 1000)
+                .fluidOut(ni + "chloroform", 500)
+                .fluidOut(mi + "hydrochloric_acid", 1000)
+                .save("resonant/fkm_chloroform");
+
+        // R-22: chlorine-fluorine exchange on chloroform with HF
+        r.machine("chemical_reactor", EU, RT)
+                .fluidIn(ni + "chloroform", 500)
+                .fluidIn(ni + "hydrofluoric_acid", 1000)
+                .fluidOut(ni + "refrigerant_22", 500)
+                .fluidOut(mi + "hydrochloric_acid", 500)
+                .save("resonant/fkm_refrigerant_22");
+
+        // VDF monomer: high-temperature R-22 pyrolysis
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "refrigerant_22", 1000)
+                .fluidOut(ni + "vinylidene_fluoride", 800)
+                .fluidOut(mi + "hydrogen", 200)
+                .fluidOut(mi + "hydrochloric_acid", 200)
+                .save("resonant/fkm_vdf");
+
+        // HFP comonomer: full fluorination of propene
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(mi + "propene", 500)
+                .fluidIn(ni + "fluorine", 1500)
+                .fluidOut(ni + "hexafluoropropylene", 400)
+                .fluidOut(mi + "hydrogen", 1000)
+                .save("resonant/fkm_hfp");
+
+        // FKM: persulfate-initiated emulsion copolymerization, cured straight
+        // into gasket sheet stock
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "vinylidene_fluoride", 600)
+                .fluidIn(ni + "hexafluoropropylene", 200)
+                .itemIn(NIItems.SODIUM_SULFATE.getId().toString(), 1, 0.10)
+                .itemOut(NIItems.FLUOROELASTOMER_SHEET.getId().toString(), 2)
+                .save("resonant/fkm_sheet");
+
+        // -- resonant superconductor ------------------------------------------
+
+        // yttrium from the monazite heavy-rare-earth stream on ion exchange
+        // resin; the platinum-group residue feeds the aqua-regia leach below
+        r.machine("chemical_reactor", EU, T)
+                .fluidIn(ni + "monazite_heavy_residue_solution", 1000)
+                .itemIn(NIItems.ION_EXCHANGE_RESIN.getId().toString(), 1, 0.50)
+                .itemOut(NIItems.YTTRIUM_OXIDE.getId().toString(), 2, 0.90)
+                .itemOut(NIItems.PGM_RESIDUE.getId().toString(), 1, 0.50)
+                .fluidOut("minecraft:water", 1000)
+                .save("resonant/ybco_yttrium");
+
+        // the PGM residue: aqua-regia dissolution of the noble matrix carrying
+        // the late transactinides (alternative superheavy vapor feed)
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(NIItems.PGM_RESIDUE.getId().toString(), 2)
+                .fluidIn(ni + "aqua_regia", 500)
+                .fluidOut(ni + "superheavy_vapor", 200)
+                .save("resonant/pgm_residue_leach");
+
+        // cupric oxide: copper roasted in air
+        r.machine("chemical_reactor", EU, RT)
+                .tagIn("c:dusts/copper", 1)
+                .fluidIn(mi + "oxygen", 1000)
+                .itemOut(NIItems.CUPRIC_OXIDE.getId().toString(), 2)
+                .save("resonant/ybco_cupric_oxide");
+
+        // YBCO oxide charge: Y2O3 + 2 BaO + 3 CuO, mixed like the Hg cuprates
+        r.machine("mixer", EU, RT)
+                .itemIn(NIItems.YTTRIUM_OXIDE.getId().toString(), 1)
+                .itemIn(NIItems.BARIUM_OXIDE_DUST.getId().toString(), 2)
+                .itemIn(NIItems.CUPRIC_OXIDE.getId().toString(), 3)
+                .fluidIn(mi + "oxygen", 500)
+                .itemOut(NIItems.YBCO_TARGET.getId().toString(), 4)
+                .save("resonant/ybco_mix");
+
+        // sapphire substrates: corundum grown on the trinium coil tier
+        // (recipe eu 32768 = the trinium_dinaquide coil; lower coils locked out)
+        r.machine("blast_furnace", (int) com.nestedinfinity.mod.blocks.NICoils.TIERS.get(2).eu(), 600)
+                .tagIn("c:dusts/aluminum", 2)
+                .fluidIn(mi + "oxygen", 250)
+                .itemOut(NIItems.SAPPHIRE_SUBSTRATE.getId().toString(), 2)
+                .save("resonant/ybco_sapphire");
+
+        // RF sputtering: the target wears out with 75% chance per deposition
+        // (real sputter target lifetimes); argon carries the plasma
+        r.machine("assembler", EU, T)
+                .itemIn(NIItems.YBCO_TARGET.getId().toString(), 1, 0.75)
+                .itemIn(NIItems.SAPPHIRE_SUBSTRATE.getId().toString(), 2)
+                .fluidIn(mi + "argon", 500)
+                .fluidIn(mi + "oxygen", 250)
+                .itemOut(NIItems.RESONANT_SUPERCONDUCTOR_TAPE.getId().toString(), 2)
+                .save("resonant/ybco_sputter");
+
+        // the 2^36 EU/t cable: eight tapes laminated on resonite wire with the
+        // conductive silver epoxy, sealed in liquid glass
+        r.machine("assembler", EU, T)
+                .itemIn(NIItems.RESONANT_SUPERCONDUCTOR_TAPE.getId().toString(), 8)
+                .itemIn("modern_industrialization:resonite_wire", 4)
+                .fluidIn(ni + "conductive_epoxy", 500)
+                .fluidIn(ni + "liquid_glass", 144)
+                .itemOut("modern_industrialization:resonant_superconductor_cable", 1)
+                .save("resonant/resonant_superconductor_cable");
+    }
+
+    /**
+     * Resonant circuit program, part 5: resonite, the piezoelectric quartz
+     * side, the resonant mother liquor, the player-craftable Q8 notes
+     * (white directly, red/yellow/blue on a mother-liquor ladder; the other
+     * four colors only ever come out of the attuner), and the tuning block /
+     * resonance attuner themselves. Resonite dust blends in the mixer; its
+     * dust -&gt; hot ingot EBF recipe is auto-generated at the trinium coil
+     * tier (32768) by the material system.
+     */
+    private void resonantTuningChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int T = 80_000;
+        int RT = 20_000;
+
+        // resonite: the ender-eye alloy (ender resonance + naquadah lattice +
+        // polyimide binder); hot ingot follows on the trinium coil (auto EBF)
+        r.machine("mixer", EU, RT)
+                .itemIn("minecraft:ender_eye", 4)
+                .itemIn("modern_industrialization:naquadah_dust", 2)
+                .itemIn(NIItems.POLYIMIDE_DUST.getId().toString(), 1)
+                .itemOut("modern_industrialization:resonite_dust", 4)
+                .save("resonant/resonite_blend");
+
+        // resonite cable: PI insulation, FKM jacket, silver-epoxy bonded
+        // (the auto assembler/cable recipe is canceled in NIMaterials)
+        r.machine("assembler", EU, RT)
+                .itemIn("modern_industrialization:resonite_wire", 1)
+                .itemIn(NIItems.POLYIMIDE_PLATE.getId().toString(), 1)
+                .itemIn(NIItems.FLUOROELASTOMER_SHEET.getId().toString(), 1)
+                .fluidIn(ni + "conductive_epoxy", 250)
+                .fluidIn(ni + "liquid_glass", 72)
+                .itemOut("modern_industrialization:resonite_cable", 1)
+                .save("resonant/resonite_cable");
+
+        // piezo wafers: quartz blanks cut along the resonant axis
+        r.machine("cutting_machine", EU, RT)
+                .itemIn("minecraft:quartz", 4)
+                .fluidIn(mi + "lubricant", 233)
+                .itemOut(NIItems.PIEZO_WAFER.getId().toString(), 8)
+                .save("resonant/piezo_wafer");
+
+        // lead titanate: the perovskite piezoceramic (MI has no zirconium,
+        // so real PbTiO3 instead of PZT)
+        r.machine("mixer", EU, RT)
+                .tagIn("c:dusts/lead", 1)
+                .tagIn("c:dusts/titanium", 1)
+                .fluidIn(mi + "oxygen", 1500)
+                .itemOut(NIItems.LEAD_TITANATE_DUST.getId().toString(), 3)
+                .save("resonant/lead_titanate");
+
+        // the sintered ceramic plate
+        r.machine("compressor", EU, RT)
+                .itemIn(NIItems.LEAD_TITANATE_DUST.getId().toString(), 4)
+                .itemOut(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 1)
+                .save("resonant/lead_titanate_plate");
+
+        // quartz oscillator: wafer on a titanate header
+        r.machine("assembler", EU, RT)
+                .itemIn(NIItems.PIEZO_WAFER.getId().toString(), 2)
+                .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 1)
+                .itemIn("modern_industrialization:resonite_dust", 1)
+                .itemOut(NIItems.QUARTZ_OSCILLATOR.getId().toString(), 2)
+                .save("resonant/quartz_oscillator");
+
+        // SAW resonator: interdigital combs on a titanate substrate
+        r.machine("assembler", EU, RT)
+                .itemIn(NIItems.PIEZO_WAFER.getId().toString(), 4)
+                .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 2)
+                .fluidIn(ni + "conductive_epoxy", 100)
+                .itemOut(NIItems.SAW_RESONATOR.getId().toString(), 2)
+                .save("resonant/saw_resonator");
+
+        // the resonant mother liquor: ender eyes dissolved in mutagen —
+        // the growth feed for every craftable note
+        r.machine("chemical_reactor", EU, T)
+                .itemIn("minecraft:ender_eye", 1)
+                .fluidIn(ni + "mutagen", 800)
+                .fluidIn("minecraft:water", 200)
+                .fluidOut(ni + "resonant_mother_liquor", 1000)
+                .save("resonant/mother_liquor");
+
+        // the white note (the group identity): a crystal circuit reading a
+        // monocrystalline naquadah reference
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "crystal_circuit", 1)
+                .itemIn(NIItems.HIGH_PURITY_MONOCRYSTALLINE_NAQUADAH.getId().toString(), 1)
+                .itemIn(NIItems.QUARTZ_OSCILLATOR.getId().toString(), 1)
+                .fluidIn(ni + "resonant_mother_liquor", 100)
+                .itemOut("mi_nested_infinity:note_white", 1)
+                .save("resonant/note_white");
+
+        // red / yellow / blue on the mother-liquor ladder; the complementary
+        // colors (green/cyan/purple/black) exist only as attuner products
+        String[] primaries = {"red", "yellow", "blue"};
+        for (int i = 0; i < primaries.length; i++) {
+            r.machine("assembler", EU, T)
+                    .itemIn(NIItems.QUARTZ_OSCILLATOR.getId().toString(), 1)
+                    .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 1)
+                    .itemIn("modern_industrialization:resonite_plate", 1)
+                    .fluidIn(ni + "resonant_mother_liquor", 100 * (i + 1))
+                    .itemOut("mi_nested_infinity:note_" + primaries[i], 1)
+                    .save("resonant/note_" + primaries[i]);
+        }
+
+        // the tuning block: an eight-state Q8 register around a white note seed
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "crystal_circuit", 1)
+                .itemIn(NIItems.HIGH_PURITY_MONOCRYSTALLINE_NAQUADAH.getId().toString(), 2)
+                .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 2)
+                .itemIn("modern_industrialization:resonite_plate", 1)
+                .itemIn("mi_nested_infinity:note_white", 1)
+                .itemOut("mi_nested_infinity:tuning_block", 1)
+                .save("resonant/tuning_block");
+
+        // the resonance attuner: the machine itself, wetware-brained, wired
+        // with the resonant superconductor and potted in silver epoxy
+        r.machine("assembler", EU, T)
+                .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 2)
+                .itemIn("modern_industrialization:resonite_plate", 2)
+                .itemIn("modern_industrialization:resonant_superconductor_cable", 4)
+                .itemIn(ni + "wetware_circuit", 1)
+                .fluidIn(ni + "conductive_epoxy", 250)
+                .itemOut("mi_nested_infinity:resonance_attuner", 1)
+                .save("resonant/resonance_attuner");
+    }
+
+    /**
+     * Resonant circuit program, part 6: the resonant processing units (each
+     * one consumes a machine-only Q8 note color - green RAM, cyan MMU, purple
+     * ALU, mirroring the bio parts), the signature components (the black-note
+     * saser, the resonance chamber, the phase-locked loop), the
+     * trinium_dinaquide coil, and the two finals: the board and the circuit,
+     * both at the 8000 s climax of the program.
+     */
+    private void resonantCircuitChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int T = 80_000;
+        int FT = 160_000; // the 8000 s finals
+
+        // -- resonant processing units on the note ladder (100/200/300 mB) ----
+
+        r.machine("assembler", EU, T)
+                .itemIn("mi_nested_infinity:note_green", 2)
+                .itemIn(NIItems.BIO_RANDOM_ACCESS_MEMORY.getId().toString(), 1)
+                .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 1)
+                .itemIn("modern_industrialization:resonite_plate", 1)
+                .fluidIn(ni + "resonant_mother_liquor", 100)
+                .itemOut(NIItems.RESONANT_RANDOM_ACCESS_MEMORY.getId().toString(), 1)
+                .save("resonant/resonant_ram");
+        r.machine("assembler", EU, T)
+                .itemIn("mi_nested_infinity:note_cyan", 1)
+                .itemIn(NIItems.BIO_MEMORY_MANAGEMENT_UNIT.getId().toString(), 1)
+                .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 1)
+                .itemIn("modern_industrialization:resonite_plate", 2)
+                .fluidIn(ni + "resonant_mother_liquor", 200)
+                .itemOut(NIItems.RESONANT_MEMORY_MANAGEMENT_UNIT.getId().toString(), 1)
+                .save("resonant/resonant_mmu");
+        r.machine("assembler", EU, T)
+                .itemIn("mi_nested_infinity:note_purple", 1)
+                .itemIn(NIItems.BIO_ARITHMETIC_LOGIC_UNIT.getId().toString(), 1)
+                .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 2)
+                .itemIn("modern_industrialization:resonite_plate", 2)
+                .fluidIn(ni + "resonant_mother_liquor", 300)
+                .itemOut(NIItems.RESONANT_ARITHMETIC_LOGIC_UNIT.getId().toString(), 1)
+                .save("resonant/resonant_alu");
+
+        // -- signature components ------------------------------------------------
+
+        // the saser: coherent phonons, the sound laser (a black note trapped
+        // between two SAW resonators, pumped by an elite pump)
+        r.machine("assembler", EU, T)
+                .itemIn(NIItems.SAW_RESONATOR.getId().toString(), 2)
+                .itemIn("mi_nested_infinity:note_black", 1)
+                .itemIn(NIItems.ELITE_PUMP.getId().toString(), 1)
+                .fluidIn(ni + "conductive_epoxy", 100)
+                .itemOut(NIItems.SASER.getId().toString(), 1)
+                .save("resonant/saser");
+
+        // the resonance chamber: a titanate/resonite cavity held at the black
+        // note, superconductingly wired, gasketed with FKM
+        r.machine("assembler", EU, T)
+                .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 6)
+                .itemIn("modern_industrialization:resonite_plate", 6)
+                .itemIn("mi_nested_infinity:note_black", 2)
+                .itemIn("modern_industrialization:resonant_superconductor_cable", 8)
+                .itemIn(NIItems.FLUOROELASTOMER_SHEET.getId().toString(), 2)
+                .itemOut(NIItems.RESONANCE_CHAMBER.getId().toString(), 1)
+                .save("resonant/resonance_chamber");
+
+        // the phase-locked loop: twin oscillators on resonite wire
+        r.machine("assembler", EU, T)
+                .itemIn(NIItems.QUARTZ_OSCILLATOR.getId().toString(), 2)
+                .itemIn("modern_industrialization:resonite_wire", 8)
+                .itemIn(NIItems.FLUOROELASTOMER_SHEET.getId().toString(), 1)
+                .fluidIn(ni + "conductive_epoxy", 100)
+                .itemOut(NIItems.PHASE_LOCKED_LOOP.getId().toString(), 1)
+                .save("resonant/phase_locked_loop");
+
+        // -- the trinium_dinaquide coil: 1 trinium + 2 naquide (轻硅岩) ---------
+        r.machine("assembler", EU, T)
+                .itemIn("modern_industrialization:trinium_ingot", 1)
+                .itemIn(NIItems.NAQUIDE.getId().toString(), 2)
+                .itemIn(NIItems.SILICONE_MICA_INSULATOR_SHEET.getId().toString(), 6)
+                .itemIn(ni + "wetware_circuit", 2)
+                .itemOut(ni + "trinium_dinaquadide_coil", 1)
+                .save("resonant/trinium_dinaquadide_coil");
+
+        // -- the finals ----------------------------------------------------------
+
+        // the resonant board: the wetware board re-laminated in polyimide
+        // around the three signature components (exactly eight item inputs)
+        r.machine("assembler", EU, FT)
+                .itemIn(ni + "wetware_circuit_board", 1)
+                .itemIn(NIItems.POLYIMIDE_PLATE.getId().toString(), 4)
+                .itemIn("modern_industrialization:resonant_superconductor_cable", 12)
+                .itemIn(NIItems.SASER.getId().toString(), 1)
+                .itemIn(NIItems.RESONANCE_CHAMBER.getId().toString(), 1)
+                .itemIn(NIItems.PHASE_LOCKED_LOOP.getId().toString(), 1)
+                .itemIn("modern_industrialization:resonite_plate", 6)
+                .itemIn(mi + "plutonium_battery", 16)
+                .fluidIn(ni + "resonant_mother_liquor", 100)
+                .fluidIn(mi + "helium_3", 500)
+                .fluidIn(ni + "mutagen", 100)
+                .itemOut(ni + "resonant_circuit_board", 1)
+                .save("electric_age/circuit/assembler/resonant_circuit_board");
+
+        // the resonant circuit: processing-unit layout one tier above wetware
+        r.machine("assembler", EU, FT)
+                .itemIn(ni + "wetware_circuit", 4)
+                .itemIn(NIItems.RESONANT_RANDOM_ACCESS_MEMORY.getId().toString(), 2)
+                .itemIn(NIItems.RESONANT_MEMORY_MANAGEMENT_UNIT.getId().toString(), 1)
+                .itemIn(NIItems.RESONANT_ARITHMETIC_LOGIC_UNIT.getId().toString(), 1)
+                .itemIn(ni + "resonant_circuit_board", 1)
+                .itemOut(ni + "resonant_circuit", 1)
+                .save("electric_age/circuit/assembler/resonant_circuit");
     }
 }
