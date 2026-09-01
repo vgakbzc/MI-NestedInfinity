@@ -13,7 +13,13 @@
     },
     {
       "item": "mi_nested_infinity:note_black",
-      "amount": 2
+      "amount": 2,
+      "probability": 0.5
+    },
+    {
+      "item": "mi_nested_infinity:note_white",
+      "amount": 2,
+      "probability": 0.5
     },
     {
       "item": "modern_industrialization:resonant_superconductor_cable",

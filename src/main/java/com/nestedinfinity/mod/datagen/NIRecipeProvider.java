@@ -2362,12 +2362,14 @@ public final class NIRecipeProvider implements DataProvider {
         }
 
         // the tuning block: an eight-state Q8 register around a white note seed
+        // (inverse-color pair, each consumed with 50% probability)
         r.machine("assembler", EU, T)
                 .itemIn(ni + "crystal_circuit", 1)
                 .itemIn(NIItems.HIGH_PURITY_MONOCRYSTALLINE_NAQUADAH.getId().toString(), 2)
                 .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 2)
                 .itemIn("modern_industrialization:resonite_plate", 1)
-                .itemIn("mi_nested_infinity:note_white", 1)
+                .itemIn("mi_nested_infinity:note_white", 1, 0.5)
+                .itemIn("mi_nested_infinity:note_black", 1, 0.5)
                 .itemOut("mi_nested_infinity:tuning_block", 1)
                 .save("resonant/tuning_block");
 
@@ -2385,11 +2387,12 @@ public final class NIRecipeProvider implements DataProvider {
 
     /**
      * Resonant circuit program, part 6: the resonant processing units (each
-     * one consumes a machine-only Q8 note color - green RAM, cyan MMU, purple
-     * ALU, mirroring the bio parts), the signature components (the black-note
-     * saser, the resonance chamber, the phase-locked loop), the
-     * trinium_dinaquide coil, and the two finals: the board and the circuit,
-     * both at the 8000 s climax of the program.
+     * one consumes an inverse-color pair of Q8 notes at 50% probability each
+     * - green/blue RAM, cyan/red MMU, purple/yellow ALU, mirroring the bio
+     * parts), the signature components (the black/white saser, the resonance
+     * chamber, the phase-locked loop), the trinium_dinaquide coil, and the two
+     * finals: the board and the circuit, both at the 8000 s climax of the
+     * program.
      */
     private void resonantCircuitChain(NIRecipes r) {
         String ni = "mi_nested_infinity:";
@@ -2399,9 +2402,12 @@ public final class NIRecipeProvider implements DataProvider {
         int FT = 160_000; // the 8000 s finals
 
         // -- resonant processing units on the note ladder (100/200/300 mB) ----
+        // each consumes an inverse-color pair of notes (green/blue, cyan/red,
+        // purple/yellow), both colors at 50% consumption probability
 
         r.machine("assembler", EU, T)
-                .itemIn("mi_nested_infinity:note_green", 2)
+                .itemIn("mi_nested_infinity:note_green", 2, 0.5)
+                .itemIn("mi_nested_infinity:note_blue", 2, 0.5)
                 .itemIn(NIItems.BIO_RANDOM_ACCESS_MEMORY.getId().toString(), 1)
                 .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 1)
                 .itemIn("modern_industrialization:resonite_plate", 1)
@@ -2409,7 +2415,8 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemOut(NIItems.RESONANT_RANDOM_ACCESS_MEMORY.getId().toString(), 1)
                 .save("resonant/resonant_ram");
         r.machine("assembler", EU, T)
-                .itemIn("mi_nested_infinity:note_cyan", 1)
+                .itemIn("mi_nested_infinity:note_cyan", 1, 0.5)
+                .itemIn("mi_nested_infinity:note_red", 1, 0.5)
                 .itemIn(NIItems.BIO_MEMORY_MANAGEMENT_UNIT.getId().toString(), 1)
                 .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 1)
                 .itemIn("modern_industrialization:resonite_plate", 2)
@@ -2417,7 +2424,8 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemOut(NIItems.RESONANT_MEMORY_MANAGEMENT_UNIT.getId().toString(), 1)
                 .save("resonant/resonant_mmu");
         r.machine("assembler", EU, T)
-                .itemIn("mi_nested_infinity:note_purple", 1)
+                .itemIn("mi_nested_infinity:note_purple", 1, 0.5)
+                .itemIn("mi_nested_infinity:note_yellow", 1, 0.5)
                 .itemIn(NIItems.BIO_ARITHMETIC_LOGIC_UNIT.getId().toString(), 1)
                 .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 2)
                 .itemIn("modern_industrialization:resonite_plate", 2)
@@ -2427,22 +2435,26 @@ public final class NIRecipeProvider implements DataProvider {
 
         // -- signature components ------------------------------------------------
 
-        // the saser: coherent phonons, the sound laser (a black note trapped
-        // between two SAW resonators, pumped by an elite pump)
+        // the saser: coherent phonons, the sound laser (a black/white note pair
+        // trapped between two SAW resonators, pumped by an elite pump; both
+        // colors 50% consumption)
         r.machine("assembler", EU, T)
                 .itemIn(NIItems.SAW_RESONATOR.getId().toString(), 2)
-                .itemIn("mi_nested_infinity:note_black", 1)
+                .itemIn("mi_nested_infinity:note_black", 1, 0.5)
+                .itemIn("mi_nested_infinity:note_white", 1, 0.5)
                 .itemIn(NIItems.ELITE_PUMP.getId().toString(), 1)
                 .fluidIn(ni + "conductive_epoxy", 100)
                 .itemOut(NIItems.SASER.getId().toString(), 1)
                 .save("resonant/saser");
 
         // the resonance chamber: a titanate/resonite cavity held at the black
-        // note, superconductingly wired, gasketed with FKM
+        // note, superconductingly wired, gasketed with FKM (black/white pair,
+        // both colors 50% consumption)
         r.machine("assembler", EU, T)
                 .itemIn(NIItems.LEAD_TITANATE_PLATE.getId().toString(), 6)
                 .itemIn("modern_industrialization:resonite_plate", 6)
-                .itemIn("mi_nested_infinity:note_black", 2)
+                .itemIn("mi_nested_infinity:note_black", 2, 0.5)
+                .itemIn("mi_nested_infinity:note_white", 2, 0.5)
                 .itemIn("modern_industrialization:resonant_superconductor_cable", 8)
                 .itemIn(NIItems.FLUOROELASTOMER_SHEET.getId().toString(), 2)
                 .itemOut(NIItems.RESONANCE_CHAMBER.getId().toString(), 1)

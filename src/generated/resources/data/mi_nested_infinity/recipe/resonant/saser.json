@@ -9,7 +9,13 @@
     },
     {
       "item": "mi_nested_infinity:note_black",
-      "amount": 1
+      "amount": 1,
+      "probability": 0.5
+    },
+    {
+      "item": "mi_nested_infinity:note_white",
+      "amount": 1,
+      "probability": 0.5
     },
     {
       "item": "mi_nested_infinity:elite_pump",

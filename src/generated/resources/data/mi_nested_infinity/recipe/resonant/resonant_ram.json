@@ -5,7 +5,13 @@
   "item_inputs": [
     {
       "item": "mi_nested_infinity:note_green",
-      "amount": 2
+      "amount": 2,
+      "probability": 0.5
+    },
+    {
+      "item": "mi_nested_infinity:note_blue",
+      "amount": 2,
+      "probability": 0.5
     },
     {
       "item": "mi_nested_infinity:bio_random_access_memory",
