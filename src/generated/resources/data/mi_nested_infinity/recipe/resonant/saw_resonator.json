@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:piezo_wafer",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:lead_titanate_plate",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:conductive_epoxy",
+      "amount": 100
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:saw_resonator",
+      "amount": 2
+    }
+  ]
+}

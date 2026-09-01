@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "minecraft:ender_eye",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:mutagen",
+      "amount": 800
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 200
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:resonant_mother_liquor",
+      "amount": 1000
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:electrolyzer",
+  "eu": 2000000000,
+  "duration": 20000,
+  "fluid_inputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:chlorine",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:sodium_hydroxide",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:sodium_chlorate",
+      "amount": 3
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 500
+    }
+  ]
+}

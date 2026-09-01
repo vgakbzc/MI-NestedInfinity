@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 20000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:ammonia",
+      "amount": 2000
+    },
+    {
+      "fluid": "modern_industrialization:chlorine",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:hydrazine",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:ammonium_chloride",
+      "amount": 2
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 500
+    }
+  ]
+}

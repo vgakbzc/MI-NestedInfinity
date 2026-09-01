@@ -1,0 +1,35 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:resonite_wire",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:polyimide_plate",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:fluoroelastomer_sheet",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:conductive_epoxy",
+      "amount": 250
+    },
+    {
+      "fluid": "mi_nested_infinity:liquid_glass",
+      "amount": 72
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:resonite_cable",
+      "amount": 1
+    }
+  ]
+}

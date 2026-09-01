@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 20000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:m_xylene",
+      "amount": 500
+    },
+    {
+      "fluid": "mi_nested_infinity:chloromethane",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:durene",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 500
+    }
+  ]
+}

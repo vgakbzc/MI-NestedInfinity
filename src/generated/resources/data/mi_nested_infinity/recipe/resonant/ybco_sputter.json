@@ -1,0 +1,32 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:ybco_target",
+      "amount": 1,
+      "probability": 0.75
+    },
+    {
+      "item": "mi_nested_infinity:sapphire_substrate",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:argon",
+      "amount": 500
+    },
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:resonant_superconductor_tape",
+      "amount": 2
+    }
+  ]
+}

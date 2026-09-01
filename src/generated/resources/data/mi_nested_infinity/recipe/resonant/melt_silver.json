@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:magma_crucible",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:silver_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:molten_silver",
+      "amount": 1000
+    }
+  ]
+}

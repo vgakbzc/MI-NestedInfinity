@@ -1,0 +1,41 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/monazite",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:isobutyraldehyde",
+      "amount": 1500
+    },
+    {
+      "fluid": "modern_industrialization:chlorine",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 6000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:tributyl_phosphate",
+      "amount": 4
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:monazite_heavy_residue_solution",
+      "amount": 500
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 3000
+    }
+  ]
+}

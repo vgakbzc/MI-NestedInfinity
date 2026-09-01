@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "duration": 400,
+  "eu": 32768,
+  "item_inputs": [
+    {
+      "amount": 1,
+      "item": "modern_industrialization:resonite_dust"
+    }
+  ],
+  "item_outputs": [
+    {
+      "amount": 1,
+      "item": "modern_industrialization:resonite_hot_ingot"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 2000000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/lead",
+      "amount": 1
+    },
+    {
+      "tag": "c:dusts/titanium",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 1500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:lead_titanate_dust",
+      "amount": 3
+    }
+  ]
+}

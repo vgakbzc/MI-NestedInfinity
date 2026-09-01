@@ -1,0 +1,24 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:superheavy_fission_solution",
+      "amount": 1000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:sodium_nitrite",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:valence_adjusted_feed",
+      "amount": 1000
+    }
+  ]
+}

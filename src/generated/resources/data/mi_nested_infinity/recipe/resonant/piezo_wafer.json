@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:cutting_machine",
+  "eu": 2000000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "item": "minecraft:quartz",
+      "amount": 4
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:lubricant",
+      "amount": 233
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:piezo_wafer",
+      "amount": 8
+    }
+  ]
+}

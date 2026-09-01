@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:compressor",
+  "eu": 2000000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "tag": "c:ingots/gold",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:gold_foil",
+      "amount": 4
+    }
+  ]
+}

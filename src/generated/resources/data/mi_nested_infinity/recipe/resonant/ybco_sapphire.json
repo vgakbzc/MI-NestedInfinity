@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "eu": 32768,
+  "duration": 600,
+  "item_inputs": [
+    {
+      "tag": "c:dusts/aluminum",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:sapphire_substrate",
+      "amount": 2
+    }
+  ]
+}

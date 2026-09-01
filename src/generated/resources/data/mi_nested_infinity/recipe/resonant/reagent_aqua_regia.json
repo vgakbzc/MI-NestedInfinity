@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 2000000000,
+  "duration": 20000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:nitric_acid",
+      "amount": 250
+    },
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 750
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:aqua_regia",
+      "amount": 1000
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:crystal_circuit",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:high_purity_monocrystalline_naquadah",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:quartz_oscillator",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:resonant_mother_liquor",
+      "amount": 100
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:note_white",
+      "amount": 1
+    }
+  ]
+}

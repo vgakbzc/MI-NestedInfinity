@@ -1,0 +1,31 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 2000000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:yttrium_oxide",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:barium_oxide_dust",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:cupric_oxide",
+      "amount": 3
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:ybco_target",
+      "amount": 4
+    }
+  ]
+}

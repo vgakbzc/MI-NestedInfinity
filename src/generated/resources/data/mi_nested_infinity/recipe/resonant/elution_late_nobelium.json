@@ -1,0 +1,35 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:late_actinide_group",
+      "amount": 1000
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 300
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:alpha_hiba_eluant",
+      "amount": 1,
+      "probability": 0.1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:nobelium_dust",
+      "amount": 1,
+      "probability": 0.7
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:late_actinide_group",
+      "amount": 800
+    }
+  ]
+}
