@@ -84,7 +84,7 @@ RESONANT_ITEMS = [
     ("pgm_residue",           "PGM Residue",              "铂族金属残渣",      (226, 222, 228), "mi_dust"),
     # naquide and the fusion-born alloys
     ("crude_naquide_powder",  "Crude Naquide Powder",     "粗轻硅岩粉",        (140, 180, 160), "mi_dust"),
-    ("naquide",               "Naquide",                  "轻硅岩",            (170, 220, 190), "crystal"),
+    ("naquide",               "Naquide",                  "轻硅岩",            (170, 220, 190), "mi_dust"),
     ("adamantium_ingot",      "Adamantium Ingot",         "精金锭",            (184, 56, 56),   "ingot"),
     ("mithril_ingot",         "Mithril Ingot",            "秘银锭",            (184, 216, 232), "ingot"),
     # piezo / resonator parts
