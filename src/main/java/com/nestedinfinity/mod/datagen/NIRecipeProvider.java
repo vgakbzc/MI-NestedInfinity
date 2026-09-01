@@ -1520,7 +1520,7 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemIn(ni + "crystal_circuit_board", 1)
                 .itemIn(NIMaterials.Materials.get("naquadah").id("plate"), 4)
                 .itemIn(NIItems.P_TOLUENESULFONIC_ACID.getId().toString(), 2)
-                .itemIn(NIItems.ELITE_PUMP.getId().toString(), 1)
+                .itemIn(NIItems.ELITE_PUMP.getId().toString(), 1, 0.10)
                 .fluidIn(ni + "mutagen", 400)
                 .fluidIn(mi + "helium_3", 100)
                 .fluidIn(ni + "fluoroantimonic_acid", 10)
@@ -2449,7 +2449,7 @@ public final class NIRecipeProvider implements DataProvider {
         // -- the finals ----------------------------------------------------------
 
         // the resonant board: the wetware board re-laminated in polyimide
-        // around the three signature components (exactly eight item inputs)
+        // around the three signature components (all nine assembler item inputs)
         r.machine("assembler", EU, FT)
                 .itemIn(ni + "wetware_circuit_board", 1)
                 .itemIn(NIItems.POLYIMIDE_PLATE.getId().toString(), 4)
@@ -2459,6 +2459,7 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemIn(NIItems.PHASE_LOCKED_LOOP.getId().toString(), 1)
                 .itemIn("modern_industrialization:resonite_plate", 6)
                 .itemIn(mi + "plutonium_battery", 16)
+                .itemIn(NIItems.ELITE_PUMP.getId().toString(), 2)
                 .fluidIn(ni + "resonant_mother_liquor", 100)
                 .fluidIn(mi + "helium_3", 500)
                 .fluidIn(ni + "mutagen", 100)

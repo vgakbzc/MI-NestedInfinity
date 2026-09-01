@@ -20,11 +20,6 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_xanthoglaucocaeruleorhodophyta",
-      "amount": 1,
-      "probability": 0.25
-    },
-    {
       "item": "mi_nested_infinity:petri_erythroazurophyta",
       "amount": 1,
       "probability": 0.25
@@ -36,6 +31,11 @@
     },
     {
       "item": "mi_nested_infinity:petri_xanthoazurorhodophyta",
+      "amount": 1,
+      "probability": 0.25
+    },
+    {
+      "item": "mi_nested_infinity:petri_xanthoglaucocaeruleorhodophyta",
       "amount": 1,
       "probability": 0.25
     }

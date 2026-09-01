@@ -33,7 +33,8 @@
     },
     {
       "item": "mi_nested_infinity:elite_pump",
-      "amount": 1
+      "amount": 1,
+      "probability": 0.1
     }
   ],
   "fluid_inputs": [
