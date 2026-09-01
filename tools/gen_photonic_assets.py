@@ -115,8 +115,8 @@ ITEMS = [
     ("optical_random_access_memory", "Optical RAM", "光学随机存取存储器", (192, 132, 242), "bio_ram"),
     ("optical_memory_management_unit", "Optical MMU", "光学内存管理单元", (182, 122, 238), "bio_memory"),
     ("optical_arithmetic_logic_unit", "Optical ALU", "光学算术逻辑单元", (202, 142, 246), "bio_arithmetic"),
-    ("large_elite_motor", "Large Elite Motor", "大型精英电机", (72, 182, 172), "mi_motor"),
-    ("large_elite_pump", "Large Elite Pump", "大型精英泵", (64, 172, 164), "mi_pump"),
+    ("large_elite_motor", "Large Elite Motor", "大型精英电机", (72, 182, 172), "mi_motor_green_large"),
+    ("large_elite_pump", "Large Elite Pump", "大型精英泵", (64, 172, 164), "mi_pump_green_large"),
 ]
 
 # ---------------------------------------------------------------- fluids

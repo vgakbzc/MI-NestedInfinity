@@ -486,6 +486,14 @@ def make_item_texture(dst, style, color):
     if style == "mi_motor_green":
         blue_to_green(dst, 'tools/template_motor_mi.png')
         return
+    if style == "mi_pump_green_large":
+        # MI's LARGE advanced pump with only the blue accents rotated to green
+        blue_to_green(dst, 'tools/template_pump.png')
+        return
+    if style == "mi_motor_green_large":
+        # MI's LARGE advanced motor, same treatment
+        blue_to_green(dst, 'tools/template_motor.png')
+        return
     if style == "ingot":
         # the mod's own nichrome ingot sprite, recolored (repo-relative path)
         template_recolor(dst, 'src/main/resources/assets/modern_industrialization/textures/item/nichrome_ingot.png', color)

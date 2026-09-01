@@ -2256,11 +2256,14 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemOut(NIItems.RESONANT_SUPERCONDUCTOR_TAPE.getId().toString(), 2)
                 .save("resonant/ybco_sputter");
 
-        // the 2^36 EU/t cable: eight tapes laminated on resonite wire with the
-        // conductive silver epoxy, sealed in liquid glass
+        // the 2^36 EU/t cable: eight tapes laminated on resonite wire over the
+        // previous tier's superconductor cable, the conductive silver epoxy,
+        // an elite pump on the cryo loop, sealed in liquid glass
         r.machine("assembler", EU, T)
                 .itemIn(NIItems.RESONANT_SUPERCONDUCTOR_TAPE.getId().toString(), 8)
                 .itemIn("modern_industrialization:resonite_wire", 4)
+                .itemIn(NIMaterials.Materials.get("advanced_superconductor").cableId(), 2)
+                .itemIn(NIItems.ELITE_PUMP.getId().toString(), 1)
                 .fluidIn(ni + "conductive_epoxy", 500)
                 .fluidIn(ni + "liquid_glass", 144)
                 .itemOut("modern_industrialization:resonant_superconductor_cable", 1)
@@ -3517,9 +3520,13 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemIn(ni + "optical_superconductor_ingot", 1)
                 .itemOut(ni + "optical_superconductor_wire", 4)
                 .save("optical/optical_superconductor_wire");
-        // the 2^39 EU/t cable, sealed like the resonant one
+        // the 2^39 EU/t cable: the new wire laminated over the resonant tier's
+        // cable, FFKM/PEEK insulation, the large elite pump on the cryo loop,
+        // sealed in liquid glass
         r.machine("assembler", EU, T)
                 .itemIn(ni + "optical_superconductor_wire", 2)
+                .itemIn("modern_industrialization:resonant_superconductor_cable", 2)
+                .itemIn(ni + "large_elite_pump", 1)
                 .itemIn(ni + "ffkm_sheet", 2)
                 .itemIn(ni + "peek_insulator_sheet", 2)
                 .fluidIn(ni + "liquid_glass", 144)

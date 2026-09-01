@@ -10,6 +10,14 @@
     {
       "item": "modern_industrialization:resonite_wire",
       "amount": 4
+    },
+    {
+      "item": "modern_industrialization:advanced_superconductor_cable",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:elite_pump",
+      "amount": 1
     }
   ],
   "fluid_inputs": [
