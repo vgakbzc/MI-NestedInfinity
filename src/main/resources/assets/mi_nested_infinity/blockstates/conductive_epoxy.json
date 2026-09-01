@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/conductive_epoxy"
+    }
+  }
+}

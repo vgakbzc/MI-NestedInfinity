@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/tbp_organic_phase"
+    }
+  }
+}

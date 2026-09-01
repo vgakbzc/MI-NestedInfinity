@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/early_actinide_group"
+    }
+  }
+}

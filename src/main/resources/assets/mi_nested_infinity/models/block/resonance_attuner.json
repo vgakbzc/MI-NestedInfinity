@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "mi_nested_infinity:block/resonance_attuner_side",
+    "top": "mi_nested_infinity:block/resonance_attuner_top",
+    "bottom": "mi_nested_infinity:block/resonance_attuner_bottom"
+  }
+}

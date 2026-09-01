@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/valence_adjusted_feed"
+    }
+  }
+}

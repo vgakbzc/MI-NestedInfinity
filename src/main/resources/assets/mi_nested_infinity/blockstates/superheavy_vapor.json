@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/superheavy_vapor"
+    }
+  }
+}
