@@ -1,15 +1,12 @@
 package com.nestedinfinity.mod.blocks.resonance;
 
 import com.nestedinfinity.mod.blocks.NIBlocks;
-import com.nestedinfinity.mod.items.resonance.NINotes;
 
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -62,34 +59,16 @@ public class ResonanceAttunerBlock extends BaseEntityBlock {
                 (serverLevel, pos, blockState, be) -> ResonanceAttunerBlockEntity.tick(be));
     }
 
-    // Direct hand processing: one note in, one product back into the player's
-    // inventory. Hopper automation goes through the block entity's input slot
-    // instead (see tick), so both paths share the exact same Q8 step.
+    // Right-click opens the two-slot GUI; notes placed in the input slot are
+    // processed by the server tick (the same Q8 step the hoppers go through).
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
             BlockHitResult hit) {
-        if (level.isClientSide()) {
-            return InteractionResult.SUCCESS;
-        }
-        if (!(level.getBlockEntity(pos) instanceof ResonanceAttunerBlockEntity attuner)) {
-            return InteractionResult.PASS;
-        }
-        for (InteractionHand hand : InteractionHand.values()) {
-            ItemStack held = player.getItemInHand(hand);
-            NINotes note = NINotes.byItem(held.getItem());
-            if (note == null) {
-                continue;
+        if (level.getBlockEntity(pos) instanceof ResonanceAttunerBlockEntity attuner) {
+            if (!level.isClientSide()) {
+                player.openMenu(attuner, pos);
             }
-            NINotes product = attuner.tryProcess(note);
-            if (product != null) {
-                held.shrink(1);
-                ItemStack produced = new ItemStack(product.item.get());
-                if (!player.getInventory().add(produced)) {
-                    player.drop(produced, false);
-                }
-                return InteractionResult.SUCCESS;
-            }
-            return InteractionResult.CONSUME;
+            return InteractionResult.sidedSuccess(level.isClientSide());
         }
         return InteractionResult.PASS;
     }

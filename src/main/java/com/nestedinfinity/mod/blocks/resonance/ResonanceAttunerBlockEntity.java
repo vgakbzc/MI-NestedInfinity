@@ -7,8 +7,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -31,7 +35,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * missing or the output slot cannot accept the product (standard
  * "output full" behavior; the input note stays put).
  */
-public class ResonanceAttunerBlockEntity extends BlockEntity implements WorldlyContainer {
+public class ResonanceAttunerBlockEntity extends BlockEntity implements WorldlyContainer, MenuProvider {
     public static final int INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 1;
 
@@ -85,6 +89,27 @@ public class ResonanceAttunerBlockEntity extends BlockEntity implements WorldlyC
 
     public ItemStack getOutputStack() {
         return output;
+    }
+
+    // -- MenuProvider: the two-slot GUI ----------------------------------------
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("block.mi_nested_infinity.resonance_attuner");
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
+        return new ResonanceAttunerMenu(id, playerInventory, this);
+    }
+
+    /** The tuning block's current color index, or -1 when none is placed above. */
+    public int registerColor() {
+        if (level == null) {
+            return -1;
+        }
+        BlockState above = level.getBlockState(worldPosition.above());
+        return above.is(NIBlocks.TUNING_BLOCK.get()) ? above.getValue(TuningBlock.COLOR) : -1;
     }
 
     // -- server tick: hoppers/automation path -----------------------------------

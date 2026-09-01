@@ -161,6 +161,9 @@ RESONANT_FLUIDS = [
 
 TRINIUM_COLOR = (155, 200, 216)
 RESONITE_COLOR = (140, 232, 192)
+TRINIUM_DINAQUADIDE_COLOR = (138, 63, 184)  # the purple of the dinaquide coil
+ADAMANTIUM_COLOR = (222, 156, 62)  # gold + roentgenium: a dense noble amber
+MITHRIL_COLOR = (198, 214, 232)  # silver + copernicium: lunar silver-blue
 # standard part set of NIMaterial (generateWire adds wire+cable on top)
 MAT_PARTS = ["tiny_dust", "dust", "hot_ingot", "ingot", "nugget", "plate", "rod", "gear"]
 MAT_PART_NAMES = {
@@ -290,6 +293,58 @@ def make_attuner_textures(dst_dir):
     write_png(os.path.join(dst_dir, "resonance_attuner_bottom.png"), 16, 16, bottom)
 
 
+def make_attuner_gui(dst):
+    """256x256 GUI background (vanilla blit assumes a 256x256 sheet) holding a
+    176x172 vanilla-style container panel for the attuner GUI: the two machine
+    slots, an arrow, a strip of eight Q8 swatch insets (the screen overlays the
+    live colors) and the player inventory grid. Slot coordinates mirror
+    ResonanceAttunerMenu / ResonanceAttunerScreen."""
+    SHEET, W, H = 256, 176, 172
+    px = bytearray(SHEET * SHEET * 4)
+
+    def put(x, y, rgb):
+        if 0 <= x < W and 0 <= y < H:
+            i = (y * SHEET + x) * 4
+            px[i], px[i + 1], px[i + 2], px[i + 3] = rgb[0], rgb[1], rgb[2], 255
+
+    for y in range(H):
+        for x in range(W):
+            put(x, y, (198, 198, 198))
+    for i in range(W):
+        put(i, 0, (85, 85, 85))
+        put(i, H - 1, (85, 85, 85))
+    for j in range(H):
+        put(0, j, (85, 85, 85))
+        put(W - 1, j, (85, 85, 85))
+
+    def slot_inset(x, y, w=18, h=18):
+        for yy in range(y, y + h):
+            for xx in range(x, x + w):
+                put(xx, yy, (139, 139, 139))
+        for k in range(w):
+            put(x + k, y, (55, 55, 55))
+            put(x + k, y + h - 1, (255, 255, 255))
+        for k in range(h):
+            put(x, y + k, (55, 55, 55))
+            put(x + w - 1, y + k, (255, 255, 255))
+
+    slot_inset(53, 34)   # note input
+    slot_inset(107, 34)  # note output
+    for dx in range(12):  # arrow between the slots
+        half = max(0, 5 - dx // 2)
+        for dy in range(-half, half + 1):
+            put(78 + dx, 43 + dy, (85, 85, 85))
+    for i in range(8):  # Q8 swatch insets; screen fills the inner 14x14
+        slot_inset(17 + i * 18, 57, 16, 16)
+    for row in range(3):
+        for col in range(9):
+            slot_inset(8 + col * 18, 98 + row * 18)
+    for col in range(9):
+        slot_inset(8 + col * 18, 156)
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    write_png(dst, SHEET, SHEET, px)
+
+
 def item_model(item_id):
     return {"parent": "minecraft:item/generated",
             "textures": {"layer0": f"{MODID}:item/{item_id}"}}
@@ -363,6 +418,17 @@ def main():
 
     material_parts("trinium", TRINIUM_COLOR, MAT_PARTS)
     material_parts("resonite", RESONITE_COLOR, MAT_PARTS + ["wire"])
+    # the coil alloy proper (EBF-cast on the TPV coil tier)
+    material_parts("trinium_dinaquadide", TRINIUM_DINAQUADIDE_COLOR, MAT_PARTS)
+    # fusion-alloy plates laminated into the resonant circuit casing
+    for plate_id, color in (("adamantium", ADAMANTIUM_COLOR), ("mithril", MITHRIL_COLOR)):
+        template_recolor(os.path.join(A, f"textures/item/{plate_id}_plate.png"),
+                         "src/main/resources/assets/modern_industrialization/textures/item/nichrome_plate.png",
+                         tuple(color))
+        write_json(os.path.join(A, f"models/item/{plate_id}_plate.json"),
+                   {"parent": "minecraft:item/generated",
+                    "textures": {"layer0": f"{MODID}:item/{plate_id}_plate"}})
+    make_attuner_gui(os.path.join(A, "textures/gui/resonance_attuner.png"))
     for mat in ("resonite", "resonant_superconductor"):
         # cable items render through MI's pipe delegate model, no texture needed
         write_json(os.path.join(MI, f"models/item/{mat}_cable.json"),
@@ -378,6 +444,36 @@ def main():
     for name, zh_color, _c in NOTES:
         en[f"item.{MODID}.note_{name}"] = f"{name.capitalize()} Tuning Note"
         zh[f"item.{MODID}.note_{name}"] = f"{zh_color}色音符"
+        en[f"color.{MODID}.{name}"] = name.capitalize()
+        zh[f"color.{MODID}.{name}"] = f"{zh_color}色"
+        emi_how = {
+            "white": ("Assembler recipe. Inserting it reads the current register color and resets the block to white.",
+                      "装配机合成。放入后读出当前音色，并将调律方块复位为白色。"),
+            "red": ("Assembler recipe (see the recipe page).", "装配机合成（见配方页）。"),
+            "yellow": ("Assembler recipe (see the recipe page).", "装配机合成（见配方页）。"),
+            "blue": ("Assembler recipe (see the recipe page).", "装配机合成（见配方页）。"),
+            "green": ("Machine-only: yellow register x red note, or blue register x black note.",
+                      "仅调律机产出：黄方块 × 红音符，或蓝方块 × 黑音符。"),
+            "cyan": ("Machine-only: black register x red note, or red register x black note.",
+                     "仅调律机产出：黑方块 × 红音符，或红方块 × 黑音符。"),
+            "purple": ("Machine-only: black register x yellow note, or yellow register x black note.",
+                       "仅调律机产出：黑方块 × 黄音符，或黄方块 × 黑音符。"),
+            "black": ("Machine-only: square a red, yellow or blue register (x squared = black).",
+                      "仅调律机产出：红/黄/蓝方块自乘（平方得黑）。"),
+        }[name]
+        en[f"emi.{MODID}.note.{name}.1"] = emi_how[0]
+        zh[f"emi.{MODID}.note.{name}.1"] = emi_how[1]
+        en[f"emi.{MODID}.note.{name}.2"] = ("Attuner: output = block color x note color; "
+                                            "the tuning block adopts the note's color.")
+        zh[f"emi.{MODID}.note.{name}.2"] = "调律机：输出音符 = 方块颜色 × 音符颜色；调律方块变为音符的颜色。"
+    en[f"container.{MODID}.resonance_attuner.register"] = "Register: %s"
+    zh[f"container.{MODID}.resonance_attuner.register"] = "当前音色：%s"
+    en[f"container.{MODID}.resonance_attuner.no_register"] = "No tuning block above!"
+    zh[f"container.{MODID}.resonance_attuner.no_register"] = "上方没有调律方块！"
+    en[f"item.{MODID}.adamantium_plate"] = "Adamantium Plate"
+    zh[f"item.{MODID}.adamantium_plate"] = "精金板"
+    en[f"item.{MODID}.mithril_plate"] = "Mithril Plate"
+    zh[f"item.{MODID}.mithril_plate"] = "秘银板"
     en[f"block.{MODID}.tuning_block"] = "Tuning Block"
     zh[f"block.{MODID}.tuning_block"] = "调律方块"
     en[f"block.{MODID}.resonance_attuner"] = "Resonance Attuner"
@@ -394,7 +490,8 @@ def main():
         zh[f"fluid.{MODID}.{fluid_id}"] = fluid_zh
         zh[f"item.{MODID}.{fluid_id}_bucket"] = f"{fluid_zh}桶"
     for mat, mat_en, mat_zh in (("trinium", "Trinium", "翠尼特"),
-                                ("resonite", "Resonite", "谐振合金")):
+                                ("resonite", "Resonite", "谐振合金"),
+                                ("trinium_dinaquadide", "Trinium Dinaquadide", "翠尼特二硅岩化物")):
         for part, (p_en, p_zh) in MAT_PART_NAMES.items():
             has = (part in MAT_PARTS) or (mat == "resonite" and part == "wire")
             if has:

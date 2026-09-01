@@ -2,14 +2,17 @@ package com.nestedinfinity.mod.blocks;
 import com.nestedinfinity.mod.NestedInfinity;
 import com.nestedinfinity.mod.blocks.resonance.ResonanceAttunerBlock;
 import com.nestedinfinity.mod.blocks.resonance.ResonanceAttunerBlockEntity;
+import com.nestedinfinity.mod.blocks.resonance.ResonanceAttunerMenu;
 import com.nestedinfinity.mod.blocks.resonance.TuningBlock;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -61,6 +64,12 @@ public final class NIBlocks {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ResonanceAttunerBlockEntity>> RESONANCE_ATTUNER_TYPE =
             BLOCK_ENTITY_TYPES.register("resonance_attuner",
                     () -> BlockEntityType.Builder.of(ResonanceAttunerBlockEntity::new, RESONANCE_ATTUNER.get()).build(null));
+
+    public static final DeferredRegister<MenuType<?>> MENUS =
+            DeferredRegister.create(Registries.MENU, NestedInfinity.MODID);
+
+    public static final DeferredHolder<MenuType<?>, MenuType<ResonanceAttunerMenu>> RESONANCE_ATTUNER_MENU =
+            MENUS.register("resonance_attuner", () -> IMenuTypeExtension.create(ResonanceAttunerMenu::new));
 
     public static void init() {}
 
