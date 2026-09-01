@@ -273,8 +273,10 @@ BIO_ITEMS = [
     ("naquadah_frame", "Naquadah Frame", "硅岩框架", (107, 142, 90), "frame"),
     ("polybenzimidazole_plate", "Polybenzimidazole Plate", "聚苯并咪唑片", (200, 148, 62), "mi_plate"),
     ("epoxy_plate", "Epoxy Plate", "环氧树脂板", (216, 168, 56), "mi_plate"),
-    ("elite_motor", "Elite Motor", "精英马达", (232, 184, 72), "mi_motor"),
-    ("elite_pump", "Elite Pump", "精英泵", (176, 116, 220), "mi_pump"),
+    # elites: MI's current motor/pump sprites with only the blue accents
+    # hue-rotated to green (grays/whites/copper untouched)
+    ("elite_motor", "Elite Motor", "精英马达", (76, 175, 80), "mi_motor_green"),
+    ("elite_pump", "Elite Pump", "精英泵", (76, 175, 80), "mi_pump_green"),
     ("sodium_cyanide", "Sodium Cyanide", "氰化钠", (238, 240, 244), "mi_dust"),
     ("cyanoacetic_acid", "Cyanoacetic Acid", "氰乙酸", (214, 232, 202), "mi_dust"),
     ("poly_methyl_cyanoacrylate", "Poly(Methyl Cyanoacrylate)", "聚氰基丙烯酸甲酯", (228, 214, 178), "mi_dust"),
@@ -478,6 +480,12 @@ def make_item_texture(dst, style, color):
     if style == "mi_motor":
         template_recolor(dst, 'tools/template_motor.png', color)
         return
+    if style == "mi_pump_green":
+        blue_to_green(dst, 'tools/template_pump_mi.png')
+        return
+    if style == "mi_motor_green":
+        blue_to_green(dst, 'tools/template_motor_mi.png')
+        return
     if style == "ingot":
         # the mod's own nichrome ingot sprite, recolored (repo-relative path)
         template_recolor(dst, 'src/main/resources/assets/modern_industrialization/textures/item/nichrome_ingot.png', color)
@@ -503,6 +511,18 @@ def template_recolor(dst, template, color, low=0.45, span=0.85):
         px[i] = min(255, int(color[0] * factor))
         px[i+1] = min(255, int(color[1] * factor))
         px[i+2] = min(255, int(color[2] * factor))
+    write_png(dst, w, h, px)
+
+
+def blue_to_green(dst, template):
+    """MI's original sprite with only the blue parts hue-rotated to green:
+    blue-dominant pixels swap their G and B channels (same luminance ramp,
+    e.g. #396385 -> #398563), while grays, whites and copper stay untouched."""
+    w, h, px = read_png(os.path.join(ROOT, template))
+    for i in range(0, len(px), 4):
+        r, g, b, a = px[i], px[i+1], px[i+2], px[i+3]
+        if a and b > r + 12 and b >= g + 8:
+            px[i+1], px[i+2] = b, g
     write_png(dst, w, h, px)
 
 
