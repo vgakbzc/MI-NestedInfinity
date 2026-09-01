@@ -18,12 +18,20 @@
     {
       "item": "mi_nested_infinity:graphene_electrode",
       "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:graphene_rod",
+      "amount": 4
     }
   ],
   "fluid_inputs": [
     {
-      "fluid": "mi_nested_infinity:xenon",
+      "fluid": "mi_nested_infinity:krypton",
       "amount": 100
+    },
+    {
+      "fluid": "mi_nested_infinity:liquid_xenon",
+      "amount": 16000
     },
     {
       "fluid": "mi_nested_infinity:molten_trinium",

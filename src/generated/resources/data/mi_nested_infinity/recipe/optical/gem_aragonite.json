@@ -8,13 +8,13 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_aurantiophyta",
+      "item": "mi_nested_infinity:petri_aurantiochloromagentophyta",
       "amount": 1
     }
   ],
   "fluid_inputs": [
     {
-      "fluid": "mi_nested_infinity:radon",
+      "fluid": "modern_industrialization:helium",
       "amount": 50
     }
   ],

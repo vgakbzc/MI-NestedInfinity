@@ -8,7 +8,7 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_prasinophyta",
+      "item": "mi_nested_infinity:petri_aurantiochlorophyta",
       "amount": 1
     }
   ],
@@ -22,7 +22,17 @@
     {
       "item": "mi_nested_infinity:gem_brazilianite",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.16666666666666666
+    },
+    {
+      "item": "mi_nested_infinity:gem_epidote",
+      "amount": 1,
+      "probability": 0.16666666666666666
+    },
+    {
+      "item": "mi_nested_infinity:gem_pyrite",
+      "amount": 1,
+      "probability": 0.16666666666666666
     }
   ]
 }

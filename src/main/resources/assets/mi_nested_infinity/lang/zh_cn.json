@@ -1050,5 +1050,10 @@
   "item.mi_nested_infinity.argon_bucket": "氩桶",
   "fluid.mi_nested_infinity.krypton": "氪",
   "item.mi_nested_infinity.krypton_bucket": "氪桶",
-  "emi.category.mi_nested_infinity.super_assembler": "超级组装机"
+  "emi.category.mi_nested_infinity.super_assembler": "超级组装机",
+  "item.mi_nested_infinity.graphene_oxide": "氧化石墨烯",
+  "item.mi_nested_infinity.graphene": "石墨烯",
+  "item.mi_nested_infinity.graphene_rod": "石墨烯杆",
+  "fluid.mi_nested_infinity.liquid_xenon": "液态氙",
+  "item.mi_nested_infinity.liquid_xenon_bucket": "液态氙桶"
 }

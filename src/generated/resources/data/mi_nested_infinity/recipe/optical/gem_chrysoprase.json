@@ -8,13 +8,13 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_prasinophyta",
+      "item": "mi_nested_infinity:petri_chlorophyta",
       "amount": 1
     }
   ],
   "fluid_inputs": [
     {
-      "fluid": "mi_nested_infinity:xenon",
+      "fluid": "modern_industrialization:helium",
       "amount": 50
     }
   ],
@@ -22,7 +22,12 @@
     {
       "item": "mi_nested_infinity:gem_chrysoprase",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.25
+    },
+    {
+      "item": "mi_nested_infinity:gem_serpentine",
+      "amount": 1,
+      "probability": 0.25
     }
   ]
 }

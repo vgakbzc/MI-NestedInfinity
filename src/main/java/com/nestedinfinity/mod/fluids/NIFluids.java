@@ -148,9 +148,14 @@ public final class NIFluids {
     // modern_industrialization:helium). Each gem's tube is filled with the gas
     // whose discharge color lies nearest the gem's color: neon red-orange,
     // argon lavender, krypton ice-blue (xenon and radon already registered).
+    // Liquid xenon is the deep-chilled phase the tubes are flooded with
+    // (xenon gas condensed in the vacuum freezer).
     public static final Entry NEON = register("neon", 0xFFFF5F42);
     public static final Entry ARGON = register("argon", 0xFFAA8CFF);
     public static final Entry KRYPTON = register("krypton", 0xFF96C8FF);
+    public static final Entry LIQUID_XENON = register("liquid_xenon", 0xFF64A0D7);
+
+    public static final List<Entry> NOBLE = List.of(NEON, ARGON, KRYPTON, LIQUID_XENON);
 
     public static final List<Entry> ALGAE = List.of(ERYTHROPHYTA, AURANTIOPHYTA, XANTHOPHYTA, PRASINOPHYTA,
             CHLOROPHYTA, GLAUCOPHYTA, CYANOPHYTA, AZUREOPHYTA, CAERULEOPHYTA, PURPUREOPHYTA, MAGENTOPHYTA, RHODOPHYTA);
@@ -175,7 +180,8 @@ public final class NIFluids {
             CRUDE_ALLYL_CHLORIDE, ALLYL_CHLORIDE, CHLORINATED_WASTE, HYPOCHLOROUS_ACID, DICHLOROHYDRIN,
             CRUDE_EPICHLOROHYDRIN, EPICHLOROHYDRIN, CRUDE_BISPHENOL_A, BISPHENOL_A, CHLOROHYDRIN_ETHER,
             CRUDE_EPOXY_RESIN, EPOXY_RESIN, ANTIMONY_PENTAFLUORIDE, FLUOROANTIMONIC_ACID).stream(),
-            Stream.concat(ALGAE.stream(), Stream.concat(BIO.stream(), RESONANT.stream()))).toList();
+            Stream.concat(NOBLE.stream(), Stream.concat(ALGAE.stream(),
+            Stream.concat(BIO.stream(), RESONANT.stream())))).toList();
 
     private static Entry register(String name, int tint) {
         return new Entry(name, tint);

@@ -8,7 +8,7 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_erythrophyta",
+      "item": "mi_nested_infinity:petri_erythrocaeruleophyta",
       "amount": 1
     }
   ],
@@ -22,7 +22,32 @@
     {
       "item": "mi_nested_infinity:gem_garnet",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.08333333333333333
+    },
+    {
+      "item": "mi_nested_infinity:gem_kunzite",
+      "amount": 1,
+      "probability": 0.08333333333333333
+    },
+    {
+      "item": "mi_nested_infinity:gem_rose_quartz",
+      "amount": 1,
+      "probability": 0.08333333333333333
+    },
+    {
+      "item": "mi_nested_infinity:gem_thulite",
+      "amount": 1,
+      "probability": 0.08333333333333333
+    },
+    {
+      "item": "mi_nested_infinity:gem_rubellite",
+      "amount": 1,
+      "probability": 0.08333333333333333
+    },
+    {
+      "item": "mi_nested_infinity:gem_bixbite",
+      "amount": 1,
+      "probability": 0.08333333333333333
     }
   ]
 }

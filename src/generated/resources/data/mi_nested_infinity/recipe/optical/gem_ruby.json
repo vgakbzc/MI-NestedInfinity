@@ -22,7 +22,52 @@
     {
       "item": "mi_nested_infinity:gem_ruby",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.05
+    },
+    {
+      "item": "mi_nested_infinity:gem_spinel",
+      "amount": 1,
+      "probability": 0.05
+    },
+    {
+      "item": "mi_nested_infinity:gem_bloodstone",
+      "amount": 1,
+      "probability": 0.05
+    },
+    {
+      "item": "mi_nested_infinity:gem_cuprite",
+      "amount": 1,
+      "probability": 0.05
+    },
+    {
+      "item": "mi_nested_infinity:gem_crocoite",
+      "amount": 1,
+      "probability": 0.05
+    },
+    {
+      "item": "mi_nested_infinity:gem_eudialyte",
+      "amount": 1,
+      "probability": 0.05
+    },
+    {
+      "item": "mi_nested_infinity:gem_rhodochrosite",
+      "amount": 1,
+      "probability": 0.05
+    },
+    {
+      "item": "mi_nested_infinity:gem_morganite",
+      "amount": 1,
+      "probability": 0.05
+    },
+    {
+      "item": "mi_nested_infinity:gem_rhodonite",
+      "amount": 1,
+      "probability": 0.05
+    },
+    {
+      "item": "mi_nested_infinity:gem_poudretteite",
+      "amount": 1,
+      "probability": 0.05
     }
   ]
 }

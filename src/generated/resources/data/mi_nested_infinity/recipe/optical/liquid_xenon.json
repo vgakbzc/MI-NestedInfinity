@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:vacuum_freezer",
+  "eu": 4096,
+  "duration": 400,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:xenon",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:liquid_xenon",
+      "amount": 1000
+    }
+  ]
+}

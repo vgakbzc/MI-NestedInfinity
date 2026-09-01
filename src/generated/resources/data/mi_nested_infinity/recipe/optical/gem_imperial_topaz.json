@@ -8,13 +8,13 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_aurantiophyta",
+      "item": "mi_nested_infinity:petri_erythrochlorophyta",
       "amount": 1
     }
   ],
   "fluid_inputs": [
     {
-      "fluid": "mi_nested_infinity:neon",
+      "fluid": "modern_industrialization:helium",
       "amount": 50
     }
   ],
@@ -22,7 +22,62 @@
     {
       "item": "mi_nested_infinity:gem_imperial_topaz",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.041666666666666664
+    },
+    {
+      "item": "mi_nested_infinity:gem_topaz",
+      "amount": 1,
+      "probability": 0.041666666666666664
+    },
+    {
+      "item": "mi_nested_infinity:gem_sphene",
+      "amount": 1,
+      "probability": 0.041666666666666664
+    },
+    {
+      "item": "mi_nested_infinity:gem_scapolite",
+      "amount": 1,
+      "probability": 0.041666666666666664
+    },
+    {
+      "item": "mi_nested_infinity:gem_cassiterite",
+      "amount": 1,
+      "probability": 0.041666666666666664
+    },
+    {
+      "item": "mi_nested_infinity:gem_peridot",
+      "amount": 1,
+      "probability": 0.041666666666666664
+    },
+    {
+      "item": "mi_nested_infinity:gem_prasiolite",
+      "amount": 1,
+      "probability": 0.041666666666666664
+    },
+    {
+      "item": "mi_nested_infinity:gem_prehnite",
+      "amount": 1,
+      "probability": 0.041666666666666664
+    },
+    {
+      "item": "mi_nested_infinity:gem_unakite",
+      "amount": 1,
+      "probability": 0.041666666666666664
+    },
+    {
+      "item": "mi_nested_infinity:gem_smoky_quartz",
+      "amount": 1,
+      "probability": 0.041666666666666664
+    },
+    {
+      "item": "mi_nested_infinity:gem_staurolite",
+      "amount": 1,
+      "probability": 0.041666666666666664
+    },
+    {
+      "item": "mi_nested_infinity:gem_rutile",
+      "amount": 1,
+      "probability": 0.041666666666666664
     }
   ]
 }

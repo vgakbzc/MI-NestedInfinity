@@ -8,7 +8,7 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_azurophyta",
+      "item": "mi_nested_infinity:petri_chlorocaeruleophyta",
       "amount": 1
     }
   ],
@@ -22,7 +22,12 @@
     {
       "item": "mi_nested_infinity:gem_jeremejevite",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.25
+    },
+    {
+      "item": "mi_nested_infinity:gem_labradorite",
+      "amount": 1,
+      "probability": 0.25
     }
   ]
 }

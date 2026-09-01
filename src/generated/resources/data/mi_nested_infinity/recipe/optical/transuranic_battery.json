@@ -5,19 +5,19 @@
   "item_inputs": [
     {
       "item": "modern_industrialization:naquadah_plate",
-      "amount": 2
+      "amount": 16
     },
     {
       "item": "mi_nested_infinity:americium_dust",
-      "amount": 1
+      "amount": 24
     },
     {
       "item": "mi_nested_infinity:curium_dust",
-      "amount": 1
+      "amount": 16
     },
     {
       "item": "mi_nested_infinity:neptunium_dust",
-      "amount": 1
+      "amount": 12
     }
   ],
   "item_outputs": [

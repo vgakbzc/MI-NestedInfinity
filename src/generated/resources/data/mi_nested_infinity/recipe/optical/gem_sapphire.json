@@ -8,13 +8,13 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_azurophyta",
+      "item": "mi_nested_infinity:petri_caeruleophyta",
       "amount": 1
     }
   ],
   "fluid_inputs": [
     {
-      "fluid": "mi_nested_infinity:xenon",
+      "fluid": "mi_nested_infinity:krypton",
       "amount": 50
     }
   ],
@@ -22,7 +22,37 @@
     {
       "item": "mi_nested_infinity:gem_sapphire",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_lapis",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_benitoite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_kyanite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_iolite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_lazulite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_celestine",
+      "amount": 1,
+      "probability": 0.07142857142857142
     }
   ]
 }

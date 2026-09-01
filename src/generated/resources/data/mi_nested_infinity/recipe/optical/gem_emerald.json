@@ -8,7 +8,7 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_glaucophyta",
+      "item": "mi_nested_infinity:petri_erythrochlorocaeruleophyta",
       "amount": 1
     }
   ],
@@ -22,7 +22,22 @@
     {
       "item": "mi_nested_infinity:gem_emerald",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.125
+    },
+    {
+      "item": "mi_nested_infinity:gem_magnetite",
+      "amount": 1,
+      "probability": 0.125
+    },
+    {
+      "item": "mi_nested_infinity:gem_galena",
+      "amount": 1,
+      "probability": 0.125
+    },
+    {
+      "item": "mi_nested_infinity:gem_molybdenite",
+      "amount": 1,
+      "probability": 0.125
     }
   ]
 }

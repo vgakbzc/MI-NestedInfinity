@@ -8,13 +8,13 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_azurophyta",
+      "item": "mi_nested_infinity:petri_erythrochlorocaeruleophyta",
       "amount": 1
     }
   ],
   "fluid_inputs": [
     {
-      "fluid": "mi_nested_infinity:xenon",
+      "fluid": "mi_nested_infinity:krypton",
       "amount": 50
     }
   ],
@@ -22,7 +22,12 @@
     {
       "item": "mi_nested_infinity:gem_azurite",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.25
+    },
+    {
+      "item": "mi_nested_infinity:gem_sodalite",
+      "amount": 1,
+      "probability": 0.25
     }
   ]
 }

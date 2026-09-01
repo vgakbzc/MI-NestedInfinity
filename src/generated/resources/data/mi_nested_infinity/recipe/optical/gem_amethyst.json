@@ -8,7 +8,7 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_purpureophyta",
+      "item": "mi_nested_infinity:petri_erythrocaeruleophyta",
       "amount": 1
     }
   ],
@@ -22,7 +22,37 @@
     {
       "item": "mi_nested_infinity:gem_amethyst",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_charoite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_sugilite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_lepidolite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_purpurite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_axinite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_stichtite",
+      "amount": 1,
+      "probability": 0.07142857142857142
     }
   ]
 }

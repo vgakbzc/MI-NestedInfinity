@@ -107,11 +107,15 @@ public class NestedInfinity {
                 output.accept(NIItems.TRANSURANIC_BATTERY.get());
                 output.accept(NIItems.CRYSTAL_DIODE.get());
                 output.accept(NIItems.GRAPHENE_ELECTRODE.get());
+                output.accept(NIItems.GRAPHENE_OXIDE.get());
+                output.accept(NIItems.GRAPHENE.get());
+                output.accept(NIItems.GRAPHENE_ROD.get());
                 output.accept(NIItems.OPTICAL_QUBIT_COMPONENT.get());
                 output.accept(NIBlocks.SUPER_ASSEMBLER_ITEM.get());
                 output.accept(NIFluids.NEON.bucket.get());
                 output.accept(NIFluids.ARGON.bucket.get());
                 output.accept(NIFluids.KRYPTON.bucket.get());
+                output.accept(NIFluids.LIQUID_XENON.bucket.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.

@@ -8,13 +8,13 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_rhodophyta",
+      "item": "mi_nested_infinity:petri_erythropurpureophyta",
       "amount": 1
     }
   ],
   "fluid_inputs": [
     {
-      "fluid": "mi_nested_infinity:radon",
+      "fluid": "mi_nested_infinity:neon",
       "amount": 50
     }
   ],
@@ -22,7 +22,12 @@
     {
       "item": "mi_nested_infinity:gem_cobaltoan_calcite",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.25
+    },
+    {
+      "item": "mi_nested_infinity:gem_pezzottaite",
+      "amount": 1,
+      "probability": 0.25
     }
   ]
 }

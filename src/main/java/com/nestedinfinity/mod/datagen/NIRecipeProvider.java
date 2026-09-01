@@ -1,7 +1,9 @@
 package com.nestedinfinity.mod.datagen;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -2537,10 +2539,10 @@ public final class NIRecipeProvider implements DataProvider {
         // naquadah casing (Am/Cm are real radioisotope-battery fuels, Np-237
         // breeds battery-grade Pu-238)
         r.machine("assembler", EU, T)
-                .itemIn("modern_industrialization:naquadah_plate", 2)
-                .itemIn(ni + "americium_dust", 1)
-                .itemIn(ni + "curium_dust", 1)
-                .itemIn(ni + "neptunium_dust", 1)
+                .itemIn("modern_industrialization:naquadah_plate", 16)
+                .itemIn(ni + "americium_dust", 24)
+                .itemIn(ni + "curium_dust", 16)
+                .itemIn(ni + "neptunium_dust", 12)
                 .itemOut(ni + "transuranic_battery", 1)
                 .save("optical/transuranic_battery");
         // crystal diode and graphene electrodes, the tube's active parts
@@ -2555,20 +2557,55 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemOut(ni + "graphene_electrode", 2)
                 .save("optical/graphene_electrode");
 
-        String[] dishIds = new String[NIAlgae.WHEEL_SIZE];
+        // the graphene chemical route: Brodie-style nitric-acid intercalation
+        // oxidizes graphite into graphene oxide, hydrazine strips the oxygen
+        // back down to graphene, and the packer presses the flakes into rods
+        r.machine("chemical_reactor", EU, T)
+                .itemIn("modern_industrialization:carbon_dust", 2)
+                .fluidIn(ni + "nitric_acid", 250)
+                .itemOut(ni + "graphene_oxide", 4)
+                .save("optical/graphene_oxide");
+        r.machine("chemical_reactor", EU, T)
+                .itemIn(ni + "graphene_oxide", 2)
+                .itemIn(ni + "hydrazine", 1)
+                .itemOut(ni + "graphene", 2)
+                .save("optical/graphene");
+        r.machine("packer", EU, T)
+                .itemIn(ni + "graphene", 4)
+                .itemOut(ni + "graphene_rod", 1)
+                .save("optical/graphene_rod");
+
+        // xenon condensed to the liquid phase in the vacuum freezer: the tubes
+        // are flooded with 16 buckets of it each
+        r.machine("vacuum_freezer", 4096, 400)
+                .fluidIn(ni + "xenon", 1000)
+                .fluidOut(ni + "liquid_xenon", 1000)
+                .save("optical/liquid_xenon");
+
+        // gems are grown in groups: every gem sharing one petri dish AND one
+        // noble gas shares a single cultivator recipe whose outputs all roll
+        // independently, probabilities scaled so the expected yield per craft
+        // (half a gem) is unchanged
+        record CultivationGroup(String dish, String gas, List<NIGems.Gem> gems) {}
+        Map<String, CultivationGroup> groups = new LinkedHashMap<>();
         for (NIGems.Gem gem : NIGems.ALL) {
-            int slot = algaSlotFor(gem.rgb());
-            if (dishIds[slot] == null) {
-                dishIds[slot] = dishForSlot(slot);
-            }
-            String dish = dishIds[slot];
             String gas = gasFor(gem.rgb());
-            r.machine("algae_cultivator", 8, 200)
+            String dish = dishFor(gem.rgb());
+            groups.computeIfAbsent(dish + "|" + gas,
+                    key -> new CultivationGroup(dish, gas, new ArrayList<>())).gems().add(gem);
+        }
+        for (CultivationGroup group : groups.values()) {
+            double probability = 0.5 / group.gems().size();
+            NIRecipes.MachineBuilder builder = r.machine("algae_cultivator", 8, 200)
                     .itemIn("minecraft:glass", 1)
-                    .itemIn(dish, 1)
-                    .fluidIn(gas, 50)
-                    .itemOut(NIGems.gemId(gem), 1, 0.5)
-                    .save("optical/gem_" + gem.name());
+                    .itemIn(group.dish(), 1)
+                    .fluidIn(group.gas(), 50);
+            for (NIGems.Gem gem : group.gems()) {
+                builder.itemOut(NIGems.gemId(gem), 1, probability);
+            }
+            builder.save("optical/gem_" + group.gems().get(0).name());
+        }
+        for (NIGems.Gem gem : NIGems.ALL) {
             r.machine("compressor", 2, 200)
                     .itemIn(NIGems.gemId(gem), 9)
                     .itemOut(NIGems.blockId(gem), 1)
@@ -2583,7 +2620,9 @@ public final class NIRecipeProvider implements DataProvider {
                     .itemIn(ni + "transuranic_battery", 1)
                     .itemIn(ni + "crystal_diode", 1)
                     .itemIn(ni + "graphene_electrode", 2)
-                    .fluidIn(gas, 100)
+                    .itemIn(ni + "graphene_rod", 4)
+                    .fluidIn(gasFor(gem.rgb()), 100)
+                    .fluidIn(ni + "liquid_xenon", 16_000)
                     .fluidIn(ni + "molten_trinium", 50)
                     .itemOut(NIGems.tubeId(gem), 1)
                     .save("optical/tube_" + gem.name());
@@ -2603,43 +2642,99 @@ public final class NIRecipeProvider implements DataProvider {
             "mi_nested_infinity:xenon",
             "mi_nested_infinity:radon",
     };
-    /** Canonical colors of the twelve algae-wheel slots (ordinal order). */
+    /** Canonical colors of the twelve algae-wheel slots (ordinal order);
+     * the mixture of a multi-strain dish is the average of its members. */
     private static final int[][] WHEEL_COLORS = {
             {220, 45, 55}, {240, 140, 45}, {240, 220, 80}, {160, 215, 80}, {60, 200, 110}, {75, 200, 165},
             {80, 215, 215}, {95, 165, 230}, {55, 95, 210}, {145, 95, 200}, {200, 65, 170}, {240, 145, 175},
     };
 
-    /** The noble gas whose discharge color lies nearest the given rgb. */
+    /**
+     * The noble gas whose discharge color lies nearest the given rgb. Hue
+     * dominates the metric (weighted circular hue distance plus saturation
+     * and value deltas), which spreads the six gases across the wheel
+     * instead of letting xenon's central glow swallow the whole blue side;
+     * near-achromatic gems fall back to plain RGB distance where hue is
+     * meaningless.
+     */
     private static String gasFor(int rgb) {
-        return NOBLE_FLUIDS[nearest(rgb, NOBLE_GLOWS)];
+        float[] hsv = toHsv(rgb);
+        if (hsv[1] < 0.12f) {
+            return NOBLE_FLUIDS[nearest(rgb, NOBLE_GLOWS)];
+        }
+        int best = 0;
+        double bestDistance = Double.MAX_VALUE;
+        for (int i = 0; i < NOBLE_GLOWS.length; i++) {
+            float[] glow = toHsv((NOBLE_GLOWS[i][0] << 16) | (NOBLE_GLOWS[i][1] << 8) | NOBLE_GLOWS[i][2]);
+            double hueDelta = Math.abs(hsv[0] - glow[0]);
+            hueDelta = Math.min(hueDelta, 1 - hueDelta);
+            double distance = 24 * hueDelta * hueDelta
+                    + 0.25 * ((hsv[1] - glow[1]) * (hsv[1] - glow[1])
+                    + (hsv[2] - glow[2]) * (hsv[2] - glow[2]));
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                best = i;
+            }
+        }
+        return NOBLE_FLUIDS[best];
     }
 
-    /**
-     * The algae-wheel slot for a gem color: hue mapped onto the twelve wheel
-     * positions, with near-achromatic colors (grays, whites, blacks, metallic
-     * sheens) falling back to nearest canonical wheel color by distance.
-     */
-    private static int algaSlotFor(int rgb) {
+    /** {hue turns 0..1, saturation, value} of a packed rgb. */
+    private static float[] toHsv(int rgb) {
         int red = (rgb >> 16) & 0xFF;
         int green = (rgb >> 8) & 0xFF;
         int blue = rgb & 0xFF;
         int max = Math.max(red, Math.max(green, blue));
         int min = Math.min(red, Math.min(green, blue));
-        if (max == 0 || (max - min) / (float) max < 0.18f) {
-            return nearest(rgb, WHEEL_COLORS);
-        }
+        float delta = max - min;
         float hue;
-        if (max == red) {
-            hue = 60f * (green - blue) / (float) (max - min);
+        if (delta == 0) {
+            hue = 0;
+        } else if (max == red) {
+            hue = ((green - blue) / delta) % 6;
         } else if (max == green) {
-            hue = 60f * ((blue - red) / (float) (max - min) + 2);
+            hue = (blue - red) / delta + 2;
         } else {
-            hue = 60f * ((red - green) / (float) (max - min) + 4);
+            hue = (red - green) / delta + 4;
         }
         if (hue < 0) {
-            hue += 360;
+            hue += 6;
         }
-        return Math.round(hue / 30f) % NIAlgae.WHEEL_SIZE;
+        return new float[] {hue / 6, max == 0 ? 0 : delta / max, max / 255f};
+    }
+
+    /**
+     * The petri dish a gem color grows on: of all 97 dishes, the one whose
+     * culture color — the average of the member wheel colors, i.e. the exact
+     * wheel color for a single strain — lies nearest. Vivid gems naturally
+     * land on their single-strain dish, while muted stones (jaspers, smoky
+     * quartz, grays) match the muddy mixtures only a multi-strain culture
+     * can produce, so part of the collection sits on blended dishes.
+     */
+    private static String dishFor(int rgb) {
+        NIPetriDishes.PetriDish best = null;
+        long bestDistance = Long.MAX_VALUE;
+        for (NIPetriDishes.PetriDish dish : NIPetriDishes.ALL) {
+            long red = 0;
+            long green = 0;
+            long blue = 0;
+            for (NIAlgae alga : dish.algae()) {
+                int[] color = WHEEL_COLORS[alga.ordinal()];
+                red += color[0];
+                green += color[1];
+                blue += color[2];
+            }
+            int size = dish.algae().size();
+            long dr = (rgb >> 16 & 0xFF) - red / size;
+            long dg = (rgb >> 8 & 0xFF) - green / size;
+            long db = (rgb & 0xFF) - blue / size;
+            long distance = dr * dr + dg * dg + db * db;
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                best = dish;
+            }
+        }
+        return best.item().getId().toString();
     }
 
     private static int nearest(int rgb, int[][] palette) {
@@ -2659,16 +2754,5 @@ public final class NIRecipeProvider implements DataProvider {
             }
         }
         return best;
-    }
-
-    /** The single-strain petri dish item id of an algae-wheel slot. */
-    private static String dishForSlot(int slot) {
-        NIAlgae alga = NIAlgae.values()[slot];
-        for (NIPetriDishes.PetriDish dish : NIPetriDishes.ALL) {
-            if (dish.algae().size() == 1 && dish.algae().get(0) == alga) {
-                return dish.item().getId().toString();
-            }
-        }
-        throw new IllegalStateException("No single-strain dish for " + alga);
     }
 }

@@ -90,6 +90,143 @@ def parse_gems():
 
 # ---------------------------------------------------------------- painters
 
+# vanilla-diamond-style faceted gem: bright crown and white sparkles on the
+# upper left, dark pavilion on the lower right. 1..6 shade dark->bright, W is
+# the white sparkle; painted in each gem's hue.
+GEM_GRID = [
+    "................",
+    "................",
+    ".....36663......",
+    "....3W66641.....",
+    "...3W6666641....",
+    "...3W6W666641...",
+    "..3W666666641...",
+    "..3W666666441...",
+    "..36666664441...",
+    "..36666444441...",
+    "..35544444441...",
+    "...1544444441...",
+    "...1544444461...",
+    "....13666641....",
+    ".....111111.....",
+    "................",
+]
+
+
+def make_gem_texture(dst, color):
+    """A vanilla-diamond-like faceted gem recolored to the given rgb."""
+    import colorsys
+    h, s, v = colorsys.rgb_to_hsv(*(c / 255 for c in color))
+    v = min(max(v, 0.55), 0.90)
+
+    def shade(level, sat_scale=1.0):
+        if level == 'W':
+            return (250, 250, 252, 255)
+        value = {  # dark -> bright
+            '1': v * 0.40, '2': v * 0.55, '3': v * 0.70, '4': v * 0.85,
+            '5': min(v * 1.05, 1.0), '6': max(v * 1.0, 0.93),
+        }[level]
+        sat = s * {'1': 1.05, '2': 1.0, '3': 1.0, '4': 0.95, '5': 0.85, '6': 0.55}[level] * sat_scale
+        r, g, b = colorsys.hsv_to_rgb(h, min(sat, 1.0), min(value, 1.0))
+        return (round(r * 255), round(g * 255), round(b * 255), 255)
+
+    px = bytearray(16 * 16 * 4)
+    for y, row in enumerate(GEM_GRID):
+        for x, c in enumerate(row):
+            o = (y * 16 + x) * 4
+            if c == '.':
+                continue
+            px[o:o + 4] = bytes(shade(c))
+    write_png(dst, 16, 16, px)
+
+
+def make_rod_texture(dst, color):
+    """A graphite-style rod: sheen column on the left, shade on the right."""
+    px = bytearray(16 * 16 * 4)
+    r, g, b = color
+    body = (r, g, b)
+    sheen = (min(r + 42, 255), min(g + 42, 255), min(b + 46, 255))
+    shade = (int(r * 0.6), int(g * 0.6), int(b * 0.62))
+
+    def put(x, y, c):
+        o = (y * 16 + x) * 4
+        px[o:o + 4] = bytes((c[0], c[1], c[2], 255))
+
+    for y in range(1, 15):
+        span = range(6, 10) if y in (1, 14) else range(5, 11)
+        for x in span:
+            put(x, y, sheen if x <= 6 else (shade if x >= 9 else body))
+    write_png(dst, 16, 16, px)
+
+
+def make_qubit_texture(dst, target_hue_deg):
+    """MI's own qubit orb, hue-shifted (yellow for the optical component)."""
+    import zipfile
+    import colorsys
+    jar = os.path.expanduser(os.path.join(
+        '~/.gradle/caches/modules-2/files-2.1/maven.modrinth/modern-industrialization',
+        'E1nD4PKl/7ef8099ac087509df69408f15807a34d2b82768e',
+        'modern-industrialization-E1nD4PKl.jar'))
+    with zipfile.ZipFile(jar) as z:
+        w, h, px = read_png_stream(z.read('assets/modern_industrialization/textures/item/qubit.png'))
+    target = target_hue_deg / 360.0
+    out = bytearray(len(px))
+    for i in range(w * h):
+        o = i * 4
+        a = px[o + 3]
+        if a == 0:
+            continue
+        hh, ss, vv = colorsys.rgb_to_hsv(px[o] / 255, px[o + 1] / 255, px[o + 2] / 255)
+        r, g, b = colorsys.hsv_to_rgb(target if ss > 0.06 else hh, ss, vv)
+        out[o:o + 4] = bytes((round(r * 255), round(g * 255), round(b * 255), a))
+    write_png(dst, w, h, out)
+
+
+def read_png_stream(data):
+    """Minimal PNG decoder for recoloring (mirrors gen_algae_assets.read_png)."""
+    import struct
+    import zlib
+    pos, idat, w, h = 8, b"", 0, 0
+    while pos < len(data):
+        ln, typ = struct.unpack(">I", data[pos:pos+4])[0], data[pos+4:pos+8]
+        chunk = data[pos+8:pos+8+ln]
+        if typ == b"IHDR":
+            w, h, _depth, color = struct.unpack(">IIBB", chunk[:10])
+            channels = {0: 1, 2: 3, 4: 2, 6: 4}[color]
+        elif typ == b"IDAT":
+            idat += chunk
+        pos += 12 + ln
+    raw = zlib.decompress(idat)
+    px = bytearray(w * h * channels)
+    prev = bytearray(w * channels)
+    i = 0
+    for y in range(h):
+        f = raw[i]
+        i += 1
+        line = bytearray(raw[i:i + w * channels])
+        i += w * channels
+        if f == 1:
+            for x in range(channels, w * channels):
+                line[x] = (line[x] + line[x - channels]) & 255
+        elif f == 2:
+            for x in range(w * channels):
+                line[x] = (line[x] + prev[x]) & 255
+        elif f == 3:
+            for x in range(w * channels):
+                left = line[x - channels] if x >= channels else 0
+                line[x] = (line[x] + (left + prev[x]) // 2) & 255
+        elif f == 4:
+            for x in range(w * channels):
+                a = line[x - channels] if x >= channels else 0
+                b = prev[x]
+                c = prev[x - channels] if x >= channels else 0
+                p, pa, pb, pc = a + b - c, abs(b - c), abs(a - c), abs(a + b - 2 * c)
+                pr = a if (pa <= pb and pa <= pc) else (b if pb <= pc else c)
+                line[x] = (line[x] + pr) & 255
+        px[y * w * channels:(y + 1) * w * channels] = line
+        prev = line
+    return w, h, px
+
 
 def make_glow_tube(dst, color):
     """16x16 nixie-style tube: glass envelope with a glowing gas core and
@@ -278,7 +415,7 @@ def main():
     loot_dir = os.path.join(DATA, 'loot_table/blocks')
     os.makedirs(loot_dir, exist_ok=True)
     for name, color in gems:
-        make_item_texture(os.path.join(DST, f"item/gem_{name}.png"), "crystal", color)
+        make_gem_texture(os.path.join(DST, f"item/gem_{name}.png"), color)
         make_item_texture(os.path.join(DST, f"item/{name}_plate.png"), "mi_plate", color)
         make_glow_tube(os.path.join(DST, f"item/{name}_glow_tube.png"), color)
         for item in (f"gem_{name}", f"{name}_plate", f"{name}_glow_tube"):
@@ -307,8 +444,15 @@ def main():
     make_battery_texture(os.path.join(DST, 'item/transuranic_battery.png'))
     make_item_texture(os.path.join(DST, 'item/crystal_diode.png'), "crystal", (150, 205, 225))
     make_item_texture(os.path.join(DST, 'item/graphene_electrode.png'), "mi_plate", (64, 68, 74))
-    make_item_texture(os.path.join(DST, 'item/optical_qubit_component.png'), "crystal", (250, 215, 120))
-    for item in ("transuranic_battery", "crystal_diode", "graphene_electrode", "optical_qubit_component"):
+    # the graphene chemical route's intermediates and its pressed rod
+    make_item_texture(os.path.join(DST, 'item/graphene_oxide.png'), "mi_dust", (128, 96, 68))
+    make_item_texture(os.path.join(DST, 'item/graphene.png'), "mi_dust", (40, 44, 50))
+    make_rod_texture(os.path.join(DST, 'item/graphene_rod.png'), (52, 56, 63))
+    # MI's own qubit orb, recolored yellow for the optical component
+    make_qubit_texture(os.path.join(DST, 'item/optical_qubit_component.png'), 47)
+    items = ("transuranic_battery", "crystal_diode", "graphene_electrode",
+             "graphene_oxide", "graphene", "graphene_rod", "optical_qubit_component")
+    for item in items:
         write_json(os.path.join(A, f"models/item/{item}.json"),
                    {"parent": "minecraft:item/generated",
                     "textures": {"layer0": f"{MODID}:item/{item}"}})
@@ -329,10 +473,11 @@ def main():
                            "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
     make_super_assembler_gui(os.path.join(A, 'textures/gui/super_assembler.png'))
 
-    # 3. noble gases: the fluid four-piece
+    # 3. noble gases + condensed xenon: the fluid four-piece
     gases = [("neon", "Neon", "氖", 0xFFFF5F42),
              ("argon", "Argon", "氩", 0xFFAA8CFF),
-             ("krypton", "Krypton", "氪", 0xFF96C8FF)]
+             ("krypton", "Krypton", "氪", 0xFF96C8FF),
+             ("liquid_xenon", "Liquid Xenon", "液态氙", 0xFF64A0D7)]
     for fluid_id, _en, _zh, tint in gases:
         write_json(os.path.join(A, f"blockstates/{fluid_id}.json"), fluid_blockstate(fluid_id))
         write_json(os.path.join(A, f"models/block/{fluid_id}.json"),
@@ -361,6 +506,9 @@ def main():
     parts = [("transuranic_battery", "Transuranic Battery", "超铀电池"),
              ("crystal_diode", "Crystal Diode", "晶体二极管"),
              ("graphene_electrode", "Graphene Electrode", "石墨烯电极"),
+             ("graphene_oxide", "Graphene Oxide", "氧化石墨烯"),
+             ("graphene", "Graphene", "石墨烯"),
+             ("graphene_rod", "Graphene Rod", "石墨烯杆"),
              ("optical_qubit_component", "Optical Qubit Component", "光学量子比特组件")]
     for item_id, item_en, item_zh in parts:
         en[f"item.{MODID}.{item_id}"] = item_en
@@ -376,7 +524,7 @@ def main():
     zh[f"emi.category.{MODID}.super_assembler"] = "超级组装机"
     write_json(en_path, en)
     write_json(zh_path, zh)
-    print('optical assets done: 100 gems, 3 gases, super assembler')
+    print('optical assets done: 100 gems, 4 fluids, graphene route, super assembler')
 
 
 if __name__ == '__main__':

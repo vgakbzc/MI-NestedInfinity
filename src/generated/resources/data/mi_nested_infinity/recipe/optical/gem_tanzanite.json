@@ -22,7 +22,12 @@
     {
       "item": "mi_nested_infinity:gem_tanzanite",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.25
+    },
+    {
+      "item": "mi_nested_infinity:gem_afghanite",
+      "amount": 1,
+      "probability": 0.25
     }
   ]
 }

@@ -38,51 +38,51 @@ public final class NIGems {
     private static List<Gem> buildAll() {
         String[][] table = {
             // reds
-            {"ruby", "210,25,45"}, {"garnet", "150,25,35"}, {"spinel", "230,85,105"},
-            {"carnelian", "195,75,50"}, {"bloodstone", "140,60,55"}, {"cuprite", "185,80,70"},
-            {"crocoite", "235,75,65"}, {"eudialyte", "185,80,90"}, {"rhodochrosite", "235,120,140"},
+            {"ruby", "171,48,61"}, {"garnet", "102,20,27"}, {"spinel", "128,25,40"},
+            {"carnelian", "120,48,34"}, {"bloodstone", "191,62,53"}, {"cuprite", "171,46,34"},
+            {"crocoite", "135,23,16"}, {"eudialyte", "158,19,32"}, {"rhodochrosite", "188,23,51"},
             // pinks
-            {"morganite", "250,180,200"}, {"kunzite", "245,185,225"}, {"rose_quartz", "235,150,165"},
-            {"rhodonite", "225,135,155"}, {"thulite", "215,125,150"}, {"poudretteite", "255,155,185"},
+            {"morganite", "189,38,81"}, {"kunzite", "140,39,106"}, {"rose_quartz", "128,25,66"},
+            {"rhodonite", "140,0,31"}, {"thulite", "69,20,33"}, {"poudretteite", "150,18,58"},
             // oranges
-            {"sunstone", "250,160,80"}, {"amber", "255,185,60"}, {"fire_opal", "255,120,60"},
-            {"hessonite", "215,120,60"}, {"vanadinite", "230,125,70"}, {"sphalerite", "195,140,65"},
-            {"imperial_topaz", "250,140,50"}, {"citrine", "240,195,75"},
+            {"sunstone", "158,85,19"}, {"amber", "171,127,48"}, {"fire_opal", "158,79,44"},
+            {"hessonite", "189,96,38"}, {"vanadinite", "135,58,16"}, {"sphalerite", "161,106,31"},
+            {"imperial_topaz", "120,73,34"}, {"citrine", "176,134,21"},
             // yellows
-            {"topaz", "235,205,80"}, {"heliodor", "240,225,110"}, {"sulfur", "245,230,70"},
-            {"sphene", "230,190,85"}, {"zircon", "215,185,120"}, {"scapolite", "235,215,150"},
-            {"tiger_eye", "200,160,60"}, {"cassiterite", "175,150,95"},
+            {"topaz", "126,128,25"}, {"heliodor", "189,173,53"}, {"sulfur", "176,162,21"},
+            {"sphene", "135,109,38"}, {"zircon", "191,148,53"}, {"scapolite", "107,85,13"},
+            {"tiger_eye", "219,169,44"}, {"cassiterite", "135,98,16"},
             // greens
-            {"emerald", "60,200,110"}, {"peridot", "150,210,60"}, {"jade", "0,165,110"},
-            {"malachite", "35,185,120"}, {"chrysoprase", "140,205,115"}, {"aventurine", "60,170,115"},
-            {"diopside", "70,180,110"}, {"serpentine", "105,165,85"}, {"prasiolite", "170,220,140"},
-            {"prehnite", "175,215,150"}, {"variscite", "110,195,150"}, {"brazilianite", "190,220,105"},
-            {"epidote", "120,175,75"}, {"demantoid", "85,190,90"},
+            {"emerald", "20,102,50"}, {"peridot", "76,117,14"}, {"jade", "16,135,96"},
+            {"malachite", "49,176,121"}, {"chrysoprase", "68,161,31"}, {"aventurine", "33,165,99"},
+            {"diopside", "39,140,76"}, {"serpentine", "87,189,53"}, {"prasiolite", "63,140,17"},
+            {"prehnite", "57,102,29"}, {"variscite", "15,128,68"}, {"brazilianite", "128,158,44"},
+            {"epidote", "96,171,34"}, {"demantoid", "19,158,26"},
             // teals and cyans
-            {"aquamarine", "110,220,205"}, {"turquoise", "60,215,195"}, {"chrysocolla", "55,200,200"},
-            {"larimar", "100,205,230"}, {"apatite", "95,195,210"}, {"fluorite", "150,225,235"},
-            {"amazonite", "110,210,190"}, {"hemimorphite", "160,215,225"}, {"alexandrite", "95,180,160"},
+            {"aquamarine", "38,189,168"}, {"turquoise", "34,120,109"}, {"chrysocolla", "17,140,140"},
+            {"larimar", "20,86,102"}, {"apatite", "53,171,189"}, {"fluorite", "31,146,161"},
+            {"amazonite", "12,99,82"}, {"hemimorphite", "23,166,191"}, {"alexandrite", "49,176,146"},
             // azures and blues
-            {"sapphire", "35,75,190"}, {"azurite", "45,110,195"}, {"lapis", "35,95,235"},
-            {"benitoite", "75,145,240"}, {"kyanite", "65,115,205"}, {"iolite", "105,125,195"},
-            {"sodalite", "65,95,175"}, {"tanzanite", "80,90,225"}, {"lazulite", "55,105,215"},
-            {"celestine", "150,190,235"}, {"grandidierite", "95,175,215"}, {"jeremejevite", "140,195,235"},
+            {"sapphire", "39,65,140"}, {"azurite", "29,60,102"}, {"lapis", "23,74,191"},
+            {"benitoite", "15,60,122"}, {"kyanite", "31,78,161"}, {"iolite", "17,46,146"},
+            {"sodalite", "16,35,84"}, {"tanzanite", "23,30,117"}, {"lazulite", "57,103,204"},
+            {"celestine", "38,108,189"}, {"grandidierite", "44,120,158"}, {"jeremejevite", "16,85,135"},
             // purples
-            {"amethyst", "150,100,210"}, {"charoite", "145,105,190"}, {"sugilite", "125,70,150"},
-            {"taaffeite", "205,155,225"}, {"lepidolite", "185,150,205"}, {"purpurite", "130,95,160"},
-            {"axinite", "150,125,185"}, {"afghanite", "110,95,205"}, {"stichtite", "155,120,190"},
+            {"amethyst", "96,34,171"}, {"charoite", "74,34,120"}, {"sugilite", "115,19,158"},
+            {"taaffeite", "105,26,135"}, {"lepidolite", "126,48,171"}, {"purpurite", "50,16,80"},
+            {"axinite", "57,14,117"}, {"afghanite", "60,44,158"}, {"stichtite", "79,17,140"},
             // magentas
-            {"rubellite", "215,55,160"}, {"cobaltoan_calcite", "235,110,195"},
-            {"pezzottaite", "245,95,185"}, {"bixbite", "210,35,90"},
+            {"rubellite", "135,16,95"}, {"cobaltoan_calcite", "176,49,136"},
+            {"pezzottaite", "171,34,116"}, {"bixbite", "102,29,52"},
             // earths
-            {"jasper", "150,90,70"}, {"unakite", "170,145,105"}, {"smoky_quartz", "130,115,105"},
-            {"sinhalite", "190,185,130"}, {"aragonite", "240,225,195"}, {"dolomite", "232,210,205"},
-            {"staurolite", "150,105,80"}, {"chromite", "95,80,75"}, {"painite", "200,95,90"},
+            {"jasper", "212,167,153"}, {"unakite", "135,114,81"}, {"smoky_quartz", "100,80,66"},
+            {"sinhalite", "204,199,147"}, {"aragonite", "173,150,104"}, {"dolomite", "153,111,101"},
+            {"staurolite", "115,94,82"}, {"chromite", "176,123,105"}, {"painite", "204,138,135"},
             // grays, blacks, whites, metallics
-            {"onyx", "40,40,46"}, {"hematite", "140,110,105"}, {"magnetite", "85,85,95"},
-            {"galena", "120,125,135"}, {"pyrite", "205,175,60"}, {"marcasite", "190,195,205"},
-            {"moonstone", "225,228,240"}, {"opal", "205,215,230"}, {"pearl", "245,240,235"},
-            {"labradorite", "85,140,180"}, {"rutile", "185,155,100"}, {"molybdenite", "110,115,120"},
+            {"onyx", "32,32,36"}, {"hematite", "139,127,125"}, {"magnetite", "55,55,62"},
+            {"galena", "102,106,113"}, {"pyrite", "158,149,44"}, {"marcasite", "153,157,165"},
+            {"moonstone", "203,206,216"}, {"opal", "172,179,191"}, {"pearl", "242,237,232"},
+            {"labradorite", "19,99,158"}, {"rutile", "84,60,16"}, {"molybdenite", "80,84,87"},
         };
         List<Gem> gems = new ArrayList<>(table.length);
         for (String[] row : table) {

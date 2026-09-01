@@ -195,10 +195,15 @@ public final class NIItems {
 
     // Optical program (see NIGems and the super assembler): the glow-tube
     // parts and the finale. The battery is an RTG-style cell of three
-    // so-far-unused transuranics (Np/Am/Cm) in a naquadah casing.
+    // so-far-unused transuranics (Np/Am/Cm) in a naquadah casing. Graphene
+    // comes from its own chemical route (nitric-acid oxidation of carbon to
+    // graphene oxide, hydrazine reduction), pressed into rods for the tubes.
     public static final DeferredItem<Item> TRANSURANIC_BATTERY = register("transuranic_battery");
     public static final DeferredItem<Item> CRYSTAL_DIODE = register("crystal_diode");
     public static final DeferredItem<Item> GRAPHENE_ELECTRODE = register("graphene_electrode");
+    public static final DeferredItem<Item> GRAPHENE_OXIDE = register("graphene_oxide");
+    public static final DeferredItem<Item> GRAPHENE = register("graphene");
+    public static final DeferredItem<Item> GRAPHENE_ROD = register("graphene_rod");
     public static final DeferredItem<Item> OPTICAL_QUBIT_COMPONENT = register("optical_qubit_component");
 
     // Piezoelectric quartz side (real PbTiO3 ceramics; MI has no zirconium)

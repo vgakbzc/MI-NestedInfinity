@@ -8,7 +8,7 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_erythrophyta",
+      "item": "mi_nested_infinity:petri_erythrochlorophyta",
       "amount": 1
     }
   ],
@@ -22,7 +22,17 @@
     {
       "item": "mi_nested_infinity:gem_carnelian",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.16666666666666666
+    },
+    {
+      "item": "mi_nested_infinity:gem_fire_opal",
+      "amount": 1,
+      "probability": 0.16666666666666666
+    },
+    {
+      "item": "mi_nested_infinity:gem_vanadinite",
+      "amount": 1,
+      "probability": 0.16666666666666666
     }
   ]
 }

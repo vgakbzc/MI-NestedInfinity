@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:packer",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:graphene",
+      "amount": 4
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:graphene_rod",
+      "amount": 1
+    }
+  ]
+}

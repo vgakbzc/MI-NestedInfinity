@@ -8,13 +8,13 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_rhodophyta",
+      "item": "mi_nested_infinity:petri_erythroglaucophyta",
       "amount": 1
     }
   ],
   "fluid_inputs": [
     {
-      "fluid": "mi_nested_infinity:radon",
+      "fluid": "mi_nested_infinity:neon",
       "amount": 50
     }
   ],

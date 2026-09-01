@@ -8,7 +8,7 @@
       "amount": 1
     },
     {
-      "item": "mi_nested_infinity:petri_glaucophyta",
+      "item": "mi_nested_infinity:petri_chlorocaeruleophyta",
       "amount": 1
     }
   ],
@@ -22,7 +22,42 @@
     {
       "item": "mi_nested_infinity:gem_jade",
       "amount": 1,
-      "probability": 0.5
+      "probability": 0.0625
+    },
+    {
+      "item": "mi_nested_infinity:gem_turquoise",
+      "amount": 1,
+      "probability": 0.0625
+    },
+    {
+      "item": "mi_nested_infinity:gem_chrysocolla",
+      "amount": 1,
+      "probability": 0.0625
+    },
+    {
+      "item": "mi_nested_infinity:gem_larimar",
+      "amount": 1,
+      "probability": 0.0625
+    },
+    {
+      "item": "mi_nested_infinity:gem_fluorite",
+      "amount": 1,
+      "probability": 0.0625
+    },
+    {
+      "item": "mi_nested_infinity:gem_amazonite",
+      "amount": 1,
+      "probability": 0.0625
+    },
+    {
+      "item": "mi_nested_infinity:gem_alexandrite",
+      "amount": 1,
+      "probability": 0.0625
+    },
+    {
+      "item": "mi_nested_infinity:gem_grandidierite",
+      "amount": 1,
+      "probability": 0.0625
     }
   ]
 }
