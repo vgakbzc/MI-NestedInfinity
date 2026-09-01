@@ -447,8 +447,8 @@ def main():
         en[f"color.{MODID}.{name}"] = name.capitalize()
         zh[f"color.{MODID}.{name}"] = f"{zh_color}色"
         emi_how = {
-            "white": ("Assembler recipe. Inserting it reads the current register color and resets the block to white.",
-                      "装配机合成。放入后读出当前音色，并将调律方块复位为白色。"),
+            "white": ("Assembler recipe. Inserting it reads the current register color and usually resets the block to white (50% drift to red).",
+                      "装配机合成。放入后读出当前音色，通常将调律方块复位为白色（有50%概率漂移为红色）。"),
             "red": ("Assembler recipe (see the recipe page).", "装配机合成（见配方页）。"),
             "yellow": ("Assembler recipe (see the recipe page).", "装配机合成（见配方页）。"),
             "blue": ("Assembler recipe (see the recipe page).", "装配机合成（见配方页）。"),
@@ -464,8 +464,9 @@ def main():
         en[f"emi.{MODID}.note.{name}.1"] = emi_how[0]
         zh[f"emi.{MODID}.note.{name}.1"] = emi_how[1]
         en[f"emi.{MODID}.note.{name}.2"] = ("Attuner: output = block color x note color; "
-                                            "the tuning block adopts the note's color.")
-        zh[f"emi.{MODID}.note.{name}.2"] = "调律机：输出音符 = 方块颜色 × 音符颜色；调律方块变为音符的颜色。"
+                                            "the block becomes the note's color, with a 50% chance of the next color instead.")
+        zh[f"emi.{MODID}.note.{name}.2"] = ("调律机：输出音符 = 方块颜色 × 音符颜色；"
+                                            "调律方块变为音符的颜色，有50%概率变为下一个颜色（白→红→黄→蓝→绿→青→紫→黑）。")
     en[f"container.{MODID}.resonance_attuner.register"] = "Register: %s"
     zh[f"container.{MODID}.resonance_attuner.register"] = "当前音色：%s"
     en[f"container.{MODID}.resonance_attuner.no_register"] = "No tuning block above!"

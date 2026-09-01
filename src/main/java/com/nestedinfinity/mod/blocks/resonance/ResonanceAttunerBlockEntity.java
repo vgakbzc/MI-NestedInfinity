@@ -24,9 +24,12 @@ import net.minecraft.world.level.block.state.BlockState;
  * Q8 tuning mechanic. With a tuning block ({@link TuningBlock}) placed
  * directly above, every note that enters the input slot makes the machine
  * output one note of color {@code register × note} (quaternion product, see
- * {@link NINotes#times}) and then adopt the inserted note's color as the new
- * register state. Deterministic: no randomness, no wear; the only friction is
- * planning the sequence, since the register changes with every note.
+ * {@link NINotes#times}) and then re-tunes the register to the inserted
+ * note's color — with a 50% chance of resonant drift, exciting it one step
+ * further along the color strip instead (白→红→黄→蓝→绿→青→紫→黑→白, see
+ * {@link NINotes#next}). No wear and no inputs are ever wasted: the only
+ * friction is planning the sequence, since the register changes with every
+ * note and drifts around under the player's feet.
  *
  * <p>Interacts with vanilla hoppers through {@link WorldlyContainer}: notes go
  * in from any top/side face (input slot), products come out of the bottom
@@ -69,7 +72,10 @@ public class ResonanceAttunerBlockEntity extends BlockEntity implements WorldlyC
             return null;
         }
         output = output.isEmpty() ? produced : output.copyWithCount(output.getCount() + 1);
-        level.setBlock(worldPosition.above(), TuningBlock.colored(above, note), Block.UPDATE_ALL);
+        // Resonant drift: the register adopts the inserted note's color, but
+        // half the time it is excited one step further along the color strip.
+        NINotes newRegister = level.random.nextBoolean() ? note : note.next();
+        level.setBlock(worldPosition.above(), TuningBlock.colored(above, newRegister), Block.UPDATE_ALL);
         setChanged();
         return product;
     }

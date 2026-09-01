@@ -12,10 +12,12 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
  * "group register" whose {@code color} property holds one of the eight Q8
  * note colors (the property value equals the {@link NINotes} ordinal, white —
  * the group identity — when placed). The attuner reads this state, multiplies
- * it with the inserted note, and writes the note's own color back.
+ * it with the inserted note, and writes the note's color back, with a 50%
+ * chance of drifting one step further along the color strip instead.
  *
- * <p>Breaking and re-placing resets the register to white; inserting a white
- * note reads the register out (output = current color) and resets it too.
+ * <p>Breaking and re-placing resets the register to white — the only drift-
+ * free reset; inserting a white note reads the register out (output = current
+ * color) and usually resets it, subject to the same 50% drift.
  */
 public class TuningBlock extends Block {
     public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, NINotes.GROUP_SIZE - 1);

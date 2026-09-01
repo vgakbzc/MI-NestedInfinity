@@ -17,8 +17,9 @@ import net.neoforged.neoforge.registries.DeferredItem;
  * red × red = black), and the group is non-abelian (red × yellow = blue but
  * yellow × red = green); black is central, white is the identity. The
  * resonance attuner multiplies the tuning block's state with the inserted
- * note and adopts the note's color (see the block entity in
- * {@code blocks.resonance.ResonanceAttunerBlockEntity}).
+ * note, then re-tunes the block to the note's color — or, 50% of the time,
+ * {@link #next() the next color} along the strip (resonant drift; see the
+ * block entity in {@code blocks.resonance.ResonanceAttunerBlockEntity}).
  *
  * <p>This table is mirrored by {@code tools/gen_algae_assets.py}, which
  * generates the note models, textures and lang entries from the same colors.
@@ -55,6 +56,11 @@ public enum NINotes {
 
     public String colorName() {
         return colorName;
+    }
+
+    /** The next color along the strip order 白红黄蓝绿青紫黑 (wraps black to white). */
+    public NINotes next() {
+        return values()[(ordinal() + 1) % GROUP_SIZE];
     }
 
     /** Full item id, e.g. {@code mi_nested_infinity:note_white}. */
@@ -110,6 +116,14 @@ public enum NINotes {
                 || WHITE.times(BLUE) != BLUE || BLACK.times(RED) != CYAN
                 || BLUE.times(GREEN) != WHITE || GREEN.times(GREEN) != BLACK) {
             throw new IllegalStateException("Q8 multiplication table is inconsistent");
+        }
+        // The drift order must visit all eight colors and wrap back to white.
+        NINotes c = WHITE;
+        for (int i = 0; i < GROUP_SIZE; i++) {
+            c = c.next();
+        }
+        if (c != WHITE) {
+            throw new IllegalStateException("Color strip order is not a cycle");
         }
     }
 }
