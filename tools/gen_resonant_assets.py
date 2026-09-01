@@ -295,11 +295,11 @@ def make_attuner_textures(dst_dir):
 
 def make_attuner_gui(dst):
     """256x256 GUI background (vanilla blit assumes a 256x256 sheet) holding a
-    176x172 vanilla-style container panel for the attuner GUI: the two machine
+    176x184 vanilla-style container panel for the attuner GUI: the two machine
     slots, an arrow, a strip of eight Q8 swatch insets (the screen overlays the
     live colors) and the player inventory grid. Slot coordinates mirror
     ResonanceAttunerMenu / ResonanceAttunerScreen."""
-    SHEET, W, H = 256, 176, 172
+    SHEET, W, H = 256, 176, 184
     px = bytearray(SHEET * SHEET * 4)
 
     def put(x, y, rgb):
@@ -338,9 +338,9 @@ def make_attuner_gui(dst):
         slot_inset(17 + i * 18, 57, 16, 16)
     for row in range(3):
         for col in range(9):
-            slot_inset(8 + col * 18, 98 + row * 18)
+            slot_inset(8 + col * 18, 106 + row * 18)
     for col in range(9):
-        slot_inset(8 + col * 18, 156)
+        slot_inset(8 + col * 18, 162)
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     write_png(dst, SHEET, SHEET, px)
 

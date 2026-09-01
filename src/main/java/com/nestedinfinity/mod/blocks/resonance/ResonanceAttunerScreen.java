@@ -21,12 +21,12 @@ public class ResonanceAttunerScreen extends AbstractContainerScreen<ResonanceAtt
     private static final int SWATCH_Y = 58;
     private static final int SWATCH_SIZE = 14;
     private static final int SWATCH_STEP = 18;
-    private static final int REGISTER_TEXT_Y = 76;
+    private static final int REGISTER_TEXT_Y = 78;
 
     public ResonanceAttunerScreen(ResonanceAttunerMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
-        this.imageHeight = 172;
-        this.inventoryLabelY = 86;
+        this.imageHeight = 184;
+        this.inventoryLabelY = 96;
     }
 
     @Override
