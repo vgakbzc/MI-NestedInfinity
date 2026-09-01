@@ -173,9 +173,13 @@ public final class NIMachines {
         // 10x10 grid recipe crafting the optical qubit component. MI's machine
         // background sheet hard-caps the panel at 176x260, so the grid uses a
         // 15px slot pitch instead of the standard 18px (a 1px sprite overlap
-        // between neighbours), the progress arrow and output slot live in the
-        // otherwise empty title strip, and the result fits without any slot
-        // falling off the panel.
+        // between neighbours). Fixed furniture to route around: the recipe
+        // lock button always renders at (152, 4) and the inventory title at
+        // (8, 166). So the grid is pushed against the left edge, and the
+        // output slot plus energy bar form a right rail below the lock
+        // button, separated from the grid by a 4px gutter; the efficiency
+        // bar tucks into the last free strip between the inventory title and
+        // the player inventory itself.
         SingleBlockCraftingMachines.registerMachineTiers(
                 "Super Assembler",
                 SUPER_ASSEMBLER_PATH,
@@ -186,15 +190,15 @@ public final class NIMachines {
                     builder.playerInventoryY = 182;
                 },
                 new ProgressBar.Params(100, 0, "arrow"),
-                new RecipeEfficiencyBar.Params(44, 171),
-                new EnergyBar.Params(4, 30),
+                new RecipeEfficiencyBar.Params(2, 176),
+                new EnergyBar.Params(160, 48),
                 itemSlots -> {
                     for (int row = 0; row < 10; row++) {
                         for (int col = 0; col < 10; col++) {
-                            itemSlots.addSlot(22 + col * 15, 18 + row * 15);
+                            itemSlots.addSlot(1 + col * 15, 18 + row * 15);
                         }
                     }
-                    itemSlots.addSlot(132, 0);
+                    itemSlots.addSlot(158, 26);
                 },
                 fluidTanks -> {},
                 true, false, false,
