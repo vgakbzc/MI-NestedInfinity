@@ -446,27 +446,17 @@ def main():
         zh[f"item.{MODID}.note_{name}"] = f"{zh_color}色音符"
         en[f"color.{MODID}.{name}"] = name.capitalize()
         zh[f"color.{MODID}.{name}"] = f"{zh_color}色"
-        emi_how = {
-            "white": ("Assembler recipe. Inserting it reads the current register color and usually resets the block to white (50% drift to red).",
-                      "装配机合成。放入后读出当前音色，通常将调律方块复位为白色（有50%概率漂移为红色）。"),
-            "red": ("Assembler recipe (see the recipe page).", "装配机合成（见配方页）。"),
-            "yellow": ("Assembler recipe (see the recipe page).", "装配机合成（见配方页）。"),
-            "blue": ("Assembler recipe (see the recipe page).", "装配机合成（见配方页）。"),
-            "green": ("Machine-only: yellow register x red note, or blue register x black note.",
-                      "仅调律机产出：黄方块 × 红音符，或蓝方块 × 黑音符。"),
-            "cyan": ("Machine-only: black register x red note, or red register x black note.",
-                     "仅调律机产出：黑方块 × 红音符，或红方块 × 黑音符。"),
-            "purple": ("Machine-only: black register x yellow note, or yellow register x black note.",
-                       "仅调律机产出：黑方块 × 黄音符，或黄方块 × 黑音符。"),
-            "black": ("Machine-only: square a red, yellow or blue register (x squared = black).",
-                      "仅调律机产出：红/黄/蓝方块自乘（平方得黑）。"),
-        }[name]
-        en[f"emi.{MODID}.note.{name}.1"] = emi_how[0]
-        zh[f"emi.{MODID}.note.{name}.1"] = emi_how[1]
-        en[f"emi.{MODID}.note.{name}.2"] = ("Attuner: output = block color x note color; "
-                                            "the block becomes the note's color, with a 50% chance of the next color instead.")
-        zh[f"emi.{MODID}.note.{name}.2"] = ("调律机：输出音符 = 方块颜色 × 音符颜色；"
-                                            "调律方块变为音符的颜色，有50%概率变为下一个颜色（白→红→黄→蓝→绿→青→紫→黑）。")
+    # the visual Cayley-table pages (NIAttuningRecipe) replaced the old
+    # text-only info pages; drop their keys
+    for lang in (en, zh):
+        for key in [k for k in lang if k.startswith(f"emi.{MODID}.note.")]:
+            del lang[key]
+    en[f"emi.category.{MODID}.resonance_attuner"] = "Resonance Attuner"
+    zh[f"emi.category.{MODID}.resonance_attuner"] = "谐振调律机"
+    en[f"emi.{MODID}.attuning.becomes"] = "Register becomes %s (50%%)"
+    zh[f"emi.{MODID}.attuning.becomes"] = "方块变为%s（50%%）"
+    en[f"emi.{MODID}.attuning.drifts"] = "Drifts to %s (50%%)"
+    zh[f"emi.{MODID}.attuning.drifts"] = "漂移为%s（50%%）"
     en[f"container.{MODID}.resonance_attuner.register"] = "Register: %s"
     zh[f"container.{MODID}.resonance_attuner.register"] = "当前音色：%s"
     en[f"container.{MODID}.resonance_attuner.no_register"] = "No tuning block above!"
