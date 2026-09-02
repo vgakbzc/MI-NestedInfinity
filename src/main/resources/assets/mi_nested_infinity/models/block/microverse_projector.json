@@ -3,8 +3,8 @@
   "textures": {
     "particle": "mi_nested_infinity:block/microverse_projector_side",
     "down": "mi_nested_infinity:block/neutronium_machine_casing",
-    "up": "mi_nested_infinity:block/microverse_projector_top",
-    "north": "mi_nested_infinity:block/microverse_projector_front",
+    "up": "mi_nested_infinity:block/microverse_projector_front",
+    "north": "mi_nested_infinity:block/microverse_projector_side",
     "east": "mi_nested_infinity:block/microverse_projector_side",
     "south": "mi_nested_infinity:block/microverse_projector_side",
     "west": "mi_nested_infinity:block/microverse_projector_side"

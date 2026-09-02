@@ -2,8 +2,12 @@ package com.nestedinfinity.mod.microverse;
 
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.MIEnergyStorage;
+import aztech.modern_industrialization.machines.blockentities.hatches.EnergyHatch;
+import aztech.modern_industrialization.machines.blockentities.hatches.ItemHatch;
+import aztech.modern_industrialization.util.Simulation;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.item.Item;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -83,6 +87,9 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
     private int structureTier = 0;
     private int flameMask = 0;
     private String structureProblem = "unchecked";
+    /** Hatches found by the last structure pass (see {@link MicroverseStructure.Result}). */
+    private List<BlockPos> energyHatches = List.of();
+    private List<BlockPos> itemInputHatches = List.of();
 
     private int recheckCounter = 0;
 
@@ -150,6 +157,8 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         structureTier = result.valid ? result.tduTier : 0;
         flameMask = result.flameMask;
         structureProblem = result.problem == null ? "" : result.problem;
+        energyHatches = result.energyHatches;
+        itemInputHatches = result.itemInputHatches;
         if (!was && result.valid || was && !result.valid) {
             sync();
         }
@@ -257,7 +266,8 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
     /**
      * The GUI's extend button: spends the current giant-matter-ball
      * requirement for +50% of the base time. Returns false when idle or
-     * out of balls.
+     * out of balls. The same extension also fires automatically from the
+     * structure's item input hatches (see {@link #tryAutoExtend()}).
      */
     public boolean tryExtend() {
         if (!running || level == null || level.isClientSide()) {
@@ -271,6 +281,12 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         if (balls.isEmpty()) {
             balls = ItemStack.EMPTY;
         }
+        applyExtension();
+        return true;
+    }
+
+    /** Shared extend math: +50% of the base time, the next ball costs double. */
+    private void applyExtension() {
         int add = Math.max(1, baseTicks(tier) / 2);
         remaining += add;
         totalDuration += add;
@@ -278,7 +294,74 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         ballCost = Math.min(ballCost << 1, 1 << 20);
         setChanged();
         sync();
-        return true;
+    }
+
+    /**
+     * Refills the internal buffer from the structure's energy input hatches
+     * — MI cables feed the hatches, the controller drinks from them, the
+     * same contract MI's own multiblocks use. (A creative energy source or
+     * cable placed directly against the controller also works: it pushes
+     * into the sided capability registered in MicroverseBlocks.)
+     */
+    private void pullEnergyFromHatches() {
+        long want = ENERGY_CAPACITY - energy;
+        for (BlockPos p : energyHatches) {
+            if (want <= 0) {
+                break;
+            }
+            if (level.getBlockEntity(p) instanceof EnergyHatch hatch) {
+                long drained = hatch.getEnergyComponent().consumeEu(want, Simulation.ACT);
+                if (drained > 0) {
+                    energy += drained;
+                    want -= drained;
+                    setChanged();
+                }
+            }
+        }
+    }
+
+    /**
+     * The ball auto-feeder: once per structure pass, giant matter balls in
+     * the item input hatches are detected and spent on an extension without
+     * any button press. Feeding hatches is how you keep a universe alive.
+     */
+    private void tryAutoExtend() {
+        if (!running || level == null || level.isClientSide()) {
+            return;
+        }
+        Item ball = com.nestedinfinity.mod.items.NIOpticalItems.GIANT_MATTER_BALL.get();
+        int available = 0;
+        for (BlockPos p : itemInputHatches) {
+            if (level.getBlockEntity(p) instanceof ItemHatch hatch) {
+                for (var stack : hatch.getInventory().getItemStacks()) {
+                    if (!stack.isEmpty() && stack.getResource() == ball) {
+                        available += (int) stack.getAmount();
+                    }
+                }
+            }
+        }
+        if (available < ballCost) {
+            return;
+        }
+        int need = ballCost;
+        for (BlockPos p : itemInputHatches) {
+            if (need <= 0) {
+                break;
+            }
+            if (level.getBlockEntity(p) instanceof ItemHatch hatch) {
+                for (var stack : hatch.getInventory().getItemStacks()) {
+                    if (need <= 0) {
+                        break;
+                    }
+                    if (!stack.isEmpty() && stack.getResource() == ball) {
+                        long take = Math.min(need, stack.getAmount());
+                        stack.decrement(take);
+                        need -= (int) take;
+                    }
+                }
+            }
+        }
+        applyExtension();
     }
 
     private void finish() {
@@ -377,6 +460,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
                 return;
             }
             if (be.running) {
+                be.tryAutoExtend();
                 be.sync(); // one-second resolution is plenty for the sphere
             }
         }
@@ -385,6 +469,9 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
                 be.tryStart();
             }
             return;
+        }
+        if (be.energy < EU_PER_TICK) {
+            be.pullEnergyFromHatches();
         }
         if (be.energy >= EU_PER_TICK) {
             be.energy -= EU_PER_TICK;

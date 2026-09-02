@@ -30,6 +30,15 @@ public class CoreflameScreen extends AbstractContainerScreen<CoreflameMenu> {
         graphics.blit(texture, leftPos, topPos, 0, 0, imageWidth, imageHeight);
     }
 
+    // 1.21.1's AbstractContainerScreen.render no longer draws slot tooltips
+    // itself — concrete screens call this after super.render, like vanilla's
+    // ContainerScreen does.
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.render(graphics, mouseX, mouseY, partialTick);
+        this.renderTooltip(graphics, mouseX, mouseY);
+    }
+
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
         graphics.drawString(font, this.title, this.titleLabelX, this.titleLabelY, 0x404040, false);

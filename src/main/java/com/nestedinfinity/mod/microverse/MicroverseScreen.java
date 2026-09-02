@@ -120,6 +120,11 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
                     "container.mi_nested_infinity.microverse_projector.return_chance", chance),
                     leftPos + 62, topPos + 42, 0x604040, false);
         }
+
+        // 1.21.1's AbstractContainerScreen.render no longer draws slot
+        // tooltips itself — draw them after our own labels, like vanilla's
+        // ContainerScreen does
+        this.renderTooltip(graphics, mouseX, mouseY);
     }
 
     private static String problemKey(MicroverseMenu menu) {

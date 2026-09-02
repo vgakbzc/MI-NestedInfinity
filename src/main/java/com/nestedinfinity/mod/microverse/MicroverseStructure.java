@@ -6,6 +6,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The projector's 7x3x7 pattern, centered on the controller (spec doc
  * section 2). The shape is mirror- and rotation-symmetric, so the
@@ -52,6 +55,25 @@ public final class MicroverseStructure {
         return state.is(MicroverseBlocks.NEUTRONIUM_MACHINE_CASING.get());
     }
 
+    /**
+     * Classifies a casing-like cell: MI energy input hatches and item input
+     * hatches are collected so the controller can drink EU and auto-spend
+     * giant matter balls from them.
+     */
+    private static void collectHatch(BlockState state, BlockPos pos,
+            List<BlockPos> energyHatches, List<BlockPos> itemInputHatches) {
+        var id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
+        if (!id.getNamespace().equals("modern_industrialization") || !id.getPath().endsWith("_hatch")) {
+            return;
+        }
+        String path = id.getPath();
+        if (path.contains("energy_input")) {
+            energyHatches.add(pos.immutable());
+        } else if (path.contains("item_input")) {
+            itemInputHatches.add(pos.immutable());
+        }
+    }
+
     public static final class Result {
         public final boolean valid;
         /** 1..9 when valid, 0 otherwise. */
@@ -60,12 +82,23 @@ public final class MicroverseStructure {
         public final int flameMask;
         /** First problem found, for the GUI; null when valid. */
         public final String problem;
+        /** Energy input hatches in the casing (empty when invalid). */
+        public final List<BlockPos> energyHatches;
+        /** Item input hatches in the casing (empty when invalid). */
+        public final List<BlockPos> itemInputHatches;
 
         private Result(boolean valid, int tduTier, int flameMask, String problem) {
+            this(valid, tduTier, flameMask, problem, List.of(), List.of());
+        }
+
+        private Result(boolean valid, int tduTier, int flameMask, String problem,
+                List<BlockPos> energyHatches, List<BlockPos> itemInputHatches) {
             this.valid = valid;
             this.tduTier = tduTier;
             this.flameMask = flameMask;
             this.problem = problem;
+            this.energyHatches = energyHatches;
+            this.itemInputHatches = itemInputHatches;
         }
     }
 
@@ -94,6 +127,8 @@ public final class MicroverseStructure {
 
         // layer 2: 12 coreflames + 4 TDUs + center 3x3 casing
         int tier = -1;
+        List<BlockPos> energyHatches = new ArrayList<>();
+        List<BlockPos> itemInputHatches = new ArrayList<>();
         for (int[] rc : TDU_POS) {
             BlockPos p = layer2.offset(rc[1] - 3, 0, rc[0] - 3);
             int t = TimeDilationUnitBlock.tierOf(level.getBlockState(p).getBlock());
@@ -120,18 +155,22 @@ public final class MicroverseStructure {
         }
         for (int row = 2; row <= 4; row++) {
             for (int col = 2; col <= 4; col++) {
-                if (!isCasingLike(level.getBlockState(layer2.offset(col - 3, 0, row - 3)))) {
+                BlockState state = level.getBlockState(layer2.offset(col - 3, 0, row - 3));
+                if (!isCasingLike(state)) {
                     return new Result(false, tier, 0, "layer2_center");
                 }
+                collectHatch(state, layer2.offset(col - 3, 0, row - 3), energyHatches, itemInputHatches);
             }
         }
 
         // layer 1: plain hexagon of casing-like cells
         for (int row = 0; row < 7; row++) {
             for (int col = HEX_ROWS[row][0]; col <= HEX_ROWS[row][1]; col++) {
-                if (!isCasingLike(level.getBlockState(layer1.offset(col - 3, 0, row - 3)))) {
+                BlockState state = level.getBlockState(layer1.offset(col - 3, 0, row - 3));
+                if (!isCasingLike(state)) {
                     return new Result(false, tier, 0, "layer1");
                 }
+                collectHatch(state, layer1.offset(col - 3, 0, row - 3), energyHatches, itemInputHatches);
             }
         }
 
@@ -143,7 +182,7 @@ public final class MicroverseStructure {
                 mask |= 1 << i;
             }
         }
-        return new Result(true, tier, mask, null);
+        return new Result(true, tier, mask, null, energyHatches, itemInputHatches);
     }
 
     private static boolean isPillar(int row, int col) {

@@ -25,9 +25,16 @@ public class CoreflameBER implements BlockEntityRenderer<CoreflameBlockEntity> {
     private static final double CENTER_Y = 0.95;
     private static final float RADIUS = 0.22F;
 
+    /** +Y apex first, -Y apex last, then the four equator vertices. */
     private static final float[][] VERTS = {
-            {1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {-1, 0, 0}, {0, 0, -1}, {0, -1, 0}
+            {0, 1, 0}, {1, 0, 0}, {0, 0, 1}, {-1, 0, 0}, {0, 0, -1}, {0, -1, 0}
     };
+    /**
+     * The eight faces: the top apex with each consecutive equator pair, then
+     * the bottom apex with the same pairs reversed. Indices assume the VERTS
+     * order above — index 0 is the +Y apex, index 5 the -Y apex (this exact
+     * table also drives the projector sphere's octants).
+     */
     private static final int[][] FACES = {
             {0, 1, 2}, {0, 2, 3}, {0, 3, 4}, {0, 4, 1},
             {5, 2, 1}, {5, 3, 2}, {5, 4, 3}, {5, 1, 4}

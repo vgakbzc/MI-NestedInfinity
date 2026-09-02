@@ -1,6 +1,8 @@
 {
   "textures": {
-    "all": "mi_nested_infinity:block/coreflame_eye_of_twilight"
+    "flame": "mi_nested_infinity:block/coreflame_eye_of_twilight",
+    "casing": "mi_nested_infinity:block/neutronium_machine_casing",
+    "particle": "mi_nested_infinity:block/neutronium_machine_casing"
   },
   "elements": [
     {
@@ -22,7 +24,7 @@
             16,
             12.8
           ],
-          "texture": "#all"
+          "texture": "#casing"
         },
         "south": {
           "uv": [
@@ -31,7 +33,7 @@
             16,
             12.8
           ],
-          "texture": "#all"
+          "texture": "#casing"
         },
         "west": {
           "uv": [
@@ -40,7 +42,7 @@
             16,
             12.8
           ],
-          "texture": "#all"
+          "texture": "#casing"
         },
         "east": {
           "uv": [
@@ -49,7 +51,7 @@
             16,
             12.8
           ],
-          "texture": "#all"
+          "texture": "#casing"
         },
         "up": {
           "uv": [
@@ -58,7 +60,7 @@
             16,
             16
           ],
-          "texture": "#all"
+          "texture": "#flame"
         },
         "down": {
           "uv": [
@@ -67,7 +69,7 @@
             16,
             16
           ],
-          "texture": "#all"
+          "texture": "#casing"
         }
       }
     }

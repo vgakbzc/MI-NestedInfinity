@@ -335,22 +335,27 @@ def block_model(name, texture=None):
 
 
 def coreflame_block_model(name):
-    """The brazier is 0.6 blocks tall (9.6px). The sides sample the texture's
-    center band so the diamond motif keeps its proportions on the shorter
-    face; the top face shows the full motif."""
-    side = [0, 3.2, 16, 12.8]
+    """The brazier is 0.6 blocks tall (9.6px). Its sides wear the neutronium
+    machine casing texture (the structure's skin), sampled from the texture's
+    center band to keep proportions; the top face shows the full flame
+    diamond of this flame's own texture."""
+    casing_uv = [0, 3.2, 16, 12.8]
     write_json(os.path.join(A, 'models', 'block', name + '.json'), {
-        "textures": {"all": MODID + ":block/" + name},
+        "textures": {
+            "flame": MODID + ":block/" + name,
+            "casing": MODID + ":block/neutronium_machine_casing",
+            "particle": MODID + ":block/neutronium_machine_casing",
+        },
         "elements": [{
             "from": [0, 0, 0],
             "to": [16, 9.6, 16],
             "faces": {
-                "north": {"uv": side, "texture": "#all"},
-                "south": {"uv": side, "texture": "#all"},
-                "west": {"uv": side, "texture": "#all"},
-                "east": {"uv": side, "texture": "#all"},
-                "up": {"uv": [0, 0, 16, 16], "texture": "#all"},
-                "down": {"uv": [0, 0, 16, 16], "texture": "#all"},
+                "north": {"uv": casing_uv, "texture": "#casing"},
+                "south": {"uv": casing_uv, "texture": "#casing"},
+                "west": {"uv": casing_uv, "texture": "#casing"},
+                "east": {"uv": casing_uv, "texture": "#casing"},
+                "up": {"uv": [0, 0, 16, 16], "texture": "#flame"},
+                "down": {"uv": [0, 0, 16, 16], "texture": "#casing"},
             },
         }],
     })
@@ -420,19 +425,20 @@ def main():
         block_item_model(name)
         loot(name)
 
-    # projector controller: cube with a front overlay + running variant
+    # projector controller: all four sides share one texture, the distinct
+    # "eye" texture sits on the top face (running variant swaps it for the
+    # lit one)
     save_block_texture('microverse_projector_front', make_controller_front, False)
     save_block_texture('microverse_projector_front_on', make_controller_front, True)
     save_block_texture('microverse_projector_side', make_controller_side)
-    save_block_texture('microverse_projector_top', make_casing)
     for variant, front in (('', 'front'), ('_on', 'front_on')):
         write_json(os.path.join(A, 'models', 'block', 'microverse_projector' + variant + '.json'), {
             "parent": "minecraft:block/cube",
             "textures": {
                 "particle": MODID + ":block/microverse_projector_side",
                 "down": MODID + ":block/neutronium_machine_casing",
-                "up": MODID + ":block/microverse_projector_top",
-                "north": MODID + ":block/microverse_projector_" + front,
+                "up": MODID + ":block/microverse_projector_" + front,
+                "north": MODID + ":block/microverse_projector_side",
                 "east": MODID + ":block/microverse_projector_side",
                 "south": MODID + ":block/microverse_projector_side",
                 "west": MODID + ":block/microverse_projector_side",
