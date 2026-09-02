@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:neutronium_machine_casing",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:optical_circuit",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:large_elite_motor",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:large_elite_pump",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:microverse_projector",
+      "amount": 1
+    }
+  ]
+}

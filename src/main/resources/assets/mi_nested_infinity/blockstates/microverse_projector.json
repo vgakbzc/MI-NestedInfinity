@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "running=false": {
+      "model": "mi_nested_infinity:block/microverse_projector"
+    },
+    "running=true": {
+      "model": "mi_nested_infinity:block/microverse_projector_on"
+    }
+  }
+}

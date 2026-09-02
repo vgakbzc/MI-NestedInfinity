@@ -154,3 +154,17 @@ y xxx y
   双语 lang，战利品表；EMI 结构示意页。
 - 与现有体系衔接：中子素（材料 API 全件）、巨型物质球（超组装机 360000s）、光学电路/线缆（本阶段终局）
   均为现成输入，不新增前置链。
+
+---
+
+## 实现状态（2026-09-02，feat/microverse）
+
+已按本文档完成实现并静态验证（compileJava / runData / build 全绿；未进游戏实测）：
+
+- 代码：`com.nestedinfinity.mod.microverse` 13 个 Java 文件（物品/方块/BE/菜单/屏幕/BER/结构校验/状态机），
+  注册与创造物品栏接入 `NestedInfinity` / `NestedInfinityClient`。
+- 配方：`microverseChain` 23 条（外壳×1 + 火种×12 + TDU×9 + 投影仪×1），全部装配机 2G/320000t；
+  心脏/奇点/宇宙物质按设计**有意无配方**（下一阶段挂点）。
+- 资产：`tools/gen_microverse_assets.py` 生成 167 个文件（贴图/模型/blockstate/战利品表/双语 lang）。
+- 与文档的偏差：无参数偏差。仅两处实现细节补充——能量存储容量 120G EU（2G/t × 60t 缓冲，`EnergyApi.SIDED` 能量舱供能）；
+  编译期 GrandPower 从 MI jar 内嵌副本提取至 `libs/`（`compileOnly files`，详见 RECIPE_COVERAGE §11.1）。

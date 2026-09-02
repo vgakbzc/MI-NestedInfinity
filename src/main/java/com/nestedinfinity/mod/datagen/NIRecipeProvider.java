@@ -19,6 +19,7 @@ import com.nestedinfinity.mod.items.algae.NIPetriDishes;
 import com.nestedinfinity.mod.items.gems.NIGems;
 import com.nestedinfinity.mod.material.NIMaterial;
 import com.nestedinfinity.mod.material.NIMaterials;
+import com.nestedinfinity.mod.microverse.MicroverseItems;
 
 /**
  * Collects recipes into {@link NIRecipes} and writes them out.
@@ -75,6 +76,75 @@ public final class NIRecipeProvider implements DataProvider {
         opticalHniwChain(r);
         opticalNeutroniumChain(r);
         opticalFinaleChain(r);
+        microverseChain(r);
+    }
+
+    /**
+     * Microverse program, part 1: the projector multiblock's bricks — the
+     * neutronium machine casing, the twelve coreflame kinds (each seeded by
+     * the gem of its color family), the nine time dilation unit tiers
+     * (2x previous tier + the matter it harvests) and the controller
+     * itself. The heart and the twelve singularities are next-stage hooks
+     * and stay recipeless on purpose (see the spec doc, section 3).
+     */
+    private void microverseChain(NIRecipes r) {
+        String ni = "mi_nested_infinity:";
+        String mi = "modern_industrialization:";
+        int EU = 2_000_000_000;
+        int T = 320_000;
+
+        // the casing every structural cell is built from
+        r.machine("assembler", EU, T)
+                .itemIn(mi + "neutronium_plate", 4)
+                .itemIn(mi + "neutronium_rod", 2)
+                .itemOut(ni + "neutronium_machine_casing", 2)
+                .save("microverse/neutronium_machine_casing");
+
+        // the twelve coreflames: same ignition package, distinguished by
+        // the gem of each flame's color family
+        String[] flameGems = {
+                "heliodor", "tanzanite", "azurite", "garnet", "opal", "emerald",
+                "amethyst", "sapphire", "ruby", "jade", "sodalite", "alexandrite",
+        };
+        for (int i = 0; i < flameGems.length; i++) {
+            r.machine("assembler", EU, T)
+                    .itemIn(ni + "optical_circuit_board", 1)
+                    .itemIn(ni + "ffkm_sheet", 2)
+                    .itemIn(ni + "fused_silica_plate", 2)
+                    .itemIn(ni + "gem_" + flameGems[i], 2)
+                    .fluidIn(ni + "liquid_xenon", 1000)
+                    .itemOut(ni + "coreflame_" + MicroverseItems.SINGULARITIES.get(i).blockSuffix(), 1)
+                    .save("microverse/coreflame_" + MicroverseItems.SINGULARITIES.get(i).blockSuffix());
+        }
+
+        // time dilation units: T1 from the optical endgame, each next tier
+        // folds two of the previous tier around the matter that tier grows
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "optical_circuit", 2)
+                .itemIn(mi + "neutronium_plate", 4)
+                .itemIn(mi + "optical_superconductor_cable", 2)
+                .itemOut(ni + "time_dilation_unit_t1", 1)
+                .save("microverse/time_dilation_unit_t1");
+        for (int tier = 2; tier <= 9; tier++) {
+            r.machine("assembler", EU, T)
+                    .itemIn(ni + "time_dilation_unit_t" + (tier - 1), 2)
+                    .itemIn(ni + matterPath(tier - 1), 4)
+                    .itemOut(ni + "time_dilation_unit_t" + tier, 1)
+                    .save("microverse/time_dilation_unit_t" + tier);
+        }
+
+        // the controller
+        r.machine("assembler", EU, T)
+                .itemIn(ni + "neutronium_machine_casing", 4)
+                .itemIn(ni + "optical_circuit", 4)
+                .itemIn(ni + "large_elite_motor", 1)
+                .itemIn(ni + "large_elite_pump", 1)
+                .itemOut(ni + "microverse_projector", 1)
+                .save("microverse/microverse_projector");
+    }
+
+    private static String matterPath(int tier) {
+        return MicroverseItems.MATTERS.get(tier - 1).getId().getPath();
     }
 
     /**

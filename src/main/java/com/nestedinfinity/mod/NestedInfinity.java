@@ -33,6 +33,8 @@ import com.nestedinfinity.mod.fluids.NIFluids;
 import com.nestedinfinity.mod.items.NICircuits;
 import com.nestedinfinity.mod.items.NIItems;
 import com.nestedinfinity.mod.items.NIOpticalItems;
+import com.nestedinfinity.mod.microverse.MicroverseBlocks;
+import com.nestedinfinity.mod.microverse.MicroverseItems;
 import com.nestedinfinity.mod.items.algae.NIPetriDishes;
 import com.nestedinfinity.mod.items.gems.NIGems;
 import com.nestedinfinity.mod.items.resonance.NINotes;
@@ -124,6 +126,14 @@ public class NestedInfinity {
                 // chains, optics, the HNIW and neutronium programs, the parts
                 NIOpticalItems.ALL.forEach(item -> output.accept(item.get()));
                 NIFluids.OPTICAL.forEach(fluid -> output.accept(fluid.bucket.get()));
+                // microverse program: the projector multiblock and its parts
+                output.accept(MicroverseBlocks.NEUTRONIUM_MACHINE_CASING_ITEM.get());
+                MicroverseBlocks.TDUS.forEach(tdu -> output.accept(tdu.get()));
+                MicroverseBlocks.COREFLAMES.forEach(flame -> output.accept(flame.get()));
+                output.accept(MicroverseBlocks.MICROVERSE_PROJECTOR_ITEM.get());
+                output.accept(MicroverseItems.HEART_OF_A_NONEXISTENT_WORLD.get());
+                MicroverseItems.SINGULARITIES.forEach(s -> output.accept(s.item().get()));
+                MicroverseItems.MATTERS.forEach(matter -> output.accept(matter.get()));
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -141,6 +151,8 @@ public class NestedInfinity {
         NIGems.init();
         NICoils.init();
         NIMachines.init();
+        MicroverseItems.init();
+        MicroverseBlocks.init(modEventBus);
 
         // generate recipe/tag JSONs during runData
         modEventBus.addListener(NIDataGen::gatherData);

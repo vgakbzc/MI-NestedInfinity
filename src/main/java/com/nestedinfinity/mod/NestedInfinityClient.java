@@ -91,6 +91,17 @@ public class NestedInfinityClient {
     @SubscribeEvent
     static void registerMenuScreens(RegisterMenuScreensEvent event) {
         event.register(NIBlocks.RESONANCE_ATTUNER_MENU.get(), ResonanceAttunerScreen::new);
+        event.register(com.nestedinfinity.mod.microverse.MicroverseBlocks.COREFLAME_MENU.get(),
+                com.nestedinfinity.mod.microverse.CoreflameScreen::new);
+        event.register(com.nestedinfinity.mod.microverse.MicroverseBlocks.PROJECTOR_MENU.get(),
+                com.nestedinfinity.mod.microverse.MicroverseScreen::new);
+    }
+
+    @SubscribeEvent
+    static void registerBlockEntityRenderers(
+            net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(com.nestedinfinity.mod.microverse.MicroverseBlocks.PROJECTOR_TYPE.get(),
+                com.nestedinfinity.mod.microverse.MicroverseProjectorBER::new);
     }
 
     @SubscribeEvent

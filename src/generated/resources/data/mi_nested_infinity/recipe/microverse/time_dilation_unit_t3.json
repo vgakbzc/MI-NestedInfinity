@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:time_dilation_unit_t2",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:hadronic_matter",
+      "amount": 4
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:time_dilation_unit_t3",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:optical_circuit_board",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:ffkm_sheet",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:fused_silica_plate",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:gem_ruby",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:liquid_xenon",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:coreflame_lance_of_fury",
+      "amount": 1
+    }
+  ]
+}

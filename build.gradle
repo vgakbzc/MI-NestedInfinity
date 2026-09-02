@@ -41,6 +41,8 @@ repositories {
     maven {
         name = "SleepingTown"
         url = uri("https://repo.sleeping.town/")
+        // Its root URL 403s (hard failure for Gradle) on groups it does not host.
+        content { excludeGroup("maven.modrinth") }
     }
 }
 
@@ -134,6 +136,11 @@ dependencies {
     // Use Modrinth version IDs to make sure we get the NeoForge builds (version numbers are shared between Fabric/NeoForge)
     implementation "maven.modrinth:modern-industrialization:E1nD4PKl"
     implementation "maven.modrinth:guideme:rduAfwb7"
+
+    // GrandPower ships jarjar'd inside the MI jar (runtime-visible, but javac
+    // cannot see nested jars) and is not published to Modrinth/Central; this is
+    // the exact copy MI 2.5.6 bundles, extracted for compilation only.
+    compileOnly files("libs/grandpower-3.0.0.jar")
 
     compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
     localRuntime "dev.emi:emi-neoforge:${emi_version}"

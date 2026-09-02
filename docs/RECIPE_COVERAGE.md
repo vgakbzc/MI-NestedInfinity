@@ -185,3 +185,22 @@
 
 ### 10.8 新注册内容
 物品 81（NIOpticalItems；trioctyl_phosphate 在核对后移除——AO 萃取相复用 PUREX 的磷酸三丁酯更真实）+ 流体 26（TFE/HFPO/PMVE/蒽醌工作液×2/粗+电子级 H₂O₂/电子级硝酸+硫酸/TMAH/PGMEA/KrF+ArF 胶/UV 胶/氯苄/氟苯/苄胺/乙二醛/乙烯酮/乙酸酐/MIBK/SiCl₄/GeCl₄/氟铌酸/中子流体/熔融中子素）+ 材料 2（neutronium 全件含 wire、optical_superconductor cableOnly 2^39）+ 机器 1（duv_stepper）+ 配方 116（`tools/audit_optical.py` 静态审计：生产覆盖/下游/槽位/时长四项全绿；phantom 部件 gear/hot_ingot 与 trinium 先例一致）。巨型物质球自定义大模型（GUI 2.4×/地面 1.6×）+ DUV 机身 overlay（透镜柱+晶圆台+193nm 紫光束 active 变体）由 `gen_photonic_assets.py` 生成。大型精英电机/泵贴图取 MI 大型高级原图做蓝→绿通道交换与橙色 +120° 色相旋转（灰白机身逐像素保留，`gen_algae_assets.blue_and_orange_to_green`）。
+
+## 11. 2026-09-02 微缩宇宙投影仪（feat/microverse，23 个新配方 + 多方块机器）
+
+### 11.1 新注册内容（com.nestedinfinity.mod.microverse，13 个 Java 文件）
+- **方块 23**：中子素机器外壳×1、核心火种×12（`coreflame_<suffix>`，带 1 槽 BE 的 BaseEntityBlock，只接受配对奇点物品）、时间膨胀装置×9（`time_dilation_unit_t1..t9`，TIERS 自注册）、投影仪控制器×1（RUNNING 方块属性 + 服务端 ticker）。
+- **BE 2 + 菜单 2**：coreflame（12 方块共用）、microverse_projector；GUI 走 `IMenuTypeExtension` + RegistryFriendlyByteBuf 传 BlockPos（ResonanceAttuner 先例）。
+- **物品 22**：无心世界之心×1 + 奇点×12（对应 12 火种）+ 宇宙物质×9（夸克胶子等离子体→千新星抛射物，按宇宙学纪元排序）。**全部有意无配方**——是下一阶段（层级 2+ 投影产出消费）的挂点。
+- 能量走 `EnergyApi.SIDED`（grandpower `MIEnergyStorage` 匿名实现，只进不出，容量 120G=2G EU/t×60t）。GrandPower 未发布到 Modrinth/Central 且 jarjar 嵌于 MI jar（javac 不可见），故抽取内嵌副本至 `libs/grandpower-3.0.0.jar` 仅供编译（`compileOnly files(...)`，与运行时版本严格一致）。
+
+### 11.2 结构与状态机（MicroverseStructure + MicroverseProjectorBlockEntity）
+- 7×3×7 共 99 格：L1 六角 37 外壳；L2 中心 3×3 外壳 + 4 同档 TDU + 12 火种（固定坐标）；L3 六角 37（中心=控制器，TDU 正上方 4 格强制外壳）。外壳可被任意 MI 舱室替换（namespace `modern_industrialization` + path 以 `_hatch` 结尾）。
+- 校验顺序 L3→L2→L1，问题码：layer1/layer2_center/layer3/tdu_missing/tdu_mixed/coreflame_missing/coreflame_duplicate（GUI 状态栏显示 `problem_<key>` 本地化键）。
+- 运行：放入心脏自动开始（消耗心脏+12 奇点，逐火种记录 pending）；2G EU/t，`baseTicks(n)=round(20×2.1^(n-1))`（T1=20t … T9=7565t），`microPerTick(n)=round(2.1^(n-1)×50000)`；结束时产出 `floor(累计micro/1e6)` 物质（输出槽上限 64，超出落地），每奇点按 `max(0, 95−5×延长次数)`% 概率返还回火种 BE。
+- 延长：巨型物质球消耗 1→2→4→8（每次翻倍，上限 2^20），每延长一次剩余时长 +baseTicks/2；结构破坏=宇宙坍缩，心脏/奇点/球全部损失（POOF 粒子+爆炸音）。
+- 客户端：12 格奇点指示灯条（HSB 循环色相）、倒计时/累计/返还率读数、延长按钮（`handleInventoryButtonClick`）；BER 以 `RenderType.endPortal()` 绘制半径 2.0 二十面体细分球（中心 (0.5, 3.5, 0.5)，前后 40t 缩放动画，双面绕序防剔除）。
+
+### 11.3 配方（microverseChain，全部装配机 2G/320000t）
+外壳=中子素板×4+中子素杆×2→2；火种=光学电路板×1+FFKM 板×2+石英玻璃板×2+对应宝石×2+液氙 1000（12 宝石一对一：heliodor/tanzanite/azurite/garnet/opal/emerald/amethyst/sapphire/ruby/jade/sodalite/alexandrite）；TDU1=光学电路×2+中子素板×4+光学超导线缆×2；TDU n=2..9 为 2×前级+4×matter(n−1)（火种→TDU 阶梯与宇宙物质纪元一一对应，T9=2×t8+4×超新星重元素）；投影仪=外壳×4+光学电路×4+大型精英电机+大型精英泵。
+资产（`tools/gen_microverse_assets.py`，167 文件）：23 blockstates + 24 方块模型（控制器 front/front_on 变体）+ 45 物品模型 + 27 方块贴图 + 22 物品贴图 + 2 GUI（176×166/176×184）+ 24 战利品表 + 双语 lang（含 problem_* 状态键与 GUI 文案）。

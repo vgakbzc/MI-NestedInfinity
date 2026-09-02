@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "mi_nested_infinity:block/microverse_projector_side",
+    "down": "mi_nested_infinity:block/neutronium_machine_casing",
+    "up": "mi_nested_infinity:block/microverse_projector_top",
+    "north": "mi_nested_infinity:block/microverse_projector_front_on",
+    "east": "mi_nested_infinity:block/microverse_projector_side",
+    "south": "mi_nested_infinity:block/microverse_projector_side",
+    "west": "mi_nested_infinity:block/microverse_projector_side"
+  }
+}
