@@ -382,6 +382,129 @@ def save_emi_vertical_arrow():
     canvas.save(os.path.join(A, 'textures', 'gui', 'emi', 'vertical_arrow.png'))
 
 
+# The projector multiblock, mirroring MicroverseStructure (single source of
+# truth lives in Java; keep the two in sync). Rows run north(0)..south(6),
+# cols west(0)..east(6); layers 0..2 bottom..top.
+HEX_ROWS = [(2, 4), (1, 5), (0, 6), (0, 6), (0, 6), (1, 5), (2, 4)]
+FLAME_POS = [(0, 2), (0, 3), (0, 4), (2, 0), (2, 6), (3, 0), (3, 6), (4, 0), (4, 6), (6, 2), (6, 3), (6, 4)]
+TDU_SPOTS = [(1, 1), (1, 5), (5, 1), (5, 5)]
+CONTROLLER_CELL = (3, 3)
+
+
+def structure_layer(layer):
+    """The occupied (row, col) -> kind map of one layer."""
+    cells = {}
+    for row, (c0, c1) in enumerate(HEX_ROWS):
+        for col in range(c0, c1 + 1):
+            if layer == 0:
+                cells[(row, col)] = 'casing'
+            elif layer == 2:
+                if (row, col) in TDU_SPOTS:
+                    cells[(row, col)] = 'pillar'
+                elif (row, col) == CONTROLLER_CELL:
+                    cells[(row, col)] = 'controller'
+            else:
+                pass  # layer 1 is rebuilt below
+    if layer == 1:
+        cells = {}
+        for i, pos in enumerate(FLAME_POS):
+            cells[pos] = ('flame', i)
+        for pos in TDU_SPOTS:
+            cells[pos] = 'tdu'
+        for row in range(2, 5):
+            for col in range(2, 5):
+                cells[(row, col)] = 'casing'
+    return cells
+
+
+def save_emi_structure_diagram():
+    """EMI projector structure page: the 7x3x7 multiblock as an exploded 2:1
+    isometric parallel projection seen from above the south-east corner. The
+    three layers pull apart vertically so every part stays readable — all
+    twelve rim coreflames (kind color on the top face), the four TDU dials,
+    the 3x3 casing core and the floating top layer of controller and pillars.
+    Each cube is drawn from its bottom south vertex: east wall (lit, carries
+    the kind detail), south wall (shaded), top rhombus. Rendered oversize,
+    then cropped to content."""
+    from PIL import Image
+    HALF_W, HALF_H, WALL, GAP = 8, 4, 10, 18
+    casing = (96, 90, 108)
+    frame = (52, 46, 62)
+    tdu_dial = TDU_RAMP[4]  # one representative tier: any same-tier set is valid
+
+    def cube(paint, x, y, base, top, detail=None):
+        """base = east wall color; south wall shades it; detail(i, j, c)
+        overrides east wall pixels; top is the rhombus fill."""
+        south = shade(base, 0.72)
+        for i in range(HALF_W + 1):
+            for j in range(WALL):
+                paint(x + i, y - i // 2 - j, detail(i, j, base) if detail else base)
+                paint(x - i, y - i // 2 - j, south)
+        for py in range(y - WALL - 2 * HALF_H + 1, y - WALL):
+            half = HALF_W * (1 - abs(py - (y - WALL - HALF_H)) / HALF_H)
+            for ex in range(-HALF_W, HALF_W + 1):
+                if abs(ex) <= half + 0.5:
+                    paint(x + ex, py, top)
+
+    layers = [structure_layer(l) for l in range(3)]
+    cubes = []
+    for layer in range(3):
+        for row in range(7):
+            for col in range(7):
+                kind = layers[layer].get((row, col))
+                if kind is None:
+                    continue
+                cubes.append((layer, row + col, row, col, kind))
+    # bottom layer first (the explosion puts higher layers visually on top)
+    cubes.sort(key=lambda c: (c[0], c[1]))
+
+    big = Canvas(220, 190)
+    for layer, _sum, row, col, kind in cubes:
+        x = 110 + (row + col) * HALF_W
+        y = 90 + (row - col) * HALF_H - layer * (WALL + GAP)
+        if kind in ('casing', 'pillar'):
+            cube(big.px, x, y, casing, lift(casing, 0.30))
+        elif kind == 'tdu':
+            def detail(i, j, c):
+                d = abs(i - 4) + abs(j - 5)
+                if d <= 1:
+                    return tdu_dial
+                if d == 2:
+                    return shade(tdu_dial, 0.55)
+                return c
+            cube(big.px, x, y, (88, 82, 100), lift((88, 82, 100), 0.30), detail)
+        elif kind == 'controller':
+            def detail(i, j, c):
+                if abs(i - 4) + abs(j - 5) <= 3:
+                    swirl = ((i * 7 + j * 13) % 5) / 4.0
+                    return (int(60 + swirl * 140), int(30 + swirl * 60),
+                            int(120 + swirl * 120))
+                return c
+            cube(big.px, x, y, casing, lift((110, 70, 180), 0.35), detail)
+            big.px(x + 5, y - 2 - 4, (240, 230, 255))  # one bright star
+        else:  # ('flame', i)
+            color = COREFLAMES[kind[1]][4]
+
+            def detail(i, j, c, color=color):
+                d = abs(i - 4) + abs(j - 5)
+                if d == 0:
+                    return color
+                if d <= 2:
+                    return lift(color, 0.15)
+                return c
+            # solid kind color on the top face: never occluded from this
+            # angle, so every rim flame stays identifiable even where its
+            # east wall hides behind a nearer neighbour
+            cube(big.px, x, y, frame, lift(color, 0.10), detail)
+
+    img = Image.frombytes('RGBA', (big.w, big.h), bytes(big.buf))
+    bbox = img.getbbox()  # non-transparent content
+    pad = 4
+    out = img.crop((max(0, bbox[0] - pad), max(0, bbox[1] - pad),
+                    min(big.w, bbox[2] + pad), min(big.h, bbox[3] + pad)))
+    out.save(os.path.join(A, 'textures', 'gui', 'emi', 'projector_structure.png'))
+
+
 def paint_progress_arrow(canvas):
     """A dark arrow groove between the catalyzer slots; the screen fills the
     body (74..93, 40..47) with a light bar as the craft progresses."""
@@ -589,6 +712,7 @@ def main():
 
     # EMI projector page: vertical (downward) arrow pair
     save_emi_vertical_arrow()
+    save_emi_structure_diagram()
 
     # singularity catalyzer machine block
     save_block_texture('singularity_catalyzer', make_catalyzer)
@@ -730,6 +854,22 @@ def write_lang():
     zh[emi + 'projector.rate'] = '物质:每 10 秒 1 颗,坍缩 +%s 颗'
     en[emi + 'projector.energy'] = '2 G EU/t, matter balls extend'
     zh[emi + 'projector.energy'] = '2 G EU/t,物质球可延长'
+    en[emi + 'structure.title'] = '7x3x7 hexagon around the controller'
+    zh[emi + 'structure.title'] = '以控制器为中心的 7×3×7 六边形'
+    en[emi + 'structure.legend.controller'] = 'Controller'
+    zh[emi + 'structure.legend.controller'] = '控制器'
+    en[emi + 'structure.legend.tdu'] = 'TDU x4'
+    zh[emi + 'structure.legend.tdu'] = 'TDU×4'
+    en[emi + 'structure.legend.casing'] = 'Casing'
+    zh[emi + 'structure.legend.casing'] = '外壳'
+    en[emi + 'structure.legend.flames'] = 'Coreflames'
+    zh[emi + 'structure.legend.flames'] = '火种×12'
+    en[emi + 'structure.bottom'] = 'Bottom: full casing plate (MI hatches may replace casings)'
+    zh[emi + 'structure.bottom'] = '底层:整层外壳(可换 MI 仓口)'
+    en[emi + 'structure.middle'] = 'Middle: 12 coreflames on the rim (one of each kind), 4 same-tier TDUs at the inner corners, 3x3 casing core'
+    zh[emi + 'structure.middle'] = '中层:边缘 12 火种(每种一颗)、内角 4 个同等级 TDU、中心 3×3 外壳'
+    en[emi + 'structure.top'] = 'Top: controller center, 4 casing pillars on the TDUs (casing only, no hatches)'
+    zh[emi + 'structure.top'] = '顶层:中央控制器、TDU 正上方 4 根外壳柱(仅外壳,不可替换)'
     en[emi + 'catalyzer.time'] = '100s per singularity, no energy'
     zh[emi + 'catalyzer.time'] = '每 100 秒 1 颗奇点,不耗电'
     en[emi + 'catalyzer.once'] = 'One-shot: completing it unlocks this kind here forever'

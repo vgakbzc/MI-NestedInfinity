@@ -1318,5 +1318,13 @@
   "tag.mi_nested_infinity.amino_acids": "Amino Acids",
   "tag.mi_nested_infinity.cold_petri_dishes": "Cold-Strain Petri Dishes",
   "container.mi_nested_infinity.singularity_catalyzer.slot_seed": "Seed: a plain MI singularity, consumed each craft",
-  "container.mi_nested_infinity.singularity_catalyzer.ritual_seed": "missing singularity seed"
+  "container.mi_nested_infinity.singularity_catalyzer.ritual_seed": "missing singularity seed",
+  "emi.mi_nested_infinity.structure.title": "7x3x7 hexagon around the controller",
+  "emi.mi_nested_infinity.structure.legend.controller": "Controller",
+  "emi.mi_nested_infinity.structure.legend.tdu": "TDU x4",
+  "emi.mi_nested_infinity.structure.legend.casing": "Casing",
+  "emi.mi_nested_infinity.structure.legend.flames": "Coreflames",
+  "emi.mi_nested_infinity.structure.bottom": "Bottom: full casing plate (MI hatches may replace casings)",
+  "emi.mi_nested_infinity.structure.middle": "Middle: 12 coreflames on the rim (one of each kind), 4 same-tier TDUs at the inner corners, 3x3 casing core",
+  "emi.mi_nested_infinity.structure.top": "Top: controller center, 4 casing pillars on the TDUs (casing only, no hatches)"
 }

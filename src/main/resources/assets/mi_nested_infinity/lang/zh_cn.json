@@ -1318,5 +1318,13 @@
   "tag.mi_nested_infinity.amino_acids": "氨基酸",
   "tag.mi_nested_infinity.cold_petri_dishes": "低温菌株培养皿",
   "container.mi_nested_infinity.singularity_catalyzer.slot_seed": "种子:普通 MI 奇点,每批消耗 1 颗",
-  "container.mi_nested_infinity.singularity_catalyzer.ritual_seed": "缺少奇点种子"
+  "container.mi_nested_infinity.singularity_catalyzer.ritual_seed": "缺少奇点种子",
+  "emi.mi_nested_infinity.structure.title": "以控制器为中心的 7×3×7 六边形",
+  "emi.mi_nested_infinity.structure.legend.controller": "控制器",
+  "emi.mi_nested_infinity.structure.legend.tdu": "TDU×4",
+  "emi.mi_nested_infinity.structure.legend.casing": "外壳",
+  "emi.mi_nested_infinity.structure.legend.flames": "火种×12",
+  "emi.mi_nested_infinity.structure.bottom": "底层:整层外壳(可换 MI 仓口)",
+  "emi.mi_nested_infinity.structure.middle": "中层:边缘 12 火种(每种一颗)、内角 4 个同等级 TDU、中心 3×3 外壳",
+  "emi.mi_nested_infinity.structure.top": "顶层:中央控制器、TDU 正上方 4 根外壳柱(仅外壳,不可替换)"
 }
