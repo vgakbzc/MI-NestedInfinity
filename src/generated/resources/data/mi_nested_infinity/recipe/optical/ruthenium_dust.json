@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:ruthenium_dioxide",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:ruthenium_dust",
+      "amount": 1
+    }
+  ]
+}

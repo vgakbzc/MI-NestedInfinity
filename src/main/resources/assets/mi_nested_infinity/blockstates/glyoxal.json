@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/glyoxal"
+    }
+  }
+}

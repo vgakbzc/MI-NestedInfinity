@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:benzene",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:phenol",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:polyhydroxystyrene_resin",
+      "amount": 2
+    }
+  ]
+}

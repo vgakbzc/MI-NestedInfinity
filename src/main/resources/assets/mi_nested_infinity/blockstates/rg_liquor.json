@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/rg_liquor"
+    }
+  }
+}

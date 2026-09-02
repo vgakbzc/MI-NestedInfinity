@@ -4,7 +4,7 @@
   "package": "com.nestedinfinity.mod.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "UpgradeComponentMixin", "ElectricBlastFurnaceMixin", "CrafterComponentMixin"
+    "UpgradeComponentMixin", "ElectricBlastFurnaceMixin", "CrafterComponentMixin", "ReplicatorMachineMixin"
   ],
   "injectors": {
     "defaultRequire": 1

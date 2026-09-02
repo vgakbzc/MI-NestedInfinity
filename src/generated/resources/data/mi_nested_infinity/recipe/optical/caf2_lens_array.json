@@ -1,0 +1,22 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:gem_fluorite",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:cerium_oxide",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:caf2_lens_array",
+      "amount": 2
+    }
+  ]
+}

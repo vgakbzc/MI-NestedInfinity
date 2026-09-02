@@ -1,0 +1,35 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:lead_titanate_plate",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:resonite_plate",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:resonant_superconductor_cable",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:wetware_circuit",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:conductive_epoxy",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:resonance_attuner",
+      "amount": 1
+    }
+  ]
+}

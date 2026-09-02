@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "color=0": {
+      "model": "mi_nested_infinity:block/tuning_block_white"
+    },
+    "color=1": {
+      "model": "mi_nested_infinity:block/tuning_block_red"
+    },
+    "color=2": {
+      "model": "mi_nested_infinity:block/tuning_block_yellow"
+    },
+    "color=3": {
+      "model": "mi_nested_infinity:block/tuning_block_blue"
+    },
+    "color=4": {
+      "model": "mi_nested_infinity:block/tuning_block_green"
+    },
+    "color=5": {
+      "model": "mi_nested_infinity:block/tuning_block_cyan"
+    },
+    "color=6": {
+      "model": "mi_nested_infinity:block/tuning_block_purple"
+    },
+    "color=7": {
+      "model": "mi_nested_infinity:block/tuning_block_black"
+    }
+  }
+}

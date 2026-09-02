@@ -1,0 +1,28 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:pgm_residue",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:sodium_chlorate",
+      "amount": 2,
+      "probability": 0.15
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:aqua_regia",
+      "amount": 2000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:ruthenium_dioxide",
+      "amount": 3
+    }
+  ]
+}

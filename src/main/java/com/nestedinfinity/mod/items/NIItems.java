@@ -140,6 +140,117 @@ public final class NIItems {
     public static final DeferredItem<Item> CYANOACETIC_ACID = register("cyanoacetic_acid");
     public static final DeferredItem<Item> POLY_METHYL_CYANOACRYLATE = register("poly_methyl_cyanoacrylate");
 
+    // Resonant circuit program -------------------------------------------------
+    // The eight Q8 tuning notes live in items/resonance/NINotes; the tuning block
+    // and the resonance attuner machine in blocks/resonance. Everything below is
+    // datagen'd in NIRecipeProvider.resonantChain (see docs/RECIPE_COVERAGE.md).
+
+    // Individually purified superheavy elements of the periodic table's last row
+    // (Ac through Cn). U and Pu reuse MI's own items; these dusts are produced by
+    // the multi-cycle separation cascade and held as a strategic reserve for the
+    // future circuit tiers (optical, EMI, ...).
+    public static final DeferredItem<Item> ACTINIUM_DUST = register("actinium_dust");
+    public static final DeferredItem<Item> PROTACTINIUM_DUST = register("protactinium_dust");
+    public static final DeferredItem<Item> THORIUM_DUST = register("thorium_dust");
+    public static final DeferredItem<Item> NEPTUNIUM_DUST = register("neptunium_dust");
+    public static final DeferredItem<Item> AMERICIUM_DUST = register("americium_dust");
+    public static final DeferredItem<Item> CURIUM_DUST = register("curium_dust");
+    public static final DeferredItem<Item> BERKELIUM_DUST = register("berkelium_dust");
+    public static final DeferredItem<Item> CALIFORNIUM_DUST = register("californium_dust");
+    public static final DeferredItem<Item> EINSTEINIUM_DUST = register("einsteinium_dust");
+    public static final DeferredItem<Item> FERMIUM_DUST = register("fermium_dust");
+    public static final DeferredItem<Item> MENDELEVIUM_DUST = register("mendelevium_dust");
+    public static final DeferredItem<Item> NOBELIUM_DUST = register("nobelium_dust");
+    public static final DeferredItem<Item> LAWRENCIUM_DUST = register("lawrencium_dust");
+    public static final DeferredItem<Item> RUTHERFORDIUM_DUST = register("rutherfordium_dust");
+    public static final DeferredItem<Item> DUBNIUM_DUST = register("dubnium_dust");
+    public static final DeferredItem<Item> SEABORGIUM_DUST = register("seaborgium_dust");
+    public static final DeferredItem<Item> BOHRIUM_DUST = register("bohrium_dust");
+    public static final DeferredItem<Item> HASSIUM_DUST = register("hassium_dust");
+    public static final DeferredItem<Item> MEITNERIUM_DUST = register("meitnerium_dust");
+    public static final DeferredItem<Item> DARMSTADTIUM_DUST = register("darmstadtium_dust");
+    public static final DeferredItem<Item> ROENTGENIUM_DUST = register("roentgenium_dust");
+    public static final DeferredItem<Item> COPERNICIUM_DUST = register("copernicium_dust");
+
+    // Separation-cascade catalysts and reagents (probability-consumed where they
+    // act as catalysts; MI item inputs carry the consumption probability).
+    public static final DeferredItem<Item> TRIBUTYL_PHOSPHATE = register("tributyl_phosphate"); // PUREX extractant
+    public static final DeferredItem<Item> CMPO_EXTRACTANT = register("cmpo_extractant"); // TRUEX extractant
+    public static final DeferredItem<Item> DTPA_COMPLEXANT = register("dtpa_complexant"); // TALSPEAK actinide selectant
+    public static final DeferredItem<Item> ALPHA_HIBA_ELUANT = register("alpha_hiba_eluant"); // cation-exchange eluant
+    public static final DeferredItem<Item> SODIUM_NITRITE = register("sodium_nitrite"); // valence adjustment
+    public static final DeferredItem<Item> SODIUM_CHLORATE = register("sodium_chlorate"); // Bk(IV) oxidation
+    public static final DeferredItem<Item> HYDRAZINE = register("hydrazine"); // Pu stripping reductant
+    public static final DeferredItem<Item> GOLD_FOIL = register("gold_foil"); // Cn surface trap
+    public static final DeferredItem<Item> TELLURIUM_DUST = register("tellurium_dust"); // fission byproduct, telluric acid feed
+
+    // Light naquide (trinium_dinaquide coil component) and the fusion-born alloys
+    public static final DeferredItem<Item> CRUDE_NAQUIDE_POWDER = register("crude_naquide_powder");
+    public static final DeferredItem<Item> NAQUIDE = register("naquide");
+    public static final DeferredItem<Item> ADAMANTIUM_INGOT = register("adamantium_ingot");
+    public static final DeferredItem<Item> MITHRIL_INGOT = register("mithril_ingot");
+    // Plates of the fusion-born alloys, laminated into the resonant circuit
+    public static final DeferredItem<Item> ADAMANTIUM_PLATE = register("adamantium_plate");
+    public static final DeferredItem<Item> MITHRIL_PLATE = register("mithril_plate");
+
+    // Optical program (see NIGems and the super assembler): the glow-tube
+    // parts and the finale. The battery is an RTG-style cell of three
+    // so-far-unused transuranics (Np/Am/Cm) in a naquadah casing. Graphene
+    // comes from its own chemical route (nitric-acid oxidation of carbon to
+    // graphene oxide, hydrazine reduction), pressed into rods for the tubes.
+    public static final DeferredItem<Item> TRANSURANIC_BATTERY = register("transuranic_battery");
+    public static final DeferredItem<Item> CRYSTAL_DIODE = register("crystal_diode");
+    public static final DeferredItem<Item> GRAPHENE_ELECTRODE = register("graphene_electrode");
+    public static final DeferredItem<Item> GRAPHENE_OXIDE = register("graphene_oxide");
+    public static final DeferredItem<Item> GRAPHENE = register("graphene");
+    public static final DeferredItem<Item> GRAPHENE_ROD = register("graphene_rod");
+    public static final DeferredItem<Item> OPTICAL_QUBIT_COMPONENT = register("optical_qubit_component");
+
+    // Piezoelectric quartz side (real PbTiO3 ceramics; MI has no zirconium)
+    public static final DeferredItem<Item> LEAD_TITANATE_DUST = register("lead_titanate_dust");
+    public static final DeferredItem<Item> LEAD_TITANATE_PLATE = register("lead_titanate_plate");
+    public static final DeferredItem<Item> PIEZO_WAFER = register("piezo_wafer");
+    public static final DeferredItem<Item> QUARTZ_OSCILLATOR = register("quartz_oscillator");
+    public static final DeferredItem<Item> SAW_RESONATOR = register("saw_resonator");
+
+    // Polyimide program (real Kapton chemistry): durene oxidation -> PMDA,
+    // nitrobenzene chlorination/etherification/reduction -> ODA, polyamic acid
+    // imidization -> PI
+    public static final DeferredItem<Item> DURENE = register("durene");
+    public static final DeferredItem<Item> PYROMELLITIC_ACID = register("pyromellitic_acid");
+    public static final DeferredItem<Item> PYROMELLITIC_DIANHYDRIDE = register("pyromellitic_dianhydride");
+    public static final DeferredItem<Item> P_NITROCHLOROBENZENE = register("p_nitrochlorobenzene");
+    public static final DeferredItem<Item> DINITRODIPHENYL_ETHER = register("dinitrodiphenyl_ether");
+    public static final DeferredItem<Item> DIAMINODIPHENYL_ETHER = register("diaminodiphenyl_ether");
+    public static final DeferredItem<Item> POLYIMIDE_DUST = register("polyimide_dust");
+    public static final DeferredItem<Item> POLYIMIDE_PLATE = register("polyimide_plate");
+
+    // Fluoroelastomer (FKM) gasket stock for the resonance chamber
+    public static final DeferredItem<Item> FLUOROELASTOMER_SHEET = register("fluoroelastomer_sheet");
+
+    // Resonant superconductor: monazite-residue yttrium -> YBCO target ->
+    // sputtered tape -> 2^36 EU/t cable (material registered cable-only)
+    public static final DeferredItem<Item> YTTRIUM_OXIDE = register("yttrium_oxide");
+    public static final DeferredItem<Item> CUPRIC_OXIDE = register("cupric_oxide");
+    public static final DeferredItem<Item> YBCO_TARGET = register("ybco_target");
+    public static final DeferredItem<Item> SAPPHIRE_SUBSTRATE = register("sapphire_substrate");
+    public static final DeferredItem<Item> RESONANT_SUPERCONDUCTOR_TAPE = register("resonant_superconductor_tape");
+
+    // Processing-unit replacements one tier above the bio parts (each consumes a
+    // machine-only Q8 note color: green RAM, cyan MMU, purple ALU)
+    public static final DeferredItem<Item> RESONANT_RANDOM_ACCESS_MEMORY = register("resonant_random_access_memory");
+    public static final DeferredItem<Item> RESONANT_MEMORY_MANAGEMENT_UNIT = register("resonant_memory_management_unit");
+    public static final DeferredItem<Item> RESONANT_ARITHMETIC_LOGIC_UNIT = register("resonant_arithmetic_logic_unit");
+
+    // Signature one-off components (the black-note saser, the resonance chamber,
+    // the phase-locked loop) consumed by the coil and the board
+    public static final DeferredItem<Item> SASER = register("saser");
+    public static final DeferredItem<Item> RESONANCE_CHAMBER = register("resonance_chamber");
+    public static final DeferredItem<Item> PHASE_LOCKED_LOOP = register("phase_locked_loop");
+
+    // Platinum-group residue of the bromine-free aqua-regia cycle (Rf/Db/Sg/Bh/Mt/Ds feed)
+    public static final DeferredItem<Item> PGM_RESIDUE = register("pgm_residue");
+
     private static DeferredItem<Item> register(String name) {
         return NestedInfinity.ITEMS.registerSimpleItem(name, new Item.Properties());
     }

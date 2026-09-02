@@ -1,5 +1,5 @@
 {
-  "type": "modern_industrialization:distillery",
+  "type": "modern_industrialization:chemical_reactor",
   "eu": 16,
   "duration": 200,
   "fluid_inputs": [

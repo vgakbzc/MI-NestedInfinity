@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/refrigerant_22"
+    }
+  }
+}

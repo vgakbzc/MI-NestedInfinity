@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:piezo_wafer",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:lead_titanate_plate",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:resonite_dust",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:quartz_oscillator",
+      "amount": 2
+    }
+  ]
+}

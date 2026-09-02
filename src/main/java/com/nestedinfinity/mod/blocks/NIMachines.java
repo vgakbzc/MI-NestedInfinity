@@ -27,6 +27,12 @@ public final class NIMachines {
     public static final String SUPER_MIXER_PATH = "super_mixer";
     public static final MachineRecipeType SUPER_MIXER = createSuperMixerType();
 
+    public static final String SUPER_ASSEMBLER_PATH = "super_assembler";
+    public static final MachineRecipeType SUPER_ASSEMBLER = createSuperAssemblerType();
+
+    public static final String DUV_STEPPER_PATH = "duv_stepper";
+    public static final MachineRecipeType DUV_STEPPER = createDuvStepperType();
+
     /**
      * MIMachineRecipeTypes.create(String) builds a type that rejects every ingredient kind;
      * the two-arg overload that configures capabilities is private, so we construct the
@@ -74,6 +80,28 @@ public final class NIMachines {
                 .withFluidOutputs();
         MIRegistries.RECIPE_SERIALIZERS.register(SUPER_MIXER_PATH, () -> type);
         MIRegistries.RECIPE_TYPES.register(SUPER_MIXER_PATH, () -> type);
+        return type;
+    }
+
+    private static MachineRecipeType createSuperAssemblerType() {
+        MachineRecipeType type = new MachineRecipeType(
+                ResourceLocation.fromNamespaceAndPath("modern_industrialization", SUPER_ASSEMBLER_PATH))
+                .withItemInputs()
+                .withItemOutputs();
+        MIRegistries.RECIPE_SERIALIZERS.register(SUPER_ASSEMBLER_PATH, () -> type);
+        MIRegistries.RECIPE_TYPES.register(SUPER_ASSEMBLER_PATH, () -> type);
+        return type;
+    }
+
+    private static MachineRecipeType createDuvStepperType() {
+        MachineRecipeType type = new MachineRecipeType(
+                ResourceLocation.fromNamespaceAndPath("modern_industrialization", DUV_STEPPER_PATH))
+                .withItemInputs()
+                .withItemOutputs()
+                .withFluidInputs()
+                .withFluidOutputs();
+        MIRegistries.RECIPE_SERIALIZERS.register(DUV_STEPPER_PATH, () -> type);
+        MIRegistries.RECIPE_TYPES.register(DUV_STEPPER_PATH, () -> type);
         return type;
     }
 
@@ -155,6 +183,64 @@ public final class NIMachines {
                 fluidTanks -> fluidTanks.addSlot(128, 71),
                 true, false, false,
                 4, 16);
+
+        // Super assembler: the optical finale — all hundred glow tubes in ONE
+        // 10x10 grid recipe crafting the optical qubit component. MI's machine
+        // background sheet hard-caps the panel at 176x260, so the grid uses a
+        // 15px slot pitch instead of the standard 18px (a 1px sprite overlap
+        // between neighbours). Fixed furniture to route around: the recipe
+        // lock button always renders at (152, 4) and the inventory title at
+        // (8, 166). So the grid is pushed against the left edge, and the
+        // output slot plus energy bar form a right rail below the lock
+        // button, separated from the grid by a 4px gutter; the efficiency
+        // bar tucks into the last free strip between the inventory title and
+        // the player inventory itself.
+        SingleBlockCraftingMachines.registerMachineTiers(
+                "Super Assembler",
+                SUPER_ASSEMBLER_PATH,
+                SUPER_ASSEMBLER,
+                100, 1, 0, 0,
+                builder -> {
+                    builder.backgroundHeight(260);
+                    builder.playerInventoryY = 182;
+                },
+                new ProgressBar.Params(100, 0, "arrow"),
+                new RecipeEfficiencyBar.Params(44, 171),
+                new EnergyBar.Params(4, 30),
+                itemSlots -> {
+                    for (int row = 0; row < 10; row++) {
+                        for (int col = 0; col < 10; col++) {
+                            itemSlots.addSlot(22 + col * 15, 18 + row * 15);
+                        }
+                    }
+                    itemSlots.addSlot(132, 0);
+                },
+                fluidTanks -> {},
+                true, false, false,
+                4, 16);
+
+        // DUV stepper: the deep-UV lithography scanner of the optical program.
+        // Three item inputs on the left (wafer, mask, carrier), two fluid tanks
+        // below them (photoresist + developer/etchant), the exposed wafer out
+        // on the right with the waste tank. Slot consumers take items then
+        // fluids, inputs before outputs in each. The lock button at (152,4)
+        // and the title strip are kept clear by the column layout.
+        SingleBlockCraftingMachines.registerMachineTiers(
+                "DUV Stepper",
+                DUV_STEPPER_PATH,
+                DUV_STEPPER,
+                3, 1, 2, 1,
+                builder -> {
+                    builder.backgroundHeight(184);
+                    builder.playerInventoryY = 102;
+                },
+                new ProgressBar.Params(92, 44, "arrow"),
+                new RecipeEfficiencyBar.Params(30, 95),
+                new EnergyBar.Params(12, 30),
+                itemSlots -> itemSlots.addSlots(30, 17, 1, 3).addSlot(128, 44),
+                fluidTanks -> fluidTanks.addSlot(30, 75).addSlot(54, 75).addSlot(128, 75),
+                true, false, false,
+                4, 16);
     }
 
     public static void clientInit() {
@@ -162,6 +248,7 @@ public final class NIMachines {
         MachineRegistrationHelper.addMachineModel(ION_EXCHANGE_PATH, ION_EXCHANGE_PATH, MachineCasings.get("lv"), true, false, false);
         MachineRegistrationHelper.addMachineModel(ALGAE_CULTIVATOR_PATH, ALGAE_CULTIVATOR_PATH, MachineCasings.get("lv"), true, false, false);
         MachineRegistrationHelper.addMachineModel(SUPER_MIXER_PATH, SUPER_MIXER_PATH, MachineCasings.get("lv"), true, false, false);
+        MachineRegistrationHelper.addMachineModel(SUPER_ASSEMBLER_PATH, SUPER_ASSEMBLER_PATH, MachineCasings.get("lv"), true, false, false);
     }
 
     private NIMachines() {}

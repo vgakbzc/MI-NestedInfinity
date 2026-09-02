@@ -1,0 +1,35 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:hlr_raffinate",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:sodium_hydroxide",
+      "amount": 500
+    }
+  ],
+  "item_inputs": [
+    {
+      "tag": "c:dusts/monazite",
+      "amount": 2,
+      "probability": 0.5
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:actinium_dust",
+      "amount": 1,
+      "probability": 0.75
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:monazite_heavy_residue_solution",
+      "amount": 800
+    }
+  ]
+}

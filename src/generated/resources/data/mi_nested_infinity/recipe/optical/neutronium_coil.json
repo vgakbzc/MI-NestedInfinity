@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:neutronium_wire",
+      "amount": 32
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:neutronium_coil",
+      "amount": 1
+    }
+  ]
+}

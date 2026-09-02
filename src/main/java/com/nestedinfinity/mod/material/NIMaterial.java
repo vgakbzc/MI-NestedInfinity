@@ -38,10 +38,14 @@ public final class NIMaterial {
     /** Coil tier required to smelt the hot ingot: 0=cupronickel, 1=kanthal, 2=nichrome, then in NICoils order. */
     private int blastFurnaceTier = 1;
     private boolean wire;
+    /** Wire part registered without the energy cable (hand-written recipe, feeds a coil). */
+    private boolean wireOnly;
     /** Adds the rotor part with a simplified plate+rod recipe (MI's own rotor needs blade/ring/bolt parts). */
     private boolean rotor;
     /** Cable-only material: registers just {@code <name>_cable} (e.g. the advanced superconductor cable). */
     private boolean cableOnly;
+    /** Suppresses the custom tier-gated dust -> hot ingot EBF recipe (fusion-born materials). */
+    private boolean skipEbf;
     private long cableTransfer = DEFAULT_CABLE_TRANSFER;
     private Material material;
     /** Auto-generated material recipe ids to suppress, e.g. "packer/block" (applied after StandardRecipes). */
@@ -81,6 +85,18 @@ public final class NIMaterial {
     }
 
     /**
+     * Adds the wire part without an energy cable, for materials whose wire has
+     * a hand-written recipe (neutronium's mirrors the previous coil tier) and
+     * feeds a coil instead of a cable. The auto wiremill recipe is canceled so
+     * the hand-written one is the only route.
+     */
+    public NIMaterial generateWireOnly() {
+        this.wire = true;
+        this.wireOnly = true;
+        return this;
+    }
+
+    /**
      * Registers only an energy cable part ({@code modern_industrialization:<name>_cable}) with the
      * given max transfer — no dusts/ingots/wire. The cable's own recipe comes from the chain
      * recipes (NIRecipeProvider), not from the material system.
@@ -101,6 +117,16 @@ public final class NIMaterial {
         return cancelRecipes("assembler/rotor", "craft/rotor");
     }
 
+    /**
+     * Suppresses the auto-generated tier-gated dust -&gt; hot ingot EBF recipe,
+     * for materials whose ingots come from somewhere else entirely (trinium is
+     * born in the fusion reactor, so an EBF route would bypass the cascade).
+     */
+    public NIMaterial skipEbfRecipes() {
+        this.skipEbf = true;
+        return this;
+    }
+
     /** Registers through MI's material API. Called once from {@link NIMaterials#init()}, after all options. */
     void register() {
         MaterialBuilder builder = new MaterialBuilder(englishDisplayName(), name)
@@ -118,7 +144,9 @@ public final class NIMaterial {
             }
             if (wire) {
                 builder.addParts(MIParts.WIRE);
-                builder.addParts(MIParts.CABLE.of(cableTier()));
+                if (!wireOnly) {
+                    builder.addParts(MIParts.CABLE.of(cableTier()));
+                }
             }
         }
         builder.addRecipes(StandardRecipes::apply);
@@ -142,7 +170,7 @@ public final class NIMaterial {
 
     /** Whether this material has an energy cable (via {@link #generateWire} or {@link #generateCableOnly}). */
     public boolean hasCable() {
-        return wire || cableOnly;
+        return (wire && !wireOnly) || cableOnly;
     }
 
     /** Full item id of a part, e.g. naquadah + "dust" -> modern_industrialization:naquadah_dust */
@@ -207,12 +235,12 @@ public final class NIMaterial {
     /** Recipes MI's StandardRecipes does not cover. */
     private void customRecipes(MaterialBuilder.RecipeContext ctx) {
         // Tier-gated EBF smelting: dust -> hot ingot
-        if (!cableOnly) {
+        if (!cableOnly && !skipEbf) {
             new MIRecipeBuilder(ctx, MIMachineRecipeTypes.BLAST_FURNACE, "dust_to_hot_ingot", tierEu(blastFurnaceTier), 400)
                     .addPartInput(MIParts.DUST, 1)
                     .addPartOutput(MIParts.HOT_INGOT, 1);
         }
-        if (wire && !cableOnly) {
+        if (wire && !cableOnly && !wireOnly) {
             // Cable: wire + mica insulator sheet + styrene rubber + liquid glass
             new MIRecipeBuilder(ctx, MIMachineRecipeTypes.ASSEMBLER, "cable", 8, 200)
                     .addPartInput(MIParts.WIRE, 1)
@@ -249,6 +277,12 @@ public final class NIMaterial {
             case "nichrome" -> 0xA8B0B8;
             case "tpv" -> 0x5AC26C; // aligned with the green tpv coil texture
             case "advanced_superconductor" -> 0x3A4E8C;
+            case "trinium" -> 0x9BC8D8; // pale steel-blue, aligned with the trinium coil
+            case "trinium_dinaquadide" -> 0x8A3FB8; // purple, aligned with the dinaquide coil
+            case "resonite" -> 0x8CE8C0; // ender-teal, the ender-eye alloy
+            case "resonant_superconductor" -> 0x50C8E8; // bright cyan YBCO luster
+            case "neutronium" -> 0xD8D8F8; // degenerate-matter pale lavender glow
+            case "optical_superconductor" -> 0xB070F0; // violet, the photonic tier
             default -> 0x9E9E9E;
         };
     }

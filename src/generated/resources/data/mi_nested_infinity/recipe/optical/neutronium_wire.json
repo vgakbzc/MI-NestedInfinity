@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:neutronium_plate",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:peek_insulator_sheet",
+      "amount": 6
+    },
+    {
+      "item": "mi_nested_infinity:resonant_circuit",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:neutronium_wire",
+      "amount": 1
+    }
+  ]
+}

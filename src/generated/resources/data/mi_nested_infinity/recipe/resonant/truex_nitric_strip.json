@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:truex_organic",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:nitric_acid",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:minor_actinide_liquor",
+      "amount": 900
+    },
+    {
+      "fluid": "mi_nested_infinity:tbp_organic_phase",
+      "amount": 100
+    }
+  ]
+}

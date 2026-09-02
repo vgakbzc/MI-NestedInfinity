@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:uranium_neptunium_liquor",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:nitric_acid",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:uranium_liquor",
+      "amount": 850
+    },
+    {
+      "fluid": "mi_nested_infinity:neptunium_liquor",
+      "amount": 150
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    }
+  ]
+}

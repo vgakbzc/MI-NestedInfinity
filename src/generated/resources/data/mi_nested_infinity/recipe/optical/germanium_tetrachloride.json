@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:zinc_flue_dust",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 1500
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:germanium_tetrachloride",
+      "amount": 600
+    },
+    {
+      "fluid": "mi_nested_infinity:chlorinated_waste",
+      "amount": 500
+    }
+  ]
+}

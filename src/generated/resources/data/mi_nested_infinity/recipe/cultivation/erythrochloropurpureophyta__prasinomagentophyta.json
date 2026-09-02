@@ -25,7 +25,7 @@
       "probability": 0.25
     },
     {
-      "item": "mi_nested_infinity:petri_erythroprasinopurpureophyta",
+      "item": "mi_nested_infinity:petri_chlororhodophyta",
       "amount": 1,
       "probability": 0.25
     },
@@ -35,7 +35,7 @@
       "probability": 0.25
     },
     {
-      "item": "mi_nested_infinity:petri_chlororhodophyta",
+      "item": "mi_nested_infinity:petri_erythroprasinopurpureophyta",
       "amount": 1,
       "probability": 0.25
     }

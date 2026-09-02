@@ -1,0 +1,28 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:acrylic_glue",
+      "amount": 500
+    },
+    {
+      "fluid": "mi_nested_infinity:pgmea_solvent",
+      "amount": 500
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:uv_photoinitiator",
+      "amount": 1,
+      "probability": 0.1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:uv_optical_adhesive",
+      "amount": 1500
+    }
+  ]
+}

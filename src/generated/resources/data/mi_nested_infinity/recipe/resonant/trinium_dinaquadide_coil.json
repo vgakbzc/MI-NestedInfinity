@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:trinium_dinaquadide_plate",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:silicone_mica_insulator_sheet",
+      "amount": 6
+    },
+    {
+      "item": "mi_nested_infinity:wetware_circuit",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:trinium_dinaquadide_coil",
+      "amount": 1
+    }
+  ]
+}

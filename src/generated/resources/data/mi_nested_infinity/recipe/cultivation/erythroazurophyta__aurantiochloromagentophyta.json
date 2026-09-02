@@ -20,12 +20,12 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_chloroazurorhodophyta",
+      "item": "mi_nested_infinity:petri_aurantiochloroazuromagentophyta",
       "amount": 1,
       "probability": 0.5
     },
     {
-      "item": "mi_nested_infinity:petri_aurantiochloroazuromagentophyta",
+      "item": "mi_nested_infinity:petri_chloroazurorhodophyta",
       "amount": 1,
       "probability": 0.5
     }

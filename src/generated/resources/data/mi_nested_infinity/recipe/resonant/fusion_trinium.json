@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:fusion_reactor",
+  "eu": 16000,
+  "duration": 2400,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:molten_adamantium",
+      "amount": 500
+    },
+    {
+      "fluid": "mi_nested_infinity:molten_mithril",
+      "amount": 500
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:molten_trinium",
+      "amount": 1000
+    }
+  ]
+}

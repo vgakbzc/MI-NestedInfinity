@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:ruby_plate",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:alexandrite_plate",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:laser_diode",
+      "amount": 4
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:solid_state_laser",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:vacuum_freezer",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:molten_adamantium",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:helium_3",
+      "amount": 200
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:adamantium_ingot",
+      "amount": 1
+    }
+  ]
+}

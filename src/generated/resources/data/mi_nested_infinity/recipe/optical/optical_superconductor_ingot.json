@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "eu": 262144,
+  "duration": 40000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:optical_alloy_mixture",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:optical_superconductor_ingot",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:lead_titanate_plate",
+      "amount": 6
+    },
+    {
+      "item": "modern_industrialization:resonite_plate",
+      "amount": 6
+    },
+    {
+      "item": "mi_nested_infinity:note_black",
+      "amount": 2,
+      "probability": 0.5
+    },
+    {
+      "item": "mi_nested_infinity:note_white",
+      "amount": 2,
+      "probability": 0.5
+    },
+    {
+      "item": "modern_industrialization:resonant_superconductor_cable",
+      "amount": 8
+    },
+    {
+      "item": "mi_nested_infinity:fluoroelastomer_sheet",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:resonance_chamber",
+      "amount": 1
+    }
+  ]
+}

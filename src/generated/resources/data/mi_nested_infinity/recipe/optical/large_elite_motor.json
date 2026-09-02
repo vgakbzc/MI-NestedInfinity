@@ -1,0 +1,35 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:elite_motor",
+      "amount": 18
+    },
+    {
+      "item": "modern_industrialization:naquadah_rod",
+      "amount": 8
+    },
+    {
+      "item": "modern_industrialization:quantum_circuit",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:resonant_circuit",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:lubricant",
+      "amount": 2000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:large_elite_motor",
+      "amount": 1
+    }
+  ]
+}

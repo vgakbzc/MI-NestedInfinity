@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:fusion_reactor",
+  "eu": 16000,
+  "duration": 2400,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:supercharged_naquadah_solution",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:radon",
+      "amount": 100
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:superheavy_fission_solution",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:inert_naquadah_solution",
+      "amount": 800
+    }
+  ]
+}

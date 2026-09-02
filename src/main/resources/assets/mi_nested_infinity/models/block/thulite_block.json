@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "mi_nested_infinity:block/thulite_block"
+  }
+}

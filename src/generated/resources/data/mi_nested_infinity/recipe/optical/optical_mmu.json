@@ -1,0 +1,35 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:optical_transceiver",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:resonant_memory_management_unit",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:optical_waveguide",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:peek_insulator_sheet",
+      "amount": 4
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:electronic_grade_nitric_acid",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:optical_memory_management_unit",
+      "amount": 1
+    }
+  ]
+}

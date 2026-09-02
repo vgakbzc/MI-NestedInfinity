@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/perfluoromethyl_vinyl_ether"
+    }
+  }
+}

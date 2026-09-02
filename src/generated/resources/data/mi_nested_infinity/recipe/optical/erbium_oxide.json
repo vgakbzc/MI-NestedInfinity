@@ -1,0 +1,30 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:monazite_heavy_residue_solution",
+      "amount": 3000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:alpha_hiba_eluant",
+      "amount": 2,
+      "probability": 0.25
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:erbium_oxide",
+      "amount": 2
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:monazite_heavy_residue_solution",
+      "amount": 2000
+    }
+  ]
+}

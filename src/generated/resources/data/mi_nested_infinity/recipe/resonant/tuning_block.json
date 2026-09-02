@@ -1,0 +1,39 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:crystal_circuit",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:high_purity_monocrystalline_naquadah",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:lead_titanate_plate",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:resonite_plate",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:note_white",
+      "amount": 1,
+      "probability": 0.5
+    },
+    {
+      "item": "mi_nested_infinity:note_black",
+      "amount": 1,
+      "probability": 0.5
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:tuning_block",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:magma_crucible",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:neutronium_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:molten_neutronium",
+      "amount": 144
+    }
+  ]
+}

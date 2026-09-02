@@ -1,0 +1,41 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 160000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:wetware_circuit",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:resonant_random_access_memory",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:resonant_memory_management_unit",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:resonant_arithmetic_logic_unit",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:resonant_circuit_board",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:adamantium_plate",
+      "amount": 8
+    },
+    {
+      "item": "mi_nested_infinity:mithril_plate",
+      "amount": 8
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:resonant_circuit",
+      "amount": 1
+    }
+  ]
+}

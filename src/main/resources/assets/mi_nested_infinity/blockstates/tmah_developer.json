@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/tmah_developer"
+    }
+  }
+}

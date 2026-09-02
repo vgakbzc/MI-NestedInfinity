@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:germanium_ingot",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:antimony_dust",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:tellurium_dust",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:gst_target",
+      "amount": 2
+    }
+  ]
+}

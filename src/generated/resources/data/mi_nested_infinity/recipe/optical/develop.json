@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:duv_stepper",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:exposed_substrate",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:tmah_developer",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:developed_substrate",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:phenol_tar",
+      "amount": 100
+    }
+  ]
+}

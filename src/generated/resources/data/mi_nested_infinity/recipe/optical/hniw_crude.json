@@ -1,0 +1,28 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:taiw",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:dinitrogen_pentoxide",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:electronic_grade_nitric_acid",
+      "amount": 2000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:hniw_crude",
+      "amount": 1,
+      "probability": 0.9
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:lithium_carbonate",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:niobium_pentoxide",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:quartz_dust",
+      "amount": 1,
+      "probability": 0.1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:lithium_niobate_wafer",
+      "amount": 2
+    }
+  ]
+}

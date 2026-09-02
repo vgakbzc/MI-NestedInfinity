@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 20000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:chloroform",
+      "amount": 500
+    },
+    {
+      "fluid": "mi_nested_infinity:hydrofluoric_acid",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:refrigerant_22",
+      "amount": 500
+    },
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 500
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:superheavy_vapor",
+      "amount": 300
+    },
+    {
+      "fluid": "mi_nested_infinity:sulfur_dioxide",
+      "amount": 200
+    },
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 200
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:roentgenium_dust",
+      "amount": 1,
+      "probability": 0.6
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 200
+    }
+  ]
+}

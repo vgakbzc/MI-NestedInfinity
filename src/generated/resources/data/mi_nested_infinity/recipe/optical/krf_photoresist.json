@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:polyhydroxystyrene_resin",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:triphenylsulfonium_pag",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:pgmea_solvent",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:krf_photoresist",
+      "amount": 2000
+    }
+  ]
+}

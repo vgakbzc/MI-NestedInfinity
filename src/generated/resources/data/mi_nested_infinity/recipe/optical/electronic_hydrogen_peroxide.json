@@ -1,0 +1,24 @@
+{
+  "type": "modern_industrialization:ion_exchange",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:crude_hydrogen_peroxide",
+      "amount": 2000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:ion_exchange_resin",
+      "amount": 1,
+      "probability": 0.25
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:electronic_grade_hydrogen_peroxide",
+      "amount": 1800
+    }
+  ]
+}

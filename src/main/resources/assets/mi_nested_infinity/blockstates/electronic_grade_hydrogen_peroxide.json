@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/electronic_grade_hydrogen_peroxide"
+    }
+  }
+}

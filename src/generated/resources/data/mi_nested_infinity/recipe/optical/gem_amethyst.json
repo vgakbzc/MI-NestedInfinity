@@ -1,0 +1,58 @@
+{
+  "type": "modern_industrialization:algae_cultivator",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "minecraft:glass",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:petri_erythrocaeruleophyta",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:argon",
+      "amount": 50
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:gem_amethyst",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_charoite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_sugilite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_lepidolite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_purpurite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_axinite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    },
+    {
+      "item": "mi_nested_infinity:gem_stichtite",
+      "amount": 1,
+      "probability": 0.07142857142857142
+    }
+  ]
+}

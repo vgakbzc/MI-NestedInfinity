@@ -1,0 +1,39 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:resonant_superconductor_tape",
+      "amount": 8
+    },
+    {
+      "item": "modern_industrialization:resonite_wire",
+      "amount": 4
+    },
+    {
+      "item": "modern_industrialization:advanced_superconductor_cable",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:elite_pump",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:conductive_epoxy",
+      "amount": 500
+    },
+    {
+      "fluid": "mi_nested_infinity:liquid_glass",
+      "amount": 144
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:resonant_superconductor_cable",
+      "amount": 1
+    }
+  ]
+}

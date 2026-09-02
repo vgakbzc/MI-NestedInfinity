@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/argon"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/argon"
+    }
+  }
+}

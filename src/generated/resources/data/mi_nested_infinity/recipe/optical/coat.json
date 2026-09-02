@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:duv_stepper",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:litho_substrate",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:arf_photoresist",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:coated_substrate",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:photomask_blank",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:solid_state_laser",
+      "amount": 1,
+      "probability": 0.1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:krf_photoresist",
+      "amount": 250
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:photomask",
+      "amount": 1
+    }
+  ]
+}

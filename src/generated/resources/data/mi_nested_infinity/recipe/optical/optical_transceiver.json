@@ -1,0 +1,33 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:laser_diode",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:electrooptic_modulator",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:single_photon_detector",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:erbium_doped_fiber",
+      "amount": 4
+    },
+    {
+      "item": "modern_industrialization:resonant_superconductor_cable",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:optical_transceiver",
+      "amount": 1
+    }
+  ]
+}

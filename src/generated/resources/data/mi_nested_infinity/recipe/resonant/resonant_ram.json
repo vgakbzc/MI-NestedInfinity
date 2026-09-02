@@ -1,0 +1,41 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:note_green",
+      "amount": 2,
+      "probability": 0.5
+    },
+    {
+      "item": "mi_nested_infinity:note_blue",
+      "amount": 2,
+      "probability": 0.5
+    },
+    {
+      "item": "mi_nested_infinity:bio_random_access_memory",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:lead_titanate_plate",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:resonite_plate",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:resonant_mother_liquor",
+      "amount": 100
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:resonant_random_access_memory",
+      "amount": 1
+    }
+  ]
+}

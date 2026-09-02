@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/radon"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/radon"
+    }
+  }
+}

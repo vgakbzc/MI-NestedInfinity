@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=1": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=2": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=3": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=4": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=5": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=6": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=7": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=8": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=9": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=10": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=11": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=12": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=13": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=14": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    },
+    "level=15": {
+      "model": "mi_nested_infinity:block/liquid_xenon"
+    }
+  }
+}

@@ -108,6 +108,95 @@ public final class NIFluids {
     public static final Entry METHYL_CYANOACETATE = register("methyl_cyanoacetate", 0xFFE8ECE8); // esterified cyanoacetic acid
     public static final Entry CYANOACRYLATE_GLUE = register("cyanoacrylate_glue", 0xFFE4DCC0); // cracked monomer, the strong glue
 
+    // Resonant circuit program: superheavy separation cascade, fusion-born
+    // alloys, polyimide / fluoroelastomer / superconductor chemistry and the
+    // tuning feedstocks. Mirror of tools/gen_algae_assets.py (RESONANT_FLUIDS).
+    public static final Entry RADON = register("radon", 0xFFC8B8E8); // noble gas, xenon fusion product
+    public static final Entry SUPERHEAVY_FISSION_SOLUTION = register("superheavy_fission_solution", 0xFF8C58C8); // radon-cracked supercharged naquadah
+    public static final Entry VALENCE_ADJUSTED_FEED = register("valence_adjusted_feed", 0xFFB068D8); // Pu(IV)/Np(VI) nitrate feed
+    public static final Entry TBP_ORGANIC_PHASE = register("tbp_organic_phase", 0xFFE8D8A8); // loaded PUREX extractant
+    public static final Entry HLR_RAFFINATE = register("hlr_raffinate", 0xFFB85838); // high-level PUREX raffinate
+    public static final Entry URANIUM_LIQUOR = register("uranium_liquor", 0xFFC8E858); // purified uranyl nitrate
+    public static final Entry PLUTONIUM_LIQUOR = register("plutonium_liquor", 0xFF8898B8); // stripped Pu(III)
+    public static final Entry NEPTUNIUM_LIQUOR = register("neptunium_liquor", 0xFF68C8A8); // valence-split Np
+    public static final Entry URANIUM_NEPTUNIUM_LIQUOR = register("uranium_neptunium_liquor", 0xFFB8D888); // U/Np co-stripped feed
+    public static final Entry TRUEX_ORGANIC = register("truex_organic", 0xFFE8C888); // CMPO minor-actinide phase
+    public static final Entry MINOR_ACTINIDE_LIQUOR = register("minor_actinide_liquor", 0xFFC87858); // stripped minor actinides
+    public static final Entry EARLY_ACTINIDE_GROUP = register("early_actinide_group", 0xFFD88858); // Am/Cm/Bk/Cf/Es elution group
+    public static final Entry LATE_ACTINIDE_GROUP = register("late_actinide_group", 0xFFD8A858); // Fm/Md/No/Lr elution group
+    public static final Entry SUPERHEAVY_VAPOR = register("superheavy_vapor", 0xFFD8C8F0); // volatile oxychloride/oxide carrier gas
+    public static final Entry CN_CONDENSATE = register("cn_condensate", 0xFFA8C8E8); // condensed copernicium
+    public static final Entry RG_LIQUOR = register("rg_liquor", 0xFFE8C858); // roentgenium thioether complex
+    public static final Entry TELLURIC_ACID = register("telluric_acid", 0xFFE8E0B8); // Te(VI) oxidizer, O->Te congener
+    public static final Entry AQUA_REGIA = register("aqua_regia", 0xFFE8C840); // HNO3 + HCl, royal water
+    public static final Entry MOLTEN_GOLD = register("molten_gold", 0xFFE8B830);
+    public static final Entry MOLTEN_SILVER = register("molten_silver", 0xFFD8D8E0);
+    public static final Entry MOLTEN_ROENTGENIUM = register("molten_roentgenium", 0xFFD8A830);
+    public static final Entry MOLTEN_COPERNICIUM = register("molten_copernicium", 0xFF98B8D8);
+    public static final Entry MOLTEN_ADAMANTIUM = register("molten_adamantium", 0xFFB83838); // gold-group fusion alloy
+    public static final Entry MOLTEN_MITHRIL = register("molten_mithril", 0xFFB8D8E8); // silver-amalgam fusion alloy
+    public static final Entry MOLTEN_TRINIUM = register("molten_trinium", 0xFF9BC8D8); // adamantium + mithril fusion
+    public static final Entry RESONANT_MOTHER_LIQUOR = register("resonant_mother_liquor", 0xFF54C4C4); // mutagen + ender eye
+    public static final Entry POLYAMIC_ACID = register("polyamic_acid", 0xFFD8C060); // PMDA/ODA polycondensate
+    public static final Entry CONDUCTIVE_EPOXY = register("conductive_epoxy", 0xFFB8B8C0); // silver-filled epoxy
+    public static final Entry VINYLIDENE_FLUORIDE = register("vinylidene_fluoride", 0xFFD0E8E0); // R-22 pyrolysis product
+    public static final Entry HEXAFLUOROPROPYLENE = register("hexafluoropropylene", 0xFFC8E0D0); // propylene fluorination
+    public static final Entry CHLOROFORM = register("chloroform", 0xFFD8E8E8); // methane chlorination
+    public static final Entry REFRIGERANT_22 = register("refrigerant_22", 0xFFC8E8E8); // CHClF2, VF2 precursor
+
+    // Remaining noble gases of the glow-tube program (helium is MI's own
+    // modern_industrialization:helium). Each gem's tube is filled with the gas
+    // whose discharge color lies nearest the gem's color: neon red-orange,
+    // argon lavender, krypton ice-blue (xenon and radon already registered).
+    // Liquid xenon is the deep-chilled phase the tubes are flooded with
+    // (xenon gas condensed in the vacuum freezer).
+    public static final Entry NEON = register("neon", 0xFFFF5F42);
+    public static final Entry ARGON = register("argon", 0xFFAA8CFF);
+    public static final Entry KRYPTON = register("krypton", 0xFF96C8FF);
+    public static final Entry LIQUID_XENON = register("liquid_xenon", 0xFF64A0D7);
+
+    public static final List<Entry> NOBLE = List.of(NEON, ARGON, KRYPTON, LIQUID_XENON);
+
+    // Optical-circuit program: perfluoroelastomer monomers, the AO peroxide
+    // loop, semiconductor-grade acids and photoresists, the HNIW reagent
+    // stream, the fiber precursor chlorides and the neutronium melts.
+    // Mirror of tools/gen_photonic_assets.py (OPTICAL_FLUIDS).
+    public static final Entry TETRAFLUOROETHYLENE = register("tetrafluoroethylene", 0xFFE8E8E0); // R-22 pyrolysis
+    public static final Entry HEXAFLUOROPROPYLENE_OXIDE = register("hexafluoropropylene_oxide", 0xFFD8E8E0); // HFPO
+    public static final Entry PERFLUOROMETHYL_VINYL_ETHER = register("perfluoromethyl_vinyl_ether", 0xFFC0E0DC); // PMVE
+    public static final Entry ANTHRAQUINONE_WORKING_SOLUTION = register("anthraquinone_working_solution", 0xFFD8B850);
+    public static final Entry HYDROGENATED_WORKING_SOLUTION = register("hydrogenated_working_solution", 0xFFB89838);
+    public static final Entry CRUDE_HYDROGEN_PEROXIDE = register("crude_hydrogen_peroxide", 0xFFE0E8E4);
+    public static final Entry ELECTRONIC_HYDROGEN_PEROXIDE = register("electronic_grade_hydrogen_peroxide", 0xFFF0F8F8);
+    public static final Entry ELECTRONIC_NITRIC_ACID = register("electronic_grade_nitric_acid", 0xFFF0E8C8);
+    public static final Entry ELECTRONIC_SULFURIC_ACID = register("electronic_grade_sulfuric_acid", 0xFFF0E8D0);
+    public static final Entry TMAH_DEVELOPER = register("tmah_developer", 0xFFE8E8D8); // 0.26N developer
+    public static final Entry PGMEA_SOLVENT = register("pgmea_solvent", 0xFFF0E8D8); // resist thinner
+    public static final Entry KRF_PHOTORESIST = register("krf_photoresist", 0xFFD8A860);
+    public static final Entry ARF_PHOTORESIST = register("arf_photoresist", 0xFFC898B8);
+    public static final Entry UV_OPTICAL_ADHESIVE = register("uv_optical_adhesive", 0xFFE8D8E8);
+    public static final Entry BENZYL_CHLORIDE = register("benzyl_chloride", 0xFFE8E8C8);
+    public static final Entry FLUOROBENZENE = register("fluorobenzene", 0xFFE0F0E8);
+    public static final Entry BENZYLAMINE = register("benzylamine", 0xFFE8E0B8);
+    public static final Entry GLYOXAL = register("glyoxal", 0xFFF0E8C8);
+    public static final Entry KETENE = register("ketene", 0xFFE0E0E0);
+    public static final Entry ACETIC_ANHYDRIDE = register("acetic_anhydride", 0xFFE8E8D0);
+    public static final Entry MIBK_SOLVENT = register("mibk_solvent", 0xFFE8E0D0); // niobium extractant
+    public static final Entry SILICON_TETRACHLORIDE = register("silicon_tetrachloride", 0xFFD8E0E8);
+    public static final Entry GERMANIUM_TETRACHLORIDE = register("germanium_tetrachloride", 0xFFE0E8D0);
+    public static final Entry FLUORONIOBIC_SOLUTION = register("fluoroniobic_solution", 0xFFD8E0D8); // H2NbF7
+    public static final Entry NEUTRON_FLUID = register("neutron_fluid", 0xFFB8D8F0); // Cf-252 decay flux
+    public static final Entry MOLTEN_NEUTRONIUM = register("molten_neutronium", 0xFFD8D8F8);
+
+    public static final List<Entry> OPTICAL = List.of(TETRAFLUOROETHYLENE, HEXAFLUOROPROPYLENE_OXIDE,
+            PERFLUOROMETHYL_VINYL_ETHER, ANTHRAQUINONE_WORKING_SOLUTION, HYDROGENATED_WORKING_SOLUTION,
+            CRUDE_HYDROGEN_PEROXIDE, ELECTRONIC_HYDROGEN_PEROXIDE, ELECTRONIC_NITRIC_ACID, ELECTRONIC_SULFURIC_ACID,
+            TMAH_DEVELOPER, PGMEA_SOLVENT, KRF_PHOTORESIST, ARF_PHOTORESIST, UV_OPTICAL_ADHESIVE, BENZYL_CHLORIDE,
+            BENZYLAMINE, GLYOXAL, KETENE, ACETIC_ANHYDRIDE, MIBK_SOLVENT, SILICON_TETRACHLORIDE,
+            GERMANIUM_TETRACHLORIDE, FLUORONIOBIC_SOLUTION, NEUTRON_FLUID, MOLTEN_NEUTRONIUM,
+            FLUOROBENZENE);
+
+
     public static final List<Entry> ALGAE = List.of(ERYTHROPHYTA, AURANTIOPHYTA, XANTHOPHYTA, PRASINOPHYTA,
             CHLOROPHYTA, GLAUCOPHYTA, CYANOPHYTA, AZUREOPHYTA, CAERULEOPHYTA, PURPUREOPHYTA, MAGENTOPHYTA, RHODOPHYTA);
 
@@ -117,13 +206,22 @@ public final class NIFluids {
             CHLOROMETHANE, DIMETHYLDICHLOROSILANE, LIQUID_SILICONE_RUBBER, SUPERCHARGED_NAQUADAH_SOLUTION,
             M_XYLENE, NITROBENZENE, POLYBENZIMIDAZOLE, MUTAGEN, METHYL_CYANOACETATE, CYANOACRYLATE_GLUE);
 
+    public static final List<Entry> RESONANT = List.of(RADON, SUPERHEAVY_FISSION_SOLUTION, VALENCE_ADJUSTED_FEED,
+            TBP_ORGANIC_PHASE, HLR_RAFFINATE, URANIUM_LIQUOR, PLUTONIUM_LIQUOR, NEPTUNIUM_LIQUOR,
+            URANIUM_NEPTUNIUM_LIQUOR, TRUEX_ORGANIC,
+            MINOR_ACTINIDE_LIQUOR, EARLY_ACTINIDE_GROUP, LATE_ACTINIDE_GROUP, SUPERHEAVY_VAPOR, CN_CONDENSATE,
+            RG_LIQUOR, TELLURIC_ACID, AQUA_REGIA, MOLTEN_GOLD, MOLTEN_SILVER, MOLTEN_ROENTGENIUM, MOLTEN_COPERNICIUM,
+            MOLTEN_ADAMANTIUM, MOLTEN_MITHRIL, MOLTEN_TRINIUM, RESONANT_MOTHER_LIQUOR, POLYAMIC_ACID,
+            CONDUCTIVE_EPOXY, VINYLIDENE_FLUORIDE, HEXAFLUOROPROPYLENE, CHLOROFORM, REFRIGERANT_22);
+
     public static final List<Entry> ALL = Stream.concat(List.of(XENON, FLUORINE, HYDROFLUORIC_ACID, XENON_HEXAFUORIDE,
             INERT_NAQUADAH_SOLUTION, NEUTRON_ACTIVATED_NAQUADAH_SOLUTION, NITRIC_ACID, MONAZITE_HEAVY_RESIDUE_SOLUTION,
             ULTRAHEAVY_ELEMENT_MIXTURE, LIQUID_GLASS, BRINE, CUMENE, CUMENE_HYDROPEROXIDE, PHENOL, ACETONE, PHENOL_TAR,
             CRUDE_ALLYL_CHLORIDE, ALLYL_CHLORIDE, CHLORINATED_WASTE, HYPOCHLOROUS_ACID, DICHLOROHYDRIN,
             CRUDE_EPICHLOROHYDRIN, EPICHLOROHYDRIN, CRUDE_BISPHENOL_A, BISPHENOL_A, CHLOROHYDRIN_ETHER,
             CRUDE_EPOXY_RESIN, EPOXY_RESIN, ANTIMONY_PENTAFLUORIDE, FLUOROANTIMONIC_ACID).stream(),
-            Stream.concat(ALGAE.stream(), BIO.stream())).toList();
+            Stream.concat(NOBLE.stream(), Stream.concat(ALGAE.stream(),
+            Stream.concat(BIO.stream(), Stream.concat(RESONANT.stream(), OPTICAL.stream()))))).toList();
 
     private static Entry register(String name, int tint) {
         return new Entry(name, tint);

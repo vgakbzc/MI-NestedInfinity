@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 80000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:pyromellitic_dianhydride",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:diaminodiphenyl_ether",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:polyamic_acid",
+      "amount": 1000
+    }
+  ]
+}

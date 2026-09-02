@@ -1,0 +1,35 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:argon",
+      "amount": 1000
+    },
+    {
+      "fluid": "mi_nested_infinity:fluorine",
+      "amount": 1000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:caf2_lens_array",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:optical_bench",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:laser_diode",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:excimer_laser",
+      "amount": 1
+    }
+  ]
+}

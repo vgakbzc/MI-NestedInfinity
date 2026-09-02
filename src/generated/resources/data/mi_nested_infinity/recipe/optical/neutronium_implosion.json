@@ -1,0 +1,30 @@
+{
+  "type": "modern_industrialization:implosion_compressor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:giant_matter_ball",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:hniw_implosion_lens",
+      "amount": 6
+    },
+    {
+      "item": "mi_nested_infinity:californium_initiator",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:beryllium_reflector",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:neutronium_dust",
+      "amount": 4,
+      "probability": 0.95
+    }
+  ]
+}

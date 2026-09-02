@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 2000000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "item": "minecraft:ender_eye",
+      "amount": 4
+    },
+    {
+      "item": "modern_industrialization:naquadah_dust",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:polyimide_dust",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:resonite_dust",
+      "amount": 4
+    }
+  ]
+}

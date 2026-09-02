@@ -1,0 +1,48 @@
+{
+  "type": "modern_industrialization:algae_cultivator",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "minecraft:glass",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:petri_chlorophyta",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:xenon",
+      "amount": 50
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:gem_malachite",
+      "amount": 1,
+      "probability": 0.1
+    },
+    {
+      "item": "mi_nested_infinity:gem_aventurine",
+      "amount": 1,
+      "probability": 0.1
+    },
+    {
+      "item": "mi_nested_infinity:gem_diopside",
+      "amount": 1,
+      "probability": 0.1
+    },
+    {
+      "item": "mi_nested_infinity:gem_variscite",
+      "amount": 1,
+      "probability": 0.1
+    },
+    {
+      "item": "mi_nested_infinity:gem_demantoid",
+      "amount": 1,
+      "probability": 0.1
+    }
+  ]
+}

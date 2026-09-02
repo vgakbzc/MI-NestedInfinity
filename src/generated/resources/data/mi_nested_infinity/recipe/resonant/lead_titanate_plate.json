@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:compressor",
+  "eu": 2000000000,
+  "duration": 20000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:lead_titanate_dust",
+      "amount": 4
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:lead_titanate_plate",
+      "amount": 1
+    }
+  ]
+}

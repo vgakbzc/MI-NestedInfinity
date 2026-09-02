@@ -18,10 +18,13 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import com.nestedinfinity.mod.blocks.NIBlocks;
 import com.nestedinfinity.mod.blocks.NIMachines;
+import com.nestedinfinity.mod.blocks.resonance.ResonanceAttunerScreen;
 import com.nestedinfinity.mod.fluids.NIFluids;
 import com.nestedinfinity.mod.material.NIMaterial;
 import com.nestedinfinity.mod.material.NIMaterials;
@@ -83,6 +86,11 @@ public class NestedInfinityClient {
                 }
             }, entry.type.get());
         }
+    }
+
+    @SubscribeEvent
+    static void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(NIBlocks.RESONANCE_ATTUNER_MENU.get(), ResonanceAttunerScreen::new);
     }
 
     @SubscribeEvent

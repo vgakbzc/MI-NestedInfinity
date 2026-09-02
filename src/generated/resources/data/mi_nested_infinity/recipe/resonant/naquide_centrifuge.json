@@ -1,0 +1,24 @@
+{
+  "type": "modern_industrialization:centrifuge",
+  "eu": 2000000000,
+  "duration": 80000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:inert_naquadah_solution",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:crude_naquide_powder",
+      "amount": 1,
+      "probability": 0.75
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 900
+    }
+  ]
+}

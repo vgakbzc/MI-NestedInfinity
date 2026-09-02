@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "mi_nested_infinity:fused_silica_plate",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:resonite_plate",
+      "amount": 2
+    },
+    {
+      "item": "mi_nested_infinity:peek_insulator_sheet",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:optical_bench",
+      "amount": 1
+    }
+  ]
+}

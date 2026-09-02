@@ -1,0 +1,28 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 2000000000,
+  "duration": 320000,
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:anthraquinone_working_solution",
+      "amount": 2000
+    },
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 2000
+    }
+  ],
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:platinum_dust",
+      "amount": 1,
+      "probability": 0.1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "mi_nested_infinity:hydrogenated_working_solution",
+      "amount": 2000
+    }
+  ]
+}
