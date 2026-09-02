@@ -5,11 +5,11 @@
   "item_inputs": [
     {
       "item": "mi_nested_infinity:elite_pump",
-      "amount": 3
+      "amount": 6
     },
     {
       "item": "mi_nested_infinity:large_elite_motor",
-      "amount": 1
+      "amount": 2
     },
     {
       "item": "modern_industrialization:naquadah_rotor",

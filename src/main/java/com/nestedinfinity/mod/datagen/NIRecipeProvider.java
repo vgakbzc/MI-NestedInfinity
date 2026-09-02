@@ -3547,19 +3547,19 @@ public final class NIRecipeProvider implements DataProvider {
         int FT = 640_000; // 32000 s finals
         int T = 320_000;
 
-        // large elite motor: nine elites on a naquadah shaft (4x the elite's time)
+        // large elite motor: eighteen elites on a naquadah shaft (4x the elite's time)
         r.machine("assembler", EU, T)
-                .itemIn(NIItems.ELITE_MOTOR.getId().toString(), 9)
+                .itemIn(NIItems.ELITE_MOTOR.getId().toString(), 18)
                 .itemIn(mi + "naquadah_rod", 8)
                 .itemIn(mi + "quantum_circuit", 4)
                 .itemIn(ni + "resonant_circuit", 2)
                 .fluidIn(mi + "lubricant", 2000)
                 .itemOut(ni + "large_elite_motor", 1)
                 .save("optical/large_elite_motor");
-        // large elite pump: three elites around a large elite motor
+        // large elite pump: six elites around two large elite motors
         r.machine("assembler", EU, T)
-                .itemIn(NIItems.ELITE_PUMP.getId().toString(), 3)
-                .itemIn(ni + "large_elite_motor", 1)
+                .itemIn(NIItems.ELITE_PUMP.getId().toString(), 6)
+                .itemIn(ni + "large_elite_motor", 2)
                 .itemIn(mi + "naquadah_rotor", 12)
                 .itemIn(mi + "quantum_circuit", 8)
                 .itemIn(ni + "ffkm_sheet", 4)
