@@ -19,11 +19,6 @@ public class MicroverseProjectorBER implements BlockEntityRenderer<MicroversePro
     /** Center of the sphere, in blocks above the controller's origin. */
     private static final double CENTER_Y = 3.5;
 
-    /** Subdivided-octahedron vertices of a unit sphere (mirrored octants). */
-    private static final float[][] VERTICES = buildSphere();
-    /** Triangle indices into {@link #VERTICES}. */
-    private static final int[][] TRIANGLES = buildTriangles();
-
     public MicroverseProjectorBER(BlockEntityRendererProvider.Context context) {
     }
 
@@ -84,6 +79,13 @@ public class MicroverseProjectorBER implements BlockEntityRenderer<MicroversePro
             {0, 1, 2}, {0, 2, 3}, {0, 3, 4}, {0, 4, 1},
             {5, 2, 1}, {5, 3, 2}, {5, 4, 3}, {5, 1, 4}
     };
+
+    // Must be declared after the lattice constants above: Java runs static
+    // initializers in textual order, and these two read OCTANTS/OCTANT_DIRS.
+    /** Subdivided-octahedron vertices of a unit sphere (mirrored octants). */
+    private static final float[][] VERTICES = buildSphere();
+    /** Triangle indices into {@link #VERTICES}. */
+    private static final int[][] TRIANGLES = buildTriangles();
 
     private static float[][] buildSphere() {
         float[][] verts = new float[OCTANTS.length * OCTANT_VERTS][];
