@@ -63,9 +63,12 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
     public static final int BALL_SLOT = 1;
     public static final int OUTPUT_SLOT = 2;
 
-    /** Base stability time in ticks: t1 = 20, then x2.1 per tier. */
+    /**
+     * Base stability time in ticks: t1 = 10s, then x10^(1/4) per tier — a
+     * geometric ramp from 10s (t1) to exactly 1000s (t9).
+     */
     public static int baseTicks(int tier) {
-        return (int) Math.round(20.0 * Math.pow(2.1, tier - 1));
+        return (int) Math.round(200.0 * Math.pow(10.0, (tier - 1) / 4.0));
     }
 
     /** One matter item flows out every ten productive seconds while running. */
@@ -225,6 +228,11 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
     /** True while the item output hatches cannot take the accrued matter. */
     public boolean isOutputBlocked() {
         return outputBlocked;
+    }
+
+    /** True when the buffer cannot cover this tick — outranks a blocked output. */
+    public boolean isEnergyStarved() {
+        return running && energy < EU_PER_TICK;
     }
 
     /**
@@ -549,6 +557,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         if (be.energy < EU_PER_TICK) {
             be.pullEnergyFromHatches();
         }
+        // decay priority: no energy (10x) outranks a blocked output (0.5x)
         if (be.energy >= EU_PER_TICK) {
             be.energy -= EU_PER_TICK;
             if (!be.outputBlocked) {

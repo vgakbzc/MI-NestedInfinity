@@ -1271,5 +1271,7 @@
   "container.mi_nested_infinity.coreflame.slot_input": "This flame accepts only its own singularity",
   "container.mi_nested_infinity.coreflame.slot_return": "Returned singularities appear here",
   "container.mi_nested_infinity.microverse_projector.ready_hint": "Insert heart + 12 singularities",
-  "container.mi_nested_infinity.microverse_projector.output_full_hint": "collapse at half speed"
+  "container.mi_nested_infinity.microverse_projector.output_full_hint": "collapse at half speed",
+  "container.mi_nested_infinity.microverse_projector.starved": "No energy — unstable",
+  "container.mi_nested_infinity.microverse_projector.starved_hint": "collapse at 10x speed"
 }

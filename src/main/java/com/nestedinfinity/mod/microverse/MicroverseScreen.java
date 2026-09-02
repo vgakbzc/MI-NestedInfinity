@@ -50,6 +50,7 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
 
         boolean running = menu.data(MicroverseMenu.DATA_RUNNING) == 1;
         boolean blocked = menu.data(MicroverseMenu.DATA_OUTPUT_BLOCKED) == 1;
+        boolean starved = menu.data(MicroverseMenu.DATA_STARVED) == 1;
 
         // the twelve coreflame lights: lit = the flame holds its singularity;
         // a running universe keeps the whole ring lit (all twelve burn)
@@ -73,11 +74,16 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
         boolean ok = menu.data(MicroverseMenu.DATA_OK) == 1;
 
         // status: a two-line block — state on the first row, detail on the
-        // second (a blocked output outranks the plain "projecting" note)
+        // second. Priority: no energy (10x decay) > blocked output (0.5x)
+        // > normal projection.
         Component status1;
         Component status2 = null;
         int statusColor;
-        if (running && blocked) {
+        if (running && starved) {
+            status1 = Component.translatable("container.mi_nested_infinity.microverse_projector.starved");
+            status2 = Component.translatable("container.mi_nested_infinity.microverse_projector.starved_hint");
+            statusColor = 0x803030;
+        } else if (running && blocked) {
             status1 = Component.translatable("container.mi_nested_infinity.microverse_projector.output_full");
             status2 = Component.translatable("container.mi_nested_infinity.microverse_projector.output_full_hint");
             statusColor = 0x803030;

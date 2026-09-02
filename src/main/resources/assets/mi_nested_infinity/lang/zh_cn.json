@@ -1271,5 +1271,7 @@
   "container.mi_nested_infinity.coreflame.slot_input": "本火种只接受自己的奇点",
   "container.mi_nested_infinity.coreflame.slot_return": "返还的奇点会出现在这里",
   "container.mi_nested_infinity.microverse_projector.ready_hint": "放入创世之心与 12 奇点",
-  "container.mi_nested_infinity.microverse_projector.output_full_hint": "坍缩半速进行中"
+  "container.mi_nested_infinity.microverse_projector.output_full_hint": "坍缩半速进行中",
+  "container.mi_nested_infinity.microverse_projector.starved": "能量不足——宇宙失稳",
+  "container.mi_nested_infinity.microverse_projector.starved_hint": "坍缩加速 10 倍"
 }
