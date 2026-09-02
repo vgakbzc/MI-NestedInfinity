@@ -97,7 +97,7 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
         private static final int OBLIQUE_W = 121;
         private static final int OBLIQUE_H = 80;
         private static final int EXPLODED_W = 89;
-        private static final int EXPLODED_H = 134;
+        private static final int EXPLODED_H = 165;
 
         private static final EmiTexture OBLIQUE = new EmiTexture(
                 id("textures/gui/emi/projector_structure_oblique.png"),

@@ -583,28 +583,46 @@ def save_emi_structure_oblique():
 
 def save_emi_structure_exploded():
     """EMI structure page 2: the 7x3x7 multiblock as an exploded 2:1
-    isometric parallel projection seen from above the north-west corner
-    (each cube's lit north wall and shaded west wall meet at its bottom
-    vertex; nearer cubes — smaller row+col — are painted last, on top).
-    The three layers pull apart vertically (GAP) so every part stays
-    readable — all twelve rim coreflames (kind color on the top face), the
-    four TDU dials, the 3x3 casing core and the floating top layer of
-    controller and pillars. Rendered oversize, then cropped to content."""
-    HALF_W, HALF_H, WALL, GAP = 8, 4, 10, 28
+    isometric parallel projection seen from above the south-east corner
+    (each cube shows its top face plus its lit south and shaded east wall
+    meeting at the silhouette's bottom vertex; nearer cubes — larger
+    row+col — are painted last, on top). Invisible faces are carved before
+    drawing: a south/east wall whose same-layer neighbour cell is occupied
+    is skipped entirely, so interior seams can never peek out. The three
+    layers pull apart vertically (GAP exceeds a layer's on-screen height
+    so exploded layers never collide) and every part stays readable — all
+    twelve rim coreflames (kind color on the never-occluded top face),
+    the four TDUs (overhead dial mark on every top face — the far walls
+    hide honestly behind the core), the 3x3 casing core and the floating
+    top layer of controller and pillars. Rendered oversize, then cropped."""
+    HALF_W, HALF_H, WALL, GAP = 8, 4, 10, 44
     casing = (96, 90, 108)
     frame = (52, 46, 62)
     tdu_dial = TDU_RAMP[4]  # one representative tier: any same-tier set is valid
 
-    def cube(paint, x, y, base, top, detail=None):
-        """base = lit north wall color; the west wall shades it; detail(i, j,
-        c) overrides north wall pixels; top is the rhombus fill."""
-        south = shade(base, 0.72)
+    def cube(paint, x, y, base, top, detail=None, south=True, east=True):
+        """One cube for the cell whose north-west ground corner projects to
+        (x, y): the top face is the rhombus centred half a cell below the
+        corner, and the lit south wall and shaded east wall hang beneath
+        it, meeting at the silhouette's bottom vertex (x, y + 8).
+        detail(i, j, c) overrides south wall pixels (i walks the wall's
+        bottom edge west to east, j climbs it). Faces with an occupied
+        same-layer neighbour are carved by the caller: a hidden interior
+        face must not be painted at all, or its seam slivers peek out
+        from behind the neighbour covering it."""
+        east_face = shade(base, 0.72)
         for i in range(HALF_W + 1):
             for j in range(WALL):
-                paint(x + i, y - i // 2 - j, detail(i, j, base) if detail else base)
-                paint(x - i, y - i // 2 - j, south)
-        for py in range(y - WALL - 2 * HALF_H + 1, y - WALL):
-            half = HALF_W * (1 - abs(py - (y - WALL - HALF_H)) / HALF_H)
+                if south:
+                    paint(x - HALF_W + i, y + HALF_H + i // 2 - j,
+                          detail(i, j, base) if detail else base)
+                if east:
+                    paint(x + HALF_W - i, y + HALF_H + i // 2 - j, east_face)
+        # nine rhombus rows including both 1px tips so packed diamonds tile
+        # seamlessly at their 8px vertical pitch — fewer rows leave
+        # transparent pinholes between vertically adjacent cells
+        for py in range(y - WALL, y - WALL + 2 * HALF_H + 1):
+            half = HALF_W * (1 - abs(py - (y - WALL + HALF_H)) / HALF_H)
             for ex in range(-HALF_W, HALF_W + 1):
                 if abs(ex) <= half + 0.5:
                     paint(x + ex, py, top)
@@ -619,17 +637,21 @@ def save_emi_structure_exploded():
                     continue
                 cubes.append((layer, row + col, row, col, kind))
     # bottom layer first (the explosion puts higher layers visually on top);
-    # within a layer, FAR cubes first: the viewer hangs above the north-west
-    # corner (the lit north wall and shaded west wall meet at the bottom
-    # vertex), so smaller row+col = nearer and must be painted last, on top
-    cubes.sort(key=lambda c: (c[0], -c[1]))
+    # within a layer, FAR cubes first: the viewer hangs above the south-east
+    # corner (each cube's lit south wall and shaded east wall meet at its
+    # bottom vertex), so larger row+col = nearer and must be painted last,
+    # on top
+    cubes.sort(key=lambda c: (c[0], c[1]))
 
     big = Canvas(240, 170)
     for layer, _sum, row, col, kind in cubes:
-        x = 120 + (row + col) * HALF_W
-        y = 125 + (row - col) * HALF_H - layer * (WALL + GAP)
+        x = 120 + (col - row) * HALF_W
+        y = 112 + (row + col) * HALF_H - layer * (WALL + GAP)
+        occupied = layers[layer]
+        south = (row + 1, col) not in occupied  # face carved if a neighbour hides it
+        east = (row, col + 1) not in occupied
         if kind in ('casing', 'pillar'):
-            cube(big.px, x, y, casing, lift(casing, 0.30))
+            cube(big.px, x, y, casing, lift(casing, 0.30), south=south, east=east)
         elif kind == 'tdu':
             def detail(i, j, c):
                 d = abs(i - 4) + abs(j - 5)
@@ -638,7 +660,13 @@ def save_emi_structure_exploded():
                 if d == 2:
                     return shade(tdu_dial, 0.55)
                 return c
-            cube(big.px, x, y, (88, 82, 100), lift((88, 82, 100), 0.30), detail)
+            cube(big.px, x, y, (88, 82, 100), lift((88, 82, 100), 0.30),
+                 detail, south=south, east=east)
+            # the dial seen from above, on the never-occluded top face:
+            # a TDU's lit wall can hide honestly behind the core or a rim
+            # flame, but the dial mark keeps all four identifiable
+            for ddx, ddy in ((0, 0), (-1, 0), (1, 0), (0, -1), (0, 1)):
+                big.px(x + ddx, y - WALL + HALF_H + ddy, tdu_dial)
         elif kind == 'controller':
             def detail(i, j, c):
                 if abs(i - 4) + abs(j - 5) <= 3:
@@ -646,8 +674,10 @@ def save_emi_structure_exploded():
                     return (int(60 + swirl * 140), int(30 + swirl * 60),
                             int(120 + swirl * 120))
                 return c
-            cube(big.px, x, y, casing, lift((110, 70, 180), 0.35), detail)
-            big.px(x + 5, y - 2 - 4, (240, 230, 255))  # one bright star
+            cube(big.px, x, y, casing, lift((110, 70, 180), 0.35),
+                 detail, south=south, east=east)
+            big.px(x - HALF_W + 5, y + HALF_H + 5 // 2 - 4,
+                   (240, 230, 255))  # star: wall pixel (5, 4)
         else:  # ('flame', i)
             color = COREFLAMES[kind[1]][4]
 
@@ -659,9 +689,9 @@ def save_emi_structure_exploded():
                     return lift(color, 0.15)
                 return c
             # solid kind color on the top face: never occluded from this
-            # angle, so every rim flame stays identifiable even where its
-            # east wall hides behind a nearer neighbour
-            cube(big.px, x, y, frame, lift(color, 0.10), detail)
+            # angle, so every rim flame stays identifiable even when its lit
+            # wall is carved away behind a neighbour
+            cube(big.px, x, y, frame, lift(color, 0.10), detail, south=south, east=east)
 
     crop_save(big, 4, 'projector_structure_exploded.png')
 
