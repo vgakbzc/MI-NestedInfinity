@@ -108,17 +108,24 @@ public class MicroverseProjectorBER implements BlockEntityRenderer<MicroversePro
         return verts;
     }
 
-    /** Triangles of one octant's triangular lattice, offset per octant. */
+    /**
+     * Triangles of one octant's triangular lattice, offset per octant. Row r
+     * has STEPS+1-r vertices starting at rowStart; the next row starts
+     * STEPS+1-r later and is one vertex shorter, so the downward triangle of
+     * the last cell of each row does not exist.
+     */
     private static int[][] buildTriangles() {
         java.util.List<int[]> tris = new java.util.ArrayList<>();
         int rowStart = 0;
         for (int row = 0; row < STEPS; row++) {
+            int next = rowStart + (STEPS + 1 - row);
             for (int col = 0; col + row < STEPS; col++) {
-                tris.add(new int[] {rowStart + col, rowStart + col + 1, rowStart + (STEPS + 1 - row) + col + 1});
-                tris.add(new int[] {rowStart + col, rowStart + (STEPS + 1 - row) + col + 1,
-                        rowStart + (STEPS + 1 - row) + col});
+                tris.add(new int[] {rowStart + col, rowStart + col + 1, next + col});
+                if (col + 2 + row <= STEPS) {
+                    tris.add(new int[] {rowStart + col + 1, next + col, next + col + 1});
+                }
             }
-            rowStart += STEPS + 1 - row;
+            rowStart = next;
         }
         int[][] one = tris.toArray(new int[0][]);
         int[][] all = new int[OCTANTS.length * one.length][];
