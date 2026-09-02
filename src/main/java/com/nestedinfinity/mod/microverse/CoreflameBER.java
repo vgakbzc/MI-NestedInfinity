@@ -9,14 +9,18 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * A filled coreflame keeps its captured singularity on display: a regular
  * octahedron in the flame's own color, hovering above the 0.6-block-tall
  * brazier and slowly spinning. Drawn on the vanilla white sprite with
  * forced full brightness so even the dark flames (shadow, evernight) stay
- * readable.
+ * readable. While the projector above is running, all twelve flames show
+ * their octahedron even when their singularity is spent — the running
+ * universe keeps the whole ring lit.
  */
 public class CoreflameBER implements BlockEntityRenderer<CoreflameBlockEntity> {
     private static final ResourceLocation WHITE = ResourceLocation.withDefaultNamespace("textures/misc/white.png");
@@ -46,7 +50,10 @@ public class CoreflameBER implements BlockEntityRenderer<CoreflameBlockEntity> {
     @Override
     public void render(CoreflameBlockEntity be, float partialTick, PoseStack poseStack,
             MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        if (be.getLevel() == null || !be.isFilled()) {
+        if (be.getLevel() == null) {
+            return;
+        }
+        if (!be.isFilled() && !projectorRunningAbove(be)) {
             return;
         }
         int index = MicroverseBlocks.coreflameIndex(be.getBlockState().getBlock());
@@ -88,5 +95,23 @@ public class CoreflameBER implements BlockEntityRenderer<CoreflameBlockEntity> {
             }
         }
         poseStack.popPose();
+    }
+
+    /**
+     * Is a running projector controller directly above this flame's ring?
+     * The controller sits one block up, at the position mirrored from any of
+     * the twelve coreflame cells, so each candidate offset is checked —
+     * twelve blockstate lookups only while the flame itself is empty.
+     */
+    private static boolean projectorRunningAbove(CoreflameBlockEntity be) {
+        BlockPos above = be.getBlockPos().above();
+        for (int[] rc : MicroverseStructure.COREFLAME_POS) {
+            BlockState state = be.getLevel().getBlockState(above.offset(3 - rc[1], 0, 3 - rc[0]));
+            if (state.is(MicroverseBlocks.MICROVERSE_PROJECTOR.get())
+                    && state.getValue(MicroverseProjectorBlock.RUNNING)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
