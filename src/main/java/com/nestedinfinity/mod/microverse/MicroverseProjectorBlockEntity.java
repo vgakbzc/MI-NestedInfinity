@@ -53,6 +53,13 @@ import net.minecraft.world.level.block.state.BlockState;
  * heart and singularities were already consumed, the spent balls and the
  * accrued matter go with the collapsing universe.</li>
  * </ul>
+ *
+ * <p>The harvester rides on top of any running universe: once per structure
+ * pass, an intact Auto-Navigated Microverse Harvester plus 32 transuranic
+ * batteries in the item input hatches launch a five-minute harvest flight
+ * (one drone at a time). On landing, 16 infinitium and the damaged wreck go
+ * to the item output hatches; if the universe collapses or finishes before
+ * the drone is home, drone and batteries go with it.
  */
 public class MicroverseProjectorBlockEntity extends BlockEntity implements WorldlyContainer, MenuProvider {
     public static final long EU_PER_TICK = 2_000_000_000L;
@@ -78,6 +85,15 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         return tier * tier;
     }
 
+    // -- the auto-navigated harvester ------------------------------------------------
+
+    /** One launch drinks 32 transuranic batteries from the item input hatches. */
+    public static final int HARVEST_BATTERIES = 32;
+    /** A five-minute harvest flight inside the running universe. */
+    public static final int HARVEST_TICKS = 20 * 60 * 5;
+    /** What one flight brings home (the wreck is returned on top of this). */
+    public static final int HARVEST_YIELD = 16;
+
     private ItemStack heart = ItemStack.EMPTY;
     private ItemStack balls = ItemStack.EMPTY;
     private ItemStack matterOutput = ItemStack.EMPTY;
@@ -98,6 +114,8 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
     private boolean slowPhase = false;
     /** Singularity kinds swallowed at start, awaiting their return roll. */
     private final List<Integer> pendingSingularities = new ArrayList<>();
+    /** Ticks left of the harvester's flight; 0 while no drone is away. */
+    private int harvestTicks = 0;
 
     /** Cached structure state, refreshed every second and on demand. */
     private boolean structureOk = false;
@@ -339,28 +357,89 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
             return;
         }
         Item ball = com.nestedinfinity.mod.items.NIOpticalItems.GIANT_MATTER_BALL.get();
-        if (!takeOneBallFromHatches(ball)) {
-            return;
+        if (removeFromHatches(ball, 1)) {
+            applyExtension();
         }
-        applyExtension();
     }
 
-    /** Takes exactly one ball out of the item input hatches; false if none. */
-    private boolean takeOneBallFromHatches(Item ball) {
+    // -- the harvest flight ------------------------------------------------------------
+
+    /**
+     * Once per structure pass while a universe runs: if the item input
+     * hatches hold an intact harvester and 32 transuranic batteries, the
+     * drone launches. Only one drone flies at a time, and it must be home
+     * before the universe ends — collapse or finish mid-flight loses it.
+     */
+    private void tryLaunchHarvest() {
+        if (harvestTicks > 0) {
+            return;
+        }
+        if (countInHatches(MicroverseItems.MICROVERSE_HARVESTER.get()) < 1
+                || countInHatches(com.nestedinfinity.mod.items.NIItems.TRANSURANIC_BATTERY.get()) < HARVEST_BATTERIES) {
+            return;
+        }
+        removeFromHatches(MicroverseItems.MICROVERSE_HARVESTER.get(), 1);
+        removeFromHatches(com.nestedinfinity.mod.items.NIItems.TRANSURANIC_BATTERY.get(), HARVEST_BATTERIES);
+        harvestTicks = HARVEST_TICKS;
+        level.playSound(null, worldPosition, SoundEvents.FIREWORK_ROCKET_LAUNCH, SoundSource.BLOCKS, 0.8F, 0.7F);
+        setChanged();
+        sync();
+    }
+
+    /** The drone lands: infinitium and the wreck go to the hatches, the rest drops. */
+    private void deliverHarvest() {
+        int infinitium = pushMatterToHatches(MicroverseItems.INFINITIUM.get(), HARVEST_YIELD);
+        int wrecks = pushMatterToHatches(MicroverseItems.DAMAGED_MICROVERSE_HARVESTER.get(), 1);
+        dropAbove(MicroverseItems.INFINITIUM.get(), infinitium);
+        dropAbove(MicroverseItems.DAMAGED_MICROVERSE_HARVESTER.get(), wrecks);
+        level.playSound(null, worldPosition, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS, 1.0F, 0.7F);
+        setChanged();
+        sync();
+    }
+
+    // -- item hatch plumbing ------------------------------------------------------------
+
+    /** Total amount of an item across all item input hatches. */
+    private int countInHatches(Item item) {
+        int total = 0;
         for (BlockPos p : itemInputHatches) {
             if (level.getBlockEntity(p) instanceof ItemHatch hatch) {
                 for (var stack : hatch.getInventory().getItemStacks()) {
                     // NOTE: getResource()/getVariant() return the ItemVariant
                     // wrapper, never the Item — compare via getItem() or the
                     // == silently compares unrelated references (always false)
-                    if (!stack.isEmpty() && stack.getVariant().getItem() == ball && stack.getAmount() >= 1) {
-                        stack.decrement(1);
-                        return true;
+                    if (!stack.isEmpty() && stack.getVariant().getItem() == item) {
+                        total += (int) stack.getAmount();
                     }
                 }
             }
         }
-        return false;
+        return total;
+    }
+
+    /** Removes exactly {@code count} of an item from the input hatches; all or nothing. */
+    private boolean removeFromHatches(Item item, int count) {
+        if (countInHatches(item) < count) {
+            return false;
+        }
+        for (BlockPos p : itemInputHatches) {
+            if (count <= 0) {
+                break;
+            }
+            if (level.getBlockEntity(p) instanceof ItemHatch hatch) {
+                for (var stack : hatch.getInventory().getItemStacks()) {
+                    if (count <= 0) {
+                        break;
+                    }
+                    while (count > 0 && !stack.isEmpty()
+                            && stack.getVariant().getItem() == item && stack.getAmount() >= 1) {
+                        stack.decrement(1);
+                        count--;
+                    }
+                }
+            }
+        }
+        return count == 0;
     }
 
     /**
@@ -437,6 +516,16 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         return count;
     }
 
+    /** Drops whole stacks of an item above the controller (hatch overflow). */
+    private void dropAbove(Item item, int count) {
+        while (count > 0) {
+            int drop = Math.min(count, new ItemStack(item).getMaxStackSize());
+            level.addFreshEntity(new ItemEntity(level, worldPosition.getX() + 0.5, worldPosition.getY() + 1.0,
+                    worldPosition.getZ() + 0.5, new ItemStack(item, drop)));
+            count -= drop;
+        }
+    }
+
     private void finish() {
         running = false;
         int runTier = tier;
@@ -460,13 +549,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
             }
             matterOutput = ItemStack.EMPTY;
         }
-        while (count > 0) {
-            int drop = Math.min(count, new ItemStack(produced).getMaxStackSize());
-            ItemEntity entity = new ItemEntity(level, worldPosition.getX() + 0.5, worldPosition.getY() + 1.0,
-                    worldPosition.getZ() + 0.5, new ItemStack(produced, drop));
-            level.addFreshEntity(entity);
-            count -= drop;
-        }
+        dropAbove(produced, count);
         // the singularity return rolls: each burned flame's return slot
         int chance = getReturnChance();
         for (int index : pendingSingularities) {
@@ -482,6 +565,8 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         pendingSingularities.clear();
         extensions = 0;
         outputBlocked = false;
+        // the universe ends before the drone made it home: it goes with it
+        harvestTicks = 0;
         setRunningState(false);
         revalidateStructure();
         level.playSound(null, worldPosition, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 0.6F);
@@ -500,6 +585,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         outputBlocked = false;
         pendingSingularities.clear();
         balls = ItemStack.EMPTY; // spent balls go with the collapsing universe
+        harvestTicks = 0; // so does any drone still flying inside it
         setRunningState(false);
         if (level instanceof ServerLevel server) {
             server.sendParticles(ParticleTypes.POOF, worldPosition.getX() + 0.5, worldPosition.getY() + 3.5,
@@ -542,6 +628,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
             }
             if (be.running) {
                 be.tryAutoExtend();
+                be.tryLaunchHarvest();
                 be.sync(); // one-second resolution is plenty for the cube
             }
         }
@@ -554,6 +641,10 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         // one matter item every ten productive seconds; a full output side
         // holds the pending item and halves the countdown until room appears
         be.produceMatter();
+        // the harvester's flight clock runs alongside the universe's own
+        if (be.harvestTicks > 0 && --be.harvestTicks == 0) {
+            be.deliverHarvest();
+        }
         if (be.energy < EU_PER_TICK) {
             be.pullEnergyFromHatches();
         }
@@ -695,6 +786,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         tag.putInt("yielded", yieldedThisRun);
         tag.putInt("extensions", extensions);
         tag.putBoolean("outputBlocked", outputBlocked);
+        tag.putInt("harvestTicks", harvestTicks);
         tag.putInt("pending", pendingSingularities.size());
         for (int i = 0; i < pendingSingularities.size(); i++) {
             tag.putByte("pending" + i, (byte) (int) pendingSingularities.get(i));
@@ -716,6 +808,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         yieldedThisRun = tag.getInt("yielded");
         extensions = tag.getInt("extensions");
         outputBlocked = tag.getBoolean("outputBlocked");
+        harvestTicks = tag.getInt("harvestTicks");
         pendingSingularities.clear();
         for (int i = 0; i < tag.getInt("pending"); i++) {
             pendingSingularities.add((int) tag.getByte("pending" + i) & 0xFF);

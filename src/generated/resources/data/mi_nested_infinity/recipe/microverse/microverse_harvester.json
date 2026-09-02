@@ -1,0 +1,43 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 2000000000,
+  "duration": 320000,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:neutronium_plate",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:large_elite_motor",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:optical_circuit",
+      "amount": 1
+    },
+    {
+      "item": "minecraft:recovery_compass",
+      "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:graphene_rod",
+      "amount": 4
+    },
+    {
+      "item": "mi_nested_infinity:ffkm_sheet",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "mi_nested_infinity:molten_neutronium",
+      "amount": 288
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "mi_nested_infinity:microverse_harvester",
+      "amount": 1
+    }
+  ]
+}

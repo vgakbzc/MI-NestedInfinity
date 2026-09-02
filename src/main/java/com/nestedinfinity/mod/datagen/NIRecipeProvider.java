@@ -142,6 +142,22 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemIn(ni + "heart_of_a_nonexistent_world", 1)
                 .itemOut(ni + "microverse_projector", 1)
                 .save("microverse/microverse_projector");
+
+        // the auto-navigated harvester — a real quadcopter bill of materials
+        // in neutronium: monocoque frame, four brushless outrunners, a flight
+        // controller, a GNSS return-to-launch module (the recovery compass),
+        // CFRP propellers on graphene rods, FFKM weather seals; molten
+        // neutronium die-casts the frame joints
+        r.machine("assembler", EU, T)
+                .itemIn(mi + "neutronium_plate", 4)
+                .itemIn(ni + "large_elite_motor", 4)
+                .itemIn(ni + "optical_circuit", 1)
+                .itemIn("minecraft:recovery_compass", 1)
+                .itemIn(ni + "graphene_rod", 4)
+                .itemIn(ni + "ffkm_sheet", 2)
+                .fluidIn(ni + "molten_neutronium", 288)
+                .itemOut(ni + "microverse_harvester", 1)
+                .save("microverse/microverse_harvester");
     }
 
     private static String matterPath(int tier) {

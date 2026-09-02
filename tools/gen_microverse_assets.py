@@ -309,6 +309,79 @@ def make_matter(canvas, color, seed):
             canvas.px(sx, sy, (255, 255, 255))
 
 
+def make_harvester(canvas, damaged=False):
+    """The auto-navigated harvester seen from above: a pale neutronium
+    monocoque, four arms out to blurred rotor discs, nav lights on the
+    hubs. The damaged variant comes back scorched, one arm sheared off."""
+    body = (120, 118, 138) if damaged else (216, 216, 248)
+    edge = shade(body, 0.62)
+    arm = (74, 72, 88)
+    hub = (48, 46, 58)
+    disc = (176, 176, 196)
+    hubs = ((3, 3), (12, 3), (3, 12), (12, 12))
+    broken = (12, 3) if damaged else None  # one front arm sheared off
+    for hx, hy in hubs:
+        if (hx, hy) == broken:
+            continue
+        for y in range(16):
+            for x in range(16):
+                d = ((x - hx) ** 2 + (y - hy) ** 2) ** 0.5
+                if 2.0 <= d <= 2.9:
+                    canvas.px(x, y, shade(disc, 1.14 if d < 2.5 else 0.9))
+        for dy in (-1, 0, 1):
+            for dx in (-1, 0, 1):
+                canvas.px(hx + dx, hy + dy, shade(hub, 1.5) if dx == 0 and dy == 0 else hub)
+    for hx, hy in hubs:
+        if (hx, hy) == broken:
+            # just a sheared stub next to the body
+            canvas.px(9, 4, arm)
+            canvas.px(10, 3, shade(arm, 0.7))
+            continue
+        for t in range(5):
+            x = 6 + (hx - 6) * t // 4
+            y = 6 + (hy - 6) * t // 4
+            canvas.px(x, y, arm)
+            if t:
+                canvas.px(x + (1 if hx > 6 else -1), y, shade(arm, 0.8))
+    for y in range(6, 10):
+        for x in range(6, 10):
+            canvas.px(x, y, body if 6 < x < 9 and 6 < y < 9 else edge)
+    # the sensor eye looking down through the universe
+    canvas.px(7, 7, (60, 60, 78))
+    canvas.px(8, 8, (60, 60, 78))
+    canvas.px(8, 7, (80, 220, 200) if not damaged else (90, 110, 105))
+    canvas.px(7, 8, (80, 220, 200) if not damaged else (90, 110, 105))
+    # nav lights: red port-front, green starboard-front, white at the rear
+    canvas.px(3, 1, (235, 70, 50))
+    if not damaged:
+        canvas.px(12, 1, (110, 210, 120))
+    canvas.px(3, 14, (235, 235, 245))
+    canvas.px(12, 14, (235, 235, 245))
+    if damaged:
+        canvas.px(12, 1, (90, 90, 100))   # dead light
+        canvas.px(13, 2, (250, 150, 60))  # sparks at the shear point
+        canvas.px(11, 1, (120, 120, 130))  # smoke
+        canvas.px(14, 0, (90, 90, 100))
+
+
+def make_infinitium(canvas):
+    """Infinitium, the harvest of a whole virtual universe: a crystal
+    lemniscate running teal into violet with white glints at the lobes."""
+    for y in range(16):
+        for x in range(16):
+            for cx in (5, 10):
+                d = ((x - cx) ** 2 + (y - 8) ** 2) ** 0.5
+                if 1.5 <= d <= 3.3:
+                    t = x / 15.0
+                    c = (int(80 + (138 - 80) * t), int(220 + (95 - 220) * t),
+                         int(200 + (240 - 200) * t))
+                    canvas.px(x, y, shade(c, 1.15 if d < 2.5 else 0.85))
+    for gy, gx in ((8, 4), (8, 5), (8, 10), (8, 11), (5, 5), (11, 10)):
+        canvas.px(gx, gy, (245, 250, 255))
+    canvas.px(7, 8, (200, 160, 250))
+    canvas.px(8, 8, (200, 160, 250))
+
+
 def gui_slot_well(canvas, x, y):
     """An 18x18 vanilla-style slot well at (x, y) (one pixel up-left of the 16x16 item)."""
     for yy in range(y, y + 18):
@@ -772,6 +845,12 @@ def main():
     # items: heart + matters
     save_item_texture('heart_of_a_nonexistent_world', make_heart)
     item_model('heart_of_a_nonexistent_world')
+    save_item_texture('microverse_harvester', make_harvester)
+    save_item_texture('damaged_microverse_harvester', make_harvester, True)
+    item_model('microverse_harvester')
+    item_model('damaged_microverse_harvester')
+    save_item_texture('infinitium', make_infinitium)
+    item_model('infinitium')
     for i, (mid, _en, _zh, color) in enumerate(MATTERS):
         save_item_texture(mid, make_matter, color, i)
         item_model(mid)
@@ -845,6 +924,13 @@ def write_lang():
     zh['block.%s.creative_energy_source' % MODID] = '创造发电机'
     en['item.%s.heart_of_a_nonexistent_world' % MODID] = 'Heart of a Nonexistent World'
     zh['item.%s.heart_of_a_nonexistent_world' % MODID] = '创世之心'
+    for mid, e, z in (
+        ('microverse_harvester', 'Auto-Navigated Microverse Harvester', '自动导航微缩宇宙收割机'),
+        ('damaged_microverse_harvester', 'Damaged Microverse Harvester', '受损的微缩宇宙收割机'),
+        ('infinitium', 'Infinitium', '无限素'),
+    ):
+        en['item.%s.%s' % (MODID, mid)] = e
+        zh['item.%s.%s' % (MODID, mid)] = z
     for mid, en_name, zh_name, _c in MATTERS:
         en['item.%s.%s' % (MODID, mid)] = en_name
         zh['item.%s.%s' % (MODID, mid)] = zh_name
@@ -961,6 +1047,18 @@ def write_lang():
     zh[emi + 'structure.top'] = '顶层:中央控制器、TDU 正上方 4 根外壳柱(仅外壳,不可替换)'
     en[emi + 'catalyzer.time'] = '100s per singularity, no energy'
     zh[emi + 'catalyzer.time'] = '每 100 秒 1 颗奇点,不耗电'
+    en['emi.category.%s.microverse_harvester' % MODID] = 'Microverse Harvester'
+    zh['emi.category.%s.microverse_harvester' % MODID] = '微缩宇宙收割机'
+    en[emi + 'harvester.build.note1'] = 'A real quadcopter bill of materials: neutronium monocoque frame, four brushless outrunners, a flight controller, a GNSS return-to-launch module, CFRP propellers.'
+    zh[emi + 'harvester.build.note1'] = '现实四旋翼 BOM:中子素一体式机架、4 台无刷电机、飞控电路、GNSS 返航模块、碳纤维桨叶。'
+    en[emi + 'harvester.build.note2'] = 'Molten neutronium die-casts the frame joints; FFKM gaskets weather-seal the hull.'
+    zh[emi + 'harvester.build.note2'] = '熔融中子素压铸框架关节,FFKM 密封件做全天候防护。'
+    en[emi + 'harvester.launch.time'] = 'Launched from the item input hatches while a universe is running: a five-minute harvest flight.'
+    zh[emi + 'harvester.launch.time'] = '虚拟宇宙运行期间从物品输入仓自动放飞:5 分钟收割航程。'
+    en[emi + 'harvester.launch.return'] = 'Returns 16 infinitium plus the wreck; all 32 batteries are spent.'
+    zh[emi + 'harvester.launch.return'] = '返航带回 16 个无限素与受损机体;32 块电池全部耗尽。'
+    en[emi + 'harvester.launch.warn'] = 'If the universe collapses or finishes mid-flight, drone and batteries are lost.'
+    zh[emi + 'harvester.launch.warn'] = '宇宙中途坍塌或提前收束,无人机与电池全部损失。'
     en[emi + 'catalyzer.once'] = 'One-shot: completing it unlocks this kind here forever'
     zh[emi + 'catalyzer.once'] = '一次性仪式:完成即在本机永久解锁'
     en[emi + 'catalyzer.state'] = 'Must hold when the craft starts (checked every 8 ticks)'

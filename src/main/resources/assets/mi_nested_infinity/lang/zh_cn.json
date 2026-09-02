@@ -1326,5 +1326,14 @@
   "emi.mi_nested_infinity.structure.legend": "控制器 · TDU×4 · 外壳×50 · 火种×12",
   "emi.mi_nested_infinity.structure.note": "整体斜二测图,分解图见下一页。",
   "emi.mi_nested_infinity.structure.hint": "自下而上搭建:底板 → 中层 → 顶层。",
-  "emi.mi_nested_infinity.structure.hatch": "外壳格可换成 MI 仓口,但顶层四根立柱必须用外壳本体。"
+  "emi.mi_nested_infinity.structure.hatch": "外壳格可换成 MI 仓口,但顶层四根立柱必须用外壳本体。",
+  "item.mi_nested_infinity.microverse_harvester": "自动导航微缩宇宙收割机",
+  "item.mi_nested_infinity.damaged_microverse_harvester": "受损的微缩宇宙收割机",
+  "item.mi_nested_infinity.infinitium": "无限素",
+  "emi.category.mi_nested_infinity.microverse_harvester": "微缩宇宙收割机",
+  "emi.mi_nested_infinity.harvester.build.note1": "现实四旋翼 BOM:中子素一体式机架、4 台无刷电机、飞控电路、GNSS 返航模块、碳纤维桨叶。",
+  "emi.mi_nested_infinity.harvester.build.note2": "熔融中子素压铸框架关节,FFKM 密封件做全天候防护。",
+  "emi.mi_nested_infinity.harvester.launch.time": "虚拟宇宙运行期间从物品输入仓自动放飞:5 分钟收割航程。",
+  "emi.mi_nested_infinity.harvester.launch.return": "返航带回 16 个无限素与受损机体;32 块电池全部耗尽。",
+  "emi.mi_nested_infinity.harvester.launch.warn": "宇宙中途坍塌或提前收束,无人机与电池全部损失。"
 }

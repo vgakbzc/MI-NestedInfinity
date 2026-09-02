@@ -1326,5 +1326,14 @@
   "emi.mi_nested_infinity.structure.legend": "Controller · TDU x4 · Casing x50 · Coreflames x12",
   "emi.mi_nested_infinity.structure.note": "Assembled oblique view; the exploded layout is on the next page.",
   "emi.mi_nested_infinity.structure.hint": "Build bottom-up: base plate, middle ring, then the open top.",
-  "emi.mi_nested_infinity.structure.hatch": "Any casing cell may be an MI hatch instead, except the four top pillars (casing only)."
+  "emi.mi_nested_infinity.structure.hatch": "Any casing cell may be an MI hatch instead, except the four top pillars (casing only).",
+  "item.mi_nested_infinity.microverse_harvester": "Auto-Navigated Microverse Harvester",
+  "item.mi_nested_infinity.damaged_microverse_harvester": "Damaged Microverse Harvester",
+  "item.mi_nested_infinity.infinitium": "Infinitium",
+  "emi.category.mi_nested_infinity.microverse_harvester": "Microverse Harvester",
+  "emi.mi_nested_infinity.harvester.build.note1": "A real quadcopter bill of materials: neutronium monocoque frame, four brushless outrunners, a flight controller, a GNSS return-to-launch module, CFRP propellers.",
+  "emi.mi_nested_infinity.harvester.build.note2": "Molten neutronium die-casts the frame joints; FFKM gaskets weather-seal the hull.",
+  "emi.mi_nested_infinity.harvester.launch.time": "Launched from the item input hatches while a universe is running: a five-minute harvest flight.",
+  "emi.mi_nested_infinity.harvester.launch.return": "Returns 16 infinitium plus the wreck; all 32 batteries are spent.",
+  "emi.mi_nested_infinity.harvester.launch.warn": "If the universe collapses or finishes mid-flight, drone and batteries are lost."
 }

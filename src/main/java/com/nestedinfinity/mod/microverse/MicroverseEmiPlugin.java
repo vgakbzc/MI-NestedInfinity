@@ -1,6 +1,10 @@
 package com.nestedinfinity.mod.microverse;
 
 import com.nestedinfinity.mod.NestedInfinity;
+import com.nestedinfinity.mod.fluids.NIFluids;
+import com.nestedinfinity.mod.items.NICircuits;
+import com.nestedinfinity.mod.items.NIItems;
+import com.nestedinfinity.mod.items.NIOpticalItems;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
@@ -15,10 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 
@@ -41,18 +47,25 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
             id("singularity_catalyzer"), EmiStack.of(MicroverseBlocks.SINGULARITY_CATALYZER.get()));
     public static final EmiRecipeCategory STRUCTURE = new EmiRecipeCategory(
             id("projector_structure"), EmiStack.of(MicroverseBlocks.NEUTRONIUM_MACHINE_CASING.get()));
+    public static final EmiRecipeCategory HARVESTER = new EmiRecipeCategory(
+            id("microverse_harvester"), EmiStack.of(MicroverseItems.MICROVERSE_HARVESTER.get()));
 
     @Override
     public void register(EmiRegistry registry) {
         registry.addCategory(PROJECTOR);
         registry.addCategory(CATALYZER);
         registry.addCategory(STRUCTURE);
+        registry.addCategory(HARVESTER);
         registry.addWorkstation(PROJECTOR, EmiStack.of(MicroverseBlocks.MICROVERSE_PROJECTOR.get()));
         registry.addWorkstation(CATALYZER, EmiStack.of(MicroverseBlocks.SINGULARITY_CATALYZER.get()));
         registry.addWorkstation(STRUCTURE, EmiStack.of(MicroverseBlocks.MICROVERSE_PROJECTOR.get()));
+        registry.addWorkstation(HARVESTER, EmiStack.of(miItem("assembler")));
+        registry.addWorkstation(HARVESTER, EmiStack.of(MicroverseBlocks.MICROVERSE_PROJECTOR.get()));
         for (int page = 0; page < 3; page++) {
             registry.addRecipe(new StructureRecipe(page));
         }
+        registry.addRecipe(new HarvesterRecipe(0));
+        registry.addRecipe(new HarvesterRecipe(1));
         for (int tier = 1; tier <= MicroverseItems.MATTERS.size(); tier++) {
             registry.addRecipe(new ProjectorRecipe(tier));
         }
@@ -231,6 +244,130 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
 
         private static Component text(String key) {
             return Component.translatable("emi.mi_nested_infinity.structure." + key);
+        }
+    }
+
+    /**
+     * The harvester program as its own two-page category: page 0 mirrors
+     * the real assembler recipe (a quadcopter bill of materials in
+     * neutronium, see NIRecipeProvider), page 1 the projector launch — the
+     * drone plus 32 transuranic batteries into a running universe,
+     * infinitium and the damaged wreck back out.
+     */
+    private static final class HarvesterRecipe implements EmiRecipe {
+        private static final int WIDTH = 168;
+        private static final int TEXT_X = 6;
+        private static final int TEXT_WIDTH = WIDTH - 2 * TEXT_X;
+        private static final int LINE_HEIGHT = 10;
+
+        private final int page; // 0 build, 1 launch
+        private final List<EmiIngredient> inputs;
+        private final List<EmiStack> outputs;
+
+        HarvesterRecipe(int page) {
+            this.page = page;
+            if (page == 0) {
+                this.inputs = List.of(
+                        EmiStack.of(miItem("neutronium_plate"), 4), // the monocoque frame
+                        EmiStack.of(NIOpticalItems.LARGE_ELITE_MOTOR.get(), 4), // four brushless outrunners
+                        EmiStack.of(NICircuits.OPTICAL_CIRCUIT.get()), // the flight controller
+                        EmiStack.of(Items.RECOVERY_COMPASS), // the GNSS return-to-launch module
+                        EmiStack.of(NIItems.GRAPHENE_ROD.get(), 4), // CFRP propellers
+                        EmiStack.of(NIOpticalItems.FFKM_SHEET.get(), 2), // weather seals
+                        EmiStack.of(NIFluids.MOLTEN_NEUTRONIUM.source.get(), 288)); // die-cast frame joints
+                this.outputs = List.of(EmiStack.of(MicroverseItems.MICROVERSE_HARVESTER.get()));
+            } else {
+                this.inputs = List.of(
+                        EmiStack.of(MicroverseItems.MICROVERSE_HARVESTER.get()),
+                        EmiStack.of(NIItems.TRANSURANIC_BATTERY.get(),
+                                MicroverseProjectorBlockEntity.HARVEST_BATTERIES));
+                this.outputs = List.of(
+                        EmiStack.of(MicroverseItems.INFINITIUM.get(), MicroverseProjectorBlockEntity.HARVEST_YIELD),
+                        EmiStack.of(MicroverseItems.DAMAGED_MICROVERSE_HARVESTER.get()));
+            }
+        }
+
+        @Override
+        public EmiRecipeCategory getCategory() {
+            return HARVESTER;
+        }
+
+        @Override
+        public ResourceLocation getId() {
+            return id("microverse_harvester/" + (page == 0 ? "build" : "launch"));
+        }
+
+        @Override
+        public List<EmiIngredient> getInputs() {
+            return inputs;
+        }
+
+        @Override
+        public List<EmiStack> getOutputs() {
+            return outputs;
+        }
+
+        @Override
+        public int getDisplayWidth() {
+            return WIDTH;
+        }
+
+        @Override
+        public int getDisplayHeight() {
+            Font font = Minecraft.getInstance().font;
+            if (page == 0) {
+                return 48 + lines("harvester.build.note1", font) * LINE_HEIGHT + 2
+                        + lines("harvester.build.note2", font) * LINE_HEIGHT + 5;
+            }
+            return 50 + (lines("harvester.launch.time", font)
+                    + lines("harvester.launch.return", font)
+                    + lines("harvester.launch.warn", font)) * LINE_HEIGHT + 4 + 5;
+        }
+
+        @Override
+        public boolean supportsRecipeTree() {
+            return false; // the real assembler recipe carries the tree; the launch is projector magic
+        }
+
+        @Override
+        public void addWidgets(WidgetHolder widgets) {
+            if (page == 0) {
+                for (int i = 0; i < 4; i++) {
+                    widgets.addSlot(inputs.get(i), 6 + i * 18, 4);
+                }
+                for (int i = 0; i < 3; i++) { // props, seals, molten neutronium
+                    widgets.addSlot(inputs.get(4 + i), 6 + i * 18, 24);
+                }
+                widgets.addFillingArrow(78, 22, 20000);
+                widgets.addSlot(outputs.getFirst(), 114, 22);
+                int y = addWrapped(widgets, "harvester.build.note1", 48) + 2;
+                addWrapped(widgets, "harvester.build.note2", y);
+                return;
+            }
+            widgets.addSlot(inputs.get(0), 30, 8);
+            widgets.addSlot(inputs.get(1), 48, 8);
+            widgets.addFillingArrow(80, 12, 20000);
+            widgets.addSlot(outputs.get(0), 112, 8);
+            widgets.addSlot(outputs.get(1), 112, 26);
+            int y = addWrapped(widgets, "harvester.launch.time", 50) + 2;
+            y = addWrapped(widgets, "harvester.launch.return", y) + 2;
+            addWrapped(widgets, "harvester.launch.warn", y);
+        }
+
+        private static int addWrapped(WidgetHolder widgets, String key, int y) {
+            for (FormattedCharSequence line : Minecraft.getInstance().font.split(text(key), TEXT_WIDTH)) {
+                widgets.addText(line, TEXT_X, y, TEXT_COLOR, false);
+                y += LINE_HEIGHT;
+            }
+            return y;
+        }
+
+        private static int lines(String key, Font font) {
+            return font.split(text(key), TEXT_WIDTH).size();
+        }
+
+        private static Component text(String key) {
+            return Component.translatable("emi.mi_nested_infinity." + key);
         }
     }
 
@@ -469,6 +606,12 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
 
     private static ResourceLocation id(String path) {
         return ResourceLocation.fromNamespaceAndPath(NestedInfinity.MODID, path);
+    }
+
+    /** Registry lookup for MI items — always resolved at call time, never
+     *  cached in a static initializer (see the singularity AIR lesson). */
+    private static Item miItem(String path) {
+        return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("modern_industrialization", path));
     }
 
     public MicroverseEmiPlugin() {}

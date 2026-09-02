@@ -54,6 +54,15 @@ public final class MicroverseItems {
             register("supernova_heavy_elements"),
             register("kilonova_ejecta"));
 
+    /**
+     * The harvest program: the auto-navigated drone launched into a running
+     * universe with 32 transuranic batteries, the wreck that flies home, and
+     * infinitium, what a whole virtual universe yields.
+     */
+    public static final DeferredItem<Item> MICROVERSE_HARVESTER = register("microverse_harvester");
+    public static final DeferredItem<Item> DAMAGED_MICROVERSE_HARVESTER = register("damaged_microverse_harvester");
+    public static final DeferredItem<Item> INFINITIUM = register("infinitium");
+
     private static DeferredItem<Item> register(String name) {
         return NestedInfinity.ITEMS.registerSimpleItem(name, new Item.Properties());
     }

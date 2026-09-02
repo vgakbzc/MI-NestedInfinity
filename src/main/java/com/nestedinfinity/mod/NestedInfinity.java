@@ -139,6 +139,9 @@ public class NestedInfinity {
                 output.accept(MicroverseItems.HEART_OF_A_NONEXISTENT_WORLD.get());
                 MicroverseItems.SINGULARITIES.forEach(s -> output.accept(s.item().get()));
                 MicroverseItems.MATTERS.forEach(matter -> output.accept(matter.get()));
+                output.accept(MicroverseItems.MICROVERSE_HARVESTER.get());
+                output.accept(MicroverseItems.DAMAGED_MICROVERSE_HARVESTER.get());
+                output.accept(MicroverseItems.INFINITIUM.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
