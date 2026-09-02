@@ -1251,8 +1251,8 @@
   "item.mi_nested_infinity.early_galactic_matter": "Early Galactic Matter",
   "item.mi_nested_infinity.supernova_heavy_elements": "Supernova Heavy Elements",
   "item.mi_nested_infinity.kilonova_ejecta": "Kilonova Ejecta",
-  "container.mi_nested_infinity.microverse_projector.running": "Projecting: %s",
-  "container.mi_nested_infinity.microverse_projector.ready": "Structure ready — insert heart + 12 singularities",
+  "container.mi_nested_infinity.microverse_projector.running": "Projecting",
+  "container.mi_nested_infinity.microverse_projector.ready": "Structure ready",
   "container.mi_nested_infinity.microverse_projector.countdown": "Collapse in %ss",
   "container.mi_nested_infinity.microverse_projector.accrued": "Accrued: %s",
   "container.mi_nested_infinity.microverse_projector.return_chance": "Singularity return: %s%%",
@@ -1267,7 +1267,9 @@
   "block.mi_nested_infinity.creative_energy_source": "Creative Energy Source",
   "container.mi_nested_infinity.microverse_projector.slot_heart": "Heart of a Nonexistent World goes here",
   "container.mi_nested_infinity.microverse_projector.ball_time": "Matter ball: +%ss",
-  "container.mi_nested_infinity.microverse_projector.output_full": "Output hatch full — paused (half-speed collapse)",
+  "container.mi_nested_infinity.microverse_projector.output_full": "Output hatch full — paused",
   "container.mi_nested_infinity.coreflame.slot_input": "This flame accepts only its own singularity",
-  "container.mi_nested_infinity.coreflame.slot_return": "Returned singularities appear here"
+  "container.mi_nested_infinity.coreflame.slot_return": "Returned singularities appear here",
+  "container.mi_nested_infinity.microverse_projector.ready_hint": "Insert heart + 12 singularities",
+  "container.mi_nested_infinity.microverse_projector.output_full_hint": "collapse at half speed"
 }

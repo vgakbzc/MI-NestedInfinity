@@ -1251,8 +1251,8 @@
   "item.mi_nested_infinity.early_galactic_matter": "早期星系物质",
   "item.mi_nested_infinity.supernova_heavy_elements": "超新星重元素",
   "item.mi_nested_infinity.kilonova_ejecta": "千新星抛射物",
-  "container.mi_nested_infinity.microverse_projector.running": "投影中：%s",
-  "container.mi_nested_infinity.microverse_projector.ready": "结构就绪 — 放入创世之心与 12 奇点",
+  "container.mi_nested_infinity.microverse_projector.running": "投影中",
+  "container.mi_nested_infinity.microverse_projector.ready": "结构就绪",
   "container.mi_nested_infinity.microverse_projector.countdown": "%s 秒后坍缩",
   "container.mi_nested_infinity.microverse_projector.accrued": "已积累:%s",
   "container.mi_nested_infinity.microverse_projector.return_chance": "奇点返还率:%s%%",
@@ -1267,7 +1267,9 @@
   "block.mi_nested_infinity.creative_energy_source": "创造发电机",
   "container.mi_nested_infinity.microverse_projector.slot_heart": "在此放入创世之心",
   "container.mi_nested_infinity.microverse_projector.ball_time": "物质球延长：+%s 秒",
-  "container.mi_nested_infinity.microverse_projector.output_full": "输出仓已满——已暂停（坍缩半速）",
+  "container.mi_nested_infinity.microverse_projector.output_full": "输出仓已满——已暂停",
   "container.mi_nested_infinity.coreflame.slot_input": "本火种只接受自己的奇点",
-  "container.mi_nested_infinity.coreflame.slot_return": "返还的奇点会出现在这里"
+  "container.mi_nested_infinity.coreflame.slot_return": "返还的奇点会出现在这里",
+  "container.mi_nested_infinity.microverse_projector.ready_hint": "放入创世之心与 12 奇点",
+  "container.mi_nested_infinity.microverse_projector.output_full_hint": "坍缩半速进行中"
 }

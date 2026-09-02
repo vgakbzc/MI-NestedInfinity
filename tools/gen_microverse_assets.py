@@ -470,10 +470,11 @@ def main():
     for suffix, _key, _en, _zh, color in COREFLAMES:
         make_gui(os.path.join(GUI_TX, 'coreflame_' + suffix + '.png'), 166,
                  coreflame_slots, tint=color)
-    # projector: only the heart slot (8,26) is exposed; balls come from item
-    # input hatches, the matter leaves through item output hatches
+    # projector: only the heart slot (8,38) is exposed (below the two status
+    # rows); balls come from item input hatches, the matter leaves through
+    # item output hatches
     make_gui(os.path.join(GUI_TX, 'microverse_projector.png'), 184,
-             [(7, 25)] + inventory_wells(101))
+             [(7, 37)] + inventory_wells(101))
 
     # creative energy source (creative-only, no recipe)
     save_block_texture('creative_energy_source', make_creative_source)
@@ -515,18 +516,22 @@ def write_lang():
     gui = 'container.%s.microverse_projector.' % MODID
     en[gui + 'ball_time'] = 'Matter ball: +%ss'
     zh[gui + 'ball_time'] = '物质球延长：+%s 秒'
-    en[gui + 'running'] = 'Projecting: %s'
-    zh[gui + 'running'] = '投影中：%s'
-    en[gui + 'ready'] = 'Structure ready — insert heart + 12 singularities'
-    zh[gui + 'ready'] = '结构就绪 — 放入创世之心与 12 奇点'
+    en[gui + 'running'] = 'Projecting'
+    zh[gui + 'running'] = '投影中'
+    en[gui + 'ready'] = 'Structure ready'
+    zh[gui + 'ready'] = '结构就绪'
+    en[gui + 'ready_hint'] = 'Insert heart + 12 singularities'
+    zh[gui + 'ready_hint'] = '放入创世之心与 12 奇点'
     en[gui + 'countdown'] = 'Collapse in %ss'
     zh[gui + 'countdown'] = '%s 秒后坍缩'
     en[gui + 'accrued'] = 'Accrued: %s'
     zh[gui + 'accrued'] = '已积累:%s'
     en[gui + 'return_chance'] = 'Singularity return: %s%%'
     zh[gui + 'return_chance'] = '奇点返还率:%s%%'
-    en[gui + 'output_full'] = 'Output hatch full — paused (half-speed collapse)'
-    zh[gui + 'output_full'] = '输出仓已满——已暂停（坍缩半速）'
+    en[gui + 'output_full'] = 'Output hatch full — paused'
+    zh[gui + 'output_full'] = '输出仓已满——已暂停'
+    en[gui + 'output_full_hint'] = 'collapse at half speed'
+    zh[gui + 'output_full_hint'] = '坍缩半速进行中'
     en[gui + 'slot_heart'] = 'Heart of a Nonexistent World goes here'
     zh[gui + 'slot_heart'] = '在此放入创世之心'
     en['container.%s.coreflame.slot_input' % MODID] = 'This flame accepts only its own singularity'

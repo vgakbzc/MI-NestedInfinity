@@ -54,7 +54,7 @@ public class MicroverseMenu extends AbstractContainerMenu {
         this.data = data;
         addDataSlots(data);
 
-        addSlot(new Slot(be, MicroverseProjectorBlockEntity.HEART_SLOT, 8, 26) {
+        addSlot(new Slot(be, MicroverseProjectorBlockEntity.HEART_SLOT, 8, 38) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return be.canPlaceItem(MicroverseProjectorBlockEntity.HEART_SLOT, stack);

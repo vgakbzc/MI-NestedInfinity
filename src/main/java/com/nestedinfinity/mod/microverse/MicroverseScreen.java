@@ -19,15 +19,20 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
             NestedInfinity.MODID, "textures/gui/microverse_projector.png");
 
-    /** The lights share their row with the heart slot (center y 34). */
+    /** Two status rows, then the slot/lights row below them. */
+    private static final int STATUS_Y1 = 16;
+    private static final int STATUS_Y2 = 26;
+
+    /** The lights share their row with the heart slot (center y 46). */
     private static final int LIGHT_X = 39;
-    private static final int LIGHT_Y = 30;
+    private static final int LIGHT_Y = 42;
     private static final int LIGHT_SIZE = 8;
     private static final int LIGHT_STEP = 10;
 
-    private static final int COUNTDOWN_Y = 44;
-    private static final int BALL_TIME_Y = 62;
-    private static final int INFO_Y = 80;
+    /** The three compact readout rows (10px pitch). */
+    private static final int COUNTDOWN_Y = 58;
+    private static final int BALL_TIME_Y = 68;
+    private static final int INFO_Y = 78;
 
     public MicroverseScreen(MicroverseMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -67,26 +72,33 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
         int tier = menu.data(MicroverseMenu.DATA_TIER);
         boolean ok = menu.data(MicroverseMenu.DATA_OK) == 1;
 
-        // status line: a blocked output outranks the plain "projecting" note
-        Component status;
+        // status: a two-line block — state on the first row, detail on the
+        // second (a blocked output outranks the plain "projecting" note)
+        Component status1;
+        Component status2 = null;
         int statusColor;
         if (running && blocked) {
-            status = Component.translatable("container.mi_nested_infinity.microverse_projector.output_full");
+            status1 = Component.translatable("container.mi_nested_infinity.microverse_projector.output_full");
+            status2 = Component.translatable("container.mi_nested_infinity.microverse_projector.output_full_hint");
             statusColor = 0x803030;
         } else if (running) {
-            status = Component.translatable("container.mi_nested_infinity.microverse_projector.running",
-                    Component.translatable("item.mi_nested_infinity."
-                            + MicroverseItems.MATTERS.get(Math.max(0, tier - 1)).getId().getPath()));
+            status1 = Component.translatable("container.mi_nested_infinity.microverse_projector.running");
+            status2 = Component.translatable("item.mi_nested_infinity."
+                    + MicroverseItems.MATTERS.get(Math.max(0, tier - 1)).getId().getPath());
             statusColor = 0x208040;
         } else if (ok) {
-            status = Component.translatable("container.mi_nested_infinity.microverse_projector.ready");
+            status1 = Component.translatable("container.mi_nested_infinity.microverse_projector.ready");
+            status2 = Component.translatable("container.mi_nested_infinity.microverse_projector.ready_hint");
             statusColor = 0x305080;
         } else {
-            status = Component.translatable("container.mi_nested_infinity.microverse_projector.problem_"
+            status1 = Component.translatable("container.mi_nested_infinity.microverse_projector.problem_"
                     + problemKey(menu));
             statusColor = 0x803030;
         }
-        graphics.drawString(font, status, leftPos + 8, topPos + 16, statusColor, false);
+        graphics.drawString(font, status1, leftPos + 8, topPos + STATUS_Y1, statusColor, false);
+        if (status2 != null) {
+            graphics.drawString(font, status2, leftPos + 8, topPos + STATUS_Y2, statusColor, false);
+        }
 
         if (running) {
             int remaining = menu.data(MicroverseMenu.DATA_REMAINING);
