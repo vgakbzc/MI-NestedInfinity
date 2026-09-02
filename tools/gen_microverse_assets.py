@@ -510,21 +510,21 @@ def save_emi_structure_oblique():
 
 def save_emi_structure_exploded():
     """EMI structure page 2: the 7x3x7 multiblock as an exploded 2:1
-    isometric parallel projection seen from above the south-east corner. The
-    three layers pull apart vertically (GAP) so every part stays readable —
-    all twelve rim coreflames (kind color on the top face), the four TDU
-    dials, the 3x3 casing core and the floating top layer of controller and
-    pillars. Each cube is drawn from its bottom south vertex: east wall (lit,
-    carries the kind detail), south wall (shaded), top rhombus. Rendered
-    oversize, then cropped to content."""
+    isometric parallel projection seen from above the north-west corner
+    (each cube's lit north wall and shaded west wall meet at its bottom
+    vertex; nearer cubes — smaller row+col — are painted last, on top).
+    The three layers pull apart vertically (GAP) so every part stays
+    readable — all twelve rim coreflames (kind color on the top face), the
+    four TDU dials, the 3x3 casing core and the floating top layer of
+    controller and pillars. Rendered oversize, then cropped to content."""
     HALF_W, HALF_H, WALL, GAP = 8, 4, 10, 28
     casing = (96, 90, 108)
     frame = (52, 46, 62)
     tdu_dial = TDU_RAMP[4]  # one representative tier: any same-tier set is valid
 
     def cube(paint, x, y, base, top, detail=None):
-        """base = east wall color; south wall shades it; detail(i, j, c)
-        overrides east wall pixels; top is the rhombus fill."""
+        """base = lit north wall color; the west wall shades it; detail(i, j,
+        c) overrides north wall pixels; top is the rhombus fill."""
         south = shade(base, 0.72)
         for i in range(HALF_W + 1):
             for j in range(WALL):
@@ -545,8 +545,11 @@ def save_emi_structure_exploded():
                 if kind is None:
                     continue
                 cubes.append((layer, row + col, row, col, kind))
-    # bottom layer first (the explosion puts higher layers visually on top)
-    cubes.sort(key=lambda c: (c[0], c[1]))
+    # bottom layer first (the explosion puts higher layers visually on top);
+    # within a layer, FAR cubes first: the viewer hangs above the north-west
+    # corner (the lit north wall and shaded west wall meet at the bottom
+    # vertex), so smaller row+col = nearer and must be painted last, on top
+    cubes.sort(key=lambda c: (c[0], -c[1]))
 
     big = Canvas(240, 170)
     for layer, _sum, row, col, kind in cubes:
