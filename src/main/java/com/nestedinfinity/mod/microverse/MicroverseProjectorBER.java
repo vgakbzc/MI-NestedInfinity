@@ -2,22 +2,54 @@ package com.nestedinfinity.mod.microverse;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.core.BlockPos;
+import org.joml.Matrix4f;
 
 /**
- * The projected universe: a radius-2 sphere centered three blocks above the
- * controller while a run is active, drawn with the vanilla end-portal
- * render type (the animated starfield shader — position-only format).
- * It scales in over the first two seconds and collapses over the final two
- * (spec doc section 7).
+ * The projected universe: a starfield cube (the vanilla end-portal render
+ * type, position-only format) centered three and a half blocks above the
+ * controller while a run is active, tumbling around the X and Z axes at
+ * different rates. It scales in over the first two seconds and collapses
+ * over the final two (spec doc section 7).
  */
 public class MicroverseProjectorBER implements BlockEntityRenderer<MicroverseProjectorBlockEntity> {
-    /** Center of the sphere, in blocks above the controller's origin. */
+    /** Center of the cube, in blocks above the controller's origin. */
     private static final double CENTER_Y = 3.5;
+    /** Half edge of the cube (the old sphere's radius was 2.0). */
+    private static final float HALF = 1.8F;
+
+    /**
+     * Tumble rates with exact wrap: 0.225 deg/tick over 1600 ticks is one
+     * whole X turn every 80 s, 0.15 deg/tick over 2400 ticks one Z turn every
+     * 120 s — the modulo never glitches and the angle never grows into float
+     * imprecision.
+     */
+    private static final int X_PERIOD = 1600;
+    private static final float X_DEG_PER_TICK = 0.225F;
+    private static final int Z_PERIOD = 2400;
+    private static final float Z_DEG_PER_TICK = 0.15F;
+
+    /** The eight cube corners, x/y/z each -1 or +1, bit pattern xyz. */
+    private static final float[][] CORNERS = new float[8][];
+    /** The six faces as corner indices. */
+    private static final int[][] FACES = {
+            {0, 3, 2, 1}, // -Z
+            {4, 5, 6, 7}, // +Z
+            {0, 1, 5, 4}, // -Y
+            {3, 7, 6, 2}, // +Y
+            {1, 2, 6, 5}, // +X
+            {0, 4, 7, 3}, // -X
+    };
+
+    static {
+        for (int i = 0; i < 8; i++) {
+            CORNERS[i] = new float[] {(i & 1) == 0 ? -1 : 1, (i & 2) == 0 ? -1 : 1, (i & 4) == 0 ? -1 : 1};
+        }
+    }
 
     public MicroverseProjectorBER(BlockEntityRendererProvider.Context context) {
     }
@@ -25,45 +57,45 @@ public class MicroverseProjectorBER implements BlockEntityRenderer<MicroversePro
     @Override
     public void render(MicroverseProjectorBlockEntity be, float partialTick, PoseStack poseStack,
             MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        if (!be.isRunning() || be.getTotalDuration() <= 0) {
+        if (be.getLevel() == null || !be.isRunning() || be.getTotalDuration() <= 0) {
             return;
         }
         float total = be.getTotalDuration();
         float remaining = be.getRemaining();
-        float radius = 2.0F;
+        float half = HALF;
         // scale in over the first 40 ticks, out over the last 40
         if (total - remaining < 40.0F) {
-            radius *= (total - remaining) / 40.0F;
+            half *= (total - remaining) / 40.0F;
         } else if (remaining < 40.0F) {
-            radius *= remaining / 40.0F;
+            half *= remaining / 40.0F;
         }
+
+        long time = be.getLevel().getGameTime();
+        float angleX = (time % X_PERIOD + partialTick) * X_DEG_PER_TICK;
+        float angleZ = (time % Z_PERIOD + partialTick) * Z_DEG_PER_TICK;
 
         poseStack.pushPose();
         poseStack.translate(0.5, CENTER_Y, 0.5);
+        poseStack.mulPose(Axis.XP.rotationDegrees(angleX));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(angleZ));
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.endPortal());
-        var pose = poseStack.last().pose();
-        // the end-portal buffer draws QUADS (4 vertices per primitive), so
-        // each triangle is emitted as a quad with its first vertex repeated:
-        // the quad's second triangle degenerates and never rasterizes. Both
-        // windings go out because the starfield shader's cull state is not
-        // ours to rely on (same trick vanilla's EndPortalRenderer uses).
-        for (int[] tri : TRIANGLES) {
-            emitTri(consumer, pose, tri, 0, 1, 2, radius);
-            emitTri(consumer, pose, tri, 0, 2, 1, radius);
+        Matrix4f pose = poseStack.last().pose();
+        for (int[] face : FACES) {
+            // each quad twice, once per winding — the starfield shader's face
+            // culling state is not ours to rely on (vanilla's EndPortalRenderer
+            // does the same)
+            for (int i = 0; i < 4; i++) {
+                vertex(consumer, pose, CORNERS[face[i]], half);
+            }
+            for (int i = 3; i >= 0; i--) {
+                vertex(consumer, pose, CORNERS[face[i]], half);
+            }
         }
         poseStack.popPose();
     }
 
-    private static void emitTri(VertexConsumer consumer, org.joml.Matrix4f pose,
-            int[] tri, int a, int b, int c, float radius) {
-        vertex(consumer, pose, VERTICES[tri[a]], radius);
-        vertex(consumer, pose, VERTICES[tri[b]], radius);
-        vertex(consumer, pose, VERTICES[tri[c]], radius);
-        vertex(consumer, pose, VERTICES[tri[a]], radius);
-    }
-
-    private static void vertex(VertexConsumer consumer, org.joml.Matrix4f pose, float[] v, float radius) {
-        consumer.addVertex(pose, v[0] * radius, v[1] * radius, v[2] * radius);
+    private static void vertex(VertexConsumer consumer, Matrix4f pose, float[] v, float half) {
+        consumer.addVertex(pose, v[0] * half, v[1] * half, v[2] * half);
     }
 
     @Override
@@ -74,76 +106,5 @@ public class MicroverseProjectorBER implements BlockEntityRenderer<MicroversePro
     @Override
     public int getViewDistance() {
         return 192;
-    }
-
-    // -- a coarse sphere: eight octahedron octants, midpoint-subdivided ------------
-
-    private static final int STEPS = 4;
-    private static final int OCTANT_VERTS = (STEPS + 1) * (STEPS + 2) / 2;
-    private static final float[][] OCTANT_DIRS = {
-            {0, 1, 0}, {1, 0, 0}, {0, 0, 1}, {-1, 0, 0}, {0, 0, -1}, {0, -1, 0}
-    };
-    private static final int[][] OCTANTS = {
-            {0, 1, 2}, {0, 2, 3}, {0, 3, 4}, {0, 4, 1},
-            {5, 2, 1}, {5, 3, 2}, {5, 4, 3}, {5, 1, 4}
-    };
-
-    // Must be declared after the lattice constants above: Java runs static
-    // initializers in textual order, and these two read OCTANTS/OCTANT_DIRS.
-    /** Subdivided-octahedron vertices of a unit sphere (mirrored octants). */
-    private static final float[][] VERTICES = buildSphere();
-    /** Triangle indices into {@link #VERTICES}. */
-    private static final int[][] TRIANGLES = buildTriangles();
-
-    private static float[][] buildSphere() {
-        float[][] verts = new float[OCTANTS.length * OCTANT_VERTS][];
-        for (int oct = 0; oct < OCTANTS.length; oct++) {
-            float[] a = OCTANT_DIRS[OCTANTS[oct][0]];
-            float[] b = OCTANT_DIRS[OCTANTS[oct][1]];
-            float[] c = OCTANT_DIRS[OCTANTS[oct][2]];
-            int n = 0;
-            for (int i = 0; i <= STEPS; i++) {
-                for (int j = 0; j + i <= STEPS; j++) {
-                    float k = STEPS - i - j;
-                    float x = a[0] * i + b[0] * j + c[0] * k;
-                    float y = a[1] * i + b[1] * j + c[1] * k;
-                    float z = a[2] * i + b[2] * j + c[2] * k;
-                    float len = (float) Math.sqrt(x * x + y * y + z * z);
-                    verts[oct * OCTANT_VERTS + n++] = new float[] {x / len, y / len, z / len};
-                }
-            }
-        }
-        return verts;
-    }
-
-    /**
-     * Triangles of one octant's triangular lattice, offset per octant. Row r
-     * has STEPS+1-r vertices starting at rowStart; the next row starts
-     * STEPS+1-r later and is one vertex shorter, so the downward triangle of
-     * the last cell of each row does not exist.
-     */
-    private static int[][] buildTriangles() {
-        java.util.List<int[]> tris = new java.util.ArrayList<>();
-        int rowStart = 0;
-        for (int row = 0; row < STEPS; row++) {
-            int next = rowStart + (STEPS + 1 - row);
-            for (int col = 0; col + row < STEPS; col++) {
-                tris.add(new int[] {rowStart + col, rowStart + col + 1, next + col});
-                if (col + 2 + row <= STEPS) {
-                    tris.add(new int[] {rowStart + col + 1, next + col, next + col + 1});
-                }
-            }
-            rowStart = next;
-        }
-        int[][] one = tris.toArray(new int[0][]);
-        int[][] all = new int[OCTANTS.length * one.length][];
-        for (int oct = 0; oct < OCTANTS.length; oct++) {
-            for (int t = 0; t < one.length; t++) {
-                int[] tri = one[t];
-                all[oct * one.length + t] = new int[] {
-                        oct * OCTANT_VERTS + tri[0], oct * OCTANT_VERTS + tri[1], oct * OCTANT_VERTS + tri[2]};
-            }
-        }
-        return all;
     }
 }
