@@ -27,16 +27,16 @@ public final class MicroverseItems {
 
     public static final List<Singularity> SINGULARITIES = List.of(
             new Singularity("gold", "chrysalis_of_gold", 0xF0C450, register("singularity_gold")),
-            new Singularity("rift", "bough_of_rift", 0x7850C8, register("singularity_rift")),
-            new Singularity("shadow", "hand_of_shadow", 0x463858, register("singularity_shadow")),
+            new Singularity("rift", "bough_of_rift", 0x8A5FF0, register("singularity_rift")),
+            new Singularity("shadow", "hand_of_shadow", 0x8C3C78, register("singularity_shadow")),
             new Singularity("justice", "scale_of_justice", 0xD2D6DC, register("singularity_justice")),
-            new Singularity("whimsy", "coin_of_whimsy", 0xFA8CBE, register("singularity_whimsy")),
+            new Singularity("whimsy", "coin_of_whimsy", 0xFA78C8, register("singularity_whimsy")),
             new Singularity("plenty", "chalice_of_plenty", 0x6ED278, register("singularity_plenty")),
-            new Singularity("twilight", "eye_of_twilight", 0xA06EDC, register("singularity_twilight")),
-            new Singularity("worlds", "throne_of_worlds", 0x5A8CDC, register("singularity_worlds")),
-            new Singularity("fury", "lance_of_fury", 0xE6503C, register("singularity_fury")),
+            new Singularity("twilight", "eye_of_twilight", 0xC85FE1, register("singularity_twilight")),
+            new Singularity("worlds", "throne_of_worlds", 0x50AAEB, register("singularity_worlds")),
+            new Singularity("fury", "lance_of_fury", 0xEB4632, register("singularity_fury")),
             new Singularity("stone", "pillar_of_stone", 0x96968C, register("singularity_stone")),
-            new Singularity("evernight", "veil_of_evernight", 0x323C6E, register("singularity_evernight")),
+            new Singularity("evernight", "veil_of_evernight", 0x2D3787, register("singularity_evernight")),
             new Singularity("infinity", "gate_of_infinity", 0x50DCC8, register("singularity_infinity")));
 
     /**

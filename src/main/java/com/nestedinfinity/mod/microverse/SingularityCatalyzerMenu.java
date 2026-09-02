@@ -45,7 +45,7 @@ public class SingularityCatalyzerMenu extends AbstractContainerMenu {
         addSlot(new Slot(be, SingularityCatalyzerBlockEntity.SEED_SLOT, 36, 35) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(SingularityCatalyzerBlockEntity.MI_SINGULARITY);
+                return SingularityCatalyzerBlockEntity.isSeed(stack);
             }
         });
         addSlot(new Slot(be, SingularityCatalyzerBlockEntity.CATALYST_SLOT, 54, 35) {
@@ -99,7 +99,7 @@ public class SingularityCatalyzerMenu extends AbstractContainerMenu {
             if (!moveItemStackTo(stack, 3, 39, true)) {
                 return ItemStack.EMPTY;
             }
-        } else if (stack.is(SingularityCatalyzerBlockEntity.MI_SINGULARITY)) {
+        } else if (SingularityCatalyzerBlockEntity.isSeed(stack)) {
             if (!moveItemStackTo(stack, SingularityCatalyzerBlockEntity.SEED_SLOT,
                     SingularityCatalyzerBlockEntity.SEED_SLOT + 1, false)) {
                 return ItemStack.EMPTY;

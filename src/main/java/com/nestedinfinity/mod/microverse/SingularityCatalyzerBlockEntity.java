@@ -75,25 +75,48 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     public static final int KIND_WHIMSY = 4;
     public static final int KIND_FURY = 8;
 
-    /** The catalyst of each kind, in MicroverseItems.SINGULARITIES order. */
-    public static final List<Item> CATALYSTS = List.of(
-            Items.STRING, // gold: spun beside lava
-            BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(
-                    "modern_industrialization", "quantum_circuit")), // rift
-            Items.ALLIUM, // shadow
-            Items.BLUE_CANDLE, // justice
-            Items.GOLD_BLOCK, // whimsy
-            Items.POTION, // plenty: water bottles only (see kindOf)
-            Items.DAYLIGHT_DETECTOR, // twilight
-            Items.GLOWSTONE, // worlds
-            Items.ARROW, // fury
-            Items.DIRT, // stone
-            Items.CLOCK, // evernight
-            Items.FIREWORK_ROCKET); // infinity
+    /** The catalyst of each kind, in MicroverseItems.SINGULARITIES order.
+     * Resolved lazily for the same reason as {@link #MI_SINGULARITY_ID}: an
+     * eager MI lookup in a static initializer can freeze in air. */
+    private static volatile List<Item> catalystCache;
 
-    /** The seed every craft consumes and transmutes: MI's own singularity. */
-    public static final Item MI_SINGULARITY = BuiltInRegistries.ITEM.get(
-            ResourceLocation.fromNamespaceAndPath("modern_industrialization", "singularity"));
+    public static List<Item> catalysts() {
+        List<Item> cache = catalystCache;
+        if (cache == null) {
+            cache = List.of(
+                    Items.STRING, // gold: spun beside lava
+                    BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(
+                            "modern_industrialization", "quantum_circuit")), // rift
+                    Items.ALLIUM, // shadow
+                    Items.BLUE_CANDLE, // justice
+                    Items.GOLD_BLOCK, // whimsy
+                    Items.POTION, // plenty: water bottles only (see kindOf)
+                    Items.DAYLIGHT_DETECTOR, // twilight
+                    Items.GLOWSTONE, // worlds
+                    Items.ARROW, // fury
+                    Items.DIRT, // stone
+                    Items.CLOCK, // evernight
+                    Items.FIREWORK_ROCKET); // infinity
+            catalystCache = cache;
+        }
+        return cache;
+    }
+
+    /** The seed every craft consumes and transmutes: MI's own singularity.
+     * Resolved lazily — this class can class-load before MI's items register,
+     * and an eager lookup would freeze in {@code Items.AIR}. */
+    public static final ResourceLocation MI_SINGULARITY_ID =
+            ResourceLocation.fromNamespaceAndPath("modern_industrialization", "singularity");
+
+    /** The seed item, or air if MI is somehow absent. */
+    public static Item miSingularity() {
+        return BuiltInRegistries.ITEM.get(MI_SINGULARITY_ID);
+    }
+
+    /** Whether the stack is a seed (always re-resolved — see {@link #MI_SINGULARITY_ID}). */
+    public static boolean isSeed(ItemStack stack) {
+        return stack.is(BuiltInRegistries.ITEM.get(MI_SINGULARITY_ID));
+    }
 
     /** Whether the kind's ritual is a one-shot event (primed) or a held state. */
     private static final boolean[] EVENT_RITUAL = {
@@ -142,7 +165,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
 
     /** The singularity kind index this catalyst stack targets, or -1. */
     public static int kindOf(ItemStack stack) {
-        int index = CATALYSTS.indexOf(stack.getItem());
+        int index = catalysts().indexOf(stack.getItem());
         if (index == 5 && !isWaterBottle(stack)) {
             return -1;
         }
@@ -317,7 +340,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
         }
         int kind = kindOf(catalyst);
         ritualState = kind < 0 ? 0
-                : !seed.is(MI_SINGULARITY) ? 3
+                : !isSeed(seed) ? 3
                 : (readyMask & (1 << kind)) != 0 ? 2 : 1;
         if (progress > 0) {
             if (++progress >= TOTAL_TICKS) {
@@ -331,7 +354,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
             return;
         }
         if (kind < 0 || catalyst.getCount() < craftAmount(catalyst)
-                || (readyMask & (1 << kind)) == 0 || !seed.is(MI_SINGULARITY)) {
+                || (readyMask & (1 << kind)) == 0 || !isSeed(seed)) {
             return;
         }
         ItemStack produced = new ItemStack(MicroverseItems.SINGULARITIES.get(kind).item().get(), OUTPUT_AMOUNT);
@@ -500,7 +523,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
         if (slot == SEED_SLOT) {
-            return stack.is(MI_SINGULARITY);
+            return isSeed(stack);
         }
         return slot == CATALYST_SLOT && kindOf(stack) >= 0;
     }

@@ -297,3 +297,35 @@ y xxx y
   轮盘整体旋转 `Δ = 火色色相 − 45°`（暖极落在火色上，冷极随动 150°，形成各火色自己的主/辅双色渐变）；
   低饱和火色（暗影/正义/磐石）按 `min(1, s/0.55)` 缩放彩度得银灰质感。黄金奇点色相与原版几乎重合，
   即"原版渐变 + 四芒星标"。12 张 16×128 贴图全部重生成，逐行色相/明度抽验通过。
+
+### 2026-09-02 追加五（游戏内反馈修复：种子图标 / 页高裁切 / 12 色区分度）
+
+- **催化器 EMI 种子槽空 → 惰性解析**：游戏内种子槽显示为空。根因是 `MI_SINGULARITY`/`CATALYSTS`
+  这类静态常量在类初始化时经 `BuiltInRegistries.ITEM.get` 取 MI 物品，若类加载早于 MI 物品注册，
+  会把 **air 冻结进常量**（rift 页的量子电路催化剂同病）。改为**用时解析**：
+  `miSingularity()` / `isSeed(stack)` / `catalysts()`（volatile 缓存）——BE serverTick、canPlaceItem、
+  Menu mayPlace/quick-move、EMI 页构造全部改走这三个入口，任何时机取值都正确。
+- **催化器 EMI 页底文字被裁 → 页高按实际换行计**：`getDisplayHeight` 原把"时长"文案硬记 1 行，
+  英文 `100s per singularity, no energy` 在 156px 宽度下折 2 行，页高少 10px，最后一行被裁。
+  改为三段文案（时长/条件/模式）都经 `Font.split` 计数，底边距 3→5px。
+- **12 色区分度（三组撞色拉开）**：rift/shadow/twilight 原本 260/266/267° 三紫、evernight/worlds
+  230/217° 两蓝、fury/whimsy 7/333° 红粉。新调板（Python `COREFLAMES` 与 Java `MicroverseItems`
+  双端同步）：
+
+  | 种类 | 新色 | 色相 | 说明 |
+  |---|---|---|---|
+  | rift | `#8A5FF0` | 258° | 鲜靛紫 |
+  | shadow | `#8C3C78` | 315° | 深梅紫（暗、低饱和） |
+  | twilight | `#C85FE1` | 288° | 兰花紫 |
+  | worlds | `#50AAEB` | 205° | 亮蔚蓝 |
+  | evernight | `#2D3787` | 233° | 深海军蓝 |
+  | fury | `#EB4632` | 7° | 正红（更饱和） |
+  | whimsy | `#FA78C8` | 323° | 洋红粉（更浅） |
+
+  组内两两色相差：rift/shadow 57°、rift/twilight 31°、shadow/twilight 27°、evernight/worlds 28°、
+  fury/whimsy 43°（shadow↔whimsy 色相 8° 但亮度 0.39 vs 0.73 深浅分明）。其余 5 色（黄金/正义/
+  丰饶/磐石/无限）不动。像素级复验：12 张奇点贴图饱和像素圆均色相的组间差 29.6–60.7°。
+- **徽章/镶钉换 `lift()` 提亮**：原 `max 通道归一化` 会把暗色系洗成亮粉/亮青（shadow 徽章
+  (255,109,218) 与 whimsy 徽章几乎同色、worlds 镶钉变薄荷青）。改为**向白混合**
+  （徽章 35%、催化器镶钉 25%），保留种类间相对明度；`make_coreflame` 与 GUI tint 本就无此问题。
+  22 张贴图重生成（7 色的方块/GUI/奇点 + 催化器环），逐像素断言通过。

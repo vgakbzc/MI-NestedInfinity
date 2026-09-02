@@ -25,16 +25,16 @@ GUI_TX = os.path.join(TX, 'gui')
 # 12 coreflames: block suffix, singularity key, en, zh, flame color
 COREFLAMES = [
     ("chrysalis_of_gold", "gold", "Chrysalis of Gold", "黄金之茧", (240, 196, 80)),
-    ("bough_of_rift", "rift", "Bough of Rift", "裂隙之枝", (120, 80, 200)),
-    ("hand_of_shadow", "shadow", "Hand of Shadow", "暗影之手", (70, 56, 88)),
+    ("bough_of_rift", "rift", "Bough of Rift", "裂隙之枝", (138, 95, 240)),
+    ("hand_of_shadow", "shadow", "Hand of Shadow", "暗影之手", (140, 60, 120)),
     ("scale_of_justice", "justice", "Scale of Justice", "正义之秤", (210, 214, 220)),
-    ("coin_of_whimsy", "whimsy", "Coin of Whimsy", "狂想之币", (250, 140, 190)),
+    ("coin_of_whimsy", "whimsy", "Coin of Whimsy", "狂想之币", (250, 120, 200)),
     ("chalice_of_plenty", "plenty", "Chalice of Plenty", "丰饶之杯", (110, 210, 120)),
-    ("eye_of_twilight", "twilight", "Eye of Twilight", "暮光之眼", (160, 110, 220)),
-    ("throne_of_worlds", "worlds", "Throne of Worlds", "世界王座", (90, 140, 220)),
-    ("lance_of_fury", "fury", "Lance of Fury", "狂怒之枪", (230, 80, 60)),
+    ("eye_of_twilight", "twilight", "Eye of Twilight", "暮光之眼", (200, 95, 225)),
+    ("throne_of_worlds", "worlds", "Throne of Worlds", "世界王座", (80, 170, 235)),
+    ("lance_of_fury", "fury", "Lance of Fury", "狂怒之枪", (235, 70, 50)),
     ("pillar_of_stone", "stone", "Pillar of Stone", "磐石之柱", (150, 150, 140)),
-    ("veil_of_evernight", "evernight", "Veil of Evernight", "永夜之幕", (50, 60, 110)),
+    ("veil_of_evernight", "evernight", "Veil of Evernight", "永夜之幕", (45, 55, 135)),
     ("gate_of_infinity", "infinity", "Gate of Infinity", "无限之门", (80, 220, 200)),
 ]
 
@@ -70,6 +70,13 @@ MATTERS = [
 
 def shade(c, f):
     return tuple(max(0, min(255, int(v * f))) for v in c)
+
+
+def lift(c, f):
+    """Blend toward white while keeping the relative lightness between
+    kinds — max-channel normalization would turn every dark flame
+    (shadow, evernight) into the same bright pastel."""
+    return tuple(max(0, min(255, int(v + (255 - v) * f))) for v in c)
 
 
 class Canvas:
@@ -215,7 +222,7 @@ def save_singularity_texture(key, color):
     fh, _fl, fs = colorsys.rgb_to_hls(color[0] / 255, color[1] / 255, color[2] / 255)
     shift = (fh - 45 / 360) % 1.0  # vanilla's warm pole sits around 45 degrees
     chroma = min(1.0, fs / 0.55)  # vivid flames keep vanilla chroma, muted ones go silvery
-    bright = tuple(min(255, int(c * 255 / (max(color) or 1))) for c in color)
+    bright = lift(color, 0.35)  # badge tint: readable on any hue, still kind-true
     out = Image.new('RGBA', (w, h))
     bp, op = base.load(), out.load()
     for y in range(h):
@@ -249,7 +256,7 @@ def make_catalyzer(canvas):
         angle = 2 * math.pi * k / 12
         x = int(round(7.5 + 4.8 * math.cos(angle)))
         y = int(round(7.5 + 4.8 * math.sin(angle)))
-        canvas.px(x, y, tuple(min(255, int(v * 255 / (max(c) or 1))) for v in c))
+        canvas.px(x, y, lift(c, 0.25))  # 1px studs: pop on the casing, keep kind lightness
     for y in range(16):
         for x in range(16):
             d = ((x - 7.5) ** 2 + (y - 7.5) ** 2) ** 0.5

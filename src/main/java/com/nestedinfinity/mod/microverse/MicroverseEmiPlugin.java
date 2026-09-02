@@ -172,18 +172,20 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
         private final EmiStack seed;
         private final EmiStack catalyst;
         private final EmiStack output;
+        private final Component time;
         private final Component condition;
         private final Component mode;
 
         CatalyzerRecipe(int index) {
             this.index = index;
             var singularity = MicroverseItems.SINGULARITIES.get(index);
-            var item = SingularityCatalyzerBlockEntity.CATALYSTS.get(index);
+            var item = SingularityCatalyzerBlockEntity.catalysts().get(index);
             long amount = Math.min(SingularityCatalyzerBlockEntity.CRAFT_AMOUNT,
                     new net.minecraft.world.item.ItemStack(item).getMaxStackSize());
-            this.seed = EmiStack.of(SingularityCatalyzerBlockEntity.MI_SINGULARITY);
+            this.seed = EmiStack.of(SingularityCatalyzerBlockEntity.miSingularity());
             this.catalyst = EmiStack.of(item, amount);
             this.output = EmiStack.of(singularity.item().get(), SingularityCatalyzerBlockEntity.OUTPUT_AMOUNT);
+            this.time = Component.translatable("emi.mi_nested_infinity.catalyzer.time");
             this.condition = Component.translatable(
                     "emi.mi_nested_infinity.catalyzer.condition." + singularity.key());
             this.mode = Component.translatable("emi.mi_nested_infinity.catalyzer."
@@ -240,8 +242,12 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
         @Override
         public int getDisplayHeight() {
             Font font = Minecraft.getInstance().font;
-            int lines = 1 + font.split(condition, TEXT_WIDTH).size() + font.split(mode, TEXT_WIDTH).size();
-            return TEXT_Y + lines * LINE_HEIGHT + 2 * GROUP_GAP + 3;
+            // every group wraps on its own — the time line wraps too in English,
+            // and a hardcoded count clipped the page's last line in game
+            int lines = font.split(time, TEXT_WIDTH).size()
+                    + font.split(condition, TEXT_WIDTH).size()
+                    + font.split(mode, TEXT_WIDTH).size();
+            return TEXT_Y + lines * LINE_HEIGHT + 2 * GROUP_GAP + 5;
         }
 
         @Override
@@ -260,8 +266,7 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
             for (int i = 0; i < icons.size(); i++) {
                 widgets.addSlot(icons.get(i), 6 + i * 18, 22);
             }
-            int y = addWrappedText(widgets, Component.translatable("emi.mi_nested_infinity.catalyzer.time"),
-                    TEXT_X, TEXT_Y) + GROUP_GAP;
+            int y = addWrappedText(widgets, time, TEXT_X, TEXT_Y) + GROUP_GAP;
             y = addWrappedText(widgets, condition, TEXT_X, y) + GROUP_GAP;
             addWrappedText(widgets, mode, TEXT_X, y);
         }
