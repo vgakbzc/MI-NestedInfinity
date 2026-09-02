@@ -255,19 +255,42 @@ def make_matter(canvas, color, seed):
             canvas.px(sx, sy, (255, 255, 255))
 
 
-def make_gui(path, width, height, slots):
-    canvas = Canvas(width, height)
-    canvas.fill((198, 198, 198))
-    canvas.border((198, 198, 198))
+def gui_slot_well(canvas, x, y):
+    """An 18x18 vanilla-style slot well at (x, y) (one pixel up-left of the 16x16 item)."""
+    for yy in range(y, y + 18):
+        for xx in range(x, x + 18):
+            if xx == x or yy == y:
+                canvas.px(xx, yy, (55, 55, 55))
+            elif xx == x + 17 or yy == y + 17:
+                canvas.px(xx, yy, (255, 255, 255))
+            else:
+                canvas.px(xx, yy, (139, 139, 139))
+
+
+def inventory_wells(y_top):
+    """Slot wells for the 3x9 player inventory at y_top and the hotbar 4 rows down."""
+    return [(7 + c * 18, y_top + r * 18) for r in range(3) for c in range(9)] + \
+           [(7 + c * 18, y_top + 58) for c in range(9)]
+
+
+def make_gui(path, height, slots):
+    # The 8-arg GuiGraphics.blit samples as if the source texture were
+    # 256x256, so the panel must sit in the top-left corner of a 256x256
+    # canvas (same as the resonance attuner texture); the rest stays
+    # transparent.
+    canvas = Canvas(256, 256)
+    for y in range(height):
+        for x in range(176):
+            canvas.px(x, y, (198, 198, 198))
+    # beveled panel edge: light top/left, dark bottom/right
+    for x in range(176):
+        canvas.px(x, 0, (247, 247, 247))
+        canvas.px(x, height - 1, (118, 118, 118))
+    for y in range(height):
+        canvas.px(0, y, (247, 247, 247))
+        canvas.px(175, y, (118, 118, 118))
     for x, y in slots:
-        for yy in range(y, y + 18):
-            for xx in range(x, x + 18):
-                if xx == x or yy == y:
-                    canvas.px(xx, yy, (55, 55, 55))
-                elif xx == x + 17 or yy == y + 17:
-                    canvas.px(xx, yy, (255, 255, 255))
-                else:
-                    canvas.px(xx, yy, (139, 139, 139))
+        gui_slot_well(canvas, x, y)
     canvas.save(path)
 
 
@@ -387,10 +410,13 @@ def main():
         save_item_texture(mid, make_matter, color, i)
         item_model(mid)
 
-    # GUI backgrounds (slot positions mirror the two menus)
-    make_gui(os.path.join(GUI_TX, 'coreflame.png'), 176, 166, [(79, 17)])
-    make_gui(os.path.join(GUI_TX, 'microverse_projector.png'), 176, 184,
-             [(7, 23), (7, 59), (150, 41)])
+    # GUI backgrounds (slot positions mirror the two menus: item slot (80,35)
+    # -> well (79,34); player inventory starts at y=84 for the coreflame and
+    # y=102 for the projector)
+    make_gui(os.path.join(GUI_TX, 'coreflame.png'), 166,
+             [(79, 34)] + inventory_wells(83))
+    make_gui(os.path.join(GUI_TX, 'microverse_projector.png'), 184,
+             [(7, 23), (7, 59), (150, 41)] + inventory_wells(101))
 
     write_lang()
     print('microverse assets written')
