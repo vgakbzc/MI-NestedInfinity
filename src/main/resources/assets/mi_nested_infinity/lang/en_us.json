@@ -1265,5 +1265,8 @@
   "container.mi_nested_infinity.microverse_projector.problem_tdu_mixed": "Structure problem: time dilation units have mixed tiers",
   "container.mi_nested_infinity.microverse_projector.problem_coreflame_missing": "Structure problem: a coreflame is missing",
   "container.mi_nested_infinity.microverse_projector.problem_coreflame_duplicate": "Structure problem: duplicate coreflame kind",
-  "block.mi_nested_infinity.creative_energy_source": "Creative Energy Source"
+  "block.mi_nested_infinity.creative_energy_source": "Creative Energy Source",
+  "container.mi_nested_infinity.microverse_projector.slot_heart": "Heart of a Nonexistent World goes here",
+  "container.mi_nested_infinity.microverse_projector.slot_balls": "Giant matter balls (also auto-drawn from item input hatches)",
+  "container.mi_nested_infinity.microverse_projector.slot_output": "Universe matter output"
 }

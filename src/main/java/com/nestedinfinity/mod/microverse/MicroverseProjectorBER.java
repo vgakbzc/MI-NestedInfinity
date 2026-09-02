@@ -42,19 +42,27 @@ public class MicroverseProjectorBER implements BlockEntityRenderer<MicroversePro
         poseStack.translate(0.5, CENTER_Y, 0.5);
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.endPortal());
         var pose = poseStack.last().pose();
+        // the end-portal buffer draws QUADS (4 vertices per primitive), so
+        // each triangle is emitted as a quad with its first vertex repeated:
+        // the quad's second triangle degenerates and never rasterizes. Both
+        // windings go out because the starfield shader's cull state is not
+        // ours to rely on (same trick vanilla's EndPortalRenderer uses).
         for (int[] tri : TRIANGLES) {
-            // both windings: the starfield shader's face culling state is not ours to rely on
-            for (int i = 0; i < 3; i++) {
-                emit(consumer, pose, VERTICES[tri[i]], radius);
-            }
-            for (int i = 2; i >= 0; i--) {
-                emit(consumer, pose, VERTICES[tri[i]], radius);
-            }
+            emitTri(consumer, pose, tri, 0, 1, 2, radius);
+            emitTri(consumer, pose, tri, 0, 2, 1, radius);
         }
         poseStack.popPose();
     }
 
-    private static void emit(VertexConsumer consumer, org.joml.Matrix4f pose, float[] v, float radius) {
+    private static void emitTri(VertexConsumer consumer, org.joml.Matrix4f pose,
+            int[] tri, int a, int b, int c, float radius) {
+        vertex(consumer, pose, VERTICES[tri[a]], radius);
+        vertex(consumer, pose, VERTICES[tri[b]], radius);
+        vertex(consumer, pose, VERTICES[tri[c]], radius);
+        vertex(consumer, pose, VERTICES[tri[a]], radius);
+    }
+
+    private static void vertex(VertexConsumer consumer, org.joml.Matrix4f pose, float[] v, float radius) {
         consumer.addVertex(pose, v[0] * radius, v[1] * radius, v[2] * radius);
     }
 

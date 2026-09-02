@@ -73,7 +73,12 @@ public class CoreflameBER implements BlockEntityRenderer<CoreflameBlockEntity> {
             float ny = VERTS[face[0]][1] + VERTS[face[1]][1] + VERTS[face[2]][1];
             float nz = VERTS[face[0]][2] + VERTS[face[1]][2] + VERTS[face[2]][2];
             float len = (float) Math.sqrt(nx * nx + ny * ny + nz * nz);
-            for (int i : face) {
+            // the buffer draws QUADS (4 vertices per primitive): emit each
+            // triangle with its first vertex repeated, so the quad's second
+            // triangle (v2, v0, v0) is degenerate and only the intended
+            // triangle rasterizes
+            for (int k = 0; k < 4; k++) {
+                int i = k < 3 ? face[k] : face[0];
                 consumer.addVertex(pose.pose(), VERTS[i][0] * RADIUS, VERTS[i][1] * RADIUS, VERTS[i][2] * RADIUS)
                         .setColor(r, g, b, 255)
                         .setUv(0.5F, 0.5F)

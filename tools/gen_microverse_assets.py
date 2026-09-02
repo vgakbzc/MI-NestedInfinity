@@ -469,8 +469,10 @@ def main():
     for suffix, _key, _en, _zh, color in COREFLAMES:
         make_gui(os.path.join(GUI_TX, 'coreflame_' + suffix + '.png'), 166,
                  coreflame_slots, tint=color)
+    # projector: heart (8,26) and output (151,26) flank the light strip, the
+    # balls slot (8,58) sits beside the extend button
     make_gui(os.path.join(GUI_TX, 'microverse_projector.png'), 184,
-             [(7, 23), (7, 59), (150, 41)] + inventory_wells(101))
+             [(7, 25), (7, 57), (150, 25)] + inventory_wells(101))
 
     # creative energy source (creative-only, no recipe)
     save_block_texture('creative_energy_source', make_creative_source)
@@ -522,6 +524,12 @@ def write_lang():
     zh[gui + 'accrued'] = '已积累:%s'
     en[gui + 'return_chance'] = 'Singularity return: %s%%'
     zh[gui + 'return_chance'] = '奇点返还率:%s%%'
+    en[gui + 'slot_heart'] = 'Heart of a Nonexistent World goes here'
+    zh[gui + 'slot_heart'] = '在此放入创世之心'
+    en[gui + 'slot_balls'] = 'Giant matter balls (also auto-drawn from item input hatches)'
+    zh[gui + 'slot_balls'] = '巨型物质球（也会自动从物品输入仓提取）'
+    en[gui + 'slot_output'] = 'Universe matter output'
+    zh[gui + 'slot_output'] = '宇宙物质输出口'
     problems_en = {
         'unchecked': 'structure not checked yet',
         'layer1': 'bottom layer incomplete',

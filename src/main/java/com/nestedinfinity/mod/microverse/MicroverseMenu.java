@@ -52,7 +52,7 @@ public class MicroverseMenu extends AbstractContainerMenu {
         this.data = data;
         addDataSlots(data);
 
-        addSlot(new Slot(be, MicroverseProjectorBlockEntity.HEART_SLOT, 8, 24) {
+        addSlot(new Slot(be, MicroverseProjectorBlockEntity.HEART_SLOT, 8, 26) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return be.canPlaceItem(MicroverseProjectorBlockEntity.HEART_SLOT, stack);
@@ -63,13 +63,13 @@ public class MicroverseMenu extends AbstractContainerMenu {
                 return !be.isRunning();
             }
         });
-        addSlot(new Slot(be, MicroverseProjectorBlockEntity.BALL_SLOT, 8, 60) {
+        addSlot(new Slot(be, MicroverseProjectorBlockEntity.BALL_SLOT, 8, 58) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return be.canPlaceItem(MicroverseProjectorBlockEntity.BALL_SLOT, stack);
             }
         });
-        addSlot(new Slot(be, MicroverseProjectorBlockEntity.OUTPUT_SLOT, 151, 42) {
+        addSlot(new Slot(be, MicroverseProjectorBlockEntity.OUTPUT_SLOT, 151, 26) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;

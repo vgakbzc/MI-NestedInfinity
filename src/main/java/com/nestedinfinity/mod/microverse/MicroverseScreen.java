@@ -10,26 +10,32 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * The projector screen: the three machine slots on the left rail, a strip
- * of the twelve coreflame lights across the middle, live countdown /
- * accrual / return-chance readouts, and the "extend" button with its
- * current giant-matter-ball price.
+ * The projector screen: one row with the heart slot, the strip of twelve
+ * coreflame lights and the output slot, then a centered countdown, the ball
+ * slot with the "extend" button beside it, and one centered info line
+ * (accrued matter while running, singularity return chance when ready).
  */
 public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
             NestedInfinity.MODID, "textures/gui/microverse_projector.png");
 
-    private static final int LIGHT_X = 30;
-    private static final int LIGHT_Y = 36;
+    /** The lights share their row with the heart and output slots (center y 34). */
+    private static final int LIGHT_X = 29;
+    private static final int LIGHT_Y = 30;
     private static final int LIGHT_SIZE = 8;
     private static final int LIGHT_STEP = 10;
+
+    private static final int COUNTDOWN_Y = 44;
+    private static final int BUTTON_X = 30;
+    private static final int BUTTON_Y = 58;
+    private static final int BUTTON_W = 138;
+    private static final int INFO_Y = 80;
 
     private Button extendButton;
 
     public MicroverseScreen(MicroverseMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         this.imageHeight = 184;
-        this.inventoryLabelY = 108;
     }
 
     @Override
@@ -44,7 +50,7 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
                                 MicroverseMenu.EXTEND_BUTTON);
                     }
                 })
-                .bounds(leftPos + 62, topPos + 58, 104, 18)
+                .bounds(leftPos + BUTTON_X, topPos + BUTTON_Y, BUTTON_W, 18)
                 .build());
     }
 
@@ -106,19 +112,33 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
         if (running) {
             int remaining = menu.data(MicroverseMenu.DATA_REMAINING);
             // while running, exactly the burned flame's bit is clear in the mask
-            graphics.drawString(font, Component.translatable(
+            drawCentered(graphics, Component.translatable(
                     "container.mi_nested_infinity.microverse_projector.countdown",
                     String.format("%.1f", remaining / 20.0)),
-                    leftPos + 30, topPos + 48, burnedFlameColor(mask), false);
-            graphics.drawString(font, Component.translatable(
+                    COUNTDOWN_Y, burnedFlameColor(mask));
+            drawCentered(graphics, Component.translatable(
                     "container.mi_nested_infinity.microverse_projector.accrued",
                     menu.data(MicroverseMenu.DATA_ACCRUED)),
-                    leftPos + 30, topPos + 80, 0x404040, false);
+                    INFO_Y, 0x404040);
         } else if (ok) {
-            int chance = menu.data(MicroverseMenu.DATA_RETURN_CHANCE);
-            graphics.drawString(font, Component.translatable(
-                    "container.mi_nested_infinity.microverse_projector.return_chance", chance),
-                    leftPos + 62, topPos + 42, 0x604040, false);
+            drawCentered(graphics, Component.translatable(
+                    "container.mi_nested_infinity.microverse_projector.return_chance",
+                    menu.data(MicroverseMenu.DATA_RETURN_CHANCE)),
+                    INFO_Y, 0x604040);
+        }
+
+        // function hints for the machine's own slots while they are empty
+        // (occupied slots get the item's tooltip from renderTooltip below)
+        if (this.hoveredSlot != null && this.hoveredSlot.index < 3 && !this.hoveredSlot.hasItem()) {
+            String key = switch (this.hoveredSlot.index) {
+                case MicroverseProjectorBlockEntity.HEART_SLOT ->
+                        "container.mi_nested_infinity.microverse_projector.slot_heart";
+                case MicroverseProjectorBlockEntity.BALL_SLOT ->
+                        "container.mi_nested_infinity.microverse_projector.slot_balls";
+                default ->
+                        "container.mi_nested_infinity.microverse_projector.slot_output";
+            };
+            graphics.renderTooltip(font, Component.translatable(key), mouseX, mouseY);
         }
 
         // 1.21.1's AbstractContainerScreen.render no longer draws slot
@@ -130,6 +150,10 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
     private static String problemKey(MicroverseMenu menu) {
         String problem = menu.getBlockEntity().structureProblem();
         return problem == null || problem.isEmpty() || "unchecked".equals(problem) ? "unchecked" : problem;
+    }
+
+    private void drawCentered(GuiGraphics graphics, Component text, int y, int color) {
+        graphics.drawString(font, text, leftPos + (imageWidth - font.width(text)) / 2, topPos + y, color, false);
     }
 
     /** The flame's own signature color (see {@link MicroverseItems.SINGULARITIES}). */
