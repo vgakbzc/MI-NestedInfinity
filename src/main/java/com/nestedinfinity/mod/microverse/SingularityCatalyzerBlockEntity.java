@@ -50,9 +50,11 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
  * <p>Rituals split into polled states (gold's two faces of lava, rift's log
  * and leaves, plenty's world floor, twilight's open sky at Y&ge;315, worlds'
  * top light &ge;13, stone's four base stones, evernight's rail, infinity's
- * door) and one-shot events that arm the machine for one craft (shadow's
- * nearby death, justice's snuffed adjacent flame, whimsy's gold block
- * vanishing while no player watches, fury's arrow strike).
+ * door) and one-shot events that permanently unlock their kind on this
+ * machine (shadow's nearby death, justice's snuffed adjacent flame, whimsy's
+ * gold block vanishing while no player watches, fury's arrow strike) — once
+ * a kind is unlocked it stays craftable here forever. State rituals and the
+ * craft-start check are reevaluated every {@link #RITUAL_INTERVAL} ticks.
  */
 public class SingularityCatalyzerBlockEntity extends BlockEntity implements WorldlyContainer, MenuProvider {
     public static final int INPUT_SLOT = 0;
@@ -60,6 +62,14 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     public static final int TOTAL_TICKS = 2000;
     /** Catalysts are consumed a stack at a time; potions only stack to 16. */
     public static final int CRAFT_AMOUNT = 64;
+    /** Rituals are polled every 8 ticks, not every tick. */
+    public static final int RITUAL_INTERVAL = 8;
+
+    /** Ritual kind indexes with one-shot (event) rituals. */
+    public static final int KIND_SHADOW = 2;
+    public static final int KIND_JUSTICE = 3;
+    public static final int KIND_WHIMSY = 4;
+    public static final int KIND_FURY = 8;
 
     /** The catalyst of each kind, in MicroverseItems.SINGULARITIES order. */
     public static final List<Item> CATALYSTS = List.of(
@@ -89,8 +99,10 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     /** What a running craft will emit; the catalyst was already burned. */
     private ItemStack pendingOutput = ItemStack.EMPTY;
     private int progress;
-    /** Armed by a one-shot ritual event, spent when the craft starts. */
-    private boolean primed;
+    /** One-shot rituals permanently unlocked on this machine, bit per kind. */
+    private int primedMask;
+    /** Ritual readiness cache, refreshed every {@link #RITUAL_INTERVAL} ticks. */
+    private int readyMask;
     /** Face bitmask of adjacent flames / gold blocks, to catch them vanishing. */
     private int flameMask;
     private int goldMask;
@@ -114,7 +126,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
         }
         for (SingularityCatalyzerBlockEntity be : LOADED) {
             if (be.level == entity.level() && be.worldPosition.distSqr(entity.blockPosition()) <= 25) {
-                be.prime();
+                be.prime(KIND_SHADOW);
             }
         }
     }
@@ -137,18 +149,17 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
         return Math.min(CRAFT_AMOUNT, catalyst.getMaxStackSize());
     }
 
-    public void prime() {
-        if (!primed) {
-            primed = true;
+    /** Permanently unlocks a one-shot ritual kind on this machine. */
+    public void prime(int kind) {
+        int bit = 1 << kind;
+        if ((primedMask & bit) == 0) {
+            primedMask |= bit;
+            readyMask |= bit;
             setChanged();
         }
     }
 
     // -- the twelve rituals ---------------------------------------------------
-
-    private boolean ritualReady(int kind) {
-        return EVENT_RITUAL[kind] ? primed : stateRitualHolds(kind);
-    }
 
     private boolean stateRitualHolds(int kind) {
         if (level == null) {
@@ -234,10 +245,10 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
             flameMask = flame ? flameMask | bit : flameMask & ~bit;
             goldMask = gold ? goldMask | bit : goldMask & ~bit;
             if (wasFlame && !flame) {
-                prime(); // justice: the flame was snuffed or broken
+                prime(KIND_JUSTICE); // the flame was snuffed or broken
             }
             if (wasGold && !gold && !playerNearby()) {
-                prime(); // whimsy: gold spirited away unseen
+                prime(KIND_WHIMSY); // gold spirited away unseen
             }
             setChanged();
         }
@@ -292,8 +303,11 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
             return;
         }
         scanNeighbors();
+        if (level.getGameTime() % RITUAL_INTERVAL == 0) {
+            refreshRituals();
+        }
         int kind = kindOf(input);
-        ritualState = kind < 0 ? 0 : ritualReady(kind) ? 2 : 1;
+        ritualState = kind < 0 ? 0 : (readyMask & (1 << kind)) != 0 ? 2 : 1;
         if (progress > 0) {
             if (++progress >= TOTAL_TICKS) {
                 progress = 0;
@@ -305,16 +319,13 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
             }
             return;
         }
-        if (kind < 0 || input.getCount() < craftAmount(input) || !ritualReady(kind)) {
+        if (kind < 0 || input.getCount() < craftAmount(input) || (readyMask & (1 << kind)) == 0) {
             return;
         }
         ItemStack produced = new ItemStack(MicroverseItems.SINGULARITIES.get(kind).item().get());
         if (!output.isEmpty() && (!ItemStack.isSameItemSameComponents(output, produced)
                 || output.getCount() >= output.getMaxStackSize())) {
             return;
-        }
-        if (EVENT_RITUAL[kind]) {
-            primed = false; // the one-shot ritual is spent
         }
         input = input.copyWithCount(input.getCount() - craftAmount(input));
         if (input.getCount() <= 0) {
@@ -324,6 +335,19 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
         progress = 1;
         setChanged();
         sync();
+    }
+
+    /** Recomputes the readiness bitmask (states polled, events stay latched). */
+    private void refreshRituals() {
+        int mask = primedMask;
+        for (int kind = 0; kind < MicroverseItems.SINGULARITIES.size(); kind++) {
+            if (!EVENT_RITUAL[kind] && stateRitualHolds(kind)) {
+                mask |= 1 << kind;
+            }
+        }
+        if (mask != readyMask) {
+            readyMask = mask;
+        }
     }
 
     private void emitPending() {
@@ -359,6 +383,11 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     /** 0 = no target, 1 = ritual not holding, 2 = ritual ready. */
     public int getRitualState() {
         return ritualState;
+    }
+
+    /** Bit per kind: ritual completed/unlocked right now (for the GUI lights). */
+    public int getReadyMask() {
+        return readyMask;
     }
 
     @Override
@@ -495,7 +524,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
             tag.put("pending", pendingOutput.save(registries));
         }
         tag.putInt("progress", progress);
-        tag.putBoolean("primed", primed);
+        tag.putInt("primed_mask", primedMask);
         tag.putInt("flame_mask", flameMask);
         tag.putInt("gold_mask", goldMask);
     }
@@ -507,7 +536,8 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
         output = ItemStack.parseOptional(registries, tag.getCompound("output"));
         pendingOutput = ItemStack.parseOptional(registries, tag.getCompound("pending"));
         progress = Math.max(0, tag.getInt("progress"));
-        primed = tag.getBoolean("primed");
+        primedMask = tag.getInt("primed_mask");
+        readyMask = primedMask; // states refresh on the next poll
         flameMask = tag.getInt("flame_mask");
         goldMask = tag.getInt("gold_mask");
         neighborsScanned = false; // rescan from the live world

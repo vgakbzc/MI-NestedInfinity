@@ -83,7 +83,7 @@ public class SingularityCatalyzerBlock extends BaseEntityBlock {
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
         if (!level.isClientSide() && projectile instanceof AbstractArrow
                 && level.getBlockEntity(hit.getBlockPos()) instanceof SingularityCatalyzerBlockEntity catalyzer) {
-            catalyzer.prime();
+            catalyzer.prime(SingularityCatalyzerBlockEntity.KIND_FURY);
         }
     }
 }

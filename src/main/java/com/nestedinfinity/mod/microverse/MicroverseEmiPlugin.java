@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluids;
 
 /**
  * EMI integration for the microverse program: a graphical recipe page per
@@ -138,6 +141,7 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
     /** The catalyzer: a stack of the kind's catalyst + its ritual -> singularity. */
     private static final class CatalyzerRecipe implements EmiRecipe {
         private static final int WIDTH = 168;
+        private static final int HEIGHT = 71;
 
         private final int index;
         private final EmiStack catalyst;
@@ -150,6 +154,28 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
                     new net.minecraft.world.item.ItemStack(item).getMaxStackSize());
             this.catalyst = EmiStack.of(item, amount);
             this.output = EmiStack.of(MicroverseItems.SINGULARITIES.get(index).item().get());
+        }
+
+        /** A few graphical hints of what the ritual involves (icons only). */
+        private static List<EmiIngredient> ritualIcons(int index) {
+            return switch (index) {
+                case 0 -> List.of(EmiStack.of(Fluids.LAVA, 1000), EmiStack.of(Fluids.LAVA, 1000)); // two faces
+                case 1 -> List.of(EmiIngredient.of(ItemTags.LOGS), EmiIngredient.of(ItemTags.LEAVES));
+                case 2 -> List.of(EmiStack.of(Items.BONE)); // a death nearby
+                case 3 -> List.of(EmiStack.of(Items.CANDLE), EmiStack.of(Items.TORCH),
+                        EmiStack.of(Items.CAMPFIRE)); // the snuffable flames
+                case 4 -> List.of(EmiStack.of(Items.GOLD_BLOCK)); // spirited away unseen
+                case 5 -> List.of(EmiStack.of(Items.BEDROCK)); // the world floor
+                case 6 -> List.of(EmiStack.of(Items.SPYGLASS)); // open sky at the top
+                case 7 -> List.of(EmiStack.of(Items.SEA_LANTERN)); // light >= 13
+                case 8 -> List.of(EmiStack.of(Items.BOW)); // struck by an arrow
+                case 9 -> List.of(EmiIngredient.of(java.util.Arrays.asList( // four different kinds
+                        EmiStack.of(Items.STONE), EmiStack.of(Items.GRANITE), EmiStack.of(Items.DIORITE),
+                        EmiStack.of(Items.ANDESITE), EmiStack.of(Items.DEEPSLATE), EmiStack.of(Items.TUFF))));
+                case 10 -> List.of(EmiIngredient.of(ItemTags.RAILS));
+                case 11 -> List.of(EmiIngredient.of(ItemTags.DOORS));
+                default -> List.of();
+            };
         }
 
         @Override
@@ -179,7 +205,7 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
 
         @Override
         public int getDisplayHeight() {
-            return 42;
+            return HEIGHT;
         }
 
         @Override
@@ -192,10 +218,23 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
             widgets.addSlot(catalyst, 52, 0);
             widgets.addFillingArrow(74, 1, 20000);
             widgets.addSlot(output, 98, 0);
+            List<EmiIngredient> icons = ritualIcons(index);
+            for (int i = 0; i < icons.size(); i++) {
+                widgets.addSlot(icons.get(i), 6 + i * 18, 22);
+            }
             widgets.addText(Component.translatable("emi.mi_nested_infinity.catalyzer.time"),
-                    6, 22, TEXT_COLOR, false);
+                    6, 44, TEXT_COLOR, false);
             widgets.addText(Component.translatable("emi.mi_nested_infinity.catalyzer.condition."
-                    + MicroverseItems.SINGULARITIES.get(index).key()), 6, 31, TEXT_COLOR, false);
+                    + MicroverseItems.SINGULARITIES.get(index).key()), 6, 53, TEXT_COLOR, false);
+            widgets.addText(Component.translatable("emi.mi_nested_infinity.catalyzer."
+                    + (eventRitual(index) ? "once" : "state")), 6, 62, TEXT_COLOR, false);
+        }
+
+        private static boolean eventRitual(int index) {
+            return index == SingularityCatalyzerBlockEntity.KIND_SHADOW
+                    || index == SingularityCatalyzerBlockEntity.KIND_JUSTICE
+                    || index == SingularityCatalyzerBlockEntity.KIND_WHIMSY
+                    || index == SingularityCatalyzerBlockEntity.KIND_FURY;
         }
     }
 

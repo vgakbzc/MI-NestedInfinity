@@ -14,13 +14,14 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * The catalyzer GUI: catalyst stack in on the left, singularities out on the
- * right. Two data ints keep the screen's progress bar and ritual status line
- * live.
+ * right. Three data ints keep the screen's progress bar, ritual status line
+ * and the twelve ritual lights live.
  */
 public class SingularityCatalyzerMenu extends AbstractContainerMenu {
     public static final int DATA_PROGRESS = 0;
     public static final int DATA_RITUAL = 1;
-    private static final int DATA_SIZE = 2;
+    public static final int DATA_READY_MASK = 2;
+    private static final int DATA_SIZE = 3;
 
     private final SingularityCatalyzerBlockEntity blockEntity;
     private final ContainerData data;
@@ -126,6 +127,7 @@ public class SingularityCatalyzerMenu extends AbstractContainerMenu {
             return switch (index) {
                 case DATA_PROGRESS -> be.getProgress();
                 case DATA_RITUAL -> be.getRitualState();
+                case DATA_READY_MASK -> be.getReadyMask();
                 default -> 0;
             };
         }

@@ -1312,5 +1312,7 @@
   "container.mi_nested_infinity.singularity_catalyzer.condition.evernight": "A rail on any face",
   "emi.mi_nested_infinity.catalyzer.condition.evernight": "A rail on any face",
   "container.mi_nested_infinity.singularity_catalyzer.condition.infinity": "A door on any face",
-  "emi.mi_nested_infinity.catalyzer.condition.infinity": "A door on any face"
+  "emi.mi_nested_infinity.catalyzer.condition.infinity": "A door on any face",
+  "emi.mi_nested_infinity.catalyzer.once": "One-shot: completing it unlocks this kind here forever",
+  "emi.mi_nested_infinity.catalyzer.state": "Must hold when the craft starts (checked every 8 ticks)"
 }

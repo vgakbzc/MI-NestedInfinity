@@ -12,13 +12,22 @@ import net.minecraft.world.item.ItemStack;
  * Catalyst slot on the left, singularity slot on the right, a progress bar
  * filling the arrow groove between them, and one status line under the arrow
  * naming the targeted singularity kind in its flame color together with the
- * ritual state. Hovering the input slot always shows the kind's ritual.
+ * ritual state. A twelve-light strip under the title shows every ritual —
+ * lit in the flame's color once completed (one-shot rituals stay lit:
+ * completing one permanently unlocks that kind on this machine). Hovering
+ * the input slot or a light shows the kind's ritual.
  */
 public class SingularityCatalyzerScreen extends AbstractContainerScreen<SingularityCatalyzerMenu> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
             NestedInfinity.MODID, "textures/gui/singularity_catalyzer.png");
 
-    /** The light bar fills this slice of the groove painted in the texture. */
+    /** The light bar sits between the title and the slot row. */
+    private static final int LIGHT_Y = 18;
+    private static final int LIGHT_SIZE = 8;
+    private static final int LIGHT_STEP = 10;
+    private static final int LIGHT_X = (176 - (12 * LIGHT_STEP - (LIGHT_STEP - LIGHT_SIZE))) / 2;
+
+    /** The progress bar fills this slice of the groove painted in the texture. */
     private static final int BAR_X = 74;
     private static final int BAR_Y = 40;
     private static final int BAR_MAX_W = 20;
@@ -42,6 +51,25 @@ public class SingularityCatalyzerScreen extends AbstractContainerScreen<Singular
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
+
+        // the twelve ritual lights: flame color when completed/unlocked
+        int mask = menu.data(SingularityCatalyzerMenu.DATA_READY_MASK);
+        for (int i = 0; i < 12; i++) {
+            int x = leftPos + LIGHT_X + i * LIGHT_STEP;
+            int y = topPos + LIGHT_Y;
+            boolean lit = (mask & (1 << i)) != 0;
+            int color = lit ? MicroverseItems.SINGULARITIES.get(i).color() : 0x2A2A2E;
+            graphics.fill(x, y, x + LIGHT_SIZE, y + LIGHT_SIZE, 0xFF000000 | color);
+            graphics.renderOutline(x, y, LIGHT_SIZE, LIGHT_SIZE, lit ? 0xFFFFFFFF : 0xFF555560);
+            if (mouseX >= x && mouseX < x + LIGHT_SIZE && mouseY >= y && mouseY < y + LIGHT_SIZE) {
+                var kind = MicroverseItems.SINGULARITIES.get(i);
+                java.util.List<Component> tooltip = java.util.List.of(
+                        Component.translatable("item.mi_nested_infinity.singularity_" + kind.key()),
+                        Component.translatable("container.mi_nested_infinity.singularity_catalyzer.condition."
+                                + kind.key()).withStyle(net.minecraft.ChatFormatting.GRAY));
+                graphics.renderComponentTooltip(font, tooltip, mouseX, mouseY);
+            }
+        }
 
         int progress = menu.data(SingularityCatalyzerMenu.DATA_PROGRESS);
         int width = Math.round(BAR_MAX_W * (float) progress / SingularityCatalyzerBlockEntity.TOTAL_TICKS);
