@@ -7,20 +7,27 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import com.nestedinfinity.mod.NestedInfinity;
 
-/** One slot over a plain background; the title says which flame this is. */
+/** One slot over a flame-tinted background; the title says which flame this is. */
 public class CoreflameScreen extends AbstractContainerScreen<CoreflameMenu> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+    private static final ResourceLocation DEFAULT_TEXTURE = ResourceLocation.fromNamespaceAndPath(
             NestedInfinity.MODID, "textures/gui/coreflame.png");
+
+    private final ResourceLocation texture;
 
     public CoreflameScreen(CoreflameMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         this.imageHeight = 166;
         this.inventoryLabelY = 72;
+        int flame = MicroverseBlocks.coreflameIndex(menu.getBlockEntity().getBlockState().getBlock());
+        this.texture = flame >= 0
+                ? ResourceLocation.fromNamespaceAndPath(NestedInfinity.MODID,
+                        "textures/gui/coreflame_" + MicroverseItems.SINGULARITIES.get(flame).blockSuffix() + ".png")
+                : DEFAULT_TEXTURE;
     }
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
-        graphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        graphics.blit(texture, leftPos, topPos, 0, 0, imageWidth, imageHeight);
     }
 
     @Override

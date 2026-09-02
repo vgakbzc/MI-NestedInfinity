@@ -17,22 +17,27 @@ import net.neoforged.neoforge.registries.DeferredItem;
 public final class MicroverseItems {
     public static final DeferredItem<Item> HEART_OF_A_NONEXISTENT_WORLD = register("heart_of_a_nonexistent_world");
 
-    /** One singularity per coreflame, in the same order as the coreflames. */
-    public record Singularity(String key, String blockSuffix, DeferredItem<Item> item) {}
+    /**
+     * One singularity per coreflame, in the same order as the coreflames.
+     * The color is the flame's signature tint (0xRRGGBB), shared by the
+     * coreflame block textures, the coreflame GUI background and the
+     * projector's coreflame light strip.
+     */
+    public record Singularity(String key, String blockSuffix, int color, DeferredItem<Item> item) {}
 
     public static final List<Singularity> SINGULARITIES = List.of(
-            new Singularity("gold", "chrysalis_of_gold", register("singularity_gold")),
-            new Singularity("rift", "bough_of_rift", register("singularity_rift")),
-            new Singularity("shadow", "hand_of_shadow", register("singularity_shadow")),
-            new Singularity("justice", "scale_of_justice", register("singularity_justice")),
-            new Singularity("whimsy", "coin_of_whimsy", register("singularity_whimsy")),
-            new Singularity("plenty", "chalice_of_plenty", register("singularity_plenty")),
-            new Singularity("twilight", "eye_of_twilight", register("singularity_twilight")),
-            new Singularity("worlds", "throne_of_worlds", register("singularity_worlds")),
-            new Singularity("fury", "lance_of_fury", register("singularity_fury")),
-            new Singularity("stone", "pillar_of_stone", register("singularity_stone")),
-            new Singularity("evernight", "veil_of_evernight", register("singularity_evernight")),
-            new Singularity("infinity", "gate_of_infinity", register("singularity_infinity")));
+            new Singularity("gold", "chrysalis_of_gold", 0xF0C450, register("singularity_gold")),
+            new Singularity("rift", "bough_of_rift", 0x7850C8, register("singularity_rift")),
+            new Singularity("shadow", "hand_of_shadow", 0x463858, register("singularity_shadow")),
+            new Singularity("justice", "scale_of_justice", 0xD2D6DC, register("singularity_justice")),
+            new Singularity("whimsy", "coin_of_whimsy", 0xFA8CBE, register("singularity_whimsy")),
+            new Singularity("plenty", "chalice_of_plenty", 0x6ED278, register("singularity_plenty")),
+            new Singularity("twilight", "eye_of_twilight", 0xA06EDC, register("singularity_twilight")),
+            new Singularity("worlds", "throne_of_worlds", 0x5A8CDC, register("singularity_worlds")),
+            new Singularity("fury", "lance_of_fury", 0xE6503C, register("singularity_fury")),
+            new Singularity("stone", "pillar_of_stone", 0x96968C, register("singularity_stone")),
+            new Singularity("evernight", "veil_of_evernight", 0x323C6E, register("singularity_evernight")),
+            new Singularity("infinity", "gate_of_infinity", 0x50DCC8, register("singularity_infinity")));
 
     /**
      * The nine tiers of universe matter, each named after the cosmological

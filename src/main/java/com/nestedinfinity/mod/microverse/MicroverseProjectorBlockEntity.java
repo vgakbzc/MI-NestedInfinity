@@ -215,19 +215,30 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         if (flameMask != 0xFFF) {
             return;
         }
-        // consume the heart and the twelve singularities
+        // consume the heart and exactly one singularity, picked at random
+        // from the twelve filled flames (each run burns one coreflame)
         heart = heart.copyWithCount(heart.getCount() - 1);
         if (heart.isEmpty()) {
             heart = ItemStack.EMPTY;
         }
         pendingSingularities.clear();
-        for (int[] rc : MicroverseStructure.COREFLAME_POS) {
+        List<Integer> filled = new ArrayList<>();
+        for (int i = 0; i < MicroverseStructure.COREFLAME_POS.length; i++) {
+            int[] rc = MicroverseStructure.COREFLAME_POS[i];
+            BlockPos p = worldPosition.below().offset(rc[1] - 3, 0, rc[0] - 3);
+            if (level.getBlockEntity(p) instanceof CoreflameBlockEntity flame && flame.isFilled()) {
+                filled.add(i);
+            }
+        }
+        if (!filled.isEmpty()) {
+            int pick = filled.get(level.random.nextInt(filled.size()));
+            int[] rc = MicroverseStructure.COREFLAME_POS[pick];
             BlockPos p = worldPosition.below().offset(rc[1] - 3, 0, rc[0] - 3);
             if (level.getBlockEntity(p) instanceof CoreflameBlockEntity flame) {
-                int index = MicroverseBlocks.coreflameIndex(level.getBlockState(p).getBlock());
                 flame.consumeSingularity();
-                pendingSingularities.add(index);
             }
+            pendingSingularities.add(pick);
+            flameMask &= ~(1 << pick);
         }
         tier = structureTier;
         remaining = totalDuration = baseTicks(tier);
@@ -235,7 +246,8 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         extensions = 0;
         ballCost = 1;
         running = true;
-        flameMask = 0; // the flames are empty while the universe exists
+        // flameMask already reflects the one burned flame; revalidation keeps
+        // it in sync with the eleven still-filled coreflames
         setRunningState(true);
         level.playSound(null, worldPosition, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 0.4F, 1.5F);
         setChanged();

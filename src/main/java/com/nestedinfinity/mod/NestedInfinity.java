@@ -33,6 +33,7 @@ import com.nestedinfinity.mod.fluids.NIFluids;
 import com.nestedinfinity.mod.items.NICircuits;
 import com.nestedinfinity.mod.items.NIItems;
 import com.nestedinfinity.mod.items.NIOpticalItems;
+import com.nestedinfinity.mod.energy.CreativeEnergySource;
 import com.nestedinfinity.mod.microverse.MicroverseBlocks;
 import com.nestedinfinity.mod.microverse.MicroverseItems;
 import com.nestedinfinity.mod.items.algae.NIPetriDishes;
@@ -130,6 +131,8 @@ public class NestedInfinity {
                 output.accept(MicroverseBlocks.NEUTRONIUM_MACHINE_CASING_ITEM.get());
                 MicroverseBlocks.TDU_ITEMS.forEach(tdu -> output.accept(tdu.get()));
                 MicroverseBlocks.COREFLAME_ITEMS.forEach(flame -> output.accept(flame.get()));
+                // creative testing power: floods neighbors with Long.MAX EU/t
+                output.accept(CreativeEnergySource.ITEM.get());
                 output.accept(MicroverseBlocks.MICROVERSE_PROJECTOR_ITEM.get());
                 output.accept(MicroverseItems.HEART_OF_A_NONEXISTENT_WORLD.get());
                 MicroverseItems.SINGULARITIES.forEach(s -> output.accept(s.item().get()));
@@ -151,6 +154,7 @@ public class NestedInfinity {
         NIGems.init();
         NICoils.init();
         NIMachines.init();
+        CreativeEnergySource.init(modEventBus);
         MicroverseItems.init();
         MicroverseBlocks.init(modEventBus);
 

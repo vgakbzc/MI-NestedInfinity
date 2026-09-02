@@ -1264,5 +1264,6 @@
   "container.mi_nested_infinity.microverse_projector.problem_tdu_missing": "Structure problem: a time dilation unit is missing",
   "container.mi_nested_infinity.microverse_projector.problem_tdu_mixed": "Structure problem: time dilation units have mixed tiers",
   "container.mi_nested_infinity.microverse_projector.problem_coreflame_missing": "Structure problem: a coreflame is missing",
-  "container.mi_nested_infinity.microverse_projector.problem_coreflame_duplicate": "Structure problem: duplicate coreflame kind"
+  "container.mi_nested_infinity.microverse_projector.problem_coreflame_duplicate": "Structure problem: duplicate coreflame kind",
+  "block.mi_nested_infinity.creative_energy_source": "Creative Energy Source"
 }

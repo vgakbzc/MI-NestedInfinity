@@ -1264,5 +1264,6 @@
   "container.mi_nested_infinity.microverse_projector.problem_tdu_missing": "结构问题:时间膨胀单元缺失",
   "container.mi_nested_infinity.microverse_projector.problem_tdu_mixed": "结构问题:时间膨胀单元等级不一致",
   "container.mi_nested_infinity.microverse_projector.problem_coreflame_missing": "结构问题:创世火种缺失",
-  "container.mi_nested_infinity.microverse_projector.problem_coreflame_duplicate": "结构问题:创世火种种类重复"
+  "container.mi_nested_infinity.microverse_projector.problem_coreflame_duplicate": "结构问题:创世火种种类重复",
+  "block.mi_nested_infinity.creative_energy_source": "创造发电机"
 }

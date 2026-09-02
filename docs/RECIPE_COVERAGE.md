@@ -197,8 +197,8 @@
 ### 11.2 结构与状态机（MicroverseStructure + MicroverseProjectorBlockEntity）
 - 7×3×7 占位共 67 块：L1 六角 37 外壳；L2 中心 3×3 外壳 + 4 同档 TDU + 12 火种（固定坐标）；L3 几乎全空——仅控制器 + TDU 正上方 4 根强制外壳支柱，六角足迹内其余必须为空气（2026-09-02 设计修订，原为满铺 37 块）。外壳可被任意 MI 舱室替换（namespace `modern_industrialization` + path 以 `_hatch` 结尾），可替换位 37+9=46 处。
 - 校验顺序 L3→L2→L1，问题码：layer1/layer2_center/layer3/tdu_missing/tdu_mixed/coreflame_missing/coreflame_duplicate（GUI 状态栏显示 `problem_<key>` 本地化键）。
-- 运行：放入心脏自动开始（消耗心脏+12 奇点，逐火种记录 pending）；2G EU/t，`baseTicks(n)=round(20×2.1^(n-1))`（T1=20t … T9=7565t），`microPerTick(n)=round(2.1^(n-1)×50000)`；结束时产出 `floor(累计micro/1e6)` 物质（输出槽上限 64，超出落地），每奇点按 `max(0, 95−5×延长次数)`% 概率返还回火种 BE。
-- 延长：巨型物质球消耗 1→2→4→8（每次翻倍，上限 2^20），每延长一次剩余时长 +baseTicks/2；结构破坏=宇宙坍缩，心脏/奇点/球全部损失（POOF 粒子+爆炸音）。
+- 运行：放入心脏自动开始（消耗心脏+**随机 1 枚奇点**，2026-09-02 修订；仍需 12 火种全部装填才可启动，燃尽者记录进 pending）；2G EU/t，`baseTicks(n)=round(20×2.1^(n-1))`（T1=20t … T9=7565t），`microPerTick(n)=round(2.1^(n-1)×50000)`；结束时产出 `floor(累计micro/1e6)` 物质（输出槽上限 64，超出落地），每奇点按 `max(0, 95−5×延长次数)`% 概率返还回火种 BE。
+- 延长：巨型物质球消耗 1→2→4→8（每次翻倍，上限 2^20），每延长一次剩余时长 +baseTicks/2；结构破坏=宇宙坍缩，心脏/本次燃烧的奇点/球全部损失（POOF 粒子+爆炸音）。配套测试设施：`creative_energy_source` 创造发电机（`com.nestedinfinity.mod.energy`，无配方仅创造页，六面 Long.MAX_VALUE EU/t 自动推送 + 可抽取无限储能）。
 - 客户端：12 格奇点指示灯条（HSB 循环色相）、倒计时/累计/返还率读数、延长按钮（`handleInventoryButtonClick`）；BER 以 `RenderType.endPortal()` 绘制半径 2.0 二十面体细分球（中心 (0.5, 3.5, 0.5)，前后 40t 缩放动画，双面绕序防剔除）。
 
 ### 11.3 配方（microverseChain，全部装配机 2G/320000t）

@@ -105,10 +105,11 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
 
         if (running) {
             int remaining = menu.data(MicroverseMenu.DATA_REMAINING);
+            // while running, exactly the burned flame's bit is clear in the mask
             graphics.drawString(font, Component.translatable(
                     "container.mi_nested_infinity.microverse_projector.countdown",
                     String.format("%.1f", remaining / 20.0)),
-                    leftPos + 30, topPos + 48, 0x404040, false);
+                    leftPos + 30, topPos + 48, burnedFlameColor(mask), false);
             graphics.drawString(font, Component.translatable(
                     "container.mi_nested_infinity.microverse_projector.accrued",
                     menu.data(MicroverseMenu.DATA_ACCRUED)),
@@ -126,10 +127,19 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
         return problem == null || problem.isEmpty() || "unchecked".equals(problem) ? "unchecked" : problem;
     }
 
-    /** One hue per coreflame kind, in ring order. */
+    /** The flame's own signature color (see {@link MicroverseItems.SINGULARITIES}). */
     private static int flameColor(int index) {
-        float hue = index / 12.0F;
-        return java.awt.Color.HSBtoRGB(hue, 0.75F, 0.95F) & 0xFFFFFF;
+        return MicroverseItems.SINGULARITIES.get(index).color();
+    }
+
+    /** Color of the one coreflame burned by the running universe (its bit is clear). */
+    private static int burnedFlameColor(int mask) {
+        for (int i = 0; i < 12; i++) {
+            if ((mask & (1 << i)) == 0) {
+                return flameColor(i);
+            }
+        }
+        return 0x404040;
     }
 
     @Override

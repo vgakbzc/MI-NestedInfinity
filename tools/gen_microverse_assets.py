@@ -273,25 +273,47 @@ def inventory_wells(y_top):
            [(7 + c * 18, y_top + 58) for c in range(9)]
 
 
-def make_gui(path, height, slots):
+def make_gui(path, height, slots, tint=None):
     # The 8-arg GuiGraphics.blit samples as if the source texture were
     # 256x256, so the panel must sit in the top-left corner of a 256x256
     # canvas (same as the resonance attuner texture); the rest stays
-    # transparent.
+    # transparent. A tint blends the gray body toward a coreflame color.
+    if tint is None:
+        body = (198, 198, 198)
+    else:
+        body = tuple(int(g * 0.6 + t * 0.4) for g, t in zip((198, 198, 198), tint))
+    light, dark = shade(body, 1.25), shade(body, 0.6)
     canvas = Canvas(256, 256)
     for y in range(height):
         for x in range(176):
-            canvas.px(x, y, (198, 198, 198))
+            canvas.px(x, y, body)
     # beveled panel edge: light top/left, dark bottom/right
     for x in range(176):
-        canvas.px(x, 0, (247, 247, 247))
-        canvas.px(x, height - 1, (118, 118, 118))
+        canvas.px(x, 0, light)
+        canvas.px(x, height - 1, dark)
     for y in range(height):
-        canvas.px(0, y, (247, 247, 247))
-        canvas.px(175, y, (118, 118, 118))
+        canvas.px(0, y, light)
+        canvas.px(175, y, dark)
     for x, y in slots:
         gui_slot_well(canvas, x, y)
     canvas.save(path)
+
+
+def make_creative_source(canvas):
+    """Creative energy source: dark housing with a blazing golden core."""
+    canvas.fill((52, 48, 60))
+    canvas.border((52, 48, 60))
+    for y in range(16):
+        for x in range(16):
+            d = abs(x - 7.5) + abs(y - 7.5)
+            if d <= 2:
+                canvas.px(x, y, (255, 255, 224))
+            elif d <= 4:
+                canvas.px(x, y, (255, 214, 90))
+            elif d <= 6:
+                canvas.px(x, y, (200, 140, 50))
+    for x, y in ((2, 7), (13, 7), (7, 2), (7, 13), (4, 4), (11, 11), (4, 11), (11, 4)):
+        canvas.px(x, y, (255, 236, 160))
 
 
 def loot(name):
@@ -412,11 +434,22 @@ def main():
 
     # GUI backgrounds (slot positions mirror the two menus: item slot (80,35)
     # -> well (79,34); player inventory starts at y=84 for the coreflame and
-    # y=102 for the projector)
-    make_gui(os.path.join(GUI_TX, 'coreflame.png'), 166,
-             [(79, 34)] + inventory_wells(83))
+    # y=102 for the projector). Each coreflame also gets its own flame-tinted
+    # background (CoreflameScreen picks textures/gui/coreflame_<suffix>.png).
+    coreflame_slots = [(79, 34)] + inventory_wells(83)
+    make_gui(os.path.join(GUI_TX, 'coreflame.png'), 166, coreflame_slots)
+    for suffix, _key, _en, _zh, color in COREFLAMES:
+        make_gui(os.path.join(GUI_TX, 'coreflame_' + suffix + '.png'), 166,
+                 coreflame_slots, tint=color)
     make_gui(os.path.join(GUI_TX, 'microverse_projector.png'), 184,
              [(7, 23), (7, 59), (150, 41)] + inventory_wells(101))
+
+    # creative energy source (creative-only, no recipe)
+    save_block_texture('creative_energy_source', make_creative_source)
+    block_model('creative_energy_source')
+    blockstate('creative_energy_source')
+    block_item_model('creative_energy_source')
+    loot('creative_energy_source')
 
     write_lang()
     print('microverse assets written')
@@ -440,6 +473,8 @@ def write_lang():
     zh['block.%s.neutronium_machine_casing' % MODID] = '中子素机器外壳'
     en['block.%s.microverse_projector' % MODID] = 'Microverse Projector'
     zh['block.%s.microverse_projector' % MODID] = '微缩宇宙投影仪'
+    en['block.%s.creative_energy_source' % MODID] = 'Creative Energy Source'
+    zh['block.%s.creative_energy_source' % MODID] = '创造发电机'
     en['item.%s.heart_of_a_nonexistent_world' % MODID] = 'Heart of a Nonexistent World'
     zh['item.%s.heart_of_a_nonexistent_world' % MODID] = '创世之心'
     for mid, en_name, zh_name, _c in MATTERS:
