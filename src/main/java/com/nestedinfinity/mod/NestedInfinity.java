@@ -93,6 +93,10 @@ public class NestedInfinity {
                 output.accept(NIItems.SAW_RESONATOR.get());
                 output.accept(NIItems.POLYIMIDE_PLATE.get());
                 output.accept(NIItems.FLUOROELASTOMER_SHEET.get());
+                // the crafted elite pump/motor pair (first used on the wetware
+                // board's cryo loop) belongs here next to the circuit parts
+                output.accept(NIItems.ELITE_MOTOR.get());
+                output.accept(NIItems.ELITE_PUMP.get());
                 output.accept(NIItems.RESONANT_SUPERCONDUCTOR_TAPE.get());
                 output.accept(NIItems.RESONANT_RANDOM_ACCESS_MEMORY.get());
                 output.accept(NIItems.RESONANT_MEMORY_MANAGEMENT_UNIT.get());

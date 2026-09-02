@@ -275,7 +275,7 @@ BIO_ITEMS = [
     ("epoxy_plate", "Epoxy Plate", "环氧树脂板", (216, 168, 56), "mi_plate"),
     # elites: MI's current motor/pump sprites with only the blue accents
     # hue-rotated to green (grays/whites/copper untouched)
-    ("elite_motor", "Elite Motor", "精英马达", (76, 175, 80), "mi_motor_green"),
+    ("elite_motor", "Elite Motor", "精英电机", (76, 175, 80), "mi_motor_green"),
     ("elite_pump", "Elite Pump", "精英泵", (76, 175, 80), "mi_pump_green"),
     ("sodium_cyanide", "Sodium Cyanide", "氰化钠", (238, 240, 244), "mi_dust"),
     ("cyanoacetic_acid", "Cyanoacetic Acid", "氰乙酸", (214, 232, 202), "mi_dust"),
@@ -487,12 +487,13 @@ def make_item_texture(dst, style, color):
         blue_to_green(dst, 'tools/template_motor_mi.png')
         return
     if style == "mi_pump_green_large":
-        # MI's LARGE advanced pump with only the blue accents rotated to green
-        blue_to_green(dst, 'tools/template_pump.png')
+        # MI's LARGE advanced pump with the blue accents and the orange body
+        # ramp both hue-rotated to green (grays/whites untouched)
+        blue_and_orange_to_green(dst, 'tools/template_pump.png')
         return
     if style == "mi_motor_green_large":
         # MI's LARGE advanced motor, same treatment
-        blue_to_green(dst, 'tools/template_motor.png')
+        blue_and_orange_to_green(dst, 'tools/template_motor.png')
         return
     if style == "ingot":
         # the mod's own nichrome ingot sprite, recolored (repo-relative path)
@@ -531,6 +532,26 @@ def blue_to_green(dst, template):
         r, g, b, a = px[i], px[i+1], px[i+2], px[i+3]
         if a and b > r + 12 and b >= g + 8:
             px[i+1], px[i+2] = b, g
+    write_png(dst, w, h, px)
+
+
+def blue_and_orange_to_green(dst, template):
+    """blue_to_green plus the orange family: warm pixels (r > b, g > b) are
+    hue-rotated +120 degrees in HLS space so the whole orange shading ramp,
+    dark warm outlines included, lands on the same green while luminance and
+    saturation stay pixel-exact. Grays and whites never match either test."""
+    import colorsys
+    w, h, px = read_png(os.path.join(ROOT, template))
+    for i in range(0, len(px), 4):
+        r, g, b, a = px[i], px[i+1], px[i+2], px[i+3]
+        if not a:
+            continue
+        if b > r + 12 and b >= g + 8:
+            px[i+1], px[i+2] = b, g
+        elif r > b + 20 and g > b:
+            hue, lit, sat = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
+            r2, g2, b2 = colorsys.hls_to_rgb((hue + 1 / 3) % 1, lit, sat)
+            px[i], px[i+1], px[i+2] = round(r2 * 255), round(g2 * 255), round(b2 * 255)
     write_png(dst, w, h, px)
 
 
