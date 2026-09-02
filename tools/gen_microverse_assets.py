@@ -340,6 +340,33 @@ def make_gui(path, height, slots, tint=None, extra=None):
     canvas.save(path)
 
 
+def save_emi_vertical_arrow():
+    """EMI projector page arrow: a 16x24 downward arrow, outlined half at
+    u=0 and filled half at u=16, side by side in one 32x24 texture."""
+    # staircase half-widths of the head, rows 13..23 (shaft is rows 0..13)
+    halfs = [3, 4, 4, 5, 5, 6, 6, 7, 7, 7, 8]
+
+    def inside(x, y):
+        if 5 <= x <= 10 and 0 <= y <= 13:
+            return True
+        if 13 <= y <= 23:
+            half = halfs[y - 13]
+            return 8 - half <= x <= 7 + half
+        return False
+
+    os.makedirs(os.path.join(A, 'textures', 'gui', 'emi'), exist_ok=True)
+    canvas = Canvas(32, 24)
+    for y in range(24):
+        for x in range(16):
+            if not inside(x, y):
+                continue
+            outline = not all(inside(x + dx, y + dy)
+                              for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+            canvas.px(x, y, (168, 168, 168) if outline else (0, 0, 0), 255 if outline else 0)
+            canvas.px(x + 16, y, (240, 240, 240))
+    canvas.save(os.path.join(A, 'textures', 'gui', 'emi', 'vertical_arrow.png'))
+
+
 def paint_progress_arrow(canvas):
     """A dark arrow groove between the catalyzer slots; the screen fills the
     body (74..93, 40..47) with a light bar as the craft progresses."""
@@ -543,6 +570,9 @@ def main():
     # arrow groove between them; the screen overlays the progress bar
     make_gui(os.path.join(GUI_TX, 'singularity_catalyzer.png'), 166,
              [(53, 34), (103, 34)] + inventory_wells(83), extra=paint_progress_arrow)
+
+    # EMI projector page: vertical (downward) arrow pair
+    save_emi_vertical_arrow()
 
     # singularity catalyzer machine block
     save_block_texture('singularity_catalyzer', make_catalyzer)
