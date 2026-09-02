@@ -40,7 +40,7 @@ y xxx y
   yyy
 ```
 
-- y = 创世火种 ×12（恰好 12 个，缺一不可）
+- y = 创世火种 ×12（**12 种各一**，恰好集齐，缺一不可）
 - z = 时间膨胀单元 ×4（**四枚必须同等级**，否则结构无效）
 - 中心 3×3 = 中子素机器外壳 ×9
 
@@ -59,17 +59,17 @@ y xxx y
 
 | 类别 | 内容 |
 |---|---|
-| 方块 | 中子素机器外壳 `neutronium_machine_casing`、创世火种 `coreflame`（带 BE）、时间膨胀单元 ×9 `time_dilation_unit_t1..t9`、主方块 `microverse_projector`（带 BE+GUI） |
-| 物品 | 创世之心 `heart_of_a_nonexistent_world`、12 奇点（见 §6）、9 级宇宙物质（见 §4） |
-| BE | 创世火种（1 槽，存放对应奇点）、主方块（运行状态机） |
-| 其他 | 主方块 BER（球体）、双语 lang、战利品表、EMI 结构示意 |
+| 方块 | 中子素机器外壳 `neutronium_machine_casing`、**创世火种 ×12 种**（各自独立注册 + 各自的 BE，见 §6）、时间膨胀单元 ×9 `time_dilation_unit_t1..t9`、主方块 `microverse_projector`（带 BE+GUI） |
+| 物品 | 创世之心 `heart_of_a_nonexistent_world`、12 奇点（与火种一一对应，见 §6）、9 级宇宙物质（见 §4） |
+| BE | 创世火种 ×12 种（各 1 槽，只接受自己的奇点）、主方块（运行状态机） |
+| 其他 | 主方块 BER（球体）、火种 BER（火焰动画）、双语 lang、战利品表、EMI 结构示意 |
 
 方块配方（实现阶段可微调数值，时长全部 2G/16000s）：
 - 中子素机器外壳 ×2 = 中子素板×4 + 中子素杆×2（装配机）
-- 创世火种 ×1 = 光学电路板×1 + FFKM 板×2 + 石英玻璃板×2 + 液氙 1000 mB（装配机）
+- 创世火种 ×1（每种） = 光学电路板×1 + FFKM 板×2 + 石英玻璃板×2 + 液氙 1000 mB（装配机）
 - 时间膨胀单元 T1 ×1 = 光学电路×2 + 中子素板×4 + 光学超导线缆×2（装配机）
 - 时间膨胀单元 T(n) ×1 = **2×T(n-1) + 4×宇宙物质(n-1)**（装配机，n=2..9）
-- 创世之心与 12 奇点的配方属于下一阶段主线内容，用高级宇宙物质 + 现有终局材料（钩子）。
+- 创世之心、12 奇点的配方属于下一阶段主线内容，用高级宇宙物质 + 现有终局材料（钩子）。
 
 ## 4. 时间膨胀单元等级表
 
@@ -94,8 +94,9 @@ y xxx y
 ## 5. 运行流程
 
 1. **组装**：按 §2 摆放结构（4 枚 TDU 同级、12 创世火种就位），主方块 GUI 显示结构校验清单。
-2. **装填**：右键每个创世火种打开 1 槽 BE 界面，放入**互不相同**的奇点（12/12 且无重复才能启动）；
-   主方块 GUI 有 12 格指示灯同步显示。创世之心放入主方块专用槽。
+2. **装填**：右键火种打开 1 槽 BE 界面，放入**对应的**奇点——每种火种只接受自己的那一颗
+   （12 种火种各就各位、各含其奇点才能启动）；主方块 GUI 有 12 格指示灯同步显示。
+   创世之心放入主方块专用槽。
 3. **启动**：消耗创世之心（必失）+ 12 奇点进入机器，倒计时 = 基础时间，开始按速率累计物质。
 4. **延长（可选，运行中）**：按"延长"按钮投入巨型物质球：第 1 次需 1 颗，之后逐次翻倍（1→2→4→8…），
    每次延长基础时间的 50%；计数器在本次运行结束后清零。
@@ -104,24 +105,28 @@ y xxx y
 6. **坍缩（异常）**：运行中结构被破坏/拆除 → 宇宙坍缩：创世之心、全部 12 奇点、已投入的物质球、
    已累计产出全部损失，无任何返还。
 
-## 6. 十二奇点（创世火种的钥匙）
+## 6. 十二种创世火种与对应奇点
 
-| EN | zh |
-|---|---|
-| Chrysalis of Gold | 黄金之茧 |
-| Bough of Rift | 裂隙之枝 |
-| Hand of Shadow | 暗影之手 |
-| Scale of Justice | 正义之秤 |
-| Coin of Whimsy | 狂想之币 |
-| Chalice of Plenty | 丰饶之杯 |
-| Eye of Twilight | 暮光之眼 |
-| Throne of Worlds | 世界王座 |
-| Lance of Fury | 狂怒之枪 |
-| Pillar of Stone | 磐石之柱 |
-| Veil of Evernight | 永夜之幕 |
-| Gate of Infinity | 无限之门 |
+火种是 12 种**独立注册的方块**（各有 BE 与专属贴图），奇点是与之配对的 12 种物品；
+结构中 12 个 y 位必须恰好集齐 12 种，每种一个。
 
-12 枚各不相同，环上不得重复；配方由下一阶段提供（建议以 T6–T9 宇宙物质 + 现有终局材料为主料）。
+| 方块 id | 方块 EN / zh | 对应奇点 | 奇点 zh |
+|---|---|---|---|
+| `coreflame_chrysalis_of_gold` | Chrysalis of Gold / 黄金之茧 | `singularity_gold` | 黄金奇点 |
+| `coreflame_bough_of_rift` | Bough of Rift / 裂隙之枝 | `singularity_rift` | 裂隙奇点 |
+| `coreflame_hand_of_shadow` | Hand of Shadow / 暗影之手 | `singularity_shadow` | 暗影奇点 |
+| `coreflame_scale_of_justice` | Scale of Justice / 正义之秤 | `singularity_justice` | 正义奇点 |
+| `coreflame_coin_of_whimsy` | Coin of Whimsy / 狂想之币 | `singularity_whimsy` | 狂想奇点 |
+| `coreflame_chalice_of_plenty` | Chalice of Plenty / 丰饶之杯 | `singularity_plenty` | 丰饶奇点 |
+| `coreflame_eye_of_twilight` | Eye of Twilight / 暮光之眼 | `singularity_twilight` | 暮光奇点 |
+| `coreflame_throne_of_worlds` | Throne of Worlds / 世界王座 | `singularity_worlds` | 世界奇点 |
+| `coreflame_lance_of_fury` | Lance of Fury / 狂怒之枪 | `singularity_fury` | 狂怒奇点 |
+| `coreflame_pillar_of_stone` | Pillar of Stone / 磐石之柱 | `singularity_stone` | 磐石奇点 |
+| `coreflame_veil_of_evernight` | Veil of Evernight / 永夜之幕 | `singularity_evernight` | 永夜奇点 |
+| `coreflame_gate_of_infinity` | Gate of Infinity / 无限之门 | `singularity_infinity` | 无限奇点 |
+
+火种方块与奇点的配方由下一阶段提供（建议以 T6–T9 宇宙物质 + 现有终局材料为主料）。
+原文"结束后有 95% 概率返还 coreflame"按此结构理解为**返还火种中的奇点**（方块本身是结构件，始终保留）。
 
 ## 7. GUI 与渲染
 
@@ -134,7 +139,7 @@ y xxx y
 ## 8. 边界情况
 
 - 4 枚 TDU 等级不一致 → 结构无效，GUI 明确指出。
-- 奇点重复/缺失 → 无法启动；运行中不允许从火种取放物品（结构锁，同 MI 多方块惯例）。
+- 火种种类不齐（重复/缺失）或奇点未装满 → 无法启动；运行中不允许从火种取放物品（结构锁，同 MI 多方块惯例）。
 - 延长按钮仅在运行中且物质球数量足够时可用；返还概率随延长递减至 0% 为止。
 - 缺电：暂停倒计时与累计，不判定为坍缩。
 - 跨区块：结构 7×7，常规加载范围内安全；区块卸载视为暂停。
@@ -142,8 +147,8 @@ y xxx y
 ## 9. 实现要点
 
 - 结构校验：主方块为中心做三层图案扫描（方向由主方块朝向决定），运行中每 20t 复查一次。
-- BE：`CoreflameBlockEntity`（1 槽 + 绑定奇点 id 判重）、`MicroverseProjectorBlockEntity`
-  （状态机 idle/running/collapsing、能量缓冲、倒计时、累计器、延长计数与需求）。
+- BE：`CoreflameBlockEntity` 一个类派生 12 个注册（各 1 槽，槽位过滤只收自己的奇点）、
+  `MicroverseProjectorBlockEntity`（状态机 idle/running/collapsing、能量缓冲、倒计时、累计器、延长计数与需求）。
 - 产出/返还判定在服务端完成；倒计时与球体渲染状态同步到客户端。
 - datagen：方块/物品模型与贴图（外壳、火种 12 色变体、TDU 1–9、物质 9 种、奇点 12 枚、创世之心），
   双语 lang，战利品表；EMI 结构示意页。
