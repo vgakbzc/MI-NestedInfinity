@@ -30,8 +30,8 @@ public final class MicroverseStructure {
             {1, 1}, {1, 5}, {5, 1}, {5, 5}
     };
 
-    /** Layer-3 cells directly above the TDUs: forced machine casing, no hatches. */
-    public static final int[][] FORCED_CASING_POS = TDU_POS;
+    /** Layer-3 pillar cells directly above the TDUs: forced machine casing, no hatches. */
+    public static final int[][] PILLAR_POS = TDU_POS;
 
     private static boolean inHex(int row, int col) {
         int[] range = HEX_ROWS[row];
@@ -77,8 +77,8 @@ public final class MicroverseStructure {
         BlockPos layer2 = pos.below();
         BlockPos layer1 = pos.below(2);
 
-        // layer 3: hexagon of casing-like cells except the controller itself,
-        // with the four cells above the TDUs forced to real casing
+        // layer 3: almost fully open — just the controller and four casing
+        // pillars standing on the TDUs; every other hex cell must be air
         for (int row = 0; row < 7; row++) {
             for (int col = HEX_ROWS[row][0]; col <= HEX_ROWS[row][1]; col++) {
                 if (row == 3 && col == 3) {
@@ -86,7 +86,7 @@ public final class MicroverseStructure {
                 }
                 BlockPos p = pos.offset(col - 3, 0, row - 3);
                 BlockState state = level.getBlockState(p);
-                if (isForced(row, col) ? !isForcedCasing(state) : !isCasingLike(state)) {
+                if (isPillar(row, col) ? !isForcedCasing(state) : !state.isAir()) {
                     return new Result(false, 0, 0, "layer3");
                 }
             }
@@ -146,8 +146,8 @@ public final class MicroverseStructure {
         return new Result(true, tier, mask, null);
     }
 
-    private static boolean isForced(int row, int col) {
-        for (int[] rc : FORCED_CASING_POS) {
+    private static boolean isPillar(int row, int col) {
+        for (int[] rc : PILLAR_POS) {
             if (rc[0] == row && rc[1] == col) {
                 return true;
             }
