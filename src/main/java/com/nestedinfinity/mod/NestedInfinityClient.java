@@ -95,6 +95,8 @@ public class NestedInfinityClient {
                 com.nestedinfinity.mod.microverse.CoreflameScreen::new);
         event.register(com.nestedinfinity.mod.microverse.MicroverseBlocks.PROJECTOR_MENU.get(),
                 com.nestedinfinity.mod.microverse.MicroverseScreen::new);
+        event.register(com.nestedinfinity.mod.microverse.MicroverseBlocks.CATALYZER_MENU.get(),
+                com.nestedinfinity.mod.microverse.SingularityCatalyzerScreen::new);
     }
 
     @SubscribeEvent

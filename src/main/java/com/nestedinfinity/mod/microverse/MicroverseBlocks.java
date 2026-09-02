@@ -60,6 +60,14 @@ public final class MicroverseBlocks {
     public static final DeferredItem<BlockItem> MICROVERSE_PROJECTOR_ITEM =
             NestedInfinity.ITEMS.registerSimpleBlockItem("microverse_projector", MICROVERSE_PROJECTOR);
 
+    /** The standalone no-energy machine that condenses matter into singularities. */
+    public static final DeferredBlock<SingularityCatalyzerBlock> SINGULARITY_CATALYZER = NestedInfinity.BLOCKS.register(
+            "singularity_catalyzer",
+            () -> new SingularityCatalyzerBlock(BlockBehaviour.Properties.of().strength(6.0F, 8.0F)
+                    .requiresCorrectToolForDrops()));
+    public static final DeferredItem<BlockItem> SINGULARITY_CATALYZER_ITEM =
+            NestedInfinity.ITEMS.registerSimpleBlockItem("singularity_catalyzer", SINGULARITY_CATALYZER);
+
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, NestedInfinity.MODID);
 
@@ -72,6 +80,11 @@ public final class MicroverseBlocks {
                     () -> BlockEntityType.Builder.of(MicroverseProjectorBlockEntity::new,
                             MICROVERSE_PROJECTOR.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SingularityCatalyzerBlockEntity>> CATALYZER_TYPE =
+            BLOCK_ENTITY_TYPES.register("singularity_catalyzer",
+                    () -> BlockEntityType.Builder.of(SingularityCatalyzerBlockEntity::new,
+                            SINGULARITY_CATALYZER.get()).build(null));
+
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(Registries.MENU, NestedInfinity.MODID);
 
@@ -80,6 +93,9 @@ public final class MicroverseBlocks {
 
     public static final DeferredHolder<MenuType<?>, MenuType<MicroverseMenu>> PROJECTOR_MENU =
             MENUS.register("microverse_projector", () -> IMenuTypeExtension.create(MicroverseMenu::new));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<SingularityCatalyzerMenu>> CATALYZER_MENU =
+            MENUS.register("singularity_catalyzer", () -> IMenuTypeExtension.create(SingularityCatalyzerMenu::new));
 
     private static CoreflameBlock[] coreflameBlocks() {
         return COREFLAMES.stream().map(DeferredBlock::get).toArray(CoreflameBlock[]::new);

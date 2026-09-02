@@ -1,0 +1,88 @@
+package com.nestedinfinity.mod.microverse;
+
+import com.nestedinfinity.mod.NestedInfinity;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+
+/**
+ * Catalyst slot on the left, singularity slot on the right, a progress bar
+ * filling the arrow groove between them, and one status line under the arrow
+ * naming the targeted singularity kind in its flame color together with the
+ * ritual state. Hovering the input slot always shows the kind's ritual.
+ */
+public class SingularityCatalyzerScreen extends AbstractContainerScreen<SingularityCatalyzerMenu> {
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+            NestedInfinity.MODID, "textures/gui/singularity_catalyzer.png");
+
+    /** The light bar fills this slice of the groove painted in the texture. */
+    private static final int BAR_X = 74;
+    private static final int BAR_Y = 40;
+    private static final int BAR_MAX_W = 20;
+    private static final int BAR_H = 8;
+    private static final int STATUS_Y = 55;
+
+    public SingularityCatalyzerScreen(SingularityCatalyzerMenu menu, Inventory playerInventory, Component title) {
+        super(menu, playerInventory, title);
+        this.imageHeight = 166;
+        this.inventoryLabelY = 72;
+    }
+
+    @Override
+    protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
+        graphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+    }
+
+    // 1.21.1's AbstractContainerScreen.render no longer draws slot tooltips
+    // itself — concrete screens call this after super.render, like vanilla's
+    // ContainerScreen does.
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.render(graphics, mouseX, mouseY, partialTick);
+
+        int progress = menu.data(SingularityCatalyzerMenu.DATA_PROGRESS);
+        int width = Math.round(BAR_MAX_W * (float) progress / SingularityCatalyzerBlockEntity.TOTAL_TICKS);
+        if (width > 0) {
+            graphics.fill(leftPos + BAR_X, topPos + BAR_Y, leftPos + BAR_X + width,
+                    topPos + BAR_Y + BAR_H, 0xFFE0E0E0);
+        }
+
+        ItemStack catalyst = menu.getBlockEntity().getInput();
+        int kind = SingularityCatalyzerBlockEntity.kindOf(catalyst);
+        if (kind >= 0) {
+            var singularity = MicroverseItems.SINGULARITIES.get(kind);
+            int ritual = menu.data(SingularityCatalyzerMenu.DATA_RITUAL);
+            Component line = Component.translatable("container.mi_nested_infinity.singularity_catalyzer.target",
+                    Component.translatable("item.mi_nested_infinity.singularity_" + singularity.key()),
+                    Component.translatable("container.mi_nested_infinity.singularity_catalyzer.ritual_"
+                            + (ritual >= 2 ? "met" : "unmet")));
+            graphics.drawString(font, line, leftPos + (imageWidth - font.width(line)) / 2, topPos + STATUS_Y,
+                    singularity.color(), false);
+        }
+
+        if (this.hoveredSlot != null && this.hoveredSlot.index < 2) {
+            if (this.hoveredSlot.index == SingularityCatalyzerBlockEntity.INPUT_SLOT) {
+                // show the hovered (or target) kind's ritual, or the slot hint when empty
+                int hoveredKind = kind >= 0 ? kind : SingularityCatalyzerBlockEntity.kindOf(this.hoveredSlot.getItem());
+                graphics.renderTooltip(font, hoveredKind >= 0
+                        ? Component.translatable("container.mi_nested_infinity.singularity_catalyzer.condition."
+                                + MicroverseItems.SINGULARITIES.get(hoveredKind).key())
+                        : Component.translatable("container.mi_nested_infinity.singularity_catalyzer.slot_input"),
+                        mouseX, mouseY);
+            } else if (!this.hoveredSlot.hasItem()) {
+                graphics.renderTooltip(font, Component.translatable(
+                        "container.mi_nested_infinity.singularity_catalyzer.slot_output"), mouseX, mouseY);
+            }
+        }
+
+        this.renderTooltip(graphics, mouseX, mouseY);
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
+        graphics.drawString(font, this.title, this.titleLabelX, this.titleLabelY, 0x404040, false);
+    }
+}

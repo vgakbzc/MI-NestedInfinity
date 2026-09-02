@@ -36,6 +36,7 @@ import com.nestedinfinity.mod.items.NIOpticalItems;
 import com.nestedinfinity.mod.energy.CreativeEnergySource;
 import com.nestedinfinity.mod.microverse.MicroverseBlocks;
 import com.nestedinfinity.mod.microverse.MicroverseItems;
+import com.nestedinfinity.mod.microverse.SingularityCatalyzerBlockEntity;
 import com.nestedinfinity.mod.items.algae.NIPetriDishes;
 import com.nestedinfinity.mod.items.gems.NIGems;
 import com.nestedinfinity.mod.items.resonance.NINotes;
@@ -134,6 +135,7 @@ public class NestedInfinity {
                 // creative testing power: floods neighbors with Long.MAX EU/t
                 output.accept(CreativeEnergySource.ITEM.get());
                 output.accept(MicroverseBlocks.MICROVERSE_PROJECTOR_ITEM.get());
+                output.accept(MicroverseBlocks.SINGULARITY_CATALYZER_ITEM.get());
                 output.accept(MicroverseItems.HEART_OF_A_NONEXISTENT_WORLD.get());
                 MicroverseItems.SINGULARITIES.forEach(s -> output.accept(s.item().get()));
                 MicroverseItems.MATTERS.forEach(matter -> output.accept(matter.get()));
@@ -157,6 +159,7 @@ public class NestedInfinity {
         CreativeEnergySource.init(modEventBus);
         MicroverseItems.init();
         MicroverseBlocks.init(modEventBus);
+        SingularityCatalyzerBlockEntity.registerEventListeners();
 
         // generate recipe/tag JSONs during runData
         modEventBus.addListener(NIDataGen::gatherData);

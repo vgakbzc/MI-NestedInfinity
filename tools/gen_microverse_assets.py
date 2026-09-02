@@ -193,23 +193,62 @@ def make_controller_side(canvas):
         canvas.px(8, y, (110, 60, 180))
 
 
-def make_singularity(canvas, color):
-    """A dark orb with the flame color's event-horizon ring and white core."""
+# MI's vanilla singularity sprite (16x128, 8-frame swirl) is the recolor base
+# for our twelve singularities; vendored under tools/ref (MI is MIT).
+MI_SINGULARITY_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                  'ref', 'assets', 'modern_industrialization',
+                                  'textures', 'item', 'singularity.png')
+
+
+def save_singularity_texture(key, color):
+    """The MI singularity swirl repainted in this flame's hue (luminance kept,
+    saturation replaced), plus a four-pointed star badge in the top-right
+    corner of every frame so the kind is readable at GUI size."""
+    from PIL import Image
+    base = Image.open(MI_SINGULARITY_SRC).convert('RGBA')
+    w, h = base.size
+    bright = tuple(min(255, int(c * 255 / (max(color) or 1))) for c in color)
+    out = Image.new('RGBA', (w, h))
+    bp, op = base.load(), out.load()
+    for y in range(h):
+        for x in range(w):
+            r, g, b, a = bp[x, y]
+            if a:
+                v = max(r, g, b)
+                op[x, y] = (bright[0] * v // 255, bright[1] * v // 255,
+                            bright[2] * v // 255, a)
+    for frame in range(h // 16):
+        cx, cy = 12, frame * 16 + 3  # four-pointed star: plus-shaped sparkle
+        for d in (-2, -1, 1, 2):
+            op[cx + d, cy] = bright
+            op[cx, cy + d] = bright
+        op[cx, cy] = (255, 255, 255, 255)
+        op[cx - 2, cy] = shade(bright, 0.8) + (255,)
+        op[cx + 2, cy] = shade(bright, 0.8) + (255,)
+        op[cx, cy - 2] = shade(bright, 0.8) + (255,)
+        op[cx, cy + 2] = shade(bright, 0.8) + (255,)
+    out.save(os.path.join(ITEM_TX, 'singularity_' + key + '.png'))
+    write_json(os.path.join(ITEM_TX, 'singularity_' + key + '.png.mcmeta'),
+               {"animation": {"frametime": 1}})
+
+
+def make_catalyzer(canvas):
+    """The singularity catalyzer: neutronium casing with a ring of the twelve
+    flame-color studs around a white catalytic core."""
+    make_casing(canvas)
+    import math
+    for k, (_suffix, _key, _en, _zh, c) in enumerate(COREFLAMES):
+        angle = 2 * math.pi * k / 12
+        x = int(round(7.5 + 4.8 * math.cos(angle)))
+        y = int(round(7.5 + 4.8 * math.sin(angle)))
+        canvas.px(x, y, tuple(min(255, int(v * 255 / (max(c) or 1))) for v in c))
     for y in range(16):
         for x in range(16):
             d = ((x - 7.5) ** 2 + (y - 7.5) ** 2) ** 0.5
-            if d <= 6.5:
-                if d <= 2.2:
-                    c = (255, 255, 255)
-                elif d <= 3.4:
-                    c = shade(color, 1.5)
-                elif d <= 4.8:
-                    c = shade(color, 0.5)
-                else:
-                    c = shade(color, 0.22)
-                canvas.px(x, y, c)
-    for sx, sy in ((2, 7), (13, 8), (7, 2), (8, 13)):
-        canvas.px(sx, sy, shade(color, 1.8))
+            if d <= 1.6:
+                canvas.px(x, y, (248, 244, 255))
+            elif d <= 2.8:
+                canvas.px(x, y, (196, 168, 255))
 
 
 def make_heart(canvas):
@@ -273,7 +312,7 @@ def inventory_wells(y_top):
            [(7 + c * 18, y_top + 58) for c in range(9)]
 
 
-def make_gui(path, height, slots, tint=None):
+def make_gui(path, height, slots, tint=None, extra=None):
     # The 8-arg GuiGraphics.blit samples as if the source texture were
     # 256x256, so the panel must sit in the top-left corner of a 256x256
     # canvas (same as the resonance attuner texture); the rest stays
@@ -296,7 +335,31 @@ def make_gui(path, height, slots, tint=None):
         canvas.px(175, y, dark)
     for x, y in slots:
         gui_slot_well(canvas, x, y)
+    if extra is not None:
+        extra(canvas)
     canvas.save(path)
+
+
+def paint_progress_arrow(canvas):
+    """A dark arrow groove between the catalyzer slots; the screen fills the
+    body (74..93, 40..47) with a light bar as the craft progresses."""
+    for y in range(38, 50):
+        for x in range(72, 102):
+            canvas.px(x, y, (55, 55, 55))
+    for x in range(74, 94):
+        for y in range(40, 48):
+            canvas.px(x, y, (88, 88, 88))
+    for x in range(94, 102):
+        half = x - 92  # head widens from 2 to 6 half-height
+        for y in range(41 - half // 2, 47 + half // 2):
+            canvas.px(x, y, (88, 88, 88))
+    for x in range(72, 102):
+        canvas.px(x, 37, (255, 255, 255))
+    for y in range(37, 50):
+        canvas.px(71, y, (255, 255, 255))
+        canvas.px(102, y, (37, 37, 37))
+    for x in range(72, 102):
+        canvas.px(x, 50, (37, 37, 37))
 
 
 def make_creative_source(canvas):
@@ -413,7 +476,7 @@ def main():
         blockstate(name)
         block_item_model(name)
         loot(name)
-        save_item_texture('singularity_' + key, make_singularity, color)
+        save_singularity_texture(key, color)
         item_model('singularity_' + key)
 
     # time dilation units
@@ -476,6 +539,18 @@ def main():
     make_gui(os.path.join(GUI_TX, 'microverse_projector.png'), 184,
              [(7, 37)] + inventory_wells(101))
 
+    # singularity catalyzer: matter in (54,35), singularity out (104,35),
+    # arrow groove between them; the screen overlays the progress bar
+    make_gui(os.path.join(GUI_TX, 'singularity_catalyzer.png'), 166,
+             [(53, 34), (103, 34)] + inventory_wells(83), extra=paint_progress_arrow)
+
+    # singularity catalyzer machine block
+    save_block_texture('singularity_catalyzer', make_catalyzer)
+    block_model('singularity_catalyzer')
+    blockstate('singularity_catalyzer')
+    block_item_model('singularity_catalyzer')
+    loot('singularity_catalyzer')
+
     # creative energy source (creative-only, no recipe)
     save_block_texture('creative_energy_source', make_creative_source)
     block_model('creative_energy_source')
@@ -505,6 +580,8 @@ def write_lang():
     zh['block.%s.neutronium_machine_casing' % MODID] = '中子素机器外壳'
     en['block.%s.microverse_projector' % MODID] = 'Microverse Projector'
     zh['block.%s.microverse_projector' % MODID] = '微缩宇宙投影仪'
+    en['block.%s.singularity_catalyzer' % MODID] = 'Singularity Catalyzer'
+    zh['block.%s.singularity_catalyzer' % MODID] = '奇点催化器'
     en['block.%s.creative_energy_source' % MODID] = 'Creative Energy Source'
     zh['block.%s.creative_energy_source' % MODID] = '创造发电机'
     en['item.%s.heart_of_a_nonexistent_world' % MODID] = 'Heart of a Nonexistent World'
@@ -542,10 +619,83 @@ def write_lang():
     zh['container.%s.coreflame.slot_input' % MODID] = '本火种只接受自己的奇点'
     en['container.%s.coreflame.slot_return' % MODID] = 'Returned singularities appear here'
     zh['container.%s.coreflame.slot_return' % MODID] = '返还的奇点会出现在这里'
+    cat = 'container.%s.singularity_catalyzer.' % MODID
+    en[cat + 'slot_input'] = 'Catalyst slot: 64 per singularity (16 water bottles)'
+    zh[cat + 'slot_input'] = '催化剂放这里(每颗奇点 64 个,水瓶 16 个)'
+    en[cat + 'slot_output'] = 'Catalyzed singularities appear here'
+    zh[cat + 'slot_output'] = '催化出的奇点出现在这里'
+    en[cat + 'target'] = 'Target: %s - %s'
+    zh[cat + 'target'] = '目标:%s · %s'
+    en[cat + 'ritual_met'] = 'ritual ready'
+    zh[cat + 'ritual_met'] = '仪式就绪'
+    en[cat + 'ritual_unmet'] = 'ritual not ready'
+    zh[cat + 'ritual_unmet'] = '仪式未就绪'
+    # the twelve rituals, in COREFLAMES/SINGULARITIES key order
+    conditions_en = {
+        'gold': 'Two faces touching lava',
+        'rift': 'A log on one face, leaves on another',
+        'shadow': 'A creature dies within 5 blocks',
+        'justice': 'An adjacent flame is snuffed or broken',
+        'whimsy': 'Adjacent gold block vanishes, no player within 5 blocks',
+        'plenty': 'Standing at the bottom of the world',
+        'twilight': 'Y >= 315 with open sky above',
+        'worlds': 'Top-face light >= 13',
+        'fury': 'Struck by an arrow',
+        'stone': 'Four different base stones adjacent',
+        'evernight': 'A rail on any face',
+        'infinity': 'A door on any face',
+    }
+    conditions_zh = {
+        'gold': '至少两面与岩浆相邻',
+        'rift': '一面邻任意原木,另一面邻任意树叶',
+        'shadow': '5 格内有生物死亡',
+        'justice': '相邻火焰被熄灭或破坏',
+        'whimsy': '玩家不在 5 格内时相邻金块消失',
+        'plenty': '坐落于世界底层',
+        'twilight': 'Y ≥ 315 且上方无遮挡',
+        'worlds': '顶面光照 ≥ 13',
+        'fury': '被箭扎中',
+        'stone': '相邻至少四种不同的石头',
+        'evernight': '与铁轨相邻',
+        'infinity': '与任意门相邻',
+    }
+    for key in conditions_en:
+        en[cat + 'condition.' + key] = conditions_en[key]
+        zh[cat + 'condition.' + key] = conditions_zh[key]
+        # EMI pages share the same twelve ritual descriptions
+        en['emi.%s.catalyzer.condition.%s' % (MODID, key)] = conditions_en[key]
+        zh['emi.%s.catalyzer.condition.%s' % (MODID, key)] = conditions_zh[key]
+
+    # EMI categories and recipe annotations
+    emi = 'emi.%s.' % MODID
+    en['emi.category.%s.microverse_projector' % MODID] = 'Microverse Projector'
+    zh['emi.category.%s.microverse_projector' % MODID] = '微缩宇宙投影仪'
+    en['emi.category.%s.singularity_catalyzer' % MODID] = 'Singularity Catalyzer'
+    zh['emi.category.%s.singularity_catalyzer' % MODID] = '奇点催化器'
+    en[emi + 'projector.tier'] = 'Time Dilation Unit tier %s (x4)'
+    zh[emi + 'projector.tier'] = '时间膨胀单元 T%s(4 枚)'
+    en[emi + 'projector.time'] = 'Base time: %ss'
+    zh[emi + 'projector.time'] = '基础时长:%s 秒'
+    en[emi + 'projector.rate'] = 'Matter: 1 / 10s, +%s collapse'
+    zh[emi + 'projector.rate'] = '物质:每 10 秒 1 颗,坍缩 +%s 颗'
+    en[emi + 'projector.energy'] = '2 G EU/t, matter balls extend'
+    zh[emi + 'projector.energy'] = '2 G EU/t,物质球可延长'
+    en[emi + 'catalyzer.time'] = '100s per singularity, no energy'
+    zh[emi + 'catalyzer.time'] = '每 100 秒 1 颗奇点,不耗电'
+    en[emi + 'heart.line1'] = 'Starts a microverse projection: consumed together'
+    zh[emi + 'heart.line1'] = '启动一次微缩宇宙投影,启动时连同'
+    en[emi + 'heart.line2'] = 'with one singularity of every kind (12).'
+    zh[emi + 'heart.line2'] = '全部 12 种奇点各一颗一并消耗。'
     # keys retired with the extend button and the ball/output slots
     for dead in ('extend', 'slot_balls', 'slot_output'):
         en.pop(gui + dead, None)
         zh.pop(gui + dead, None)
+    # retired long-form EMI annotation (kept short for the recipe page width)
+    # and the cycle-based catalyzer texts (replaced by per-kind rituals)
+    for lang in (en, zh):
+        lang.pop(emi + 'projector.output', None)
+        lang.pop(emi + 'catalyzer.cycle', None)
+        lang.pop(cat + 'next', None)
     problems_en = {
         'unchecked': 'structure not checked yet',
         'layer1': 'bottom layer incomplete',
