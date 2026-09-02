@@ -1275,14 +1275,14 @@
   "container.mi_nested_infinity.microverse_projector.starved": "能量不足——宇宙失稳",
   "container.mi_nested_infinity.microverse_projector.starved_hint": "坍缩加速 10 倍",
   "block.mi_nested_infinity.singularity_catalyzer": "奇点催化器",
-  "container.mi_nested_infinity.singularity_catalyzer.slot_input": "催化剂放这里(每颗奇点 64 个,水瓶 16 个)",
-  "container.mi_nested_infinity.singularity_catalyzer.slot_output": "催化出的奇点出现在这里",
+  "container.mi_nested_infinity.singularity_catalyzer.slot_input": "催化剂放这里(每批 64 个,水瓶 16 个)",
+  "container.mi_nested_infinity.singularity_catalyzer.slot_output": "每批 2 颗奇点出现在这里",
   "emi.category.mi_nested_infinity.microverse_projector": "微缩宇宙投影仪",
   "emi.category.mi_nested_infinity.singularity_catalyzer": "奇点催化器",
   "emi.mi_nested_infinity.projector.tier": "时间膨胀单元 T%s(4 枚)",
   "emi.mi_nested_infinity.projector.time": "基础时长:%s 秒",
   "emi.mi_nested_infinity.projector.energy": "2 G EU/t,物质球可延长",
-  "emi.mi_nested_infinity.catalyzer.time": "每 100 秒 1 颗奇点,不耗电",
+  "emi.mi_nested_infinity.catalyzer.time": "每 100 秒一批,不耗电",
   "emi.mi_nested_infinity.heart.line1": "启动一次微缩宇宙投影,启动时连同",
   "emi.mi_nested_infinity.heart.line2": "全部 12 种奇点各一颗一并消耗。",
   "emi.mi_nested_infinity.projector.rate": "物质:每 10 秒 1 颗,坍缩 +%s 颗",
@@ -1316,5 +1316,7 @@
   "emi.mi_nested_infinity.catalyzer.once": "一次性仪式:完成即在本机永久解锁",
   "emi.mi_nested_infinity.catalyzer.state": "需在开工时成立(每 8 tick 判定)",
   "tag.mi_nested_infinity.amino_acids": "氨基酸",
-  "tag.mi_nested_infinity.cold_petri_dishes": "低温菌株培养皿"
+  "tag.mi_nested_infinity.cold_petri_dishes": "低温菌株培养皿",
+  "container.mi_nested_infinity.singularity_catalyzer.slot_seed": "种子奇点:须与催化剂同种,产出 ×2",
+  "container.mi_nested_infinity.singularity_catalyzer.ritual_seed": "种子与催化剂不匹配"
 }

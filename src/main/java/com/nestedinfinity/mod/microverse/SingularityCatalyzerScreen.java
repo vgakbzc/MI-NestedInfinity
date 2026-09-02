@@ -9,13 +9,14 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Catalyst slot on the left, singularity slot on the right, a progress bar
- * filling the arrow groove between them, and one status line under the arrow
- * naming the targeted singularity kind in its flame color together with the
- * ritual state. A twelve-light strip under the title shows every ritual —
- * lit in the flame's color once completed (one-shot rituals stay lit:
- * completing one permanently unlocks that kind on this machine). Hovering
- * the input slot or a light shows the kind's ritual.
+ * Seed singularity and catalyst slots on the left, the singularity output on
+ * the right, a progress bar filling the arrow groove between them, and one
+ * status line under the arrow naming the targeted singularity kind in its
+ * flame color together with the ritual state (or a seed mismatch). A
+ * twelve-light strip under the title shows every ritual — lit in the flame's
+ * color once completed (one-shot rituals stay lit: completing one permanently
+ * unlocks that kind on this machine). Hovering the catalyst slot or a light
+ * shows the kind's ritual.
  */
 public class SingularityCatalyzerScreen extends AbstractContainerScreen<SingularityCatalyzerMenu> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
@@ -78,7 +79,7 @@ public class SingularityCatalyzerScreen extends AbstractContainerScreen<Singular
                     topPos + BAR_Y + BAR_H, 0xFFE0E0E0);
         }
 
-        ItemStack catalyst = menu.getBlockEntity().getInput();
+        ItemStack catalyst = menu.getBlockEntity().getCatalyst();
         int kind = SingularityCatalyzerBlockEntity.kindOf(catalyst);
         if (kind >= 0) {
             var singularity = MicroverseItems.SINGULARITIES.get(kind);
@@ -86,13 +87,16 @@ public class SingularityCatalyzerScreen extends AbstractContainerScreen<Singular
             Component line = Component.translatable("container.mi_nested_infinity.singularity_catalyzer.target",
                     Component.translatable("item.mi_nested_infinity.singularity_" + singularity.key()),
                     Component.translatable("container.mi_nested_infinity.singularity_catalyzer.ritual_"
-                            + (ritual >= 2 ? "met" : "unmet")));
+                            + (ritual == 3 ? "seed" : ritual >= 2 ? "met" : "unmet")));
             graphics.drawString(font, line, leftPos + (imageWidth - font.width(line)) / 2, topPos + STATUS_Y,
                     singularity.color(), false);
         }
 
-        if (this.hoveredSlot != null && this.hoveredSlot.index < 2) {
-            if (this.hoveredSlot.index == SingularityCatalyzerBlockEntity.INPUT_SLOT) {
+        if (this.hoveredSlot != null && this.hoveredSlot.index < 3) {
+            if (this.hoveredSlot.index == SingularityCatalyzerBlockEntity.SEED_SLOT) {
+                graphics.renderTooltip(font, Component.translatable(
+                        "container.mi_nested_infinity.singularity_catalyzer.slot_seed"), mouseX, mouseY);
+            } else if (this.hoveredSlot.index == SingularityCatalyzerBlockEntity.CATALYST_SLOT) {
                 // show the hovered (or target) kind's ritual, or the slot hint when empty
                 int hoveredKind = kind >= 0 ? kind : SingularityCatalyzerBlockEntity.kindOf(this.hoveredSlot.getItem());
                 graphics.renderTooltip(font, hoveredKind >= 0

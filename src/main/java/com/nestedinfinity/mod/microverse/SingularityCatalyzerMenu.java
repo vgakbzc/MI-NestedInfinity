@@ -13,9 +13,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * The catalyzer GUI: catalyst stack in on the left, singularities out on the
- * right. Three data ints keep the screen's progress bar, ritual status line
- * and the twelve ritual lights live.
+ * The catalyzer GUI: seed singularity and catalyst stack in on the left,
+ * singularities out on the right. Three data ints keep the screen's progress
+ * bar, ritual status line and the twelve ritual lights live.
  */
 public class SingularityCatalyzerMenu extends AbstractContainerMenu {
     public static final int DATA_PROGRESS = 0;
@@ -42,7 +42,13 @@ public class SingularityCatalyzerMenu extends AbstractContainerMenu {
         this.data = data;
         addDataSlots(data);
 
-        addSlot(new Slot(be, SingularityCatalyzerBlockEntity.INPUT_SLOT, 54, 35) {
+        addSlot(new Slot(be, SingularityCatalyzerBlockEntity.SEED_SLOT, 36, 35) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return SingularityCatalyzerBlockEntity.singularityKind(stack) >= 0;
+            }
+        });
+        addSlot(new Slot(be, SingularityCatalyzerBlockEntity.CATALYST_SLOT, 54, 35) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return SingularityCatalyzerBlockEntity.kindOf(stack) >= 0;
@@ -88,14 +94,19 @@ public class SingularityCatalyzerMenu extends AbstractContainerMenu {
         }
         ItemStack stack = slot.getItem();
         ItemStack original = stack.copy();
-        if (index < 2) {
+        if (index < 3) {
             // machine slots shift-click to the inventory
-            if (!moveItemStackTo(stack, 2, 38, true)) {
+            if (!moveItemStackTo(stack, 3, 39, true)) {
+                return ItemStack.EMPTY;
+            }
+        } else if (SingularityCatalyzerBlockEntity.singularityKind(stack) >= 0) {
+            if (!moveItemStackTo(stack, SingularityCatalyzerBlockEntity.SEED_SLOT,
+                    SingularityCatalyzerBlockEntity.SEED_SLOT + 1, false)) {
                 return ItemStack.EMPTY;
             }
         } else if (SingularityCatalyzerBlockEntity.kindOf(stack) >= 0) {
-            if (!moveItemStackTo(stack, SingularityCatalyzerBlockEntity.INPUT_SLOT,
-                    SingularityCatalyzerBlockEntity.INPUT_SLOT + 1, false)) {
+            if (!moveItemStackTo(stack, SingularityCatalyzerBlockEntity.CATALYST_SLOT,
+                    SingularityCatalyzerBlockEntity.CATALYST_SLOT + 1, false)) {
                 return ItemStack.EMPTY;
             }
         } else {

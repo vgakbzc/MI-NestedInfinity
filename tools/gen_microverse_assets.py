@@ -566,10 +566,11 @@ def main():
     make_gui(os.path.join(GUI_TX, 'microverse_projector.png'), 184,
              [(7, 37)] + inventory_wells(101))
 
-    # singularity catalyzer: matter in (54,35), singularity out (104,35),
-    # arrow groove between them; the screen overlays the progress bar
+    # singularity catalyzer: seed singularity + catalyst in ((35,34),(53,34)),
+    # singularity out (103,34), arrow groove between; the screen overlays the
+    # progress bar
     make_gui(os.path.join(GUI_TX, 'singularity_catalyzer.png'), 166,
-             [(53, 34), (103, 34)] + inventory_wells(83), extra=paint_progress_arrow)
+             [(35, 34), (53, 34), (103, 34)] + inventory_wells(83), extra=paint_progress_arrow)
 
     # EMI projector page: vertical (downward) arrow pair
     save_emi_vertical_arrow()
@@ -650,16 +651,20 @@ def write_lang():
     en['container.%s.coreflame.slot_return' % MODID] = 'Returned singularities appear here'
     zh['container.%s.coreflame.slot_return' % MODID] = '返还的奇点会出现在这里'
     cat = 'container.%s.singularity_catalyzer.' % MODID
-    en[cat + 'slot_input'] = 'Catalyst slot: 64 per singularity (16 water bottles)'
-    zh[cat + 'slot_input'] = '催化剂放这里(每颗奇点 64 个,水瓶 16 个)'
-    en[cat + 'slot_output'] = 'Catalyzed singularities appear here'
-    zh[cat + 'slot_output'] = '催化出的奇点出现在这里'
+    en[cat + 'slot_seed'] = 'Seed singularity: must match the catalyst, comes back x2'
+    zh[cat + 'slot_seed'] = '种子奇点:须与催化剂同种,产出 ×2'
+    en[cat + 'slot_input'] = 'Catalyst slot: 64 per craft (16 water bottles)'
+    zh[cat + 'slot_input'] = '催化剂放这里(每批 64 个,水瓶 16 个)'
+    en[cat + 'slot_output'] = '2 singularities per craft appear here'
+    zh[cat + 'slot_output'] = '每批 2 颗奇点出现在这里'
     en[cat + 'target'] = 'Target: %s - %s'
     zh[cat + 'target'] = '目标:%s · %s'
     en[cat + 'ritual_met'] = 'ritual ready'
     zh[cat + 'ritual_met'] = '仪式就绪'
     en[cat + 'ritual_unmet'] = 'ritual not ready'
     zh[cat + 'ritual_unmet'] = '仪式未就绪'
+    en[cat + 'ritual_seed'] = 'wrong seed for this catalyst'
+    zh[cat + 'ritual_seed'] = '种子与催化剂不匹配'
     # the twelve rituals, in COREFLAMES/SINGULARITIES key order
     conditions_en = {
         'gold': 'Two faces touching lava',
@@ -710,8 +715,8 @@ def write_lang():
     zh[emi + 'projector.rate'] = '物质:每 10 秒 1 颗,坍缩 +%s 颗'
     en[emi + 'projector.energy'] = '2 G EU/t, matter balls extend'
     zh[emi + 'projector.energy'] = '2 G EU/t,物质球可延长'
-    en[emi + 'catalyzer.time'] = '100s per singularity, no energy'
-    zh[emi + 'catalyzer.time'] = '每 100 秒 1 颗奇点,不耗电'
+    en[emi + 'catalyzer.time'] = '100s per craft, no energy'
+    zh[emi + 'catalyzer.time'] = '每 100 秒一批,不耗电'
     en[emi + 'catalyzer.once'] = 'One-shot: completing it unlocks this kind here forever'
     zh[emi + 'catalyzer.once'] = '一次性仪式:完成即在本机永久解锁'
     en[emi + 'catalyzer.state'] = 'Must hold when the craft starts (checked every 8 ticks)'

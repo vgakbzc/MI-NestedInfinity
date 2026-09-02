@@ -41,11 +41,12 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 
 /**
- * The singularity catalyzer: a standalone no-energy machine that condenses
- * catalysts into singularities. Each of the twelve kinds has its own ritual
- * condition and its own catalyst — a stack of {@link #CRAFT_AMOUNT} goes
- * into the input slot and when the ritual holds the machine spends
- * {@link #TOTAL_TICKS} condensing one singularity of that kind.
+ * The singularity catalyzer: a standalone no-energy machine that grows
+ * singularities. Each of the twelve kinds has its own ritual condition and
+ * its own catalyst — a seed singularity of the kind plus a stack of
+ * {@link #CRAFT_AMOUNT} catalyst go in, and when the ritual holds the machine
+ * spends {@link #TOTAL_TICKS} returning {@link #OUTPUT_AMOUNT} singularities
+ * of that kind (the seed back plus one new one).
  *
  * <p>Rituals split into polled states (gold's two faces of lava, rift's log
  * and leaves, plenty's world floor, twilight's open sky at Y&ge;315, worlds'
@@ -57,11 +58,14 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
  * craft-start check are reevaluated every {@link #RITUAL_INTERVAL} ticks.
  */
 public class SingularityCatalyzerBlockEntity extends BlockEntity implements WorldlyContainer, MenuProvider {
-    public static final int INPUT_SLOT = 0;
-    public static final int OUTPUT_SLOT = 1;
+    public static final int SEED_SLOT = 0;
+    public static final int CATALYST_SLOT = 1;
+    public static final int OUTPUT_SLOT = 2;
     public static final int TOTAL_TICKS = 2000;
     /** Catalysts are consumed a stack at a time; potions only stack to 16. */
     public static final int CRAFT_AMOUNT = 64;
+    /** One craft returns the seed plus a fresh singularity of the same kind. */
+    public static final int OUTPUT_AMOUNT = 2;
     /** Rituals are polled every 8 ticks, not every tick. */
     public static final int RITUAL_INTERVAL = 8;
 
@@ -94,7 +98,8 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     /** Server-side catalyzers, so death events can find the witnesses fast. */
     private static final Set<SingularityCatalyzerBlockEntity> LOADED = ConcurrentHashMap.newKeySet();
 
-    private ItemStack input = ItemStack.EMPTY;
+    private ItemStack seed = ItemStack.EMPTY;
+    private ItemStack catalyst = ItemStack.EMPTY;
     private ItemStack output = ItemStack.EMPTY;
     /** What a running craft will emit; the catalyst was already burned. */
     private ItemStack pendingOutput = ItemStack.EMPTY;
@@ -107,7 +112,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     private int flameMask;
     private int goldMask;
     private boolean neighborsScanned;
-    /** 0 = no target, 1 = ritual not holding, 2 = ritual ready (for the GUI). */
+    /** 0 = no target, 1 = ritual not holding, 2 = ritual ready, 3 = wrong seed (for the GUI). */
     private int ritualState;
 
     public SingularityCatalyzerBlockEntity(BlockPos pos, BlockState state) {
@@ -138,6 +143,16 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
             return -1;
         }
         return index;
+    }
+
+    /** Which of the twelve singularities this stack is, or -1. */
+    public static int singularityKind(ItemStack stack) {
+        for (int i = 0; i < MicroverseItems.SINGULARITIES.size(); i++) {
+            if (stack.is(MicroverseItems.SINGULARITIES.get(i).item().get())) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     private static boolean isWaterBottle(ItemStack stack) {
@@ -306,8 +321,10 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
         if (level.getGameTime() % RITUAL_INTERVAL == 0) {
             refreshRituals();
         }
-        int kind = kindOf(input);
-        ritualState = kind < 0 ? 0 : (readyMask & (1 << kind)) != 0 ? 2 : 1;
+        int kind = kindOf(catalyst);
+        ritualState = kind < 0 ? 0
+                : singularityKind(seed) != kind ? 3
+                : (readyMask & (1 << kind)) != 0 ? 2 : 1;
         if (progress > 0) {
             if (++progress >= TOTAL_TICKS) {
                 progress = 0;
@@ -319,17 +336,22 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
             }
             return;
         }
-        if (kind < 0 || input.getCount() < craftAmount(input) || (readyMask & (1 << kind)) == 0) {
+        if (kind < 0 || catalyst.getCount() < craftAmount(catalyst)
+                || (readyMask & (1 << kind)) == 0 || singularityKind(seed) != kind) {
             return;
         }
-        ItemStack produced = new ItemStack(MicroverseItems.SINGULARITIES.get(kind).item().get());
+        ItemStack produced = new ItemStack(MicroverseItems.SINGULARITIES.get(kind).item().get(), OUTPUT_AMOUNT);
         if (!output.isEmpty() && (!ItemStack.isSameItemSameComponents(output, produced)
-                || output.getCount() >= output.getMaxStackSize())) {
+                || output.getCount() + OUTPUT_AMOUNT > output.getMaxStackSize())) {
             return;
         }
-        input = input.copyWithCount(input.getCount() - craftAmount(input));
-        if (input.getCount() <= 0) {
-            input = ItemStack.EMPTY;
+        catalyst = catalyst.copyWithCount(catalyst.getCount() - craftAmount(catalyst));
+        if (catalyst.getCount() <= 0) {
+            catalyst = ItemStack.EMPTY;
+        }
+        seed = seed.copyWithCount(seed.getCount() - 1);
+        if (seed.getCount() <= 0) {
+            seed = ItemStack.EMPTY;
         }
         pendingOutput = produced;
         progress = 1;
@@ -354,22 +376,31 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
         if (pendingOutput.isEmpty()) {
             return;
         }
+        int add = 0;
         if (output.isEmpty()) {
-            output = pendingOutput;
-        } else if (ItemStack.isSameItemSameComponents(output, pendingOutput)
-                && output.getCount() < output.getMaxStackSize()) {
-            output = output.copyWithCount(output.getCount() + 1);
-        } else {
+            add = pendingOutput.getCount();
+        } else if (ItemStack.isSameItemSameComponents(output, pendingOutput)) {
+            add = Math.min(pendingOutput.getCount(), output.getMaxStackSize() - output.getCount());
+        }
+        if (add > 0) {
+            output = (output.isEmpty() ? pendingOutput : output).copyWithCount(output.getCount() + add);
+        }
+        if (add < pendingOutput.getCount()) {
             level.addFreshEntity(new ItemEntity(level, worldPosition.getX() + 0.5,
-                    worldPosition.getY() + 1.0, worldPosition.getZ() + 0.5, pendingOutput));
+                    worldPosition.getY() + 1.0, worldPosition.getZ() + 0.5,
+                    pendingOutput.copyWithCount(pendingOutput.getCount() - add)));
         }
         pendingOutput = ItemStack.EMPTY;
     }
 
     // -- accessors -------------------------------------------------------------
 
-    public ItemStack getInput() {
-        return input;
+    public ItemStack getSeed() {
+        return seed;
+    }
+
+    public ItemStack getCatalyst() {
+        return catalyst;
     }
 
     public ItemStack getOutput() {
@@ -380,7 +411,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
         return progress;
     }
 
-    /** 0 = no target, 1 = ritual not holding, 2 = ritual ready. */
+    /** 0 = no target, 1 = ritual not holding, 2 = ritual ready, 3 = wrong seed. */
     public int getRitualState() {
         return ritualState;
     }
@@ -404,7 +435,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
 
     @Override
     public int[] getSlotsForFace(Direction face) {
-        return new int[] {INPUT_SLOT, OUTPUT_SLOT};
+        return new int[] {SEED_SLOT, CATALYST_SLOT, OUTPUT_SLOT};
     }
 
     @Override
@@ -419,17 +450,21 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
 
     @Override
     public int getContainerSize() {
-        return 2;
+        return 3;
     }
 
     @Override
     public boolean isEmpty() {
-        return input.isEmpty() && output.isEmpty();
+        return seed.isEmpty() && catalyst.isEmpty() && output.isEmpty();
     }
 
     @Override
     public ItemStack getItem(int slot) {
-        return slot == OUTPUT_SLOT ? output : input;
+        return switch (slot) {
+            case SEED_SLOT -> seed;
+            case CATALYST_SLOT -> catalyst;
+            default -> output;
+        };
     }
 
     @Override
@@ -450,13 +485,16 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
 
     @Override
     public void setItem(int slot, ItemStack stack) {
-        if (slot == OUTPUT_SLOT) {
-            output = stack;
-        } else {
-            input = stack;
+        switch (slot) {
+            case SEED_SLOT -> seed = stack;
+            case CATALYST_SLOT -> catalyst = stack;
+            default -> output = stack;
         }
-        if (input != null && input.isEmpty()) {
-            input = ItemStack.EMPTY;
+        if (seed != null && seed.isEmpty()) {
+            seed = ItemStack.EMPTY;
+        }
+        if (catalyst != null && catalyst.isEmpty()) {
+            catalyst = ItemStack.EMPTY;
         }
         if (output != null && output.isEmpty()) {
             output = ItemStack.EMPTY;
@@ -467,7 +505,10 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return slot == INPUT_SLOT && kindOf(stack) >= 0;
+        if (slot == SEED_SLOT) {
+            return singularityKind(stack) >= 0;
+        }
+        return slot == CATALYST_SLOT && kindOf(stack) >= 0;
     }
 
     @Override
@@ -477,7 +518,8 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
 
     @Override
     public void clearContent() {
-        input = ItemStack.EMPTY;
+        seed = ItemStack.EMPTY;
+        catalyst = ItemStack.EMPTY;
         output = ItemStack.EMPTY;
         setChanged();
         sync();
@@ -514,8 +556,11 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        if (!input.isEmpty()) {
-            tag.put("input", input.save(registries));
+        if (!seed.isEmpty()) {
+            tag.put("seed", seed.save(registries));
+        }
+        if (!catalyst.isEmpty()) {
+            tag.put("catalyst", catalyst.save(registries));
         }
         if (!output.isEmpty()) {
             tag.put("output", output.save(registries));
@@ -532,7 +577,8 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        input = ItemStack.parseOptional(registries, tag.getCompound("input"));
+        seed = ItemStack.parseOptional(registries, tag.getCompound("seed"));
+        catalyst = ItemStack.parseOptional(registries, tag.getCompound("catalyst"));
         output = ItemStack.parseOptional(registries, tag.getCompound("output"));
         pendingOutput = ItemStack.parseOptional(registries, tag.getCompound("pending"));
         progress = Math.max(0, tag.getInt("progress"));
@@ -548,8 +594,11 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
-        if (!input.isEmpty()) {
-            tag.put("input", input.save(registries));
+        if (!seed.isEmpty()) {
+            tag.put("seed", seed.save(registries));
+        }
+        if (!catalyst.isEmpty()) {
+            tag.put("catalyst", catalyst.save(registries));
         }
         if (!output.isEmpty()) {
             tag.put("output", output.save(registries));
@@ -559,7 +608,8 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
 
     @Override
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
-        input = ItemStack.parseOptional(registries, tag.getCompound("input"));
+        seed = ItemStack.parseOptional(registries, tag.getCompound("seed"));
+        catalyst = ItemStack.parseOptional(registries, tag.getCompound("catalyst"));
         output = ItemStack.parseOptional(registries, tag.getCompound("output"));
     }
 

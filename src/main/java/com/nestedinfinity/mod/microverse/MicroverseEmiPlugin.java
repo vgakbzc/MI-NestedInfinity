@@ -14,17 +14,20 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 
 /**
  * EMI integration for the microverse program: a graphical recipe page per
  * universe matter tier (what the projector consumes and yields) and per
- * singularity (what the catalyzer condenses it back into), plus an info
- * page on the heart.
+ * singularity (what the catalyzer grows from a seed plus its catalyst), plus
+ * an info page on the heart.
  *
  * <p>EMI discovers this class through the {@link EmiEntrypoint} annotation
  * and is its only referencer, so the mod runs fine without EMI installed.
@@ -156,22 +159,36 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
         }
     }
 
-    /** The catalyzer: a stack of the kind's catalyst + its ritual -> singularity. */
+    /** The catalyzer: a seed singularity + the kind's catalyst + its ritual -> 2 singularities. */
     private static final class CatalyzerRecipe implements EmiRecipe {
         private static final int WIDTH = 168;
-        private static final int HEIGHT = 71;
+        private static final int TEXT_X = 6;
+        /** Long ritual texts wrap to this width instead of overflowing the page. */
+        private static final int TEXT_WIDTH = WIDTH - 2 * TEXT_X;
+        private static final int TEXT_Y = 44;
+        private static final int LINE_HEIGHT = 10;
+        private static final int GROUP_GAP = 3;
 
         private final int index;
+        private final EmiStack seed;
         private final EmiStack catalyst;
         private final EmiStack output;
+        private final Component condition;
+        private final Component mode;
 
         CatalyzerRecipe(int index) {
             this.index = index;
+            var singularity = MicroverseItems.SINGULARITIES.get(index);
             var item = SingularityCatalyzerBlockEntity.CATALYSTS.get(index);
             long amount = Math.min(SingularityCatalyzerBlockEntity.CRAFT_AMOUNT,
                     new net.minecraft.world.item.ItemStack(item).getMaxStackSize());
+            this.seed = EmiStack.of(singularity.item().get());
             this.catalyst = EmiStack.of(item, amount);
-            this.output = EmiStack.of(MicroverseItems.SINGULARITIES.get(index).item().get());
+            this.output = EmiStack.of(singularity.item().get(), SingularityCatalyzerBlockEntity.OUTPUT_AMOUNT);
+            this.condition = Component.translatable(
+                    "emi.mi_nested_infinity.catalyzer.condition." + singularity.key());
+            this.mode = Component.translatable("emi.mi_nested_infinity.catalyzer."
+                    + (eventRitual(index) ? "once" : "state"));
         }
 
         /** A few graphical hints of what the ritual involves (icons only). */
@@ -208,7 +225,7 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
 
         @Override
         public List<EmiIngredient> getInputs() {
-            return List.of(catalyst);
+            return List.of(seed, catalyst);
         }
 
         @Override
@@ -223,7 +240,9 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
 
         @Override
         public int getDisplayHeight() {
-            return HEIGHT;
+            Font font = Minecraft.getInstance().font;
+            int lines = 1 + font.split(condition, TEXT_WIDTH).size() + font.split(mode, TEXT_WIDTH).size();
+            return TEXT_Y + lines * LINE_HEIGHT + 2 * GROUP_GAP + 3;
         }
 
         @Override
@@ -233,19 +252,32 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
 
         @Override
         public void addWidgets(WidgetHolder widgets) {
-            widgets.addSlot(catalyst, 52, 0);
-            widgets.addFillingArrow(74, 1, 20000);
-            widgets.addSlot(output, 98, 0);
+            widgets.addSlot(seed, 38, 0);
+            widgets.addTexture(EmiTexture.PLUS, 56, 2);
+            widgets.addSlot(catalyst, 69, 0);
+            widgets.addFillingArrow(87, 1, 20000);
+            widgets.addSlot(output, 111, 0);
             List<EmiIngredient> icons = ritualIcons(index);
             for (int i = 0; i < icons.size(); i++) {
                 widgets.addSlot(icons.get(i), 6 + i * 18, 22);
             }
-            widgets.addText(Component.translatable("emi.mi_nested_infinity.catalyzer.time"),
-                    6, 44, TEXT_COLOR, false);
-            widgets.addText(Component.translatable("emi.mi_nested_infinity.catalyzer.condition."
-                    + MicroverseItems.SINGULARITIES.get(index).key()), 6, 53, TEXT_COLOR, false);
-            widgets.addText(Component.translatable("emi.mi_nested_infinity.catalyzer."
-                    + (eventRitual(index) ? "once" : "state")), 6, 62, TEXT_COLOR, false);
+            int y = addWrappedText(widgets, Component.translatable("emi.mi_nested_infinity.catalyzer.time"),
+                    TEXT_X, TEXT_Y) + GROUP_GAP;
+            y = addWrappedText(widgets, condition, TEXT_X, y) + GROUP_GAP;
+            addWrappedText(widgets, mode, TEXT_X, y);
+        }
+
+        /**
+         * EMI's text widget draws one line as-is, so long strings simply
+         * overflow the page — split with the vanilla font first. Returns the y
+         * below the block; keep {@link #getDisplayHeight} in sync.
+         */
+        private static int addWrappedText(WidgetHolder widgets, Component text, int x, int y) {
+            for (FormattedCharSequence line : Minecraft.getInstance().font.split(text, TEXT_WIDTH)) {
+                widgets.addText(line, x, y, TEXT_COLOR, false);
+                y += LINE_HEIGHT;
+            }
+            return y;
         }
 
         private static boolean eventRitual(int index) {
