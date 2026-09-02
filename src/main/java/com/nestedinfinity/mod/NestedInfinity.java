@@ -128,8 +128,8 @@ public class NestedInfinity {
                 NIFluids.OPTICAL.forEach(fluid -> output.accept(fluid.bucket.get()));
                 // microverse program: the projector multiblock and its parts
                 output.accept(MicroverseBlocks.NEUTRONIUM_MACHINE_CASING_ITEM.get());
-                MicroverseBlocks.TDUS.forEach(tdu -> output.accept(tdu.get()));
-                MicroverseBlocks.COREFLAMES.forEach(flame -> output.accept(flame.get()));
+                MicroverseBlocks.TDU_ITEMS.forEach(tdu -> output.accept(tdu.get()));
+                MicroverseBlocks.COREFLAME_ITEMS.forEach(flame -> output.accept(flame.get()));
                 output.accept(MicroverseBlocks.MICROVERSE_PROJECTOR_ITEM.get());
                 output.accept(MicroverseItems.HEART_OF_A_NONEXISTENT_WORLD.get());
                 MicroverseItems.SINGULARITIES.forEach(s -> output.accept(s.item().get()));

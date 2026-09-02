@@ -35,12 +35,21 @@ public final class MicroverseBlocks {
                     () -> new CoreflameBlock(
                             BlockBehaviour.Properties.of().strength(6.0F, 8.0F).requiresCorrectToolForDrops())))
             .toList();
+    public static final List<DeferredItem<BlockItem>> COREFLAME_ITEMS = java.util.stream.IntStream
+            .range(0, MicroverseItems.SINGULARITIES.size())
+            .mapToObj(i -> NestedInfinity.ITEMS.registerSimpleBlockItem(
+                    "coreflame_" + MicroverseItems.SINGULARITIES.get(i).blockSuffix(), COREFLAMES.get(i)))
+            .toList();
 
     /** The nine time dilation unit tiers, index 0 == tier 1. */
     public static final List<DeferredBlock<TimeDilationUnitBlock>> TDUS = java.util.stream.IntStream.rangeClosed(1, 9)
             .mapToObj(tier -> NestedInfinity.BLOCKS.register("time_dilation_unit_t" + tier,
                     () -> new TimeDilationUnitBlock(tier,
                             BlockBehaviour.Properties.of().strength(6.0F, 8.0F).requiresCorrectToolForDrops())))
+            .toList();
+    public static final List<DeferredItem<BlockItem>> TDU_ITEMS = java.util.stream.IntStream.rangeClosed(1, 9)
+            .mapToObj(tier -> NestedInfinity.ITEMS.registerSimpleBlockItem("time_dilation_unit_t" + tier,
+                    TDUS.get(tier - 1)))
             .toList();
 
     public static final DeferredBlock<MicroverseProjectorBlock> MICROVERSE_PROJECTOR = NestedInfinity.BLOCKS.register(
