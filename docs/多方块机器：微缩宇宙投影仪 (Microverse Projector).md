@@ -345,3 +345,29 @@ y xxx y
   ≥20px、TDU 表盘色、控制器白星在场、四边无内容贴边即无裁切）；火种顶面直接填火色保证轮廓辨识。
 - 判定要点沉淀：正面斜投影会让同列近处方块盖住远侧火种、顶层立柱东墙悬盖北侧火种顶面——
   等距投影也仅改善到 9/12，必须配合分层分解。
+
+### 2026-09-02 追加七（结构页独立分类 + 三页分页：斜二测整体图 / 分解图 / 逐层清单）
+
+- **动机**：追加六的单页高 231px，超过 EMI 页面上限（`RecipeScreen.backgroundHeight` 上限 256，
+  减去 46px 标签/翻页栏 = **210px**），游戏内底部文字被窗口切半行；图例 4 列标签在英文下互相
+  重叠（"ControllérDU x4"）。EMI 不滚动裁切页内容 → 必须分页。
+- **新分类** `emi.category.mi_nested_infinity.projector_structure`（"Projector Structure"/
+  "投影仪结构"，图标 = 中子素机器外壳，工作台 = 投影仪本体），结构页从投影仪配方分类移出。
+  三页（同分类按 addRecipe 顺序翻页）：
+  1. `projector_structure/assembled` **整体斜二测图**（`projector_structure_oblique.png` 121×80）：
+     正面真形 14px 方块 + 45° 半比例深度轴（步长 (5,−5)，教科书系数 0.5）；画家序 行 0→6、层 0→2、
+     列 0→6。火种正面大菱形（d≤2 纯色、d≤4 提亮）+ 顶带纯火色；控制器星系面+白星。
+     **远侧火种被中心塔架遮挡是该投影的几何真相**（3 深度步 ≈ 15px ≈ 一层高 14px，中心 3×3 核心
+     与控制器正好投影压住北缘火种；实测系数 0.5 时 9/12 火色 ≥25px，gold/justice/plenty 仅剩条状）。
+     曾试深度系数 1/3 与 4/5：系数 1/3 时顶带反而被控制器**正面**压住（depth-3 与层高错位方向反转），
+     仅系数 ≈1（cavalier，非斜二测）才能全显——放弃，改由下一页承担火种清点。
+  2. `projector_structure/exploded` **分解轴测图**（89×134）：GAP 18→**28px**（用户要求更高分层
+     间距），12/12 火种顶面 ≥30px、TDU 表盘、控制器白星、四边无贴边全部复验通过。
+  3. `projector_structure/layers` **逐层清单**：底层/中层/顶层文字 + 对应槽位行（外壳×37、
+     12 火种两行各 6、TDU×4+外壳×9、控制器+外壳×4），行运行时按 `Font.split` 实际行数计页高。
+- **图例改单行**：4 槽位一行（顺序即图例），下方一条可换行文本
+  "Controller · TDU x4 · Casing x50 · Coreflames x12"，消除列标签重叠。
+- 生成器重构：`save_emi_structure_diagram()` 拆为 `save_emi_structure_oblique()` /
+  `save_emi_structure_exploded()` + 公共 `crop_save()`（超采样画布 + PIL 内容裁切 + 4px 留白，
+  对锚点误差免疫）；分解图画布锚点上移（GAP 增大后东北角菱形曾越出画布顶）。
+  旧键 `structure.title`/`structure.legend.*` 移除，新增 `structure.legend/note/hint/hatch`。

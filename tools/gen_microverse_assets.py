@@ -417,17 +417,107 @@ def structure_layer(layer):
     return cells
 
 
-def save_emi_structure_diagram():
-    """EMI projector structure page: the 7x3x7 multiblock as an exploded 2:1
-    isometric parallel projection seen from above the south-east corner. The
-    three layers pull apart vertically so every part stays readable — all
-    twelve rim coreflames (kind color on the top face), the four TDU dials,
-    the 3x3 casing core and the floating top layer of controller and pillars.
-    Each cube is drawn from its bottom south vertex: east wall (lit, carries
-    the kind detail), south wall (shaded), top rhombus. Rendered oversize,
-    then cropped to content."""
+def crop_save(canvas, pad, name):
+    """Crop an oversize render to its content box (+pad) and save it."""
     from PIL import Image
-    HALF_W, HALF_H, WALL, GAP = 8, 4, 10, 18
+    img = Image.frombytes('RGBA', (canvas.w, canvas.h), bytes(canvas.buf))
+    bbox = img.getbbox()  # non-transparent content
+    out = img.crop((max(0, bbox[0] - pad), max(0, bbox[1] - pad),
+                    min(canvas.w, bbox[2] + pad), min(canvas.h, bbox[3] + pad)))
+    out.save(os.path.join(A, 'textures', 'gui', 'emi', name))
+
+
+def save_emi_structure_oblique():
+    """EMI structure page 1: the assembled 7x3x7 multiblock as an oblique
+    cabinet (xie-er-ce) projection — front faces are true-size squares, the
+    depth axis runs to the upper right at half scale. Painter's order: far
+    rows first, bottom layers first. Nearer cubes legitimately hide parts of
+    the far rim (that is what "assembled" means); every coreflame still
+    carries its kind color on the top band, which nothing stands on. Rendered
+    oversize, then cropped to content."""
+    S, DX, DY = 14, 5, 5  # cube front size, depth step (right, up) — the
+    # textbook xie-er-ce coefficient (45deg axis, half scale). The center
+    # stack then genuinely occludes the far rim — that is what "assembled"
+    # means; the exploded page carries the full flame census
+    casing = (96, 90, 108)
+    frame = (52, 46, 62)
+    tdu_dial = TDU_RAMP[4]  # one representative tier: any same-tier set is valid
+
+    def cube(canvas, x, y, front, top, side, face=None):
+        """One cube: bordered front face plus beveled top and right faces."""
+        edge = shade(front, 0.62)
+        for dy in range(S):
+            for dx in range(S):
+                c = edge if dx in (0, S - 1) or dy in (0, S - 1) else front
+                if face:
+                    c = face(dx, dy, c)
+                canvas.px(x + dx, y + dy, c)
+        for s in range(1, DX + 1):
+            for dx in range(S):
+                canvas.px(x + s + dx, y - s, top)
+            for dy in range(S):
+                canvas.px(x + S - 1 + s, y - s + dy, side)
+
+    big = Canvas(200, 100)
+    ox, oy = 12, 70  # top bevels of the far corner reach oy - 2*S - 6*DY - DX
+    layers = [structure_layer(l) for l in range(3)]
+    for row in range(7):          # far (north) rows first ...
+        for layer in range(3):    # ... and lower layers below upper ones
+            for col in range(7):  # west first (east bevels hide inside rows)
+                kind = layers[layer].get((row, col))
+                if kind is None:
+                    continue
+                depth = 6 - row
+                x = ox + col * S + depth * DX
+                y = oy - layer * S - depth * DY
+                if kind in ('casing', 'pillar'):
+                    cube(big, x, y, casing, lift(casing, 0.30), shade(casing, 0.72))
+                elif kind == 'tdu':
+                    def face(dx, dy, c):
+                        d = abs(dx - 7) + abs(dy - 7)
+                        if d <= 1:
+                            return tdu_dial
+                        if d == 2:
+                            return shade(tdu_dial, 0.55)
+                        return c
+                    cube(big, x, y, (88, 82, 100), lift((88, 82, 100), 0.30),
+                         shade((88, 82, 100), 0.72), face)
+                elif kind == 'controller':
+                    def face(dx, dy, c):
+                        if abs(dx - 7) + abs(dy - 7) <= 3:
+                            swirl = ((dx * 7 + dy * 13) % 5) / 4.0
+                            return (int(60 + swirl * 140), int(30 + swirl * 60),
+                                    int(120 + swirl * 120))
+                        return c
+                    cube(big, x, y, casing, lift((110, 70, 180), 0.35),
+                         shade((110, 70, 180), 0.72), face)
+                    big.px(x + 7, y + 5, (240, 230, 255))  # one bright star
+                else:  # ('flame', i)
+                    color = COREFLAMES[kind[1]][4]
+
+                    def face(dx, dy, c, color=color):
+                        d = abs(dx - 7) + abs(dy - 7)
+                        if d <= 2:
+                            return color
+                        if d <= 4:
+                            return lift(color, 0.15)
+                        return c
+                    # solid kind color on the top band: no block stands on a
+                    # flame, so all twelve stay identifiable in this view too
+                    cube(big, x, y, frame, lift(color, 0.10), shade(color, 0.75), face)
+    crop_save(big, 4, 'projector_structure_oblique.png')
+
+
+def save_emi_structure_exploded():
+    """EMI structure page 2: the 7x3x7 multiblock as an exploded 2:1
+    isometric parallel projection seen from above the south-east corner. The
+    three layers pull apart vertically (GAP) so every part stays readable —
+    all twelve rim coreflames (kind color on the top face), the four TDU
+    dials, the 3x3 casing core and the floating top layer of controller and
+    pillars. Each cube is drawn from its bottom south vertex: east wall (lit,
+    carries the kind detail), south wall (shaded), top rhombus. Rendered
+    oversize, then cropped to content."""
+    HALF_W, HALF_H, WALL, GAP = 8, 4, 10, 28
     casing = (96, 90, 108)
     frame = (52, 46, 62)
     tdu_dial = TDU_RAMP[4]  # one representative tier: any same-tier set is valid
@@ -458,10 +548,10 @@ def save_emi_structure_diagram():
     # bottom layer first (the explosion puts higher layers visually on top)
     cubes.sort(key=lambda c: (c[0], c[1]))
 
-    big = Canvas(220, 190)
+    big = Canvas(240, 170)
     for layer, _sum, row, col, kind in cubes:
-        x = 110 + (row + col) * HALF_W
-        y = 90 + (row - col) * HALF_H - layer * (WALL + GAP)
+        x = 120 + (row + col) * HALF_W
+        y = 125 + (row - col) * HALF_H - layer * (WALL + GAP)
         if kind in ('casing', 'pillar'):
             cube(big.px, x, y, casing, lift(casing, 0.30))
         elif kind == 'tdu':
@@ -497,12 +587,7 @@ def save_emi_structure_diagram():
             # east wall hides behind a nearer neighbour
             cube(big.px, x, y, frame, lift(color, 0.10), detail)
 
-    img = Image.frombytes('RGBA', (big.w, big.h), bytes(big.buf))
-    bbox = img.getbbox()  # non-transparent content
-    pad = 4
-    out = img.crop((max(0, bbox[0] - pad), max(0, bbox[1] - pad),
-                    min(big.w, bbox[2] + pad), min(big.h, bbox[3] + pad)))
-    out.save(os.path.join(A, 'textures', 'gui', 'emi', 'projector_structure.png'))
+    crop_save(big, 4, 'projector_structure_exploded.png')
 
 
 def paint_progress_arrow(canvas):
@@ -712,7 +797,8 @@ def main():
 
     # EMI projector page: vertical (downward) arrow pair
     save_emi_vertical_arrow()
-    save_emi_structure_diagram()
+    save_emi_structure_oblique()
+    save_emi_structure_exploded()
 
     # singularity catalyzer machine block
     save_block_texture('singularity_catalyzer', make_catalyzer)
@@ -854,16 +940,16 @@ def write_lang():
     zh[emi + 'projector.rate'] = '物质:每 10 秒 1 颗,坍缩 +%s 颗'
     en[emi + 'projector.energy'] = '2 G EU/t, matter balls extend'
     zh[emi + 'projector.energy'] = '2 G EU/t,物质球可延长'
-    en[emi + 'structure.title'] = '7x3x7 hexagon around the controller'
-    zh[emi + 'structure.title'] = '以控制器为中心的 7×3×7 六边形'
-    en[emi + 'structure.legend.controller'] = 'Controller'
-    zh[emi + 'structure.legend.controller'] = '控制器'
-    en[emi + 'structure.legend.tdu'] = 'TDU x4'
-    zh[emi + 'structure.legend.tdu'] = 'TDU×4'
-    en[emi + 'structure.legend.casing'] = 'Casing'
-    zh[emi + 'structure.legend.casing'] = '外壳'
-    en[emi + 'structure.legend.flames'] = 'Coreflames'
-    zh[emi + 'structure.legend.flames'] = '火种×12'
+    en['emi.category.%s.projector_structure' % MODID] = 'Projector Structure'
+    zh['emi.category.%s.projector_structure' % MODID] = '投影仪结构'
+    en[emi + 'structure.legend'] = 'Controller · TDU x4 · Casing x50 · Coreflames x12'
+    zh[emi + 'structure.legend'] = '控制器 · TDU×4 · 外壳×50 · 火种×12'
+    en[emi + 'structure.note'] = 'Assembled oblique view; the exploded layout is on the next page.'
+    zh[emi + 'structure.note'] = '整体斜二测图,分解图见下一页。'
+    en[emi + 'structure.hint'] = 'Build bottom-up: base plate, middle ring, then the open top.'
+    zh[emi + 'structure.hint'] = '自下而上搭建:底板 → 中层 → 顶层。'
+    en[emi + 'structure.hatch'] = 'Any casing cell may be an MI hatch instead, except the four top pillars (casing only).'
+    zh[emi + 'structure.hatch'] = '外壳格可换成 MI 仓口,但顶层四根立柱必须用外壳本体。'
     en[emi + 'structure.bottom'] = 'Bottom: full casing plate (MI hatches may replace casings)'
     zh[emi + 'structure.bottom'] = '底层:整层外壳(可换 MI 仓口)'
     en[emi + 'structure.middle'] = 'Middle: 12 coreflames on the rim (one of each kind), 4 same-tier TDUs at the inner corners, 3x3 casing core'
