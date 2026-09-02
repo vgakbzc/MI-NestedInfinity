@@ -7,14 +7,14 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import org.joml.Matrix4f;
 
 /**
  * The projected universe: a starfield cube (the vanilla end-portal render
  * type, position-only format) centered three and a half blocks above the
  * controller while a run is active, tumbling around the X and Z axes at
- * different rates. It scales in over the first two seconds and collapses
- * over the final two (spec doc section 7).
+ * different rates, its twelve edges traced with a light-purple wireframe
+ * for volume. It scales in over the first two seconds and collapses over
+ * the final two (spec doc section 7).
  */
 public class MicroverseProjectorBER implements BlockEntityRenderer<MicroverseProjectorBlockEntity> {
     /** Center of the cube, in blocks above the controller's origin. */
@@ -32,6 +32,13 @@ public class MicroverseProjectorBER implements BlockEntityRenderer<MicroversePro
     private static final float X_DEG_PER_TICK = 0.225F;
     private static final int Z_PERIOD = 2400;
     private static final float Z_DEG_PER_TICK = 0.15F;
+
+    /** The wireframe color: a soft lilac that reads against the starfield. */
+    private static final int EDGE_R = 204;
+    private static final int EDGE_G = 168;
+    private static final int EDGE_B = 255;
+    /** The wireframe is puffed just off the faces it sits on, else z-fight. */
+    private static final float EDGE_PUFF = 1.004F;
 
     /** The eight cube corners, x/y/z each -1 or +1, bit pattern xyz. */
     private static final float[][] CORNERS = new float[8][];
@@ -78,8 +85,8 @@ public class MicroverseProjectorBER implements BlockEntityRenderer<MicroversePro
         poseStack.translate(0.5, CENTER_Y, 0.5);
         poseStack.mulPose(Axis.XP.rotationDegrees(angleX));
         poseStack.mulPose(Axis.ZP.rotationDegrees(angleZ));
+        PoseStack.Pose pose = poseStack.last();
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.endPortal());
-        Matrix4f pose = poseStack.last().pose();
         for (int[] face : FACES) {
             // each quad twice, once per winding — the starfield shader's face
             // culling state is not ours to rely on (vanilla's EndPortalRenderer
@@ -91,11 +98,35 @@ public class MicroverseProjectorBER implements BlockEntityRenderer<MicroversePro
                 vertex(consumer, pose, CORNERS[face[i]], half);
             }
         }
+        // the twelve edges: corner pairs that differ in exactly one bit
+        VertexConsumer lines = bufferSource.getBuffer(RenderType.lines());
+        float edgeHalf = half * EDGE_PUFF;
+        for (int c = 0; c < 8; c++) {
+            for (int bit = 0; bit < 3; bit++) {
+                if ((c & (1 << bit)) == 0) {
+                    edge(lines, pose, CORNERS[c], CORNERS[c | (1 << bit)], edgeHalf);
+                }
+            }
+        }
         poseStack.popPose();
     }
 
-    private static void vertex(VertexConsumer consumer, Matrix4f pose, float[] v, float half) {
-        consumer.addVertex(pose, v[0] * half, v[1] * half, v[2] * half);
+    private static void vertex(VertexConsumer consumer, PoseStack.Pose pose, float[] v, float half) {
+        consumer.addVertex(pose.pose(), v[0] * half, v[1] * half, v[2] * half);
+    }
+
+    /** One wireframe segment; the lines shader extrudes along the normal. */
+    private static void edge(VertexConsumer consumer, PoseStack.Pose pose, float[] a, float[] b, float half) {
+        float dx = b[0] - a[0];
+        float dy = b[1] - a[1];
+        float dz = b[2] - a[2];
+        float len = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+        consumer.addVertex(pose.pose(), a[0] * half, a[1] * half, a[2] * half)
+                .setColor(EDGE_R, EDGE_G, EDGE_B, 255)
+                .setNormal(pose, dx / len, dy / len, dz / len);
+        consumer.addVertex(pose.pose(), b[0] * half, b[1] * half, b[2] * half)
+                .setColor(EDGE_R, EDGE_G, EDGE_B, 255)
+                .setNormal(pose, dx / len, dy / len, dz / len);
     }
 
     @Override
