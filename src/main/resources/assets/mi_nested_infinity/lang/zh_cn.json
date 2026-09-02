@@ -1314,5 +1314,7 @@
   "container.mi_nested_infinity.singularity_catalyzer.condition.infinity": "与任意门相邻",
   "emi.mi_nested_infinity.catalyzer.condition.infinity": "与任意门相邻",
   "emi.mi_nested_infinity.catalyzer.once": "一次性仪式:完成即在本机永久解锁",
-  "emi.mi_nested_infinity.catalyzer.state": "需在开工时成立(每 8 tick 判定)"
+  "emi.mi_nested_infinity.catalyzer.state": "需在开工时成立(每 8 tick 判定)",
+  "tag.mi_nested_infinity.amino_acids": "氨基酸",
+  "tag.mi_nested_infinity.cold_petri_dishes": "低温菌株培养皿"
 }

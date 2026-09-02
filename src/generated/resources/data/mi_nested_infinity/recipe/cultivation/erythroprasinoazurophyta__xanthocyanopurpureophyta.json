@@ -20,7 +20,12 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_erythroprasinocyanopurpureophyta",
+      "item": "mi_nested_infinity:petri_aurantiocaeruleophyta",
+      "amount": 1,
+      "probability": 0.25
+    },
+    {
+      "item": "mi_nested_infinity:petri_erythroprasinocaeruleophyta",
       "amount": 1,
       "probability": 0.25
     },
@@ -30,12 +35,7 @@
       "probability": 0.25
     },
     {
-      "item": "mi_nested_infinity:petri_aurantiocaeruleophyta",
-      "amount": 1,
-      "probability": 0.25
-    },
-    {
-      "item": "mi_nested_infinity:petri_erythroprasinocaeruleophyta",
+      "item": "mi_nested_infinity:petri_erythroprasinocyanopurpureophyta",
       "amount": 1,
       "probability": 0.25
     }

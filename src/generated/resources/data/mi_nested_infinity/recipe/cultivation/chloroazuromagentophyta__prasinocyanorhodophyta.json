@@ -20,27 +20,12 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_glaucorhodophyta",
-      "amount": 1,
-      "probability": 0.125
-    },
-    {
-      "item": "mi_nested_infinity:petri_chloroazuromagentophyta",
-      "amount": 1,
-      "probability": 0.125
-    },
-    {
       "item": "mi_nested_infinity:petri_glaucomagentophyta",
       "amount": 1,
       "probability": 0.125
     },
     {
-      "item": "mi_nested_infinity:petri_prasinoazurorhodophyta",
-      "amount": 1,
-      "probability": 0.125
-    },
-    {
-      "item": "mi_nested_infinity:petri_prasinocyanorhodophyta",
+      "item": "mi_nested_infinity:petri_prasinocyanomagentophyta",
       "amount": 1,
       "probability": 0.125
     },
@@ -50,7 +35,22 @@
       "probability": 0.125
     },
     {
-      "item": "mi_nested_infinity:petri_prasinocyanomagentophyta",
+      "item": "mi_nested_infinity:petri_chloroazuromagentophyta",
+      "amount": 1,
+      "probability": 0.125
+    },
+    {
+      "item": "mi_nested_infinity:petri_glaucorhodophyta",
+      "amount": 1,
+      "probability": 0.125
+    },
+    {
+      "item": "mi_nested_infinity:petri_prasinocyanorhodophyta",
+      "amount": 1,
+      "probability": 0.125
+    },
+    {
+      "item": "mi_nested_infinity:petri_prasinoazurorhodophyta",
       "amount": 1,
       "probability": 0.125
     },

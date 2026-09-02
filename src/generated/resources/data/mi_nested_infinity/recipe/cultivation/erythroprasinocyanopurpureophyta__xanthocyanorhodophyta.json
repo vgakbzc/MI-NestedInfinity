@@ -20,7 +20,12 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_prasinomagentophyta",
+      "item": "mi_nested_infinity:petri_aurantiopurpureophyta",
+      "amount": 1,
+      "probability": 0.25
+    },
+    {
+      "item": "mi_nested_infinity:petri_erythroprasinopurpureophyta",
       "amount": 1,
       "probability": 0.25
     },
@@ -30,12 +35,7 @@
       "probability": 0.25
     },
     {
-      "item": "mi_nested_infinity:petri_aurantiopurpureophyta",
-      "amount": 1,
-      "probability": 0.25
-    },
-    {
-      "item": "mi_nested_infinity:petri_erythroprasinopurpureophyta",
+      "item": "mi_nested_infinity:petri_prasinomagentophyta",
       "amount": 1,
       "probability": 0.25
     }

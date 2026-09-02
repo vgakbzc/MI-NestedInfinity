@@ -20,12 +20,12 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_magentophyta",
+      "item": "mi_nested_infinity:petri_purpureophyta",
       "amount": 1,
       "probability": 0.5
     },
     {
-      "item": "mi_nested_infinity:petri_purpureophyta",
+      "item": "mi_nested_infinity:petri_magentophyta",
       "amount": 1,
       "probability": 0.5
     }

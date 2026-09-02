@@ -18,6 +18,14 @@
     {
       "item": "mi_nested_infinity:large_elite_pump",
       "amount": 1
+    },
+    {
+      "item": "mi_nested_infinity:transuranic_battery",
+      "amount": 64
+    },
+    {
+      "item": "mi_nested_infinity:heart_of_a_nonexistent_world",
+      "amount": 1
     }
   ],
   "item_outputs": [

@@ -20,12 +20,12 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_xanthoglaucocaeruleorhodophyta",
+      "item": "mi_nested_infinity:petri_prasinocaeruleorhodophyta",
       "amount": 1,
       "probability": 0.5
     },
     {
-      "item": "mi_nested_infinity:petri_prasinocaeruleorhodophyta",
+      "item": "mi_nested_infinity:petri_xanthoglaucocaeruleorhodophyta",
       "amount": 1,
       "probability": 0.5
     }

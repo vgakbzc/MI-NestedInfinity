@@ -20,12 +20,12 @@
   ],
   "item_outputs": [
     {
-      "item": "mi_nested_infinity:petri_xanthocyanorhodophyta",
+      "item": "mi_nested_infinity:petri_xanthocyanomagentophyta",
       "amount": 1,
       "probability": 0.5
     },
     {
-      "item": "mi_nested_infinity:petri_xanthocyanomagentophyta",
+      "item": "mi_nested_infinity:petri_xanthocyanorhodophyta",
       "amount": 1,
       "probability": 0.5
     }

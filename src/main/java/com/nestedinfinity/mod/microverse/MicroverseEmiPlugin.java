@@ -1,6 +1,7 @@
 package com.nestedinfinity.mod.microverse;
 
 import com.nestedinfinity.mod.NestedInfinity;
+import com.nestedinfinity.mod.items.NIItems;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
@@ -55,9 +56,9 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
                 id("heart_of_a_nonexistent_world")));
     }
 
-    /** The projector multiblock: heart + 4 TDUs + 12 singularities -> matter. */
+    /** The projector multiblock: heart + battery + 4 TDUs + 12 singularities -> matter. */
     private static final class ProjectorRecipe implements EmiRecipe {
-        private static final int WIDTH = 144;
+        private static final int WIDTH = 162;
         private static final int HEIGHT = 114;
 
         private final int tier;
@@ -68,6 +69,7 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
             this.tier = tier;
             List<EmiIngredient> in = new ArrayList<>();
             in.add(EmiStack.of(MicroverseItems.HEART_OF_A_NONEXISTENT_WORLD.get()));
+            in.add(EmiStack.of(NIItems.TRANSURANIC_BATTERY.get(), 64));
             in.add(EmiStack.of(MicroverseBlocks.TDUS.get(tier - 1).get(), 4)); // the ring holds four
             for (var kind : MicroverseItems.SINGULARITIES) {
                 in.add(EmiStack.of(kind.item().get()));
@@ -115,16 +117,14 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
 
         @Override
         public void addWidgets(WidgetHolder widgets) {
-            int x0 = (WIDTH - 7 * 18) / 2;
-            // row 1: the heart, the four time dilation units, five coreflames
-            widgets.addSlot(inputs.getFirst(), x0, 0);
-            widgets.addSlot(inputs.get(1), x0 + 18, 0);
-            for (int i = 0; i < 5; i++) {
-                widgets.addSlot(inputs.get(2 + i), x0 + 36 + i * 18, 0);
+            int x0 = (WIDTH - 8 * 18) / 2;
+            // row 1: the heart, the battery, the four time dilation units, five coreflames
+            for (int i = 0; i < 8; i++) {
+                widgets.addSlot(inputs.get(i), x0 + i * 18, 0);
             }
             // row 2: the remaining seven coreflames
-            for (int i = 5; i < 12; i++) {
-                widgets.addSlot(inputs.get(2 + i), x0 + (i - 5) * 18, 22);
+            for (int i = 8; i < inputs.size(); i++) {
+                widgets.addSlot(inputs.get(i), x0 + (i - 8) * 18, 22);
             }
             widgets.addFillingArrow(WIDTH / 2 - 12, 46, 20000);
             widgets.addSlot(output, WIDTH / 2 - 9, 66);
@@ -242,5 +242,5 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
         return ResourceLocation.fromNamespaceAndPath(NestedInfinity.MODID, path);
     }
 
-    private MicroverseEmiPlugin() {}
+    public MicroverseEmiPlugin() {}
 }

@@ -25,22 +25,12 @@
       "probability": 0.125
     },
     {
-      "item": "mi_nested_infinity:petri_xanthoazuromagentophyta",
+      "item": "mi_nested_infinity:petri_xanthocaeruleophyta",
       "amount": 1,
       "probability": 0.125
     },
     {
-      "item": "mi_nested_infinity:petri_aurantioazuromagentophyta",
-      "amount": 1,
-      "probability": 0.125
-    },
-    {
-      "item": "mi_nested_infinity:petri_xanthocyanomagentophyta",
-      "amount": 1,
-      "probability": 0.125
-    },
-    {
-      "item": "mi_nested_infinity:petri_aurantiocyanomagentophyta",
+      "item": "mi_nested_infinity:petri_aurantiocyanopurpureophyta",
       "amount": 1,
       "probability": 0.125
     },
@@ -50,12 +40,22 @@
       "probability": 0.125
     },
     {
-      "item": "mi_nested_infinity:petri_xanthocaeruleophyta",
+      "item": "mi_nested_infinity:petri_aurantiocyanomagentophyta",
       "amount": 1,
       "probability": 0.125
     },
     {
-      "item": "mi_nested_infinity:petri_aurantiocyanopurpureophyta",
+      "item": "mi_nested_infinity:petri_xanthocyanomagentophyta",
+      "amount": 1,
+      "probability": 0.125
+    },
+    {
+      "item": "mi_nested_infinity:petri_aurantioazuromagentophyta",
+      "amount": 1,
+      "probability": 0.125
+    },
+    {
+      "item": "mi_nested_infinity:petri_xanthoazuromagentophyta",
       "amount": 1,
       "probability": 0.125
     }

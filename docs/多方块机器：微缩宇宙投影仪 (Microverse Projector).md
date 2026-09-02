@@ -222,7 +222,7 @@ y xxx y
 - 与现有体系衔接：中子素（材料 API 全件）、巨型物质球（超组装机 360000s）、光学电路/线缆（本阶段终局）
   均为现成输入，不新增前置链。
 - EMI 集成：`MicroverseEmiPlugin`（`@EmiEntrypoint`，compileOnly 依赖，未装 EMI 时不加载）——
-  投影仪分类 9 条图形化配方（创世之心 + TDU×4 + 12 奇点 → 对应级物质 ×无延长总产量，
+  投影仪分类 9 条图形化配方（创世之心 + 超铀电池×64 + TDU×4 + 12 奇点 → 对应级物质 ×无延长总产量，
   附基础时长/产出速率/能耗注释行）、催化器分类 12 条（9 级物质循环入料 → 各奇点）、
   创世之心信息页；两个机器均注册为 EMI 工作站。
 
@@ -251,3 +251,18 @@ y xxx y
   原始底图存于 `tools/ref/`（MI 为 MIT）。
 - **EMI 图形化提示**：`MicroverseEmiPlugin` 注册两个分类（投影仪/催化器）+ 工作站 + 9+12 条配方页
   + 创世之心信息页；EMI 1.1.24 经 `@EmiEntrypoint` 注解扫描发现插件，模组本体不依赖 EMI 也可运行。
+
+### 2026-09-02 追加二（EMI 修复 + 配方变更）
+
+- **EMI 关联修复**：此前 EMI 在世界加载时报
+  `Exception constructing entrypoint: NoSuchMethodException: MicroverseEmiPlugin.<init>()`——
+  插件类误写了私有构造器，而 `EmiAgnosNeoForge` 用 `getConstructor()`（仅 public）实例化入口类。
+  改为 public 后实测日志出现 `Initialized plugin from mi_nested_infinity`、零异常，
+  投影仪/催化器配方页均可预览。
+- **投影仪配方加料**：`microverse_projector` 装配机配方新增 **超铀电池×64 + 宇宙之心×1**
+  （`NIRecipeProvider` 与 EMI 投影页同步；EMI 输入槽 14→15，重排为 8+7 两行，页宽 144→162）。
+- **datagen 确定性修复**：`outcomes()` 缓存原先存 `Map.copyOf`，其迭代顺序被 JDK 按运行加盐随机化，
+  导致 1714 个 cultivation 配方 JSON 每次 runData 输出顺序漂移；改为 TreeMap 副本后两次 runData
+  输出逐字节一致。
+- **标签翻译**：补 `tag.mi_nested_infinity.amino_acids` / `tag.mi_nested_infinity.cold_petri_dishes`
+  双语 lang（消除 EMI "Untranslated tag" 警告）。
