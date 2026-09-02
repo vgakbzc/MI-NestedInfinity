@@ -139,7 +139,6 @@ public final class NIRecipeProvider implements DataProvider {
                 .itemIn(ni + "optical_circuit", 4)
                 .itemIn(ni + "large_elite_motor", 1)
                 .itemIn(ni + "large_elite_pump", 1)
-                .itemIn(ni + "transuranic_battery", 64)
                 .itemIn(ni + "heart_of_a_nonexistent_world", 1)
                 .itemOut(ni + "microverse_projector", 1)
                 .save("microverse/microverse_projector");

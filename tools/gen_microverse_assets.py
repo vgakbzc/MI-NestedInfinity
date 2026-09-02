@@ -201,12 +201,20 @@ MI_SINGULARITY_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 
 
 def save_singularity_texture(key, color):
-    """The MI singularity swirl repainted in this flame's hue (luminance kept,
-    saturation replaced), plus a four-pointed star badge in the top-right
-    corner of every frame so the kind is readable at GUI size."""
+    """The MI singularity swirl hue-rotated into this flame's color: every
+    pixel keeps the vanilla gradient untouched — its lightness ramp, its
+    warm-pole-to-cool-pole hue sweep (~45deg -> ~195deg, 150deg apart), the
+    white-hot core — the color wheel is only turned so the dominant pole
+    lands on this flame. Muted flame colors scale the chroma down for a
+    silvery look. Plus a four-pointed star badge in the top-right corner of
+    every frame so the kind is readable at GUI size."""
+    import colorsys
     from PIL import Image
     base = Image.open(MI_SINGULARITY_SRC).convert('RGBA')
     w, h = base.size
+    fh, _fl, fs = colorsys.rgb_to_hls(color[0] / 255, color[1] / 255, color[2] / 255)
+    shift = (fh - 45 / 360) % 1.0  # vanilla's warm pole sits around 45 degrees
+    chroma = min(1.0, fs / 0.55)  # vivid flames keep vanilla chroma, muted ones go silvery
     bright = tuple(min(255, int(c * 255 / (max(color) or 1))) for c in color)
     out = Image.new('RGBA', (w, h))
     bp, op = base.load(), out.load()
@@ -214,9 +222,9 @@ def save_singularity_texture(key, color):
         for x in range(w):
             r, g, b, a = bp[x, y]
             if a:
-                v = max(r, g, b)
-                op[x, y] = (bright[0] * v // 255, bright[1] * v // 255,
-                            bright[2] * v // 255, a)
+                hh, ll, ss = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
+                rr, gg, bb = colorsys.hls_to_rgb((hh + shift) % 1.0, ll, ss * chroma)
+                op[x, y] = (round(rr * 255), round(gg * 255), round(bb * 255), a)
     for frame in range(h // 16):
         cx, cy = 12, frame * 16 + 3  # four-pointed star: plus-shaped sparkle
         for d in (-2, -1, 1, 2):
@@ -651,8 +659,8 @@ def write_lang():
     en['container.%s.coreflame.slot_return' % MODID] = 'Returned singularities appear here'
     zh['container.%s.coreflame.slot_return' % MODID] = '返还的奇点会出现在这里'
     cat = 'container.%s.singularity_catalyzer.' % MODID
-    en[cat + 'slot_seed'] = 'Seed singularity: must match the catalyst, comes back x2'
-    zh[cat + 'slot_seed'] = '种子奇点:须与催化剂同种,产出 ×2'
+    en[cat + 'slot_seed'] = 'Seed: a plain MI singularity, consumed each craft'
+    zh[cat + 'slot_seed'] = '种子:普通 MI 奇点,每批消耗 1 颗'
     en[cat + 'slot_input'] = 'Catalyst slot: 64 per craft (16 water bottles)'
     zh[cat + 'slot_input'] = '催化剂放这里(每批 64 个,水瓶 16 个)'
     en[cat + 'slot_output'] = '2 singularities per craft appear here'
@@ -663,8 +671,8 @@ def write_lang():
     zh[cat + 'ritual_met'] = '仪式就绪'
     en[cat + 'ritual_unmet'] = 'ritual not ready'
     zh[cat + 'ritual_unmet'] = '仪式未就绪'
-    en[cat + 'ritual_seed'] = 'wrong seed for this catalyst'
-    zh[cat + 'ritual_seed'] = '种子与催化剂不匹配'
+    en[cat + 'ritual_seed'] = 'missing singularity seed'
+    zh[cat + 'ritual_seed'] = '缺少奇点种子'
     # the twelve rituals, in COREFLAMES/SINGULARITIES key order
     conditions_en = {
         'gold': 'Two faces touching lava',
@@ -715,8 +723,8 @@ def write_lang():
     zh[emi + 'projector.rate'] = '物质:每 10 秒 1 颗,坍缩 +%s 颗'
     en[emi + 'projector.energy'] = '2 G EU/t, matter balls extend'
     zh[emi + 'projector.energy'] = '2 G EU/t,物质球可延长'
-    en[emi + 'catalyzer.time'] = '100s per craft, no energy'
-    zh[emi + 'catalyzer.time'] = '每 100 秒一批,不耗电'
+    en[emi + 'catalyzer.time'] = '100s per singularity, no energy'
+    zh[emi + 'catalyzer.time'] = '每 100 秒 1 颗奇点,不耗电'
     en[emi + 'catalyzer.once'] = 'One-shot: completing it unlocks this kind here forever'
     zh[emi + 'catalyzer.once'] = '一次性仪式:完成即在本机永久解锁'
     en[emi + 'catalyzer.state'] = 'Must hold when the craft starts (checked every 8 ticks)'

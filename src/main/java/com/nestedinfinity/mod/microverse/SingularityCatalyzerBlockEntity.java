@@ -43,10 +43,10 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 /**
  * The singularity catalyzer: a standalone no-energy machine that grows
  * singularities. Each of the twelve kinds has its own ritual condition and
- * its own catalyst — a seed singularity of the kind plus a stack of
- * {@link #CRAFT_AMOUNT} catalyst go in, and when the ritual holds the machine
- * spends {@link #TOTAL_TICKS} returning {@link #OUTPUT_AMOUNT} singularities
- * of that kind (the seed back plus one new one).
+ * its own catalyst — a plain Modern Industrialization singularity (the seed,
+ * consumed) plus a stack of {@link #CRAFT_AMOUNT} catalyst go in, and when
+ * the ritual holds the machine spends {@link #TOTAL_TICKS} returning
+ * {@link #OUTPUT_AMOUNT} singularity of that kind: the seed, transmuted.
  *
  * <p>Rituals split into polled states (gold's two faces of lava, rift's log
  * and leaves, plenty's world floor, twilight's open sky at Y&ge;315, worlds'
@@ -64,8 +64,8 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     public static final int TOTAL_TICKS = 2000;
     /** Catalysts are consumed a stack at a time; potions only stack to 16. */
     public static final int CRAFT_AMOUNT = 64;
-    /** One craft returns the seed plus a fresh singularity of the same kind. */
-    public static final int OUTPUT_AMOUNT = 2;
+    /** One craft transmutes the seed into one singularity of the catalyst's kind. */
+    public static final int OUTPUT_AMOUNT = 1;
     /** Rituals are polled every 8 ticks, not every tick. */
     public static final int RITUAL_INTERVAL = 8;
 
@@ -91,6 +91,10 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
             Items.CLOCK, // evernight
             Items.FIREWORK_ROCKET); // infinity
 
+    /** The seed every craft consumes and transmutes: MI's own singularity. */
+    public static final Item MI_SINGULARITY = BuiltInRegistries.ITEM.get(
+            ResourceLocation.fromNamespaceAndPath("modern_industrialization", "singularity"));
+
     /** Whether the kind's ritual is a one-shot event (primed) or a held state. */
     private static final boolean[] EVENT_RITUAL = {
             false, false, true, true, true, false, false, false, true, false, false, false};
@@ -112,7 +116,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     private int flameMask;
     private int goldMask;
     private boolean neighborsScanned;
-    /** 0 = no target, 1 = ritual not holding, 2 = ritual ready, 3 = wrong seed (for the GUI). */
+    /** 0 = no target, 1 = ritual not holding, 2 = ritual ready, 3 = no seed. */
     private int ritualState;
 
     public SingularityCatalyzerBlockEntity(BlockPos pos, BlockState state) {
@@ -143,16 +147,6 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
             return -1;
         }
         return index;
-    }
-
-    /** Which of the twelve singularities this stack is, or -1. */
-    public static int singularityKind(ItemStack stack) {
-        for (int i = 0; i < MicroverseItems.SINGULARITIES.size(); i++) {
-            if (stack.is(MicroverseItems.SINGULARITIES.get(i).item().get())) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     private static boolean isWaterBottle(ItemStack stack) {
@@ -323,7 +317,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
         }
         int kind = kindOf(catalyst);
         ritualState = kind < 0 ? 0
-                : singularityKind(seed) != kind ? 3
+                : !seed.is(MI_SINGULARITY) ? 3
                 : (readyMask & (1 << kind)) != 0 ? 2 : 1;
         if (progress > 0) {
             if (++progress >= TOTAL_TICKS) {
@@ -337,7 +331,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
             return;
         }
         if (kind < 0 || catalyst.getCount() < craftAmount(catalyst)
-                || (readyMask & (1 << kind)) == 0 || singularityKind(seed) != kind) {
+                || (readyMask & (1 << kind)) == 0 || !seed.is(MI_SINGULARITY)) {
             return;
         }
         ItemStack produced = new ItemStack(MicroverseItems.SINGULARITIES.get(kind).item().get(), OUTPUT_AMOUNT);
@@ -411,7 +405,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
         return progress;
     }
 
-    /** 0 = no target, 1 = ritual not holding, 2 = ritual ready, 3 = wrong seed. */
+    /** 0 = no target, 1 = ritual not holding, 2 = ritual ready, 3 = no seed. */
     public int getRitualState() {
         return ritualState;
     }
@@ -506,7 +500,7 @@ public class SingularityCatalyzerBlockEntity extends BlockEntity implements Worl
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
         if (slot == SEED_SLOT) {
-            return singularityKind(stack) >= 0;
+            return stack.is(MI_SINGULARITY);
         }
         return slot == CATALYST_SLOT && kindOf(stack) >= 0;
     }

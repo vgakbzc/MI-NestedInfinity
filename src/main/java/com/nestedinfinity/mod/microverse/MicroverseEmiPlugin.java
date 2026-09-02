@@ -1,7 +1,6 @@
 package com.nestedinfinity.mod.microverse;
 
 import com.nestedinfinity.mod.NestedInfinity;
-import com.nestedinfinity.mod.items.NIItems;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
@@ -26,8 +25,8 @@ import net.minecraft.world.level.material.Fluids;
 /**
  * EMI integration for the microverse program: a graphical recipe page per
  * universe matter tier (what the projector consumes and yields) and per
- * singularity (what the catalyzer grows from a seed plus its catalyst), plus
- * an info page on the heart.
+ * singularity (what the catalyzer grows from a plain MI singularity seed
+ * plus its catalyst), plus an info page on the heart.
  *
  * <p>EMI discovers this class through the {@link EmiEntrypoint} annotation
  * and is its only referencer, so the mod runs fine without EMI installed.
@@ -62,14 +61,15 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
 
     /**
      * The projector multiblock ceremony drawn as itself: the twelve
-     * singularities orbit the heart in a ring, a vertical arrow condenses
-     * them downward into the matter, and the corner holds the ring's time
-     * dilation units plus the battery bank.
+     * singularities orbit the heart in a ring (drawn bare, without slot
+     * wells, so the circle stays tight), a vertical arrow condenses them
+     * downward into the matter, and the corner holds the ring's time
+     * dilation units.
      */
     private static final class ProjectorRecipe implements EmiRecipe {
         private static final int WIDTH = 176;
-        private static final int HEIGHT = 222;
-        private static final int RING_RADIUS = 52;
+        private static final int HEIGHT = 213;
+        private static final int RING_RADIUS = 45;
 
         /** A 32x24 texture: outlined arrow at u=0, filled arrow at u=16. */
         private static final EmiTexture ARROW_EMPTY = new EmiTexture(
@@ -85,7 +85,6 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
             this.tier = tier;
             List<EmiIngredient> in = new ArrayList<>();
             in.add(EmiStack.of(MicroverseItems.HEART_OF_A_NONEXISTENT_WORLD.get()));
-            in.add(EmiStack.of(NIItems.TRANSURANIC_BATTERY.get(), 64));
             in.add(EmiStack.of(MicroverseBlocks.TDUS.get(tier - 1).get(), 4)); // the ring holds four
             for (var kind : MicroverseItems.SINGULARITIES) {
                 in.add(EmiStack.of(kind.item().get()));
@@ -134,32 +133,32 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
         @Override
         public void addWidgets(WidgetHolder widgets) {
             int cx = WIDTH / 2;
-            int cy = 68;
-            // the ring: one slot per singularity, starting at the top and going clockwise
+            int cy = 64;
+            // the ring: one bare singularity per position, starting at the top and
+            // going clockwise — no slot wells, so the circle reads as twelve sparks
             for (int i = 0; i < MicroverseItems.SINGULARITIES.size(); i++) {
                 double angle = Math.toRadians(i * 30 - 90);
                 int x = Math.round(cx + RING_RADIUS * (float) Math.cos(angle)) - 9;
                 int y = Math.round(cy + RING_RADIUS * (float) Math.sin(angle)) - 9;
-                widgets.addSlot(inputs.get(3 + i), x, y);
+                widgets.addSlot(inputs.get(2 + i), x, y).drawBack(false);
             }
             widgets.addSlot(inputs.getFirst(), cx - 9, cy - 9); // the heart holds the center
-            widgets.addTexture(ARROW_EMPTY, cx - 8, 133);
-            widgets.addAnimatedTexture(ARROW_FULL, cx - 8, 133, 20000, false, false, false);
-            widgets.addSlot(output, cx - 9, 161);
-            // bottom-left corner: the time dilation units and the battery bank
-            widgets.addSlot(inputs.get(2), 6, 161);
-            widgets.addSlot(inputs.get(1), 26, 161);
+            widgets.addTexture(ARROW_EMPTY, cx - 8, 124);
+            widgets.addAnimatedTexture(ARROW_FULL, cx - 8, 124, 20000, false, false, false);
+            widgets.addSlot(output, cx - 9, 152);
+            // bottom-left corner: the ring's time dilation units
+            widgets.addSlot(inputs.get(1), 6, 152);
             int seconds = MicroverseProjectorBlockEntity.baseTicks(tier) / 20;
             widgets.addText(Component.translatable("emi.mi_nested_infinity.projector.time", seconds),
-                    6, 189, TEXT_COLOR, false);
+                    6, 180, TEXT_COLOR, false);
             widgets.addText(Component.translatable("emi.mi_nested_infinity.projector.rate", tier * tier),
-                    6, 200, TEXT_COLOR, false);
+                    6, 191, TEXT_COLOR, false);
             widgets.addText(Component.translatable("emi.mi_nested_infinity.projector.energy"),
-                    6, 211, TEXT_COLOR, false);
+                    6, 202, TEXT_COLOR, false);
         }
     }
 
-    /** The catalyzer: a seed singularity + the kind's catalyst + its ritual -> 2 singularities. */
+    /** The catalyzer: a plain MI singularity + the kind's catalyst + its ritual -> 1 singularity of the kind. */
     private static final class CatalyzerRecipe implements EmiRecipe {
         private static final int WIDTH = 168;
         private static final int TEXT_X = 6;
@@ -182,7 +181,7 @@ public final class MicroverseEmiPlugin implements EmiPlugin {
             var item = SingularityCatalyzerBlockEntity.CATALYSTS.get(index);
             long amount = Math.min(SingularityCatalyzerBlockEntity.CRAFT_AMOUNT,
                     new net.minecraft.world.item.ItemStack(item).getMaxStackSize());
-            this.seed = EmiStack.of(singularity.item().get());
+            this.seed = EmiStack.of(SingularityCatalyzerBlockEntity.MI_SINGULARITY);
             this.catalyst = EmiStack.of(item, amount);
             this.output = EmiStack.of(singularity.item().get(), SingularityCatalyzerBlockEntity.OUTPUT_AMOUNT);
             this.condition = Component.translatable(

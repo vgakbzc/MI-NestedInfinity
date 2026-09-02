@@ -1282,7 +1282,7 @@
   "emi.mi_nested_infinity.projector.tier": "Time Dilation Unit tier %s (x4)",
   "emi.mi_nested_infinity.projector.time": "Base time: %ss",
   "emi.mi_nested_infinity.projector.energy": "2 G EU/t, matter balls extend",
-  "emi.mi_nested_infinity.catalyzer.time": "100s per craft, no energy",
+  "emi.mi_nested_infinity.catalyzer.time": "100s per singularity, no energy",
   "emi.mi_nested_infinity.heart.line1": "Starts a microverse projection: consumed together",
   "emi.mi_nested_infinity.heart.line2": "with one singularity of every kind (12).",
   "emi.mi_nested_infinity.projector.rate": "Matter: 1 / 10s, +%s collapse",
@@ -1317,6 +1317,6 @@
   "emi.mi_nested_infinity.catalyzer.state": "Must hold when the craft starts (checked every 8 ticks)",
   "tag.mi_nested_infinity.amino_acids": "Amino Acids",
   "tag.mi_nested_infinity.cold_petri_dishes": "Cold-Strain Petri Dishes",
-  "container.mi_nested_infinity.singularity_catalyzer.slot_seed": "Seed singularity: must match the catalyst, comes back x2",
-  "container.mi_nested_infinity.singularity_catalyzer.ritual_seed": "wrong seed for this catalyst"
+  "container.mi_nested_infinity.singularity_catalyzer.slot_seed": "Seed: a plain MI singularity, consumed each craft",
+  "container.mi_nested_infinity.singularity_catalyzer.ritual_seed": "missing singularity seed"
 }
