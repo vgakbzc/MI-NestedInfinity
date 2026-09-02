@@ -1266,5 +1266,8 @@
   "container.mi_nested_infinity.microverse_projector.problem_coreflame_duplicate": "Structure problem: duplicate coreflame kind",
   "block.mi_nested_infinity.creative_energy_source": "Creative Energy Source",
   "container.mi_nested_infinity.microverse_projector.slot_heart": "Heart of a Nonexistent World goes here",
-  "container.mi_nested_infinity.microverse_projector.ball_time": "Matter ball: +%ss"
+  "container.mi_nested_infinity.microverse_projector.ball_time": "Matter ball: +%ss",
+  "container.mi_nested_infinity.microverse_projector.output_full": "Output hatch full — paused (half-speed collapse)",
+  "container.mi_nested_infinity.coreflame.slot_input": "This flame accepts only its own singularity",
+  "container.mi_nested_infinity.coreflame.slot_return": "Returned singularities appear here"
 }

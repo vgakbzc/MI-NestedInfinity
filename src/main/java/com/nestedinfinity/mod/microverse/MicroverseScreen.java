@@ -43,12 +43,16 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
 
-        // the twelve coreflame lights: lit = the flame holds its singularity
+        boolean running = menu.data(MicroverseMenu.DATA_RUNNING) == 1;
+        boolean blocked = menu.data(MicroverseMenu.DATA_OUTPUT_BLOCKED) == 1;
+
+        // the twelve coreflame lights: lit = the flame holds its singularity;
+        // a running universe keeps the whole ring lit (all twelve burn)
         int mask = menu.data(MicroverseMenu.DATA_FLAME_MASK);
         for (int i = 0; i < 12; i++) {
             int x = leftPos + LIGHT_X + i * LIGHT_STEP;
             int y = topPos + LIGHT_Y;
-            boolean lit = (mask & (1 << i)) != 0;
+            boolean lit = running || (mask & (1 << i)) != 0;
             int color = lit ? flameColor(i) : 0x2a2a2e;
             graphics.fill(x, y, x + LIGHT_SIZE, y + LIGHT_SIZE, 0xFF000000 | color);
             graphics.renderOutline(x, y, LIGHT_SIZE, LIGHT_SIZE, lit ? 0xFFFFFFFF : 0xFF555560);
@@ -60,32 +64,36 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
             }
         }
 
-        boolean running = menu.data(MicroverseMenu.DATA_RUNNING) == 1;
         int tier = menu.data(MicroverseMenu.DATA_TIER);
         boolean ok = menu.data(MicroverseMenu.DATA_OK) == 1;
 
-        // status line
+        // status line: a blocked output outranks the plain "projecting" note
         Component status;
-        if (running) {
+        int statusColor;
+        if (running && blocked) {
+            status = Component.translatable("container.mi_nested_infinity.microverse_projector.output_full");
+            statusColor = 0x803030;
+        } else if (running) {
             status = Component.translatable("container.mi_nested_infinity.microverse_projector.running",
                     Component.translatable("item.mi_nested_infinity."
                             + MicroverseItems.MATTERS.get(Math.max(0, tier - 1)).getId().getPath()));
+            statusColor = 0x208040;
         } else if (ok) {
             status = Component.translatable("container.mi_nested_infinity.microverse_projector.ready");
+            statusColor = 0x305080;
         } else {
             status = Component.translatable("container.mi_nested_infinity.microverse_projector.problem_"
                     + problemKey(menu));
+            statusColor = 0x803030;
         }
-        graphics.drawString(font, status, leftPos + 8, topPos + 16,
-                running ? 0x208040 : (ok ? 0x305080 : 0x803030), false);
+        graphics.drawString(font, status, leftPos + 8, topPos + 16, statusColor, false);
 
         if (running) {
             int remaining = menu.data(MicroverseMenu.DATA_REMAINING);
-            // while running, exactly the burned flame's bit is clear in the mask
             drawCentered(graphics, Component.translatable(
                     "container.mi_nested_infinity.microverse_projector.countdown",
                     String.format("%.1f", remaining / 20.0)),
-                    COUNTDOWN_Y, burnedFlameColor(mask));
+                    COUNTDOWN_Y, blocked ? 0x803030 : 0x404040);
             // what the next auto-fed matter ball is worth (0.5/n of base time)
             drawCentered(graphics, Component.translatable(
                     "container.mi_nested_infinity.microverse_projector.ball_time",
@@ -127,16 +135,6 @@ public class MicroverseScreen extends AbstractContainerScreen<MicroverseMenu> {
     /** The flame's own signature color (see {@link MicroverseItems.SINGULARITIES}). */
     private static int flameColor(int index) {
         return MicroverseItems.SINGULARITIES.get(index).color();
-    }
-
-    /** Color of the one coreflame burned by the running universe (its bit is clear). */
-    private static int burnedFlameColor(int mask) {
-        for (int i = 0; i < 12; i++) {
-            if ((mask & (1 << i)) == 0) {
-                return flameColor(i);
-            }
-        }
-        return 0x404040;
     }
 
     @Override

@@ -460,11 +460,12 @@ def main():
         save_item_texture(mid, make_matter, color, i)
         item_model(mid)
 
-    # GUI backgrounds (slot positions mirror the two menus: item slot (80,35)
-    # -> well (79,34); player inventory starts at y=84 for the coreflame and
-    # y=102 for the projector). Each coreflame also gets its own flame-tinted
-    # background (CoreflameScreen picks textures/gui/coreflame_<suffix>.png).
-    coreflame_slots = [(79, 34)] + inventory_wells(83)
+    # GUI backgrounds (slot positions mirror the two menus: coreflame input
+    # slot (44,35) and return slot (116,35) -> wells (43,34)/(115,34); player
+    # inventory starts at y=84 for the coreflame and y=102 for the projector).
+    # Each coreflame also gets its own flame-tinted background (CoreflameScreen
+    # picks textures/gui/coreflame_<suffix>.png).
+    coreflame_slots = [(43, 34), (115, 34)] + inventory_wells(83)
     make_gui(os.path.join(GUI_TX, 'coreflame.png'), 166, coreflame_slots)
     for suffix, _key, _en, _zh, color in COREFLAMES:
         make_gui(os.path.join(GUI_TX, 'coreflame_' + suffix + '.png'), 166,
@@ -524,8 +525,14 @@ def write_lang():
     zh[gui + 'accrued'] = '已积累:%s'
     en[gui + 'return_chance'] = 'Singularity return: %s%%'
     zh[gui + 'return_chance'] = '奇点返还率:%s%%'
+    en[gui + 'output_full'] = 'Output hatch full — paused (half-speed collapse)'
+    zh[gui + 'output_full'] = '输出仓已满——已暂停（坍缩半速）'
     en[gui + 'slot_heart'] = 'Heart of a Nonexistent World goes here'
     zh[gui + 'slot_heart'] = '在此放入创世之心'
+    en['container.%s.coreflame.slot_input' % MODID] = 'This flame accepts only its own singularity'
+    zh['container.%s.coreflame.slot_input' % MODID] = '本火种只接受自己的奇点'
+    en['container.%s.coreflame.slot_return' % MODID] = 'Returned singularities appear here'
+    zh['container.%s.coreflame.slot_return' % MODID] = '返还的奇点会出现在这里'
     # keys retired with the extend button and the ball/output slots
     for dead in ('extend', 'slot_balls', 'slot_output'):
         en.pop(gui + dead, None)

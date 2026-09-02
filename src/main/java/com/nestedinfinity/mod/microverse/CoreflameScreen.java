@@ -36,6 +36,14 @@ public class CoreflameScreen extends AbstractContainerScreen<CoreflameMenu> {
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
+
+        // function hints while the machine slots are empty
+        if (this.hoveredSlot != null && this.hoveredSlot.index < 2 && !this.hoveredSlot.hasItem()) {
+            graphics.renderTooltip(font, Component.translatable("container.mi_nested_infinity.coreflame.slot_"
+                    + (this.hoveredSlot.index == CoreflameBlockEntity.INPUT_SLOT ? "input" : "return")),
+                    mouseX, mouseY);
+        }
+
         this.renderTooltip(graphics, mouseX, mouseY);
     }
 

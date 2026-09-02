@@ -36,16 +36,19 @@ import net.minecraft.world.level.block.state.BlockState;
  * <li>Idle: revalidate the structure every second; auto-start when the
  * structure is complete, the heart slot holds a Heart of a Nonexistent
  * World and all twelve coreflames hold their singularities. Starting
- * consumes the heart and the twelve singularities.</li>
- * <li>Running: 2G EU/t pauses nothing else — missing energy freezes the
- * countdown and the accrual. Output accrues at 2.1^(tier-1) per second of
- * existence (fixed-point micro-items). Giant matter balls are auto-drawn
- * one at a time from the structure's item input hatches: the n-th ball
- * spent adds 0.5/n of the base time.</li>
- * <li>Finish: the accrued matter goes to the structure's item output
- * hatches (overflow drops above the controller), and each singularity
- * returns independently with probability max(0, 95% - 5% * extensions),
- * back into its coreflame.</li>
+ * consumes the heart and one singularity of every kind (all twelve).</li>
+ * <li>Running: 2G EU/t. Matter accrues at 2.1^(tier-1) per second and flows
+ * out to the item output hatches whole-item by whole-item while the run
+ * goes; if the output hatches are full the machine pauses (no accrual)
+ * and the countdown decays at half speed until there is room again.
+ * Missing energy destabilizes the universe: the countdown then decays at
+ * ten times the normal speed instead of pausing. Giant matter balls are
+ * auto-drawn one at a time from the structure's item input hatches: the
+ * n-th ball spent adds 0.5/n of the base time.</li>
+ * <li>Finish: leftover matter is pushed to the output hatches (overflow
+ * drops above the controller), and each of the twelve burned
+ * singularities returns independently with probability
+ * max(0, 95% - 5% * extensions), into its coreflame's return slot.</li>
  * <li>Collapse: if the structure breaks mid-run everything is lost — the
  * heart and singularities were already consumed, the spent balls and the
  * accrued matter go with the collapsing universe.</li>
@@ -81,6 +84,10 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
     private int totalDuration = 0;
     private long accruedMicro = 0;
     private int extensions = 0;
+    /** Output hatches could not take the last whole item: pause + half-speed countdown. */
+    private boolean outputBlocked = false;
+    /** Toggles once per tick to halve the countdown while blocked. */
+    private boolean slowPhase = false;
     /** Singularity kinds swallowed at start, awaiting their return roll. */
     private final List<Integer> pendingSingularities = new ArrayList<>();
 
@@ -210,6 +217,11 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         return extensions;
     }
 
+    /** True while the item output hatches cannot take the accrued matter. */
+    public boolean isOutputBlocked() {
+        return outputBlocked;
+    }
+
     /**
      * Ticks the next spent matter ball would add: ball n extends the run by
      * 0.5/n of the tier's base time (ball 1 = +50%, ball 2 = +25%, ...).
@@ -235,38 +247,31 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         if (flameMask != 0xFFF) {
             return;
         }
-        // consume the heart and exactly one singularity, picked at random
-        // from the twelve filled flames (each run burns one coreflame)
+        // consume the heart and one singularity of every kind — all twelve
+        // flames burn, and each burned singularity awaits its return roll
         heart = heart.copyWithCount(heart.getCount() - 1);
         if (heart.isEmpty()) {
             heart = ItemStack.EMPTY;
         }
         pendingSingularities.clear();
-        List<Integer> filled = new ArrayList<>();
         for (int i = 0; i < MicroverseStructure.COREFLAME_POS.length; i++) {
             int[] rc = MicroverseStructure.COREFLAME_POS[i];
             BlockPos p = worldPosition.below().offset(rc[1] - 3, 0, rc[0] - 3);
             if (level.getBlockEntity(p) instanceof CoreflameBlockEntity flame && flame.isFilled()) {
-                filled.add(i);
-            }
-        }
-        if (!filled.isEmpty()) {
-            int pick = filled.get(level.random.nextInt(filled.size()));
-            int[] rc = MicroverseStructure.COREFLAME_POS[pick];
-            BlockPos p = worldPosition.below().offset(rc[1] - 3, 0, rc[0] - 3);
-            if (level.getBlockEntity(p) instanceof CoreflameBlockEntity flame) {
                 flame.consumeSingularity();
+                pendingSingularities.add(i);
             }
-            pendingSingularities.add(pick);
-            flameMask &= ~(1 << pick);
         }
+        flameMask = 0;
+        outputBlocked = false;
+        slowPhase = false;
         tier = structureTier;
         remaining = totalDuration = baseTicks(tier);
         accruedMicro = 0;
         extensions = 0;
         running = true;
-        // flameMask already reflects the one burned flame; revalidation keeps
-        // it in sync with the eleven still-filled coreflames
+        // all twelve flames burned: the mask stays 0 while running (the GUI
+        // lights the whole ring for a running universe instead)
         setRunningState(true);
         level.playSound(null, worldPosition, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 0.4F, 1.5F);
         setChanged();
@@ -311,26 +316,17 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
     }
 
     /**
-     * The ball auto-feeder: once per structure pass, one giant matter ball is
-     * spent on an extension — drawn from the internal buffer slot first
-     * (leftovers from before the hatch-only rework), then from the item
-     * input hatches. Feeding hatches is how you keep a universe alive.
+     * The ball auto-feeder: once per structure pass, one giant matter ball
+     * is spent on an extension, drawn from the item input hatches only.
+     * Feeding hatches is how you keep a universe alive.
      */
     private void tryAutoExtend() {
         if (!running || level == null || level.isClientSide()) {
             return;
         }
         Item ball = com.nestedinfinity.mod.items.NIOpticalItems.GIANT_MATTER_BALL.get();
-        if (balls.isEmpty() || !balls.is(ball)) {
-            if (!takeOneBallFromHatches(ball)) {
-                return;
-            }
-        } else {
-            balls = balls.copyWithCount(balls.getCount() - 1);
-            if (balls.isEmpty()) {
-                balls = ItemStack.EMPTY;
-            }
-            setChanged();
+        if (!takeOneBallFromHatches(ball)) {
+            return;
         }
         applyExtension();
     }
@@ -351,6 +347,30 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
     }
 
     /**
+     * Whole matter items flow out to the item output hatches as soon as they
+     * accrue. Whatever does not fit stays accrued and flags the run as
+     * blocked (paused accrual, half-speed countdown) until room appears.
+     */
+    private void flushAccruedMatter() {
+        if (tier <= 0) {
+            return;
+        }
+        int whole = (int) (accruedMicro / 1_000_000L);
+        if (whole <= 0) {
+            return;
+        }
+        Item produced = MicroverseItems.MATTERS.get(tier - 1).get();
+        int leftover = pushMatterToHatches(produced, whole);
+        accruedMicro -= (whole - leftover) * 1_000_000L;
+        boolean nowBlocked = leftover > 0;
+        if (nowBlocked != outputBlocked) {
+            outputBlocked = nowBlocked;
+            setChanged();
+            sync();
+        }
+    }
+
+    /**
      * Pushes whole matter items into the structure's item output hatches.
      * Returns what did not fit anywhere.
      */
@@ -364,6 +384,9 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
                 for (var stack : hatch.getInventory().getItemStacks()) {
                     if (count <= 0) {
                         break;
+                    }
+                    if (!stack.isResourceAllowedByLock(produced)) {
+                        continue;
                     }
                     if (stack.isEmpty()) {
                         long room = stack.getRemainingCapacityFor(variant);
@@ -415,26 +438,21 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
             level.addFreshEntity(entity);
             count -= drop;
         }
-        // the singularity return rolls
+        // the singularity return rolls: each burned flame's return slot
         int chance = getReturnChance();
-        List<Integer> returned = new ArrayList<>();
         for (int index : pendingSingularities) {
-            if (level.random.nextInt(100) < chance) {
-                returned.add(index);
+            if (level.random.nextInt(100) >= chance) {
+                continue;
+            }
+            int[] rc = MicroverseStructure.COREFLAME_POS[index];
+            BlockPos p = worldPosition.below().offset(rc[1] - 3, 0, rc[0] - 3);
+            if (level.getBlockEntity(p) instanceof CoreflameBlockEntity flame) {
+                flame.returnSingularity(new ItemStack(MicroverseItems.SINGULARITIES.get(index).item().get()));
             }
         }
         pendingSingularities.clear();
-        for (int[] rc : MicroverseStructure.COREFLAME_POS) {
-            BlockPos p = worldPosition.below().offset(rc[1] - 3, 0, rc[0] - 3);
-            if (level.getBlockEntity(p) instanceof CoreflameBlockEntity flame
-                    && flame.getSingularity().isEmpty()) {
-                int index = MicroverseBlocks.coreflameIndex(level.getBlockState(p).getBlock());
-                if (returned.remove((Integer) index)) {
-                    flame.returnSingularity(new ItemStack(MicroverseItems.SINGULARITIES.get(index).item().get()));
-                }
-            }
-        }
         extensions = 0;
+        outputBlocked = false;
         setRunningState(false);
         revalidateStructure();
         level.playSound(null, worldPosition, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 0.6F);
@@ -449,6 +467,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         totalDuration = 0;
         accruedMicro = 0;
         extensions = 0;
+        outputBlocked = false;
         pendingSingularities.clear();
         balls = ItemStack.EMPTY; // spent balls go with the collapsing universe
         setRunningState(false);
@@ -476,6 +495,14 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         if (be.level == null || be.level.isClientSide()) {
             return;
         }
+        // migration: balls left in the internal slot by pre-hatch versions
+        // are handed back — consumption is input-hatch-only now
+        if (!be.balls.isEmpty()) {
+            be.level.addFreshEntity(new ItemEntity(be.level, be.worldPosition.getX() + 0.5,
+                    be.worldPosition.getY() + 1.0, be.worldPosition.getZ() + 0.5, be.balls.copy()));
+            be.balls = ItemStack.EMPTY;
+            be.setChanged();
+        }
         if (++be.recheckCounter >= 20) {
             be.recheckCounter = 0;
             be.revalidateStructure();
@@ -485,7 +512,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
             }
             if (be.running) {
                 be.tryAutoExtend();
-                be.sync(); // one-second resolution is plenty for the sphere
+                be.sync(); // one-second resolution is plenty for the cube
             }
         }
         if (!be.running) {
@@ -494,16 +521,27 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
             }
             return;
         }
+        // whole items flow out as they accrue; a full output side blocks the
+        // run (paused accrual, half-speed countdown) until room appears
+        be.flushAccruedMatter();
         if (be.energy < EU_PER_TICK) {
             be.pullEnergyFromHatches();
         }
         if (be.energy >= EU_PER_TICK) {
             be.energy -= EU_PER_TICK;
-            be.remaining--;
-            be.accruedMicro += microPerTick(be.tier);
-            if (be.remaining <= 0) {
-                be.finish();
+            if (!be.outputBlocked) {
+                be.remaining--;
+                be.accruedMicro += microPerTick(be.tier);
+            } else if (be.slowPhase = !be.slowPhase) {
+                be.remaining--;
             }
+        } else {
+            // starving the projector destabilizes the universe: ten times
+            // the normal decay instead of a pause
+            be.remaining -= 10;
+        }
+        if (be.remaining <= 0) {
+            be.finish();
         }
     }
 
@@ -521,10 +559,9 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
 
     @Override
     public int[] getSlotsForFace(Direction face) {
-        // heart and balls in from the top/sides, matter out of the bottom
-        // (the ball slot predates the hatch-only rework and now only serves
-        // as an internal buffer that the auto-feeder drains first)
-        return face == Direction.DOWN ? new int[] {OUTPUT_SLOT} : new int[] {HEART_SLOT, BALL_SLOT};
+        // heart in from the top/sides, matter out of the bottom; the legacy
+        // ball slot is closed to automation (hatches only)
+        return face == Direction.DOWN ? new int[] {OUTPUT_SLOT} : new int[] {HEART_SLOT};
     }
 
     @Override
@@ -586,8 +623,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
     public boolean canPlaceItem(int slot, ItemStack stack) {
         return switch (slot) {
             case HEART_SLOT -> stack.is(MicroverseItems.HEART_OF_A_NONEXISTENT_WORLD.get()) && !running;
-            case BALL_SLOT -> stack.is(com.nestedinfinity.mod.items.NIOpticalItems.GIANT_MATTER_BALL.get());
-            default -> false;
+            default -> false; // matter balls: item input hatches only
         };
     }
 
@@ -625,6 +661,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         tag.putInt("totalDuration", totalDuration);
         tag.putLong("accruedMicro", accruedMicro);
         tag.putInt("extensions", extensions);
+        tag.putBoolean("outputBlocked", outputBlocked);
         tag.putInt("pending", pendingSingularities.size());
         for (int i = 0; i < pendingSingularities.size(); i++) {
             tag.putByte("pending" + i, (byte) (int) pendingSingularities.get(i));
@@ -644,6 +681,7 @@ public class MicroverseProjectorBlockEntity extends BlockEntity implements World
         totalDuration = tag.getInt("totalDuration");
         accruedMicro = tag.getLong("accruedMicro");
         extensions = tag.getInt("extensions");
+        outputBlocked = tag.getBoolean("outputBlocked");
         pendingSingularities.clear();
         for (int i = 0; i < tag.getInt("pending"); i++) {
             pendingSingularities.add((int) tag.getByte("pending" + i) & 0xFF);

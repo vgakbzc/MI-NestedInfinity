@@ -1266,5 +1266,8 @@
   "container.mi_nested_infinity.microverse_projector.problem_coreflame_duplicate": "结构问题:创世火种种类重复",
   "block.mi_nested_infinity.creative_energy_source": "创造发电机",
   "container.mi_nested_infinity.microverse_projector.slot_heart": "在此放入创世之心",
-  "container.mi_nested_infinity.microverse_projector.ball_time": "物质球延长：+%s 秒"
+  "container.mi_nested_infinity.microverse_projector.ball_time": "物质球延长：+%s 秒",
+  "container.mi_nested_infinity.microverse_projector.output_full": "输出仓已满——已暂停（坍缩半速）",
+  "container.mi_nested_infinity.coreflame.slot_input": "本火种只接受自己的奇点",
+  "container.mi_nested_infinity.coreflame.slot_return": "返还的奇点会出现在这里"
 }

@@ -23,7 +23,7 @@ import net.minecraft.world.phys.Vec3;
  * return chance.
  */
 public class MicroverseMenu extends AbstractContainerMenu {
-    private static final int DATA_SIZE = 10;
+    private static final int DATA_SIZE = 11;
     public static final int DATA_OK = 0;
     public static final int DATA_TIER = 1;
     public static final int DATA_FLAME_MASK = 2;
@@ -34,6 +34,7 @@ public class MicroverseMenu extends AbstractContainerMenu {
     public static final int DATA_EXTENSIONS = 7;
     public static final int DATA_NEXT_BALL_TICKS = 8;
     public static final int DATA_RETURN_CHANCE = 9;
+    public static final int DATA_OUTPUT_BLOCKED = 10;
 
     private final MicroverseProjectorBlockEntity blockEntity;
     private final ContainerData data;
@@ -144,6 +145,7 @@ public class MicroverseMenu extends AbstractContainerMenu {
                 case DATA_EXTENSIONS -> be.getExtensions();
                 case DATA_NEXT_BALL_TICKS -> be.getNextBallTicks();
                 case DATA_RETURN_CHANCE -> be.getReturnChance();
+                case DATA_OUTPUT_BLOCKED -> be.isOutputBlocked() ? 1 : 0;
                 default -> 0;
             };
         }

@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 
-/** The coreflame's one-slot GUI: insert or retrieve this flame's singularity. */
+/** The coreflame's GUI: singularity in on the left, returned singularity out on the right. */
 public class CoreflameMenu extends AbstractContainerMenu {
     private final CoreflameBlockEntity blockEntity;
 
@@ -22,10 +22,16 @@ public class CoreflameMenu extends AbstractContainerMenu {
     public CoreflameMenu(int id, Inventory playerInventory, CoreflameBlockEntity be) {
         super(MicroverseBlocks.COREFLAME_MENU.get(), id);
         this.blockEntity = be;
-        addSlot(new Slot(be, 0, 80, 35) {
+        addSlot(new Slot(be, CoreflameBlockEntity.INPUT_SLOT, 44, 35) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return be.canPlaceItem(0, stack);
+                return be.canPlaceItem(CoreflameBlockEntity.INPUT_SLOT, stack);
+            }
+        });
+        addSlot(new Slot(be, CoreflameBlockEntity.RETURN_SLOT, 116, 35) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return false;
             }
         });
         for (int row = 0; row < 3; row++) {
@@ -58,12 +64,14 @@ public class CoreflameMenu extends AbstractContainerMenu {
         }
         ItemStack stack = slot.getItem();
         ItemStack original = stack.copy();
-        if (index == 0) {
-            if (!moveItemStackTo(stack, 1, 37, true)) {
+        if (index < 2) {
+            // machine slots (input or return) shift-click to the inventory
+            if (!moveItemStackTo(stack, 2, 38, true)) {
                 return ItemStack.EMPTY;
             }
-        } else if (blockEntity.canPlaceItem(0, stack)) {
-            if (!moveItemStackTo(stack, 0, 1, false)) {
+        } else if (blockEntity.canPlaceItem(CoreflameBlockEntity.INPUT_SLOT, stack)) {
+            if (!moveItemStackTo(stack, CoreflameBlockEntity.INPUT_SLOT,
+                    CoreflameBlockEntity.INPUT_SLOT + 1, false)) {
                 return ItemStack.EMPTY;
             }
         } else {
