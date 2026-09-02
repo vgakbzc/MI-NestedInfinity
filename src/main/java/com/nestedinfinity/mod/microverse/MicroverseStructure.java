@@ -56,12 +56,13 @@ public final class MicroverseStructure {
     }
 
     /**
-     * Classifies a casing-like cell: MI energy input hatches and item input
-     * hatches are collected so the controller can drink EU and auto-spend
-     * giant matter balls from them.
+     * Classifies a casing-like cell: MI energy input, item input and item
+     * output hatches are collected so the controller can drink EU, auto-spend
+     * giant matter balls and push the universe matter out.
      */
     private static void collectHatch(BlockState state, BlockPos pos,
-            List<BlockPos> energyHatches, List<BlockPos> itemInputHatches) {
+            List<BlockPos> energyHatches, List<BlockPos> itemInputHatches,
+            List<BlockPos> itemOutputHatches) {
         var id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
         if (!id.getNamespace().equals("modern_industrialization") || !id.getPath().endsWith("_hatch")) {
             return;
@@ -71,6 +72,8 @@ public final class MicroverseStructure {
             energyHatches.add(pos.immutable());
         } else if (path.contains("item_input")) {
             itemInputHatches.add(pos.immutable());
+        } else if (path.contains("item_output")) {
+            itemOutputHatches.add(pos.immutable());
         }
     }
 
@@ -86,19 +89,23 @@ public final class MicroverseStructure {
         public final List<BlockPos> energyHatches;
         /** Item input hatches in the casing (empty when invalid). */
         public final List<BlockPos> itemInputHatches;
+        /** Item output hatches in the casing (empty when invalid). */
+        public final List<BlockPos> itemOutputHatches;
 
         private Result(boolean valid, int tduTier, int flameMask, String problem) {
-            this(valid, tduTier, flameMask, problem, List.of(), List.of());
+            this(valid, tduTier, flameMask, problem, List.of(), List.of(), List.of());
         }
 
         private Result(boolean valid, int tduTier, int flameMask, String problem,
-                List<BlockPos> energyHatches, List<BlockPos> itemInputHatches) {
+                List<BlockPos> energyHatches, List<BlockPos> itemInputHatches,
+                List<BlockPos> itemOutputHatches) {
             this.valid = valid;
             this.tduTier = tduTier;
             this.flameMask = flameMask;
             this.problem = problem;
             this.energyHatches = energyHatches;
             this.itemInputHatches = itemInputHatches;
+            this.itemOutputHatches = itemOutputHatches;
         }
     }
 
@@ -129,6 +136,7 @@ public final class MicroverseStructure {
         int tier = -1;
         List<BlockPos> energyHatches = new ArrayList<>();
         List<BlockPos> itemInputHatches = new ArrayList<>();
+        List<BlockPos> itemOutputHatches = new ArrayList<>();
         for (int[] rc : TDU_POS) {
             BlockPos p = layer2.offset(rc[1] - 3, 0, rc[0] - 3);
             int t = TimeDilationUnitBlock.tierOf(level.getBlockState(p).getBlock());
@@ -159,7 +167,8 @@ public final class MicroverseStructure {
                 if (!isCasingLike(state)) {
                     return new Result(false, tier, 0, "layer2_center");
                 }
-                collectHatch(state, layer2.offset(col - 3, 0, row - 3), energyHatches, itemInputHatches);
+                collectHatch(state, layer2.offset(col - 3, 0, row - 3),
+                        energyHatches, itemInputHatches, itemOutputHatches);
             }
         }
 
@@ -170,7 +179,8 @@ public final class MicroverseStructure {
                 if (!isCasingLike(state)) {
                     return new Result(false, tier, 0, "layer1");
                 }
-                collectHatch(state, layer1.offset(col - 3, 0, row - 3), energyHatches, itemInputHatches);
+                collectHatch(state, layer1.offset(col - 3, 0, row - 3),
+                        energyHatches, itemInputHatches, itemOutputHatches);
             }
         }
 
@@ -182,7 +192,7 @@ public final class MicroverseStructure {
                 mask |= 1 << i;
             }
         }
-        return new Result(true, tier, mask, null, energyHatches, itemInputHatches);
+        return new Result(true, tier, mask, null, energyHatches, itemInputHatches, itemOutputHatches);
     }
 
     private static boolean isPillar(int row, int col) {

@@ -13,15 +13,16 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * The projector GUI: heart in, giant matter balls in, universe matter out.
- * Ten data ints keep the screen's readouts and the twelve flame lights
- * live: structure validity, TDU tier, flame bitmask, running flag,
- * remaining/total ticks, accrued matter, extensions, ball cost and the
- * singularity return chance. Button id 0 is the "extend" action.
+ * The projector GUI: just the heart slot and the readouts. Giant matter
+ * balls are auto-drawn from the structure's item input hatches (one ball
+ * per pass, for 0.5/n of the base time each) and the universe matter is
+ * pushed into the item output hatches. Data ints keep the screen's
+ * readouts and the twelve flame lights live: structure validity, TDU
+ * tier, flame bitmask, running flag, remaining/total ticks, accrued
+ * matter, extensions, the next ball's extension ticks and the singularity
+ * return chance.
  */
 public class MicroverseMenu extends AbstractContainerMenu {
-    public static final int EXTEND_BUTTON = 0;
-
     private static final int DATA_SIZE = 10;
     public static final int DATA_OK = 0;
     public static final int DATA_TIER = 1;
@@ -31,7 +32,7 @@ public class MicroverseMenu extends AbstractContainerMenu {
     public static final int DATA_TOTAL = 5;
     public static final int DATA_ACCRUED = 6;
     public static final int DATA_EXTENSIONS = 7;
-    public static final int DATA_BALL_COST = 8;
+    public static final int DATA_NEXT_BALL_TICKS = 8;
     public static final int DATA_RETURN_CHANCE = 9;
 
     private final MicroverseProjectorBlockEntity blockEntity;
@@ -63,18 +64,6 @@ public class MicroverseMenu extends AbstractContainerMenu {
                 return !be.isRunning();
             }
         });
-        addSlot(new Slot(be, MicroverseProjectorBlockEntity.BALL_SLOT, 8, 58) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return be.canPlaceItem(MicroverseProjectorBlockEntity.BALL_SLOT, stack);
-            }
-        });
-        addSlot(new Slot(be, MicroverseProjectorBlockEntity.OUTPUT_SLOT, 151, 26) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return false;
-            }
-        });
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
@@ -103,14 +92,6 @@ public class MicroverseMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean clickMenuButton(Player player, int id) {
-        if (id == EXTEND_BUTTON && blockEntity.tryExtend()) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public ItemStack quickMoveStack(Player player, int index) {
         Slot slot = slots.get(index);
         if (!slot.hasItem()) {
@@ -118,35 +99,16 @@ public class MicroverseMenu extends AbstractContainerMenu {
         }
         ItemStack stack = slot.getItem();
         ItemStack original = stack.copy();
-        if (index == MicroverseProjectorBlockEntity.OUTPUT_SLOT) {
-            if (!moveItemStackTo(stack, 3, 39, true)) {
+        if (index == 0) {
+            if (!moveItemStackTo(stack, 1, 37, true)) {
                 return ItemStack.EMPTY;
             }
-        } else if (index < 3) {
-            if (!moveItemStackTo(stack, 3, 39, false)) {
+        } else if (blockEntity.canPlaceItem(MicroverseProjectorBlockEntity.HEART_SLOT, stack)) {
+            if (!moveItemStackTo(stack, 0, 1, false)) {
                 return ItemStack.EMPTY;
             }
         } else {
-            if (blockEntity.canPlaceItem(MicroverseProjectorBlockEntity.HEART_SLOT, stack)) {
-                if (!moveItemStackTo(stack, MicroverseProjectorBlockEntity.HEART_SLOT,
-                        MicroverseProjectorBlockEntity.HEART_SLOT + 1, false)) {
-                    if (blockEntity.canPlaceItem(MicroverseProjectorBlockEntity.BALL_SLOT, stack)) {
-                        if (!moveItemStackTo(stack, MicroverseProjectorBlockEntity.BALL_SLOT,
-                                MicroverseProjectorBlockEntity.BALL_SLOT + 1, false)) {
-                            return ItemStack.EMPTY;
-                        }
-                    } else {
-                        return ItemStack.EMPTY;
-                    }
-                }
-            } else if (blockEntity.canPlaceItem(MicroverseProjectorBlockEntity.BALL_SLOT, stack)) {
-                if (!moveItemStackTo(stack, MicroverseProjectorBlockEntity.BALL_SLOT,
-                        MicroverseProjectorBlockEntity.BALL_SLOT + 1, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else {
-                return ItemStack.EMPTY;
-            }
+            return ItemStack.EMPTY;
         }
         if (stack.isEmpty()) {
             slot.setByPlayer(ItemStack.EMPTY);
@@ -180,7 +142,7 @@ public class MicroverseMenu extends AbstractContainerMenu {
                 case DATA_TOTAL -> be.getTotalDuration();
                 case DATA_ACCRUED -> be.getAccruedMatter();
                 case DATA_EXTENSIONS -> be.getExtensions();
-                case DATA_BALL_COST -> be.getBallCost();
+                case DATA_NEXT_BALL_TICKS -> be.getNextBallTicks();
                 case DATA_RETURN_CHANCE -> be.getReturnChance();
                 default -> 0;
             };

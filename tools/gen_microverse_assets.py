@@ -469,10 +469,10 @@ def main():
     for suffix, _key, _en, _zh, color in COREFLAMES:
         make_gui(os.path.join(GUI_TX, 'coreflame_' + suffix + '.png'), 166,
                  coreflame_slots, tint=color)
-    # projector: heart (8,26) and output (151,26) flank the light strip, the
-    # balls slot (8,58) sits beside the extend button
+    # projector: only the heart slot (8,26) is exposed; balls come from item
+    # input hatches, the matter leaves through item output hatches
     make_gui(os.path.join(GUI_TX, 'microverse_projector.png'), 184,
-             [(7, 25), (7, 57), (150, 25)] + inventory_wells(101))
+             [(7, 25)] + inventory_wells(101))
 
     # creative energy source (creative-only, no recipe)
     save_block_texture('creative_energy_source', make_creative_source)
@@ -512,8 +512,8 @@ def write_lang():
         zh['item.%s.%s' % (MODID, mid)] = zh_name
 
     gui = 'container.%s.microverse_projector.' % MODID
-    en[gui + 'extend'] = 'Extend (+50%%) — %s balls'
-    zh[gui + 'extend'] = '延长(+50%%)— 需 %s 颗物质球'
+    en[gui + 'ball_time'] = 'Matter ball: +%ss'
+    zh[gui + 'ball_time'] = '物质球延长：+%s 秒'
     en[gui + 'running'] = 'Projecting: %s'
     zh[gui + 'running'] = '投影中：%s'
     en[gui + 'ready'] = 'Structure ready — insert heart + 12 singularities'
@@ -526,10 +526,10 @@ def write_lang():
     zh[gui + 'return_chance'] = '奇点返还率:%s%%'
     en[gui + 'slot_heart'] = 'Heart of a Nonexistent World goes here'
     zh[gui + 'slot_heart'] = '在此放入创世之心'
-    en[gui + 'slot_balls'] = 'Giant matter balls (also auto-drawn from item input hatches)'
-    zh[gui + 'slot_balls'] = '巨型物质球（也会自动从物品输入仓提取）'
-    en[gui + 'slot_output'] = 'Universe matter output'
-    zh[gui + 'slot_output'] = '宇宙物质输出口'
+    # keys retired with the extend button and the ball/output slots
+    for dead in ('extend', 'slot_balls', 'slot_output'):
+        en.pop(gui + dead, None)
+        zh.pop(gui + dead, None)
     problems_en = {
         'unchecked': 'structure not checked yet',
         'layer1': 'bottom layer incomplete',
