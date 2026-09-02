@@ -11,8 +11,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.Containers;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import com.mojang.serialization.MapCodec;
 
 /**
@@ -24,8 +29,16 @@ import com.mojang.serialization.MapCodec;
 public class CoreflameBlock extends BaseEntityBlock {
     public static final MapCodec<CoreflameBlock> CODEC = simpleCodec(CoreflameBlock::new);
 
+    /** The brazier stands 0.6 blocks tall, matching the shortened block model. */
+    private static final VoxelShape SHAPE = Shapes.create(new AABB(0, 0, 0, 1, 0.6, 1));
+
     public CoreflameBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 
     @Override

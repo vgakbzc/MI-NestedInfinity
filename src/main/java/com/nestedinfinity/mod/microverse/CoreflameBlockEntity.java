@@ -5,6 +5,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -46,12 +49,14 @@ public class CoreflameBlockEntity extends BlockEntity implements WorldlyContaine
     public void consumeSingularity() {
         singularity = ItemStack.EMPTY;
         setChanged();
+        sync();
     }
 
     /** Puts a returned singularity back into the slot. */
     public void returnSingularity(ItemStack stack) {
         singularity = stack;
         setChanged();
+        sync();
     }
 
     public ItemStack getSingularity() {
@@ -115,6 +120,7 @@ public class CoreflameBlockEntity extends BlockEntity implements WorldlyContaine
             singularity = ItemStack.EMPTY;
         }
         setChanged();
+        sync();
         return result;
     }
 
@@ -123,6 +129,7 @@ public class CoreflameBlockEntity extends BlockEntity implements WorldlyContaine
         ItemStack stack = singularity;
         singularity = ItemStack.EMPTY;
         setChanged();
+        sync();
         return stack;
     }
 
@@ -130,6 +137,7 @@ public class CoreflameBlockEntity extends BlockEntity implements WorldlyContaine
     public void setItem(int slot, ItemStack stack) {
         singularity = stack;
         setChanged();
+        sync();
     }
 
     @Override
@@ -146,6 +154,7 @@ public class CoreflameBlockEntity extends BlockEntity implements WorldlyContaine
     public void clearContent() {
         singularity = ItemStack.EMPTY;
         setChanged();
+        sync();
     }
 
     // -- persistence --------------------------------------------------------------
@@ -162,5 +171,32 @@ public class CoreflameBlockEntity extends BlockEntity implements WorldlyContaine
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         singularity = ItemStack.parseOptional(registries, tag.getCompound("singularity"));
+    }
+
+    // -- client sync (the BER shows the hovering octahedron only while filled) ----
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = new CompoundTag();
+        if (!singularity.isEmpty()) {
+            tag.put("singularity", singularity.save(registries));
+        }
+        return tag;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
+        singularity = ItemStack.parseOptional(registries, tag.getCompound("singularity"));
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    private void sync() {
+        if (level != null && !level.isClientSide()) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+        }
     }
 }

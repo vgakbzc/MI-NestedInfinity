@@ -102,6 +102,8 @@ public class NestedInfinityClient {
             net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(com.nestedinfinity.mod.microverse.MicroverseBlocks.PROJECTOR_TYPE.get(),
                 com.nestedinfinity.mod.microverse.MicroverseProjectorBER::new);
+        event.registerBlockEntityRenderer(com.nestedinfinity.mod.microverse.MicroverseBlocks.COREFLAME_TYPE.get(),
+                com.nestedinfinity.mod.microverse.CoreflameBER::new);
     }
 
     @SubscribeEvent

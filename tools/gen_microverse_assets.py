@@ -334,6 +334,28 @@ def block_model(name, texture=None):
     })
 
 
+def coreflame_block_model(name):
+    """The brazier is 0.6 blocks tall (9.6px). The sides sample the texture's
+    center band so the diamond motif keeps its proportions on the shorter
+    face; the top face shows the full motif."""
+    side = [0, 3.2, 16, 12.8]
+    write_json(os.path.join(A, 'models', 'block', name + '.json'), {
+        "textures": {"all": MODID + ":block/" + name},
+        "elements": [{
+            "from": [0, 0, 0],
+            "to": [16, 9.6, 16],
+            "faces": {
+                "north": {"uv": side, "texture": "#all"},
+                "south": {"uv": side, "texture": "#all"},
+                "west": {"uv": side, "texture": "#all"},
+                "east": {"uv": side, "texture": "#all"},
+                "up": {"uv": [0, 0, 16, 16], "texture": "#all"},
+                "down": {"uv": [0, 0, 16, 16], "texture": "#all"},
+            },
+        }],
+    })
+
+
 def blockstate(name, model=None):
     write_json(os.path.join(A, 'blockstates', name + '.json'), {
         "variants": {"": {"model": MODID + ":block/" + (model or name)}},
@@ -382,7 +404,7 @@ def main():
     for i, (suffix, key, _en, _zh, color) in enumerate(COREFLAMES):
         name = 'coreflame_' + suffix
         save_block_texture(name, make_coreflame, color)
-        block_model(name)
+        coreflame_block_model(name)
         blockstate(name)
         block_item_model(name)
         loot(name)
